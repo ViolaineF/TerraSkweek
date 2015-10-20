@@ -7,48 +7,51 @@
       <Entity type="Class">
         <Name>Entity</Name>
         <Access>Public</Access>
-        <Location left="724" top="252" />
-        <Size width="162" height="332" />
+        <Location left="724" top="441" />
+        <Size width="162" height="400" />
         <Collapsed>False</Collapsed>
         <Member type="Field">position m_pos</Member>
         <Member type="Field">int m_life</Member>
         <Member type="Field">int m_defense</Member>
         <Member type="Field">int m_dir</Member>
-        <Member type="Field">int m_attackPower</Member>
+        <Member type="Field">AudioFile hurt</Member>
+        <Member type="Field">AudioFile death</Member>
         <Member type="Field">weapon m_weapon</Member>
+        <Member type="Field">Textures m_sprites</Member>
+        <Member type="Method">void Draw()</Member>
+        <Member type="Method">void SetLife(int life)</Member>
         <Member type="Method">void MoveRight()</Member>
         <Member type="Method">void MoveLeft()</Member>
         <Member type="Method">void MoveUp()</Member>
         <Member type="Method">void MoveDown()</Member>
-        <Member type="Method">void Attack()</Member>
         <Member type="Method">void Teleport(position a)</Member>
         <Member type="Method">position GetPos()</Member>
-        <Member type="Method">void Draw()</Member>
+        <Member type="Method">void Attack()</Member>
+        <Member type="Method">void Death()</Member>
+        <Member type="Constructor">public Entity(position pos, int life, int def, int dir, weapon weap, AudioFile hurt, AudioFile death)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>Player</Name>
         <Access>Public</Access>
-        <Location left="949" top="530" />
-        <Size width="162" height="216" />
+        <Location left="954" top="679" />
+        <Size width="162" height="136" />
         <Collapsed>False</Collapsed>
-        <Member type="Field">int score</Member>
         <Member type="Method">void ChangeWeapon(weapon a)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>Enemy</Name>
         <Access>Public</Access>
-        <Location left="496" top="530" />
-        <Size width="162" height="216" />
+        <Location left="489" top="692" />
+        <Size width="162" height="125" />
         <Collapsed>False</Collapsed>
-        <Member type="Method">void Death()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Structure">
         <Name>position</Name>
         <Access>Public</Access>
-        <Location left="573" top="69" />
+        <Location left="489" top="163" />
         <Size width="162" height="187" />
         <Collapsed>False</Collapsed>
         <Member type="Field">int x</Member>
@@ -60,57 +63,184 @@
       <Entity type="Class">
         <Name>Grid</Name>
         <Access>Public</Access>
-        <Location left="1318" top="165" />
-        <Size width="162" height="275" />
+        <Location left="724" top="910" />
+        <Size width="162" height="298" />
         <Collapsed>False</Collapsed>
-        <Member type="Field">int screen</Member>
-        <Member type="Field">int select</Member>
+        <Member type="Field">int m_screen</Member>
+        <Member type="Field">int m_selected</Member>
+        <Member type="Field">int m_score</Member>
+        <Member type="Field">int m_timer</Member>
         <Member type="Method">void SaveGame()</Member>
         <Member type="Method">void LoadGame()</Member>
         <Member type="Method">void NewGame()</Member>
         <Member type="Method">void DisplayMap()</Member>
+        <Member type="Method">void HUD()</Member>
+        <Member type="Method">void Slide(int dir)</Member>
         <Member type="Method">void Pause()</Member>
-        <Member type="Method">void Cinematic()</Member>
         <Member type="Method">void EndGame()</Member>
         <Modifier>None</Modifier>
       </Entity>
-      <Entity type="Structure">
-        <Name>weapon</Name>
+      <Entity type="Class">
+        <Name>MAIN</Name>
         <Access>Public</Access>
-        <Location left="863" top="50" />
+        <Location left="574" top="1275" />
+        <Size width="471" height="279" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>AudioFile</Name>
+        <Access>Public</Access>
+        <Location left="936" top="49" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
-        <Member type="Field">int damage</Member>
-        <Member type="Field">int vitesse</Member>
-        <Member type="Field">int type</Member>
+        <Member type="Field">bool m_sound</Member>
+        <Member type="Field">SoundBuffer buffer</Member>
+        <Member type="Field">Sound sound</Member>
+        <Member type="Field">Music music</Member>
+        <Member type="Method">void Play()</Member>
+        <Member type="Method">void Stop()</Member>
+        <Member type="Constructor">public AudioFile(string directoryPath, bool sound)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Weapon</Name>
+        <Access>Public</Access>
+        <Location left="724" top="163" />
+        <Size width="162" height="230" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">position m_posSprite</Member>
+        <Member type="Field">Textures m_sprites</Member>
+        <Member type="Field">int m_damage</Member>
+        <Member type="Field">int m_vitesse</Member>
+        <Member type="Field">int m_type</Member>
+        <Member type="Field">AudioFile fire</Member>
+        <Member type="Field">AudioFile impactFire</Member>
         <Member type="Method">void DrawSprite(position posEnemy)</Member>
         <Member type="Method">void DrawFire()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Textures</Name>
+        <Access>Public</Access>
+        <Location left="936" top="301" />
+        <Size width="162" height="187" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">vector&lt;GLuint&gt; texture</Member>
+        <Member type="Method">int LoadGLTextures(string name)</Member>
+        <Member type="Constructor">public Textures()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Comment">
+        <Text>#include "GL\glut.h"
+#include "SOIL\SOIL.h"</Text>
+        <Location left="1098" top="60" />
+        <Size width="160" height="75" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>#include "SFML\Audio.hpp"</Text>
+        <Location left="1098" top="313" />
+        <Size width="160" height="75" />
       </Entity>
     </Entities>
     <Relationships>
-      <Relationship type="Association" first="3" second="0">
+      <Relationship type="Association" first="2" second="4">
         <Label>
         </Label>
         <StartOrientation>Vertical</StartOrientation>
-        <EndOrientation>Horizontal</EndOrientation>
-        <BendPoint relativeToStartShape="True">
-          <X>654</X>
-          <Y>281</Y>
-        </BendPoint>
+        <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
-        <AssociationType>Aggregation</AssociationType>
+        <AssociationType>Association</AssociationType>
       </Relationship>
-      <Relationship type="Association" first="5" second="0">
+      <Relationship type="Association" first="1" second="4">
         <Label>
         </Label>
         <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="0" second="2">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
-        <BendPoint relativeToStartShape="True">
-          <X>944</X>
-          <Y>291</Y>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="0" second="1">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>929</X>
+          <Y>754</Y>
         </BendPoint>
         <Direction>Unidirectional</Direction>
-        <AssociationType>Aggregation</AssociationType>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="4" second="5">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="7" second="0">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>805</X>
+          <Y>418</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>805</X>
+          <Y>416</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="6" second="7">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>911</X>
+          <Y>204</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>911</X>
+          <Y>271</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Dependency" first="3" second="7">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>676</X>
+          <Y>286</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>699</X>
+          <Y>312</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Association" first="8" second="7">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
       </Relationship>
     </Relationships>
   </ProjectItem>
