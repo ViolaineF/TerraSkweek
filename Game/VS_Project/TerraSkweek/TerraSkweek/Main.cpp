@@ -6,8 +6,13 @@ int main() {
 
 	
 
+<<<<<<< HEAD
 
 	//Fifi
+=======
+	// Gaga
+
+>>>>>>> test2
 
 
 
