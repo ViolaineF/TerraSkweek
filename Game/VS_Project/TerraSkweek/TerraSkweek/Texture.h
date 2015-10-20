@@ -1,3 +1,7 @@
+#ifndef TEXTURE_H
+#define TEXTURE_H
+
+
 #include <string>
 #include <vector>
 #include "GL\glut.h"
@@ -10,7 +14,9 @@ private:
 	std::vector<GLuint>	texture;
 
 public:
-	Texture();
+	Texture(int, string);
 	int LoadGLTextures(string);
 };
+
+#endif
 

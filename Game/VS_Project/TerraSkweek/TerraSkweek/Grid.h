@@ -1,3 +1,6 @@
+#ifndef GRID_H
+#define GRID_H
+
 #include "Player.h"
 #include "Enemy.h"
 
@@ -22,3 +25,5 @@ public:
 	~Grid();
 };
 
+
+#endif

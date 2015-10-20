@@ -1,33 +1,37 @@
+
 #include "AudioFile.h"
 
 
 
-AudioFile::AudioFile(string a, sf::Sound b)
+AudioFile::AudioFile(string file, bool sound)
 {
-	buffer.loadFromFile(a);
-	sound.setBuffer(buffer);
+	m_sound = sound;
+
+	if (sound) {// if it's a sound
+		buffer.loadFromFile("sounds/" + file);
+	}
+	else {// if it's a background music
+		music.openFromFile("sounds/" + file);
+	}
 }
 
-AudioFile::AudioFile(string a)
-{
-	music.openFromFile(a);
-	music.setLoop(true);
 
+void AudioFile::PlayAudio()
+{
+	if (m_sound) { // if it's a sound
+		sound.setBuffer(buffer);
+		sound.play();
+	}
+	else { // if it's a background music
+		music.play();
+		music.setLoop(true);
+	}
 }
 
-void AudioFile::PlaySfx()
+void AudioFile::StopAudio()
 {
-	sound.setVolume(40);
-	sound.play();
+	music.stop();
 }
 
-void AudioFile::PlayM()
-{
-	music.setVolume(40);
-	sound.play();
-}
 
-void AudioFile::Stop()
-{
-}
 

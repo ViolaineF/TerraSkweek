@@ -1,3 +1,6 @@
+#ifndef ENTITY_H
+#define ENTITY_H
+
 #include "Weapon.h"
 
 class Entity
@@ -10,10 +13,11 @@ private:
 	AudioFile s_hurt;
 	AudioFile s_death;
 	Weapon m_weapon;
-	Texture m_sprites;
+	std::vector<GLuint>	idle;
 
 public:
 	Entity();
+	int LoadGLTextures(string);
 	void Draw();
 	void SetLife();
 	void MoveLeft();
@@ -28,4 +32,6 @@ public:
 
 	~Entity();
 };
+
+#endif
 

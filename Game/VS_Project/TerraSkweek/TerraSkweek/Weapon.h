@@ -1,5 +1,13 @@
+#ifndef WEAPON_H
+#define WEAPON_H
+
+
+#include <string>
+#include <vector>
+#include "GL\glut.h"
+#include "SOIL\SOIL.h"
 #include "AudioFile.h"
-#include "Texture.h"
+
 
 struct position
 {
@@ -14,17 +22,21 @@ class Weapon
 {
 private:
 	position m_posSprite;
-	Texture m_sprites;
+	//Texture m_sprites;
 	int m_damage;
 	int m_speed;
 	int m_type;
 	AudioFile s_fire;
 	AudioFile s_impact;
+	std::vector<GLuint>	textures;
 
 public:
 	Weapon();
 	void DrawSprite(position);
 	void DrawFire();
+	int LoadGLTextures(string);
 	~Weapon();
 };
 
+
+#endif

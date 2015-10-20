@@ -8,16 +8,15 @@ using namespace std;
 class AudioFile
 {
 private:
-	bool m_sound;
-	sf::SoundBuffer buffer;
+	bool m_sound;// is it a sound or a background music ?
+	sf::SoundBuffer buffer; // buffer for sound
 	sf::Sound sound;
-	sf::Music music;
+	sf::Music music; // buffer for music
 
 public:
-	AudioFile(string, sf::Sound);
-	AudioFile(string);
-	void Play();
-	void Stop();
+	AudioFile(string, bool);
+	void PlayAudio();
+	void StopAudio();
 };
 
 #endif
