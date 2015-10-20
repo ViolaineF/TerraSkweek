@@ -1,7 +1,8 @@
 #ifndef AUDIOFILE_H
 #define AUDIOFILE_H
+
 #include <string>
-#include "SFML/Audio.hpp"
+#include "SFML\Audio.hpp"
 
 using namespace std; 
 
@@ -21,7 +22,5 @@ public:
 	void PlayAudio();
 	void StopAudio();
 };
-
-
 
 #endif
