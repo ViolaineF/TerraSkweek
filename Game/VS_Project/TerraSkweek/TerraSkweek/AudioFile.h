@@ -5,6 +5,7 @@
 
 using namespace std; 
 
+
 class AudioFile
 {
 private:
@@ -14,9 +15,13 @@ private:
 	sf::Music music; // buffer for music
 
 public:
+	AudioFile();
 	AudioFile(string, bool);
+	//void SetAudioFile(AudioFile);
 	void PlayAudio();
 	void StopAudio();
 };
+
+
 
 #endif

@@ -3,7 +3,7 @@
 
 
 
-Enemy::Enemy()
+Enemy::Enemy() : Entity()
 {
 }
 

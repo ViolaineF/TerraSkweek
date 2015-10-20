@@ -16,7 +16,7 @@ public:
 	void SaveGame();
 	void LoadGame();
 	void NewGame();
-	void DisplayMap();
+	//void DisplayMap();
 	void HUD();
 	void Slide(int);
 	void Pause();

@@ -4,6 +4,7 @@
 
 Grid::Grid()
 {
+
 }
 
 
@@ -24,9 +25,10 @@ void Grid::NewGame()
 {
 }
 
-void Grid::DisplayMap()
-{
-}
+//void Grid::DisplayMap()
+//{
+//
+//}
 
 void Grid::HUD()
 {

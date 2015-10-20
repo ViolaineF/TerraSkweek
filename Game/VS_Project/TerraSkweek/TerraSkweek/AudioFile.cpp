@@ -3,6 +3,10 @@
 
 
 
+AudioFile::AudioFile()
+{
+}
+
 AudioFile::AudioFile(string file, bool sound)
 {
 	m_sound = sound;
@@ -14,6 +18,14 @@ AudioFile::AudioFile(string file, bool sound)
 		music.openFromFile("sounds/" + file);
 	}
 }
+
+//void AudioFile::SetAudioFile(AudioFile a)
+//{
+//	m_sound = a.m_sound;
+//	buffer = a.buffer;
+//	sound = a.sound;
+//	music = a.music;
+//}
 
 
 void AudioFile::PlayAudio()
@@ -32,6 +44,11 @@ void AudioFile::StopAudio()
 {
 	music.stop();
 }
+
+//bool AudioFile::operator=(const AudioFile & a)
+//{
+//	return false;
+//}
 
 
 

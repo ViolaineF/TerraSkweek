@@ -10,6 +10,7 @@ private:
 	int m_life;
 	int m_def;
 	int m_dir;
+	int m_speed;
 	AudioFile s_hurt;
 	AudioFile s_death;
 	Weapon m_weapon;
@@ -17,8 +18,11 @@ private:
 
 public:
 	Entity();
-	int LoadGLTextures(string);
+	Entity(position, int, int, int, Weapon, AudioFile, AudioFile);
+	int LoadGLTextures(string, string);
 	void Draw();
+	void SwitchDir(int);
+	int GetDir();
 	void SetLife();
 	void MoveLeft();
 	void MoveRight();
@@ -28,7 +32,7 @@ public:
 	void GetPos();
 	void Attack();
 	void Death();
-	void DefineEntity(position, int, int, int, Weapon, AudioFile, AudioFile);
+
 
 	~Entity();
 };
