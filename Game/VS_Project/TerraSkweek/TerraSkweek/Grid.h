@@ -24,12 +24,18 @@ private:
 	int m_selected;
 	int m_score;
 	int m_timer;
+	int m_rows;
+	int m_lignes;
+	int map[10][10];
 
 public:
+	void SetMap(int, int, int);
+	int Map(int, int);
 	void SaveGame();
 	void LoadGame();
 	void NewGame();
-	//void DisplayMap();
+	void DisplayMap();
+	void Redim(int, int);
 	void HUD();
 	void Pause();
 	void EndGame();

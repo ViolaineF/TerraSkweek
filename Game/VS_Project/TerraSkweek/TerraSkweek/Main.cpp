@@ -29,19 +29,20 @@ int LoadGLTextures(string name) // Load Bitmaps And Convert To Textures
 
 
 //------------------CREATE MAP 0
-int colonnes = 10, lignes = 10; 
-int map0[10][10] = {
-	1,1,1,1,1,1,1,1,1,1,
-	1,0,0,0,0,0,0,0,0,1,
-	1,0,0,0,1,0,0,0,0,1,
-	1,0,0,0,1,0,0,0,0,1,
-	1,0,0,0,0,0,0,0,0,1,
-	1,0,0,0,0,0,0,0,0,1,
-	1,0,0,1,1,0,0,0,0,1,
-	1,0,0,0,0,0,0,0,0,1,
-	1,0,0,0,0,0,0,0,0,1,
-	1,1,1,1,1,1,1,1,1,1,
-};
+
+//int colonnes = 10, lignes = 10; 
+//int grid.Map[10][10] = {
+//	1,1,1,1,1,1,1,1,1,1,
+//	1,0,0,0,0,0,0,0,0,1,
+//	1,0,0,0,1,0,0,0,0,1,
+//	1,0,0,0,1,0,0,0,0,1,
+//	1,0,0,0,0,0,0,0,0,1,
+//	1,0,0,0,0,0,0,0,0,1,
+//	1,0,0,1,1,0,0,0,0,1,
+//	1,0,0,0,0,0,0,0,0,1,
+//	1,0,0,0,0,0,0,0,0,1,
+//	1,1,1,1,1,1,1,1,1,1,
+//};
 
 
 
@@ -56,20 +57,19 @@ Slime_Forest slime_01;
 
 void PrintImg(float, float, float, float, int);
 //void PrintNbr(int, int, int);
-void DisplayMap();
-void LabyRedim(int x, int y);
+void Display();
+void Redim(int x, int y);
 void KeyAction(int x, int y, int z);
 //void HUD(unsigned char key, int y, int z);
-void DessinerNiveau();
+void DrawLevel();
 //void Idle();
 //void LabyTimer1(int x);
 void PlayerMovt(int x);
 
 
-int main() {
+void main() {
 
-
-
+	grid.LoadGame();
 	
 	//Gestion de la fenetre
 	glutInitWindowPosition(10, 10);
@@ -83,8 +83,8 @@ int main() {
 
 	
 	//Gestion des evenements
-	glutDisplayFunc(DisplayMap);
-	glutReshapeFunc(LabyRedim);
+	glutDisplayFunc(Display);
+	glutReshapeFunc(Redim);
 	glutSpecialFunc(KeyAction); // Directions for the player
 	//glutKeyboardFunc(HUD);// Keyboard keys to control the HUD
 	//glutTimerFunc(700, LabyTimer1, 0); // Direction for the enemies
@@ -93,17 +93,9 @@ int main() {
 
 
 
-
-
-
 	glutMainLoop();
-	
-	
-	
-	return 0;
-	
 
-
+	
 }
 
 
@@ -215,35 +207,35 @@ void PlayerMovt(int x) {
 	int pYup = round(player.GetPos().y - 0.4);
 	int pYdown = round(player.GetPos().y + 0.4);
 
-	int pXleftConv = round(player.GetPos().x - 0.1);
-	int pXrightConv = round(player.GetPos().x + 0.1);
-	int pYupConv = round(player.GetPos().y - 0.1);
-	int pYdownConv = round(player.GetPos().y + 0.1);
+	int pXleftConv = round(player.GetPos().x - 0.3);
+	int pXrightConv = round(player.GetPos().x + 0.3);
+	int pYupConv = round(player.GetPos().y - 0.3);
+	int pYdownConv = round(player.GetPos().y + 0.3);
 
 
 	// ----------------- CHECK WALLS AND CONVERT v2
 	switch (player.GetDir())
 	{
 	case 'u' :
-		switch (map0[pXleft][pYup])
+		switch (grid.Map(pXleft,pYup))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			map0[pXleftConv][pYupConv] = 2;
+			grid.SetMap(pXleftConv, pYupConv, 2);
 			break;
 		case 2: //Ground converted
 			break;
 		}
 
-		switch (map0[pXright][pYup])
+		switch (grid.Map(pXright, pYup))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			map0[pXrightConv][pYupConv] = 2;
+			grid.SetMap(pXrightConv , pYupConv, 2);
 			break;
 		case 2: //Ground converted
 			break;
@@ -252,25 +244,25 @@ void PlayerMovt(int x) {
 		break;
 
 	case 'd':
-		switch (map0[pXleft][pYdown])
+		switch (grid.Map(pXleft, pYdown))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			map0[pXleftConv][pYdownConv] = 2;
+			grid.SetMap(pXleftConv, pYdownConv, 2);
 			break;
 		case 2: //Ground converted
 			break;
 		}
 
-		switch (map0[pXright][pYdown])
+		switch (grid.Map(pXright, pYdown))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			map0[pXrightConv][pYdownConv] = 2;
+			grid.SetMap(pXrightConv, pYdownConv, 2);
 			break;
 		case 2: //Ground converted
 			break;
@@ -279,25 +271,25 @@ void PlayerMovt(int x) {
 		break;
 
 	case 'r' : 
-		switch (map0[pXright][pYdown])
+		switch (grid.Map(pXright, pYdown))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			map0[pXrightConv][pYdownConv] = 2;
+			grid.SetMap(pXrightConv, pYdownConv, 2);
 			break;
 		case 2: //Ground converted
 			break;
 		}
 
-		switch (map0[pXright][pYup])
+		switch (grid.Map(pXright, pYup))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			map0[pXrightConv][pYupConv] = 2;
+			grid.SetMap(pXrightConv, pYupConv, 2);
 			break;
 		case 2: //Ground converted
 			break;
@@ -307,25 +299,25 @@ void PlayerMovt(int x) {
 
 
 	case 'l':
-		switch (map0[pXleft][pYup])
+		switch (grid.Map(pXleft, pYup))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			map0[pXleftConv][pYupConv] = 2;
+			grid.SetMap(pXleftConv, pYupConv, 2);
 			break;
 		case 2: //Ground converted
 			break;
 		}
 
-		switch (map0[pXleft][pYdown])
+		switch (grid.Map(pXleft, pYdown))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			map0[pXleftConv][pYdownConv] = 2;
+			grid.SetMap(pXleftConv, pYdownConv, 2);
 			break;
 		case 2: //Ground converted
 			break;
@@ -338,7 +330,7 @@ void PlayerMovt(int x) {
 
 	//------------------- CHECK CONVERT
 	//if () {
-	//	map0[newX][newY] = 2;
+	//	grid.Map[newX][newY] = 2;
 	//}
 
 
@@ -350,46 +342,10 @@ void PlayerMovt(int x) {
 }
 
 //----------------------------DRAW LABYRINTHE - PLAYER - ENEMIES - UI
-void DessinerNiveau() {
-
-	// Draw labyrinthe
-	for (int i = 0; i < colonnes; i++) {
-		for (int j = 0; j < lignes; j++) {
-			switch (map0[i][j])
-			{
-			case 0:// Floor
-				glBegin(GL_QUADS);
-
-				glColor3d(0.5, 0.5, 0.0); glVertex2d(i, j);
-				glColor3d(0.5, 0.0, 0.0); glVertex2d(i + 1, j);
-				glColor3d(0.5, 0.0, 0.0); glVertex2d(i + 1, j + 1);
-				glColor3d(0.5, 0.0, 0.0); glVertex2d(i, j + 1);
-
-				glEnd();
-				break;
-			case 1:// Wall
-				glBegin(GL_QUADS);
-
-				glColor3d(0.0, 0.5, 0.5); glVertex2d(i, j);
-				glColor3d(0.0, 0.5, 0.0); glVertex2d(i + 1, j);
-				glColor3d(0.0, 0.5, 0.0); glVertex2d(i + 1, j + 1);
-				glColor3d(0.0, 0.5, 0.0); glVertex2d(i, j + 1);
-
-				glEnd();
-				break;
-			case 2:// Converted Floor
-				glBegin(GL_QUADS);
-
-				glColor3d(0.0, 0.0, 1.0); glVertex2d(i, j);
-				glColor3d(0.0, 0.0, 0.5); glVertex2d(i + 1, j);
-				glColor3d(0.0, 0.0, 0.5); glVertex2d(i + 1, j + 1);
-				glColor3d(0.0, 0.0, 0.5); glVertex2d(i, j + 1);
-
-				glEnd();
-				break;
-			}
-		}
-	}// End drawing
+void DrawLevel() {
+	
+	// Draw map
+	grid.DisplayMap();
 
 	 // Add player
 	player.Draw();
@@ -402,22 +358,22 @@ void DessinerNiveau() {
 
 }
 
-void DisplayMap() {
+void Display() {
 
 	glClearColor(1.0, 1.0, 1.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
-	DessinerNiveau(); // Affiche le niveau
+	DrawLevel(); // Affiche le niveau
 	glFlush();
 
 }
 
-void LabyRedim(int x, int y) {
+void Redim(int x, int y) {
 
 	glViewport(0, 0, x, y);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(0.0, (double)colonnes, (double)lignes, 0.0);
+	gluOrtho2D(0.0, (double)10, (double)10, 0.0);
 
 }
 

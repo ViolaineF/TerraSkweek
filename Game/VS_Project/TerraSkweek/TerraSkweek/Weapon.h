@@ -1,9 +1,11 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
+#include <fstream>
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <iostream>
 #include <cmath>
 #include <time.h>
 #include <stdio.h> 
