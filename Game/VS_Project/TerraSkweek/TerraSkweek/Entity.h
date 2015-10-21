@@ -14,13 +14,12 @@ protected :
 	AudioFile s_hurt;
 	AudioFile s_death;
 	Weapon m_weapon;
-	std::vector<GLuint>	idle;
+	vector<GLuint>	idle;
 
 public:
 	Entity();
 	Entity(Position, int, int, int, Weapon, AudioFile, AudioFile);
-	int LoadGLTextures(string, string);
-	void Draw();
+	int LoadGLTextures(/*string,*/ string);
 	void SwitchDir(int);
 	int GetDir();
 	void SetLife(int);

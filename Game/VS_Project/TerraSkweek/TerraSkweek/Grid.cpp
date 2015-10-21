@@ -34,10 +34,6 @@ void Grid::HUD()
 {
 }
 
-void Grid::Slide(int dir)
-{
-}
-
 void Grid::Pause()
 {
 }

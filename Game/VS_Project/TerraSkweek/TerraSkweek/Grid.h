@@ -18,7 +18,6 @@ public:
 	void NewGame();
 	//void DisplayMap();
 	void HUD();
-	void Slide(int);
 	void Pause();
 	void EndGame();
 	Grid();

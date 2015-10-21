@@ -1,16 +1,22 @@
 #include "Grid.h"
 
 
+//------------------LOADING MAP TEXTURES
+
+
+
+
+
 //------------------CREATE MAP 0
 int colonnes = 10, lignes = 10; 
 int map0[10][10] = {
 	1,1,1,1,1,1,1,1,1,1,
 	1,0,0,0,0,0,0,0,0,1,
+	1,0,0,0,1,0,0,0,0,1,
+	1,0,0,0,1,0,0,0,0,1,
 	1,0,0,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,0,0,1,
-	1,0,0,0,0,0,0,0,0,1,
-	1,0,0,0,0,0,0,0,0,1,
-	1,0,0,0,0,0,0,0,0,1,
+	1,0,0,1,1,0,0,0,0,1,
 	1,0,0,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,0,0,1,
 	1,1,1,1,1,1,1,1,1,1,
@@ -172,6 +178,17 @@ void PlayerMovt(int x) {
 	//}
 
 	// ----------------- CHECK WALLS AND CONVERT
+	switch (player.GetDir())
+	{
+	case 0 :
+		break;
+	case 1:
+		break;
+	case 2 : 
+		break;
+	case 3:
+		break;
+	}
 	switch (map0[newX][newY])
 		{
 	case 1 :// Walls
@@ -192,11 +209,31 @@ void PlayerMovt(int x) {
 	case 2: //Ground converted
 		break;
 	}
+	switch (map0[newX][newY + 1])
+	{
+	case 1:// Walls
+		player.Teleport(playerPrevPos);
+		break;
+	case 0: //Ground to convert
+		break;
+	case 2: //Ground converted
+		break;
+	}
+	switch (map0[newX + 1][newY])
+	{
+	case 1:// Walls
+		player.Teleport(playerPrevPos);
+		break;
+	case 0: //Ground to convert
+		break;
+	case 2: //Ground converted
+		break;
+	}
 
 	//------------------- CHECK CONVERT
-	if () {
-		map0[newX][newY] = 2;
-	}
+	//if () {
+	//	map0[newX][newY] = 2;
+	//}
 
 
 	//Update screen
