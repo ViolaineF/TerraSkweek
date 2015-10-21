@@ -1,7 +1,13 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
-
+#include <iostream>
+#include <iomanip>
+#include <sstream>
+#include <cmath>
+#include <time.h>
+#include <stdio.h> 
+#include <stdlib.h>
 #include <string>
 #include <vector>
 #include "GL\glut.h"

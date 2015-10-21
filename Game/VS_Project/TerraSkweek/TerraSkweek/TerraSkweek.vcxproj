@@ -170,7 +170,6 @@
     <ClCompile Include="Slime_Corruption.cpp" />
     <ClCompile Include="Slime_Crimson.cpp" />
     <ClCompile Include="Slime_Forest.cpp" />
-    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Unicorn_Hallow.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="Zombie_Forest.cpp" />
@@ -191,7 +190,6 @@
     <ClInclude Include="Slime_Corruption.h" />
     <ClInclude Include="Slime_Crimson.h" />
     <ClInclude Include="Slime_Forest.h" />
-    <ClInclude Include="Texture.h" />
     <ClInclude Include="Unicorn_Hallow.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="Zombie_Forest.h" />
