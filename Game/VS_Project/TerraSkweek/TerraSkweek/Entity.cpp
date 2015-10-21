@@ -6,38 +6,13 @@ Entity::Entity()
 {
 }
 
-int Entity::LoadGLTextures(/*string type,*/string name)
+
+void Entity::SwitchDir(char d)
 {
-
-	//if (type == "idle") {
-		GLuint essai = SOIL_load_OGL_texture
-			(
-				name.c_str(),
-				SOIL_LOAD_AUTO,
-				SOIL_CREATE_NEW_ID,
-				SOIL_FLAG_INVERT_Y
-				);
-
-		idle.push_back(essai); // Add to the texture vector
-
-		if (idle.at(idle.size() - 1) == 0)
-			return false;
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		return true;       // Return Success
-
-	//}
-
+	m_dir = d;
 }
 
-void Entity::SwitchDir(int dir)
-{
-	m_dir = dir;
-}
-
-int Entity::GetDir()
+char Entity::GetDir()
 {
 	return m_dir;
 }
@@ -85,7 +60,7 @@ void Entity::Death()
 {
 }
 
-Entity::Entity(Position pos, int life , int def, int dir, Weapon weap, AudioFile hurt, AudioFile death)
+Entity::Entity(Position pos, int life , int def, char dir, Weapon weap, AudioFile hurt, AudioFile death)
 {
 	m_pos = pos; 
 	m_life = life;

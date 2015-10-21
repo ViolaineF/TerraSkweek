@@ -4,7 +4,28 @@
 //------------------LOADING MAP TEXTURES
 
 
+vector<GLuint>	texture;
 
+int LoadGLTextures(string name) // Load Bitmaps And Convert To Textures
+{
+	GLuint essai = SOIL_load_OGL_texture
+		(
+			name.c_str(),
+			SOIL_LOAD_AUTO,
+			SOIL_CREATE_NEW_ID,
+			SOIL_FLAG_INVERT_Y
+			);
+
+	texture.push_back(essai); // Add to the texture vector
+
+	if (texture.at(texture.size() - 1) == 0)
+		return false;
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	return true;       // Return Success
+}
 
 
 //------------------CREATE MAP 0
@@ -23,12 +44,17 @@ int map0[10][10] = {
 };
 
 
+
+
+
 //----------------------CREATE PLAYER AND GRID
 Grid grid;
 Player player;
 
 
-//void PrintImg(float, float, float, float, int);
+
+
+void PrintImg(float, float, float, float, int);
 //void PrintNbr(int, int, int);
 void DisplayMap();
 void LabyRedim(int x, int y);
@@ -42,12 +68,18 @@ void PlayerMovt(int x);
 
 int main() {
 
+
+
 	
 	//Gestion de la fenetre
 	glutInitWindowPosition(10, 10);
 	glutInitWindowSize(200, 200);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE);
 	glutCreateWindow("TerraSkweek");
+
+	player.LoadAllTextures();
+
+
 
 	
 	//Gestion des evenements
@@ -58,6 +90,11 @@ int main() {
 	//glutTimerFunc(700, LabyTimer1, 0); // Direction for the enemies
 	glutTimerFunc(50, PlayerMovt, 0); // Continuous movement of the player
 	//glutIdleFunc(Idle);
+
+
+
+
+
 
 	glutMainLoop();
 	
@@ -73,22 +110,22 @@ int main() {
 
 
 //------------------ PRINT IMAGES TO SCREEN
-//void PrintImg(float i, float j, float width, float height, int textureIt) {
-//
-//	glEnable(GL_TEXTURE_2D); // Start textures
-//	glBindTexture(GL_TEXTURE_2D, texture[textureIt]);//Texture[0] is linked to the first LoadGLTextures() in the glutMainLoop()
-//	glBegin(GL_QUADS);
-//
-//	glColor3d(1.0, 1.0, 1.0);
-//	glTexCoord2f(0.0f, 1.0f); glVertex2d(i, j);// coord flipped along the vertical axis
-//	glTexCoord2f(1.0f, 1.0f); glVertex2d(i + height, j);
-//	glTexCoord2f(1.0f, 0.0f); glVertex2d(i + height, j + width);
-//	glTexCoord2f(0.0f, 0.0f); glVertex2d(i, j + width);
-//
-//	glEnd();
-//	glDisable(GL_TEXTURE_2D);
-//
-//}
+void PrintImg(float i, float j, float width, float height, int textureIt) {
+
+	glEnable(GL_TEXTURE_2D); // Start textures
+	glBindTexture(GL_TEXTURE_2D, texture[textureIt]);//Texture[0] is linked to the first LoadGLTextures() in the glutMainLoop()
+	glBegin(GL_QUADS);
+
+	glColor3d(1.0, 1.0, 1.0);
+	glTexCoord2f(0.0f, 1.0f); glVertex2d(i, j);// coord flipped along the vertical axis
+	glTexCoord2f(1.0f, 1.0f); glVertex2d(i + height, j);
+	glTexCoord2f(1.0f, 0.0f); glVertex2d(i + height, j + width);
+	glTexCoord2f(0.0f, 0.0f); glVertex2d(i, j + width);
+
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
+
+}
 
 //------------------ PRINT INT INTO IMGs
 //void PrintNbr(int x, int y, int val) {
@@ -155,22 +192,24 @@ void PlayerMovt(int x) {
 
 	switch (player.GetDir())
 	{
-	case 0:
+	case 'l':
 		player.MoveLeft();
 		break;
-	case 1:
+	case 'r':
 		player.MoveRight();
 		break;
-	case 2:
+	case 'u':
 		player.MoveUp();
 		break;
-	case 3:
+	case 'd':
 		player.MoveDown();
 		break;
 	}
 
 	int newX = (player.GetPos().x); // for easier (and shorter) operation
 	int newY = (player.GetPos().y);
+	int newXsup = (player.GetPos().x + 0.5); // round up to the nearest superior int
+	int newYsup = (player.GetPos().y + 0.5);
 	//int newZ = player.GetPos().z;
 
 	//------------------CHECK IF DROPS
@@ -180,53 +219,105 @@ void PlayerMovt(int x) {
 	// ----------------- CHECK WALLS AND CONVERT
 	switch (player.GetDir())
 	{
-	case 0 :
-		break;
-	case 1:
-		break;
-	case 2 : 
-		break;
-	case 3:
-		break;
-	}
-	switch (map0[newX][newY])
+	case 'u' :
+		switch (map0[newX][newY])
 		{
-	case 1 :// Walls
-		player.Teleport(playerPrevPos);
+		case 1:// Walls
+			player.Teleport(playerPrevPos);
+			break;
+		case 0: //Ground to convert
+			break;
+		case 2: //Ground converted
+			break;
+		}
+
+		switch (map0[newX][newY + 1])
+		{
+		case 1:// Walls
+			player.Teleport(playerPrevPos);
+			break;
+		case 0: //Ground to convert
+			break;
+		case 2: //Ground converted
+			break;
+		}
+
 		break;
-	case 0: //Ground to convert
+
+	case 'd':
+		switch (map0[newX + 1][newY + 1])
+		{
+		case 1:// Walls
+			player.Teleport(playerPrevPos);
+			break;
+		case 0: //Ground to convert
+			break;
+		case 2: //Ground converted
+			break;
+		}
+
+		switch (map0[newX + 1][newY])
+		{
+		case 1:// Walls
+			player.Teleport(playerPrevPos);
+			break;
+		case 0: //Ground to convert
+			break;
+		case 2: //Ground converted
+			break;
+		}
+
 		break;
-	case 2: //Ground converted
+
+	case 'r' : 
+		switch (map0[newX][newY + 1])
+		{
+		case 1:// Walls
+			player.Teleport(playerPrevPos);
+			break;
+		case 0: //Ground to convert
+			break;
+		case 2: //Ground converted
+			break;
+		}
+
+		switch (map0[newX + 1][newY + 1])
+		{
+		case 1:// Walls
+			player.Teleport(playerPrevPos);
+			break;
+		case 0: //Ground to convert
+			break;
+		case 2: //Ground converted
+			break;
+		}
+
 		break;
-	}
-	switch (map0[newX+1][newY+1])
-	{
-	case 1:// Walls
-		player.Teleport(playerPrevPos);
-		break;
-	case 0: //Ground to convert
-		break;
-	case 2: //Ground converted
-		break;
-	}
-	switch (map0[newX][newY + 1])
-	{
-	case 1:// Walls
-		player.Teleport(playerPrevPos);
-		break;
-	case 0: //Ground to convert
-		break;
-	case 2: //Ground converted
-		break;
-	}
-	switch (map0[newX + 1][newY])
-	{
-	case 1:// Walls
-		player.Teleport(playerPrevPos);
-		break;
-	case 0: //Ground to convert
-		break;
-	case 2: //Ground converted
+
+
+	case 'l':
+		switch (map0[newX][newY])
+		{
+		case 1:// Walls
+			player.Teleport(playerPrevPos);
+			break;
+		case 0: //Ground to convert
+			break;
+		case 2: //Ground converted
+			break;
+		}
+
+		switch (map0[newX +1][newY - 1])
+		{
+		case 1:// Walls
+			player.Teleport(playerPrevPos);
+			break;
+		case 0: //Ground to convert
+			break;
+		case 2: //Ground converted
+			break;
+		}
+
 		break;
 	}
 
@@ -337,16 +428,16 @@ void KeyAction(int key, int x, int y) {
 			switch (key)
 		{
 		case GLUT_KEY_LEFT:
-			player.SwitchDir(0);
+			player.SwitchDir('l');
 			break;
 		case GLUT_KEY_RIGHT:
-			player.SwitchDir(1);
+			player.SwitchDir('r');
 			break;
 		case GLUT_KEY_UP:
-			player.SwitchDir(2);
+			player.SwitchDir('u');
 			break;
 		case GLUT_KEY_DOWN:
-			player.SwitchDir(3);
+			player.SwitchDir('d');
 			break;
 		}
 

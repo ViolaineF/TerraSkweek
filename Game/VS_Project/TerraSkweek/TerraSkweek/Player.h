@@ -6,7 +6,12 @@
 
 class Player : public Entity
 {
+private : 
+	vector<GLuint>	idle;
+
 public:
+	void LoadAllTextures();
+	int LoadGLTextures(string, string);
 	void Draw();
 	Player();
 	~Player();

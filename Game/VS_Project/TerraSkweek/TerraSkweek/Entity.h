@@ -9,19 +9,17 @@ protected :
 	Position m_pos;
 	int m_life;
 	int m_def;
-	int m_dir;
+	char m_dir;
 	float m_speed;
 	AudioFile s_hurt;
 	AudioFile s_death;
 	Weapon m_weapon;
-	vector<GLuint>	idle;
 
 public:
 	Entity();
-	Entity(Position, int, int, int, Weapon, AudioFile, AudioFile);
-	int LoadGLTextures(/*string,*/ string);
-	void SwitchDir(int);
-	int GetDir();
+	Entity(Position, int, int, char, Weapon, AudioFile, AudioFile);
+	void SwitchDir(char);
+	char GetDir();
 	void SetLife(int);
 	void MoveLeft();
 	void MoveRight();
