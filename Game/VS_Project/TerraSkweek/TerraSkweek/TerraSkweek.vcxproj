@@ -155,7 +155,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AudioFile.cpp" />
-    <ClCompile Include="CopieSource.cpp" />
     <ClCompile Include="Corruptor_Corruption.cpp" />
     <ClCompile Include="Crimera_Crimson.cpp" />
     <ClCompile Include="DemonEye_Forest.cpp" />
@@ -165,6 +164,7 @@
     <ClCompile Include="FaceMonster_Crimson.cpp" />
     <ClCompile Include="Gastopod_Hallow.cpp" />
     <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="Pixie_Hallow.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Slime_Corruption.cpp" />

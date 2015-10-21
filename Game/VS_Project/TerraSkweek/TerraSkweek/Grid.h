@@ -2,7 +2,20 @@
 #define GRID_H
 
 #include "Player.h"
-#include "Enemy.h"
+#include "Corruptor_Corruption.h"
+#include "Crimera_Crimson.h"
+#include "DemonEye_Forest.h"
+#include "Devourer_Corruption.h"
+#include "FaceMonster_Crimson.h"
+#include "Gastopod_Hallow.h"
+#include "Pixie_Hallow.h"
+#include "Slime_Corruption.h"
+#include "Slime_Crimson.h"
+#include "Slime_Forest.h"
+#include "Unicorn_Hallow.h"
+#include "Zombie_Forest.h"
+
+
 
 class Grid
 {

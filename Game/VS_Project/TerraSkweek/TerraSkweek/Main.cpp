@@ -50,7 +50,7 @@ int map0[10][10] = {
 //----------------------CREATE PLAYER AND GRID
 Grid grid;
 Player player;
-
+Slime_Forest slime_01;
 
 
 
@@ -78,7 +78,7 @@ int main() {
 	glutCreateWindow("TerraSkweek");
 
 	player.LoadAllTextures();
-
+	slime_01.LoadAllTextures();
 
 
 	
@@ -393,6 +393,7 @@ void DessinerNiveau() {
 
 	 // Add player
 	player.Draw();
+	slime_01.Draw();
 
 	// Translate Map
 	glLoadIdentity();
