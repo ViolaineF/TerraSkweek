@@ -7,10 +7,9 @@ Enemy::Enemy() : Entity()
 	afraid = false;
 }
 
-int Enemy::LoadGLTextures(/*string type,*/string name)
+int Enemy::LoadGLTextures(string type,string name)
 {
-
-	//if (type == "idle") {
+	if (type == "run") {
 	GLuint essai = SOIL_load_OGL_texture
 		(
 			name.c_str(),
@@ -19,7 +18,7 @@ int Enemy::LoadGLTextures(/*string type,*/string name)
 			SOIL_FLAG_INVERT_Y
 			);
 
-	idle.push_back(essai); // Add to the texture vector
+	run.push_back(essai); // Add to the texture vector
 
 	if (run.at(run.size() - 1) == 0)
 		return false;
@@ -29,15 +28,12 @@ int Enemy::LoadGLTextures(/*string type,*/string name)
 
 	return true;       // Return Success
 
-					   //}
-
+	}
 }
 
 
 void Enemy::Draw()
 {
-
-
 	static int frameActuelle = 0;
 	const int vitesse = 1200;
 	frameActuelle = (frameActuelle + 1) % vitesse;
@@ -46,7 +42,6 @@ void Enemy::Draw()
 	if (afraid == false)
 	{
 		glPushMatrix();
-
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glEnable(GL_TEXTURE_2D);
@@ -60,8 +55,6 @@ void Enemy::Draw()
 		glVertex2d(m_pos.x + 1, m_pos.y + 1);	glTexCoord2f(1.0f, 0.0f);
 		glVertex2d(m_pos.x, m_pos.y + 1);	glEnd();
 		glDisable(GL_TEXTURE_2D);
-
-		////////////////////////	Mettre tout sur le même calque	////////////////////////
 		glPopMatrix();
 		glutPostRedisplay();
 
