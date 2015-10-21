@@ -6,11 +6,11 @@
 class Entity
 {
 private:
-	position m_pos;
+	Position m_pos;
 	int m_life;
 	int m_def;
 	int m_dir;
-	int m_speed;
+	float m_speed;
 	AudioFile s_hurt;
 	AudioFile s_death;
 	Weapon m_weapon;
@@ -18,18 +18,18 @@ private:
 
 public:
 	Entity();
-	Entity(position, int, int, int, Weapon, AudioFile, AudioFile);
+	Entity(Position, int, int, int, Weapon, AudioFile, AudioFile);
 	int LoadGLTextures(string, string);
 	void Draw();
 	void SwitchDir(int);
 	int GetDir();
-	void SetLife();
+	void SetLife(int);
 	void MoveLeft();
 	void MoveRight();
 	void MoveUp();
 	void MoveDown();
-	void Teleport(position);
-	void GetPos();
+	void Teleport(Position);
+	Position GetPos();
 	void Attack();
 	void Death();
 

@@ -47,7 +47,7 @@ int main() {
 	//Gestion des evenements
 	glutDisplayFunc(DisplayMap);
 	glutReshapeFunc(LabyRedim);
-	//glutSpecialFunc(KeyAction); // Directions for the player
+	glutSpecialFunc(KeyAction); // Directions for the player
 	//glutKeyboardFunc(HUD);// Keyboard keys to control the HUD
 	//glutTimerFunc(700, LabyTimer1, 0); // Direction for the enemies
 	glutTimerFunc(100, PlayerMovt, 0); // Continuous movement of the player
@@ -59,6 +59,7 @@ int main() {
 	
 	return 0;
 	
+
 
 }
 
@@ -161,6 +162,9 @@ void PlayerMovt(int x) {
 
 	//Update screen
 	glutPostRedisplay();
+
+	//Reset Timer
+	glutTimerFunc(100, PlayerMovt, 0);
 }
 
 //----------------------------DRAW LABYRINTHE - PLAYER - ENEMIES - UI
@@ -187,6 +191,11 @@ void DessinerNiveau() {
 
 	 // Add player
 	player.Draw();
+
+	// Translate Map
+	glLoadIdentity();
+	glTranslatef(-player.GetPos().x + 4, -player.GetPos().y + 4, 0);
+	glutSwapBuffers();
 
 }
 
@@ -259,11 +268,11 @@ void KeyAction(int key, int x, int y) {
 //		return;
 //	}// If it's not in game (Title screen, controls screen, or paused), then do nothing
 //
-//	position prevPos = ghost1.GetPos();	//Previous position (before moving)
+//	Position prevPos = ghost1.GetPos();	//Previous Position (before moving)
 //
 //	do {
 //
-//		ghost1.Teleport(prevPos); // If invalid reset to the previous position
+//		ghost1.Teleport(prevPos); // If invalid reset to the previous Position
 //
 //		int dir = rand() % 4; // Create a value between 0 and 3 (inclusive)
 //
@@ -294,7 +303,7 @@ void KeyAction(int key, int x, int y) {
 //		}
 //		else {}
 //
-//		// Check if the new position is valid (avoid walls, UI surface, and Exit)
+//		// Check if the new Position is valid (avoid walls, UI surface, and Exit)
 //	} while ((labyrinthe[ghost1.GetPos().x][ghost1.GetPos().y] == 1) || (labyrinthe[ghost1.GetPos().x][ghost1.GetPos().y] == -1) || (labyrinthe[ghost1.GetPos().x][ghost1.GetPos().y] == 2) || (labyrinthe[ghost1.GetPos().x][ghost1.GetPos().y] == 3) || (labyrinthe[ghost1.GetPos().x][ghost1.GetPos().y] == 4));
 //
 //	// Update screen

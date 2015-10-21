@@ -7,7 +7,7 @@ Entity::Entity()
 	m_pos = { 4,4,0 };
 	m_life = 10;
 	m_def = 10;
-	m_dir = 0;
+	m_dir = 0.0;
 	m_speed = 0.1;
 }
 
@@ -86,9 +86,9 @@ int Entity::GetDir()
 	return m_dir;
 }
 
-void Entity::SetLife()
+void Entity::SetLife(int x)
 {
-	m_life = 3;
+	m_life = x;
 }
 
 void Entity::MoveLeft()
@@ -111,12 +111,13 @@ void Entity::MoveDown()
 	m_pos.y += m_speed;
 }
 
-void Entity::Teleport(position a)
+void Entity::Teleport(Position a)
 {
 }
 
-void Entity::GetPos()
+Position Entity::GetPos()
 {
+	return m_pos;
 }
 
 void Entity::Attack()
@@ -127,7 +128,7 @@ void Entity::Death()
 {
 }
 
-Entity::Entity(position pos, int life , int def, int dir, Weapon weap, AudioFile hurt, AudioFile death)
+Entity::Entity(Position pos, int life , int def, int dir, Weapon weap, AudioFile hurt, AudioFile death)
 {
 	m_pos = pos; 
 	m_life = life;

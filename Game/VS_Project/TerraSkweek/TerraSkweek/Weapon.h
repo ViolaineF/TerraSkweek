@@ -9,19 +9,19 @@
 #include "AudioFile.h"
 
 
-struct position
+struct Position
 {
-	int x, y;
+	float x, y;
 	bool z;
 };
 
-bool operator==(const position &a, const position &b);
-bool operator!=(const position &a, const position &b);
+bool operator==(const Position &a, const Position &b);
+bool operator!=(const Position &a, const Position &b);
 
 class Weapon
 {
 private:
-	position m_posSprite;
+	Position m_posSprite;
 	//Texture m_sprites;
 	int m_damage;
 	int m_speed;
@@ -32,7 +32,7 @@ private:
 
 public:
 	Weapon();
-	void DrawSprite(position);
+	void DrawSprite(Position);
 	void DrawFire();
 	int LoadGLTextures(string);
 	~Weapon();
