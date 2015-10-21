@@ -215,6 +215,12 @@ void PlayerMovt(int x) {
 	int pYup = round(player.GetPos().y - 0.4);
 	int pYdown = round(player.GetPos().y + 0.4);
 
+	int pXleftConv = round(player.GetPos().x - 0.1);
+	int pXrightConv = round(player.GetPos().x + 0.1);
+	int pYupConv = round(player.GetPos().y - 0.1);
+	int pYdownConv = round(player.GetPos().y + 0.1);
+
+
 	// ----------------- CHECK WALLS AND CONVERT v2
 	switch (player.GetDir())
 	{
@@ -225,6 +231,7 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
+			map0[pXleftConv][pYupConv] = 2;
 			break;
 		case 2: //Ground converted
 			break;
@@ -236,6 +243,7 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
+			map0[pXrightConv][pYupConv] = 2;
 			break;
 		case 2: //Ground converted
 			break;
@@ -250,6 +258,7 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
+			map0[pXleftConv][pYdownConv] = 2;
 			break;
 		case 2: //Ground converted
 			break;
@@ -261,6 +270,7 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
+			map0[pXrightConv][pYdownConv] = 2;
 			break;
 		case 2: //Ground converted
 			break;
@@ -275,6 +285,7 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
+			map0[pXrightConv][pYdownConv] = 2;
 			break;
 		case 2: //Ground converted
 			break;
@@ -286,6 +297,7 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
+			map0[pXrightConv][pYupConv] = 2;
 			break;
 		case 2: //Ground converted
 			break;
@@ -301,6 +313,7 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
+			map0[pXleftConv][pYupConv] = 2;
 			break;
 		case 2: //Ground converted
 			break;
@@ -312,6 +325,7 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
+			map0[pXleftConv][pYdownConv] = 2;
 			break;
 		case 2: //Ground converted
 			break;
