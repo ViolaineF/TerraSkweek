@@ -231,7 +231,7 @@ void PlayerMovt(int x) {
 			break;
 		}
 
-		switch (map0[newX][newY + 1])
+		switch (map0[newX +1][newY])
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
@@ -256,7 +256,7 @@ void PlayerMovt(int x) {
 			break;
 		}
 
-		switch (map0[newX + 1][newY])
+		switch (map0[newX][newY + 1])
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
@@ -270,7 +270,7 @@ void PlayerMovt(int x) {
 		break;
 
 	case 'r' : 
-		switch (map0[newX][newY + 1])
+		switch (map0[newX + 1][newY])
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
@@ -307,7 +307,7 @@ void PlayerMovt(int x) {
 			break;
 		}
 
-		switch (map0[newX +1][newY - 1])
+		switch (map0[newX][newY + 1])
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
@@ -320,6 +320,115 @@ void PlayerMovt(int x) {
 
 		break;
 	}
+
+
+
+	//// ----------------- CHECK WALLS AND CONVERT v2
+	//switch (player.GetDir())
+	//{
+	//case 'u' :
+	//	switch (map0[newX][newY])
+	//	{
+	//	case 1:// Walls
+	//		player.Teleport(playerPrevPos);
+	//		break;
+	//	case 0: //Ground to convert
+	//		break;
+	//	case 2: //Ground converted
+	//		break;
+	//	}
+
+	//	switch (map0[newX + 1][newY])
+	//	{
+	//	case 1:// Walls
+	//		player.Teleport(playerPrevPos);
+	//		break;
+	//	case 0: //Ground to convert
+	//		break;
+	//	case 2: //Ground converted
+	//		break;
+	//	}
+
+	//	break;
+
+	//case 'd':
+	//	switch (map0[newX + 1][newY + 1])
+	//	{
+	//	case 1:// Walls
+	//		player.Teleport(playerPrevPos);
+	//		break;
+	//	case 0: //Ground to convert
+	//		break;
+	//	case 2: //Ground converted
+	//		break;
+	//	}
+
+	//	switch (map0[newX][newY + 1])
+	//	{
+	//	case 1:// Walls
+	//		player.Teleport(playerPrevPos);
+	//		break;
+	//	case 0: //Ground to convert
+	//		break;
+	//	case 2: //Ground converted
+	//		break;
+	//	}
+
+	//	break;
+
+	//case 'r' : 
+	//	switch (map0[newX + 1][newY])
+	//	{
+	//	case 1:// Walls
+	//		player.Teleport(playerPrevPos);
+	//		break;
+	//	case 0: //Ground to convert
+	//		break;
+	//	case 2: //Ground converted
+	//		break;
+	//	}
+
+	//	switch (map0[newX + 1][newY + 1])
+	//	{
+	//	case 1:// Walls
+	//		player.Teleport(playerPrevPos);
+	//		break;
+	//	case 0: //Ground to convert
+	//		break;
+	//	case 2: //Ground converted
+	//		break;
+	//	}
+
+	//	break;
+
+
+	//case 'l':
+	//	switch (map0[newX][newY])
+	//	{
+	//	case 1:// Walls
+	//		player.Teleport(playerPrevPos);
+	//		break;
+	//	case 0: //Ground to convert
+	//		break;
+	//	case 2: //Ground converted
+	//		break;
+	//	}
+
+	//	switch (map0[newX][newY + 1])
+	//	{
+	//	case 1:// Walls
+	//		player.Teleport(playerPrevPos);
+	//		break;
+	//	case 0: //Ground to convert
+	//		break;
+	//	case 2: //Ground converted
+	//		break;
+	//	}
+
+	//	break;
+	//}
+
+
 
 	//------------------- CHECK CONVERT
 	//if () {
