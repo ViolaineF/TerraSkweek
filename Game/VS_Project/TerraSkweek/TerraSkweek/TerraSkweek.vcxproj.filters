@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -70,6 +67,9 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Slime_Forest.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="CopieSource.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

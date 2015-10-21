@@ -6,6 +6,7 @@ class Enemy : public Entity
 {
 protected :
 	bool afraid;
+	int currentFrame;
 	vector<GLuint>	run;
 
 public:

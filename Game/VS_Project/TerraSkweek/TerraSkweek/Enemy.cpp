@@ -5,6 +5,7 @@
 Enemy::Enemy() : Entity()
 {
 	afraid = false;
+	currentFrame = 0;
 }
 
 int Enemy::LoadGLTextures(string type,string name)
@@ -34,10 +35,9 @@ int Enemy::LoadGLTextures(string type,string name)
 
 void Enemy::Draw()
 {
-	static int frameActuelle = 0;
 	const int vitesse = 1200;
-	frameActuelle = (frameActuelle + 1) % vitesse;
-	int frame = frameActuelle * 3 / vitesse;
+	currentFrame = (currentFrame + 1) % vitesse;
+	int frame = currentFrame * 3 / vitesse;
 
 	if (afraid == false)
 	{
@@ -57,7 +57,6 @@ void Enemy::Draw()
 		glDisable(GL_TEXTURE_2D);
 		glPopMatrix();
 		glutPostRedisplay();
-
 	}
 }
 

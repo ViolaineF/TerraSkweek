@@ -17,6 +17,15 @@ Slime_Forest::Slime_Forest()
 }
 
 
+void Slime_Forest::LoadAllTextures()
+{
+	LoadGLTextures("run", "Art/Slime_01.png");
+	LoadGLTextures("run", "Art/Slime_02.png");
+	LoadGLTextures("run", "Art/Slime_03.png");
+	LoadGLTextures("run", "Art/Slime_04.png");
+	LoadGLTextures("run", "Art/Slime_05.png");
+}
+
 Slime_Forest::~Slime_Forest()
 {
 }
