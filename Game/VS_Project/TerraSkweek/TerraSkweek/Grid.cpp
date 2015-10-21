@@ -41,15 +41,46 @@ void Grid::SetMap(int x, int y, int a)
 	map[x][y] = a;
 }
 
+void Grid::LoadAllTextures(string biome)
+{
+	string directory = "Art/" + biome + "/";
+
+	LoadGLTextures(directory + "ground.jpg");
+	LoadGLTextures(directory + "walls.jpg");
+	LoadGLTextures(directory + "converted.jpg");
+
+}
+
+int Grid::LoadGLTextures(string name)
+{
+	GLuint essai = SOIL_load_OGL_texture
+		(
+			name.c_str(),
+			SOIL_LOAD_AUTO,
+			SOIL_CREATE_NEW_ID,
+			SOIL_FLAG_INVERT_Y
+			);
+
+	textures.push_back(essai); // Add to the texture vector
+
+	if (textures.at(textures.size() - 1) == 0)
+		return false;
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	return true;       // Return Success
+}
+
 int Grid::Map(int x, int y)
 {
 	return map[x][y];
 }
 
-void Grid::SaveGame()
+void Grid::SaveGame(string save)
 {
 	//--------------------------Ouvrir le fichier en écriture | supprimer ce qui est dedans avant d'ecrire
-	ofstream fichier("Saves/map2.txt", ios::out | ios::trunc);
+	ofstream fichier("Saves" + save, ios::out | ios::trunc);
 
 	if (fichier)//-------------------Si le fichier existe, écrire
 	{
@@ -75,13 +106,13 @@ void Grid::SaveGame()
 
 }
 
-void Grid::LoadGame()
+void Grid::LoadGame(string save)
 {
 	m_rows = 0;
 	m_lignes = 0;
 
 	//--------------------------Ouvrir le fichier en lecture
-	ifstream fichier("Saves/map1.txt", ios::in);
+	ifstream fichier("Saves/" + save, ios::in);
 
 	if (fichier)//-------------------Si le fichier existe, lire
 	{	string extract;
@@ -142,12 +173,30 @@ void Grid::LoadGame()
 
 }
 
-void Grid::NewGame()
+void Grid::NewGame(string save)
 {
 
 }
 
-//-------------------------------------DRAW MAP
+
+//------------------------------------- PRINT IMAGES TO SCREEN
+void Grid::PrintImg(int i, int j, int width, int height, int textureIt)
+{
+	glEnable(GL_TEXTURE_2D); // Start textures
+	glBindTexture(GL_TEXTURE_2D, textures[textureIt]);
+	glBegin(GL_QUADS);
+
+	glColor3d(1.0, 1.0, 1.0);
+	glTexCoord2f(0.0f, 0.0f); glVertex2d(i,j);
+	glTexCoord2f(0.0f, 1.0f); glVertex2d(i + height, j);
+	glTexCoord2f(1.0f, 1.0f); glVertex2d(i + height, j + width);
+	glTexCoord2f(1.0f, 0.0f); glVertex2d(i, j + width);
+
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
+}
+
+//------------------------------------- DRAW MAP
 void Grid::DisplayMap()
 {
 	for (int i = 0; i < m_rows; i++) {
@@ -155,34 +204,19 @@ void Grid::DisplayMap()
 			switch (map[i][j])
 			{
 			case 0:// Floor
-				glBegin(GL_QUADS);
-
-				glColor3d(0.5, 0.5, 0.0); glVertex2d(i, j);
-				glColor3d(0.5, 0.0, 0.0); glVertex2d(i + 1, j);
-				glColor3d(0.5, 0.0, 0.0); glVertex2d(i + 1, j + 1);
-				glColor3d(0.5, 0.0, 0.0); glVertex2d(i, j + 1);
-
-				glEnd();
+				//glBegin(GL_QUADS);
+				//glColor3d(1.0, 0.0, 0.0); glVertex2d(i, j);
+				//glColor3d(0.0, 1.0, 0.0); glVertex2d(i + 1, j);
+				//glColor3d(0.0, 0.0, 1.0); glVertex2d(i + 1, j + 1);
+				//glColor3d(0.0, 0.0, 0.0); glVertex2d(i, j + 1);
+				//glEnd();
+				PrintImg(i, j, 1, 1, 0);
 				break;
 			case 1:// Wall
-				glBegin(GL_QUADS);
-
-				glColor3d(0.0, 0.5, 0.5); glVertex2d(i, j);
-				glColor3d(0.0, 0.5, 0.0); glVertex2d(i + 1, j);
-				glColor3d(0.0, 0.5, 0.0); glVertex2d(i + 1, j + 1);
-				glColor3d(0.0, 0.5, 0.0); glVertex2d(i, j + 1);
-
-				glEnd();
+				PrintImg(i, j, 1, 1, 1);
 				break;
 			case 2:// Converted Floor
-				glBegin(GL_QUADS);
-
-				glColor3d(0.0, 0.5, 1.0); glVertex2d(i, j);
-				glColor3d(0.0, 0.0, 0.5); glVertex2d(i + 1, j);
-				glColor3d(0.0, 0.0, 0.5); glVertex2d(i + 1, j + 1);
-				glColor3d(0.0, 0.0, 0.5); glVertex2d(i, j + 1);
-
-				glEnd();
+				PrintImg(i, j, 1, 1, 2);
 				break;
 			}
 		}

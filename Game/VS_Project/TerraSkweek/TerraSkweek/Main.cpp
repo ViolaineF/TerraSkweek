@@ -3,8 +3,7 @@
 
 //------------------LOADING MAP TEXTURES
 
-
-vector<GLuint>	texture;
+vector<GLuint>	UI;
 
 int LoadGLTextures(string name) // Load Bitmaps And Convert To Textures
 {
@@ -16,9 +15,9 @@ int LoadGLTextures(string name) // Load Bitmaps And Convert To Textures
 			SOIL_FLAG_INVERT_Y
 			);
 
-	texture.push_back(essai); // Add to the texture vector
+	UI.push_back(essai); // Add to the texture vector
 
-	if (texture.at(texture.size() - 1) == 0)
+	if (UI.at(UI.size() - 1) == 0)
 		return false;
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -28,31 +27,17 @@ int LoadGLTextures(string name) // Load Bitmaps And Convert To Textures
 }
 
 
-//------------------CREATE MAP 0
 
-//int colonnes = 10, lignes = 10; 
-//int grid.Map[10][10] = {
-//	1,1,1,1,1,1,1,1,1,1,
-//	1,0,0,0,0,0,0,0,0,1,
-//	1,0,0,0,1,0,0,0,0,1,
-//	1,0,0,0,1,0,0,0,0,1,
-//	1,0,0,0,0,0,0,0,0,1,
-//	1,0,0,0,0,0,0,0,0,1,
-//	1,0,0,1,1,0,0,0,0,1,
-//	1,0,0,0,0,0,0,0,0,1,
-//	1,0,0,0,0,0,0,0,0,1,
-//	1,1,1,1,1,1,1,1,1,1,
-//};
-
-
-
-
-
-//----------------------CREATE PLAYER AND GRID
-Grid grid;
+//----------------------CREATE PLAYER AND LEVELS
+Grid lvl01;
+//Grid lvl02;
+//Grid lvl03;
+//Grid lvl04;
 Player player;
 Slime_Forest slime_01;
 
+
+int refreshRate = 30; // in miliseconds
 
 
 void PrintImg(float, float, float, float, int);
@@ -69,14 +54,16 @@ void PlayerMovt(int x);
 
 void main() {
 
-	grid.LoadGame();
+	lvl01.LoadGame("player1.txt");
 	
 	//Gestion de la fenetre
 	glutInitWindowPosition(10, 10);
-	glutInitWindowSize(200, 200);
+	glutInitWindowSize(500, 500);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE);
 	glutCreateWindow("TerraSkweek");
 
+	//----------------------- LOAD EVERYBODY'S SPRITES
+	lvl01.LoadAllTextures("corrupted");
 	player.LoadAllTextures();
 	slime_01.LoadAllTextures();
 
@@ -85,10 +72,10 @@ void main() {
 	//Gestion des evenements
 	glutDisplayFunc(Display);
 	glutReshapeFunc(Redim);
-	glutSpecialFunc(KeyAction); // Directions for the player
+	glutSpecialFunc(KeyAction); // Switch player's direction
 	//glutKeyboardFunc(HUD);// Keyboard keys to control the HUD
 	//glutTimerFunc(700, LabyTimer1, 0); // Direction for the enemies
-	glutTimerFunc(50, PlayerMovt, 0); // Continuous movement of the player
+	glutTimerFunc(refreshRate, PlayerMovt, 0); // Continuous movement of the player
 	//glutIdleFunc(Idle);
 
 
@@ -105,7 +92,7 @@ void main() {
 void PrintImg(float i, float j, float width, float height, int textureIt) {
 
 	glEnable(GL_TEXTURE_2D); // Start textures
-	glBindTexture(GL_TEXTURE_2D, texture[textureIt]);//Texture[0] is linked to the first LoadGLTextures() in the glutMainLoop()
+	glBindTexture(GL_TEXTURE_2D, UI[textureIt]);
 	glBegin(GL_QUADS);
 
 	glColor3d(1.0, 1.0, 1.0);
@@ -217,25 +204,25 @@ void PlayerMovt(int x) {
 	switch (player.GetDir())
 	{
 	case 'u' :
-		switch (grid.Map(pXleft,pYup))
+		switch (lvl01.Map(pXleft,pYup))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			grid.SetMap(pXleftConv, pYupConv, 2);
+			lvl01.SetMap(pXleftConv, pYupConv, 2);
 			break;
 		case 2: //Ground converted
 			break;
 		}
 
-		switch (grid.Map(pXright, pYup))
+		switch (lvl01.Map(pXright, pYup))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			grid.SetMap(pXrightConv , pYupConv, 2);
+			lvl01.SetMap(pXrightConv , pYupConv, 2);
 			break;
 		case 2: //Ground converted
 			break;
@@ -244,25 +231,25 @@ void PlayerMovt(int x) {
 		break;
 
 	case 'd':
-		switch (grid.Map(pXleft, pYdown))
+		switch (lvl01.Map(pXleft, pYdown))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			grid.SetMap(pXleftConv, pYdownConv, 2);
+			lvl01.SetMap(pXleftConv, pYdownConv, 2);
 			break;
 		case 2: //Ground converted
 			break;
 		}
 
-		switch (grid.Map(pXright, pYdown))
+		switch (lvl01.Map(pXright, pYdown))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			grid.SetMap(pXrightConv, pYdownConv, 2);
+			lvl01.SetMap(pXrightConv, pYdownConv, 2);
 			break;
 		case 2: //Ground converted
 			break;
@@ -271,25 +258,25 @@ void PlayerMovt(int x) {
 		break;
 
 	case 'r' : 
-		switch (grid.Map(pXright, pYdown))
+		switch (lvl01.Map(pXright, pYdown))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			grid.SetMap(pXrightConv, pYdownConv, 2);
+			lvl01.SetMap(pXrightConv, pYdownConv, 2);
 			break;
 		case 2: //Ground converted
 			break;
 		}
 
-		switch (grid.Map(pXright, pYup))
+		switch (lvl01.Map(pXright, pYup))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			grid.SetMap(pXrightConv, pYupConv, 2);
+			lvl01.SetMap(pXrightConv, pYupConv, 2);
 			break;
 		case 2: //Ground converted
 			break;
@@ -299,25 +286,25 @@ void PlayerMovt(int x) {
 
 
 	case 'l':
-		switch (grid.Map(pXleft, pYup))
+		switch (lvl01.Map(pXleft, pYup))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			grid.SetMap(pXleftConv, pYupConv, 2);
+			lvl01.SetMap(pXleftConv, pYupConv, 2);
 			break;
 		case 2: //Ground converted
 			break;
 		}
 
-		switch (grid.Map(pXleft, pYdown))
+		switch (lvl01.Map(pXleft, pYdown))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			grid.SetMap(pXleftConv, pYdownConv, 2);
+			lvl01.SetMap(pXleftConv, pYdownConv, 2);
 			break;
 		case 2: //Ground converted
 			break;
@@ -327,25 +314,18 @@ void PlayerMovt(int x) {
 	}
 
 
-
-	//------------------- CHECK CONVERT
-	//if () {
-	//	grid.Map[newX][newY] = 2;
-	//}
-
-
 	//Update screen
 	glutPostRedisplay();
 
 	//Reset Timer
-	glutTimerFunc(50, PlayerMovt, 0);
+	glutTimerFunc(refreshRate, PlayerMovt, 0);
 }
 
 //----------------------------DRAW LABYRINTHE - PLAYER - ENEMIES - UI
 void DrawLevel() {
 	
 	// Draw map
-	grid.DisplayMap();
+	lvl01.DisplayMap();
 
 	 // Add player
 	player.Draw();

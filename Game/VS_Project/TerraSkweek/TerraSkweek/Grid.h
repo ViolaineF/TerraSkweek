@@ -27,18 +27,25 @@ private:
 	int m_rows;
 	int m_lignes;
 	int map[10][10];
+	vector<GLuint>	textures;
 
 public:
+	int Map(int, int); // return map values
 	void SetMap(int, int, int);
-	int Map(int, int);
-	void SaveGame();
-	void LoadGame();
-	void NewGame();
+	void LoadAllTextures(string);
+	int LoadGLTextures(string);
+	void PrintImg(int, int, int, int, int);
 	void DisplayMap();
-	void Redim(int, int);
+
+	void SaveGame(string);
+	void LoadGame(string);
+	void NewGame(string);
+
+	void Redim(int, int); //not used RN
 	void HUD();
 	void Pause();
 	void EndGame();
+
 	Grid();
 	~Grid();
 };
