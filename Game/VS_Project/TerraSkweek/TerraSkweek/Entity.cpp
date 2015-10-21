@@ -4,11 +4,6 @@
 
 Entity::Entity()
 {
-	m_pos = { 4,4,0 };
-	m_life = 10;
-	m_def = 10;
-	m_dir = 0.0;
-	m_speed = 0.1;
 }
 
 int Entity::LoadGLTextures(string type,string name)
@@ -113,6 +108,7 @@ void Entity::MoveDown()
 
 void Entity::Teleport(Position a)
 {
+	m_pos = a;
 }
 
 Position Entity::GetPos()

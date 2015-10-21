@@ -5,7 +5,7 @@
 
 class Entity
 {
-private:
+protected :
 	Position m_pos;
 	int m_life;
 	int m_def;

@@ -4,16 +4,16 @@
 //------------------CREATE MAP 0
 int colonnes = 10, lignes = 10; 
 int map0[10][10] = {
-	0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,
+	1,1,1,1,1,1,1,1,1,1,
+	1,0,0,0,0,0,0,0,0,1,
+	1,0,0,0,0,0,0,0,0,1,
+	1,0,0,0,0,0,0,0,0,1,
+	1,0,0,0,0,0,0,0,0,1,
+	1,0,0,0,0,0,0,0,0,1,
+	1,0,0,0,0,0,0,0,0,1,
+	1,0,0,0,0,0,0,0,0,1,
+	1,0,0,0,0,0,0,0,0,1,
+	1,1,1,1,1,1,1,1,1,1,
 };
 
 
@@ -50,7 +50,7 @@ int main() {
 	glutSpecialFunc(KeyAction); // Directions for the player
 	//glutKeyboardFunc(HUD);// Keyboard keys to control the HUD
 	//glutTimerFunc(700, LabyTimer1, 0); // Direction for the enemies
-	glutTimerFunc(100, PlayerMovt, 0); // Continuous movement of the player
+	glutTimerFunc(50, PlayerMovt, 0); // Continuous movement of the player
 	//glutIdleFunc(Idle);
 
 	glutMainLoop();
@@ -144,6 +144,9 @@ int main() {
 //----------------------------CONTINUOUS PLAYER MOVEMENT
 void PlayerMovt(int x) {
 
+	// Save previous position to revert changes if the new one is invalid
+	Position playerPrevPos = { player.GetPos().x, player.GetPos().y, player.GetPos().z };
+
 	switch (player.GetDir())
 	{
 	case 0:
@@ -160,11 +163,47 @@ void PlayerMovt(int x) {
 		break;
 	}
 
+	int newX = (player.GetPos().x); // for easier (and shorter) operation
+	int newY = (player.GetPos().y);
+	//int newZ = player.GetPos().z;
+
+	//------------------CHECK IF DROPS
+	//if (map0[newX][newY]) {
+	//}
+
+	// ----------------- CHECK WALLS AND CONVERT
+	switch (map0[newX][newY])
+		{
+	case 1 :// Walls
+		player.Teleport(playerPrevPos);
+		break;
+	case 0: //Ground to convert
+		break;
+	case 2: //Ground converted
+		break;
+	}
+	switch (map0[newX+1][newY+1])
+	{
+	case 1:// Walls
+		player.Teleport(playerPrevPos);
+		break;
+	case 0: //Ground to convert
+		break;
+	case 2: //Ground converted
+		break;
+	}
+
+	//------------------- CHECK CONVERT
+	if () {
+		map0[newX][newY] = 2;
+	}
+
+
 	//Update screen
 	glutPostRedisplay();
 
 	//Reset Timer
-	glutTimerFunc(100, PlayerMovt, 0);
+	glutTimerFunc(50, PlayerMovt, 0);
 }
 
 //----------------------------DRAW LABYRINTHE - PLAYER - ENEMIES - UI
@@ -175,13 +214,33 @@ void DessinerNiveau() {
 		for (int j = 0; j < lignes; j++) {
 			switch (map0[i][j])
 			{
-			case 0:// blank
+			case 0:// Floor
 				glBegin(GL_QUADS);
 
 				glColor3d(0.5, 0.5, 0.0); glVertex2d(i, j);
 				glColor3d(0.5, 0.0, 0.0); glVertex2d(i + 1, j);
 				glColor3d(0.5, 0.0, 0.0); glVertex2d(i + 1, j + 1);
 				glColor3d(0.5, 0.0, 0.0); glVertex2d(i, j + 1);
+
+				glEnd();
+				break;
+			case 1:// Wall
+				glBegin(GL_QUADS);
+
+				glColor3d(0.0, 0.5, 0.5); glVertex2d(i, j);
+				glColor3d(0.0, 0.5, 0.0); glVertex2d(i + 1, j);
+				glColor3d(0.0, 0.5, 0.0); glVertex2d(i + 1, j + 1);
+				glColor3d(0.0, 0.5, 0.0); glVertex2d(i, j + 1);
+
+				glEnd();
+				break;
+			case 2:// Converted Floor
+				glBegin(GL_QUADS);
+
+				glColor3d(0.0, 0.0, 1.0); glVertex2d(i, j);
+				glColor3d(0.0, 0.0, 0.5); glVertex2d(i + 1, j);
+				glColor3d(0.0, 0.0, 0.5); glVertex2d(i + 1, j + 1);
+				glColor3d(0.0, 0.0, 0.5); glVertex2d(i, j + 1);
 
 				glEnd();
 				break;
