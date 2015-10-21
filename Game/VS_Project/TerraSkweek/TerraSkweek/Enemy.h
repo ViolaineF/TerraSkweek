@@ -5,8 +5,14 @@
 
 class Enemy : public Entity
 {
+protected :
+	bool afraid;
+	vector<GLuint>	run;
+
 public:
 	Enemy();
+	int LoadGLTextures(/*string,*/ string);
+	void Draw();
 	~Enemy();
 };
 
