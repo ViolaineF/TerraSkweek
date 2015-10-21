@@ -113,6 +113,7 @@ void Entity::MoveDown()
 
 void Entity::Teleport(Position a)
 {
+	m_pos = a;
 }
 
 Position Entity::GetPos()
