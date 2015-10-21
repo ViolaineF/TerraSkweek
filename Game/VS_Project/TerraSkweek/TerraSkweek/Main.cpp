@@ -50,7 +50,7 @@ int main() {
 	glutSpecialFunc(KeyAction); // Directions for the player
 	//glutKeyboardFunc(HUD);// Keyboard keys to control the HUD
 	//glutTimerFunc(700, LabyTimer1, 0); // Direction for the enemies
-	glutTimerFunc(100, PlayerMovt, 0); // Continuous movement of the player
+	glutTimerFunc(50, PlayerMovt, 0); // Continuous movement of the player
 	//glutIdleFunc(Idle);
 
 	glutMainLoop();
@@ -171,15 +171,15 @@ void PlayerMovt(int x) {
 	//if (map0[newX][newY]) {
 	//}
 
-	// ----------------- CHECK
+	// ----------------- CHECK WALLS AND CONVERT
 	switch (map0[newX][newY])
 		{
 	case 1 :// Walls
 		player.Teleport(playerPrevPos);
 		break;
-	case 5: //Ground to convert
+	case 0: //Ground to convert
 		break;
-	case 6: //something else
+	case 2: //Ground converted
 		break;
 	}
 	switch (map0[newX+1][newY+1])
@@ -187,17 +187,23 @@ void PlayerMovt(int x) {
 	case 1:// Walls
 		player.Teleport(playerPrevPos);
 		break;
-	case 5: //Ground to convert
+	case 0: //Ground to convert
 		break;
-	case 6: //something else
+	case 2: //Ground converted
 		break;
 	}
+
+	//------------------- CHECK CONVERT
+	if () {
+		map0[newX][newY] = 2;
+	}
+
 
 	//Update screen
 	glutPostRedisplay();
 
 	//Reset Timer
-	glutTimerFunc(100, PlayerMovt, 0);
+	glutTimerFunc(50, PlayerMovt, 0);
 }
 
 //----------------------------DRAW LABYRINTHE - PLAYER - ENEMIES - UI
@@ -225,6 +231,16 @@ void DessinerNiveau() {
 				glColor3d(0.0, 0.5, 0.0); glVertex2d(i + 1, j);
 				glColor3d(0.0, 0.5, 0.0); glVertex2d(i + 1, j + 1);
 				glColor3d(0.0, 0.5, 0.0); glVertex2d(i, j + 1);
+
+				glEnd();
+				break;
+			case 2:// Converted Floor
+				glBegin(GL_QUADS);
+
+				glColor3d(0.0, 0.0, 1.0); glVertex2d(i, j);
+				glColor3d(0.0, 0.0, 0.5); glVertex2d(i + 1, j);
+				glColor3d(0.0, 0.0, 0.5); glVertex2d(i + 1, j + 1);
+				glColor3d(0.0, 0.0, 0.5); glVertex2d(i, j + 1);
 
 				glEnd();
 				break;
