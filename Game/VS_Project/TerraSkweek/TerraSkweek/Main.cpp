@@ -48,14 +48,21 @@ void KeyAction(int x, int y, int z);
 //void HUD(unsigned char key, int y, int z);
 void DrawLevel();
 //void Idle();
-//void LabyTimer1(int x);
+//void EnemiesTimer(int x);
 void PlayerMovt(int x);
 
 
 void main() {
 
+
+	//------------------LOAD RANDOM
+	srand(time(NULL)); // Create a seed to start the random from
+
+
+	//------------------ LOAD PLAYER' SAVE
 	lvl01.LoadGame("player1.txt");
 	
+
 	//Gestion de la fenetre
 	glutInitWindowPosition(10, 10);
 	glutInitWindowSize(500, 500);
@@ -74,7 +81,7 @@ void main() {
 	glutReshapeFunc(Redim);
 	glutSpecialFunc(KeyAction); // Switch player's direction
 	//glutKeyboardFunc(HUD);// Keyboard keys to control the HUD
-	//glutTimerFunc(700, LabyTimer1, 0); // Direction for the enemies
+	//glutTimerFunc(700, EnemiesTimer, 0); // Direction for the enemiesd
 	glutTimerFunc(refreshRate, PlayerMovt, 0); // Continuous movement of the player
 	//glutIdleFunc(Idle);
 
@@ -163,7 +170,7 @@ void PrintImg(float i, float j, float width, float height, int textureIt) {
 //
 //}
 
-//----------------------------CONTINUOUS PLAYER MOVEMENT
+//----------------------------CONTINUOUS PLAYER MOVEMENT + ENEMIES
 void PlayerMovt(int x) {
 
 	// Save previous position to revert changes if the new one is invalid
@@ -312,6 +319,11 @@ void PlayerMovt(int x) {
 
 		break;
 	}
+
+
+	//------------------------ MOVE ALL ENEMIES AND GET IF DAMAGE
+	slime_01.Move(player.GetPos());
+
 
 
 	//Update screen
