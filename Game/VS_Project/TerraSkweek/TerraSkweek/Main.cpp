@@ -37,15 +37,25 @@ Player player;
 //Slime_Forest slime_01;
 
 
-int refreshRate = 30; // in miliseconds
 
+
+//----------------------A SUPPRIMER POUR UTILISER LE DETECTEUR DE LUMIERE
+
+int currentFrame;
+
+//----------------------
+
+
+
+int refreshRate = 30; // in miliseconds
+float light;
 
 void PrintImg(float, float, float, float, int);
 //void PrintNbr(int, int, int);
 void Display();
 void Redim(int x, int y);
 void KeyAction(int x, int y, int z);
-//void HUD(unsigned char key, int y, int z);
+void invisibility(unsigned char key, int y, int z);
 void DrawLevel();
 //void Idle();
 //void EnemiesTimer(int x);
@@ -80,7 +90,7 @@ void main() {
 	glutDisplayFunc(Display);
 	glutReshapeFunc(Redim);
 	glutSpecialFunc(KeyAction); // Switch player's direction
-	//glutKeyboardFunc(HUD);// Keyboard keys to control the HUD
+	glutKeyboardFunc(invisibility);// Keyboard keys to control the HUD
 	//glutTimerFunc(700, EnemiesTimer, 0); // Direction for the enemiesd
 	glutTimerFunc(refreshRate, PlayerMovt, 0); // Continuous movement of the player
 	//glutIdleFunc(Idle);
@@ -324,6 +334,7 @@ void PlayerMovt(int x) {
 
 	//------------------------ MOVE ALL ENEMIES AND GET IF DAMAGE
 	//slime_01.Move(player.GetPos());
+	lvl01.MoveAllEnemies();
 
 	//Update screen
 	glutPostRedisplay();
@@ -343,7 +354,6 @@ void DrawLevel() {
 	player.Draw();
 
 	//Draw Enemies
-	lvl01.MoveAllEnemies();
 	lvl01.DrawEnemies();
 	//slime_01.Draw();
 
@@ -375,20 +385,24 @@ void Redim(int x, int y) {
 
 
 //---------------------------- SCREEN/HUD CONTROLS
-//void HUD(unsigned char key, int y, int z) {
-//
-//	if (screenIt>3) {// If screen Death or WIN, then skip the function
-//		return;
-//	}
-//
-//	if ((screenIt == 3) && (key == ' ')) {
-//		screenIt = 2;
-//	}
-//	else {
-//		screenIt++;
-//	}
-//
-//}
+void invisibility(unsigned char key, int y, int z) {
+	
+
+//-------------------------- A ENLEVER POUR LAISSER PLACE AU DETECTEUR DE LUMIERE SUR ARDUINO
+	if (key == '0') {
+		const int div = 4;
+		currentFrame = (currentFrame + 1) % div;
+		light = currentFrame * 4 / div;
+
+
+		//		const int div = 4;
+		//		fLight = (fLight) / div;
+		//		light = fLight * 4 / div;
+
+
+		player.setOpacity(light);// à placer dans une boucle infinie pour detecter toujours la valeur de "light"
+	}
+}
 
 //-------------------------- PLAYER MOVEMENTS
 void KeyAction(int key, int x, int y) {

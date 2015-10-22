@@ -115,7 +115,6 @@ int Player::LoadGLTextures(string type,string name)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		return true;       // Return Success
 	}
-	
 }
 
 void Player::Draw()
@@ -140,7 +139,7 @@ void Player::Draw()
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				glBindTexture(GL_TEXTURE_2D, idle[frame]);
 				glBegin(GL_QUADS);
-				glColor3d(1.0, 1.0, 1.0);
+				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
 				glVertex2d(m_pos.x, m_pos.y);
 				glTexCoord2f(0.0f, 1.0f);
@@ -162,7 +161,7 @@ void Player::Draw()
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				glBindTexture(GL_TEXTURE_2D, left[frame]);
 				glBegin(GL_QUADS);
-				glColor3d(1.0, 1.0, 1.0);
+				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
 				glVertex2d(m_pos.x, m_pos.y);
 				glTexCoord2f(0.0f, 1.0f);
@@ -185,7 +184,7 @@ void Player::Draw()
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				glBindTexture(GL_TEXTURE_2D, left[frame]);
 				glBegin(GL_QUADS);
-				glColor3d(1.0, 1.0, 1.0);
+				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
 				glVertex2d(m_pos.x, m_pos.y);
 				glTexCoord2f(0.0f, 1.0f);
@@ -207,7 +206,7 @@ void Player::Draw()
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				glBindTexture(GL_TEXTURE_2D, up[frame]);
 				glBegin(GL_QUADS);
-				glColor3d(1.0, 1.0, 1.0);
+				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
 				glVertex2d(m_pos.x, m_pos.y);
 				glTexCoord2f(0.0f, 1.0f);
@@ -230,7 +229,7 @@ void Player::Draw()
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				glBindTexture(GL_TEXTURE_2D, down[frame]);
 				glBegin(GL_QUADS);
-				glColor3d(1.0, 1.0, 1.0);
+				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
 				glVertex2d(m_pos.x, m_pos.y);
 				glTexCoord2f(0.0f, 1.0f);
@@ -258,7 +257,7 @@ void Player::Draw()
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				glBindTexture(GL_TEXTURE_2D, idle[frame]);
 				glBegin(GL_QUADS);
-				glColor3d(1.0, 1.0, 1.0);
+				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
 				glVertex2d(m_pos.x, m_pos.y);
 				glTexCoord2f(0.0f, 1.0f);
@@ -280,7 +279,7 @@ void Player::Draw()
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				glBindTexture(GL_TEXTURE_2D, left[frame]);
 				glBegin(GL_QUADS);
-				glColor3d(1.0, 1.0, 1.0);
+				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
 				glVertex2d(m_pos.x, m_pos.y);
 				glTexCoord2f(0.0f, 1.0f);
@@ -303,7 +302,7 @@ void Player::Draw()
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				glBindTexture(GL_TEXTURE_2D, left[frame]);
 				glBegin(GL_QUADS);
-				glColor3d(1.0, 1.0, 1.0);
+				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
 				glVertex2d(m_pos.x, m_pos.y);
 				glTexCoord2f(0.0f, 1.0f);
@@ -325,7 +324,7 @@ void Player::Draw()
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				glBindTexture(GL_TEXTURE_2D, up[frame]);
 				glBegin(GL_QUADS);
-				glColor3d(1.0, 1.0, 1.0);
+				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
 				glVertex2d(m_pos.x, m_pos.y);
 				glTexCoord2f(0.0f, 1.0f);
@@ -348,7 +347,7 @@ void Player::Draw()
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				glBindTexture(GL_TEXTURE_2D, down[frame]);
 				glBegin(GL_QUADS);
-				glColor3d(1.0, 1.0, 1.0);
+				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
 				glVertex2d(m_pos.x, m_pos.y);
 				glTexCoord2f(0.0f, 1.0f);
@@ -379,7 +378,7 @@ void Player::Draw()
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				glBindTexture(GL_TEXTURE_2D, idle[frame]);
 				glBegin(GL_QUADS);
-				glColor3d(1.0, 1.0, 1.0);
+				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
 				glVertex2d(m_pos.x, m_pos.y);
 				glTexCoord2f(0.0f, 1.0f);
@@ -401,7 +400,7 @@ void Player::Draw()
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				glBindTexture(GL_TEXTURE_2D, left[frame]);
 				glBegin(GL_QUADS);
-				glColor3d(1.0, 1.0, 1.0);
+				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
 				glVertex2d(m_pos.x, m_pos.y);
 				glTexCoord2f(0.0f, 1.0f);
@@ -424,7 +423,7 @@ void Player::Draw()
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				glBindTexture(GL_TEXTURE_2D, left[frame]);
 				glBegin(GL_QUADS);
-				glColor3d(1.0, 1.0, 1.0);
+				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
 				glVertex2d(m_pos.x, m_pos.y);
 				glTexCoord2f(0.0f, 1.0f);
@@ -446,7 +445,7 @@ void Player::Draw()
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				glBindTexture(GL_TEXTURE_2D, up[frame]);
 				glBegin(GL_QUADS);
-				glColor3d(1.0, 1.0, 1.0);
+				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
 				glVertex2d(m_pos.x, m_pos.y);
 				glTexCoord2f(0.0f, 1.0f);
@@ -469,7 +468,7 @@ void Player::Draw()
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				glBindTexture(GL_TEXTURE_2D, down[frame]);
 				glBegin(GL_QUADS);
-				glColor3d(1.0, 1.0, 1.0);
+				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
 				glVertex2d(m_pos.x, m_pos.y);
 				glTexCoord2f(0.0f, 1.0f);
@@ -497,7 +496,7 @@ void Player::Draw()
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				glBindTexture(GL_TEXTURE_2D, idle[frame]);
 				glBegin(GL_QUADS);
-				glColor3d(1.0, 1.0, 1.0);
+				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
 				glVertex2d(m_pos.x, m_pos.y);
 				glTexCoord2f(0.0f, 1.0f);
@@ -519,7 +518,7 @@ void Player::Draw()
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				glBindTexture(GL_TEXTURE_2D, left[frame]);
 				glBegin(GL_QUADS);
-				glColor3d(1.0, 1.0, 1.0);
+				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
 				glVertex2d(m_pos.x, m_pos.y);
 				glTexCoord2f(0.0f, 1.0f);
@@ -542,7 +541,7 @@ void Player::Draw()
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				glBindTexture(GL_TEXTURE_2D, left[frame]);
 				glBegin(GL_QUADS);
-				glColor3d(1.0, 1.0, 1.0);
+				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
 				glVertex2d(m_pos.x, m_pos.y);
 				glTexCoord2f(0.0f, 1.0f);
@@ -564,7 +563,7 @@ void Player::Draw()
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				glBindTexture(GL_TEXTURE_2D, up[frame]);
 				glBegin(GL_QUADS);
-				glColor3d(1.0, 1.0, 1.0);
+				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
 				glVertex2d(m_pos.x, m_pos.y);
 				glTexCoord2f(0.0f, 1.0f);
@@ -587,7 +586,7 @@ void Player::Draw()
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				glBindTexture(GL_TEXTURE_2D, down[frame]);
 				glBegin(GL_QUADS);
-				glColor3d(1.0, 1.0, 1.0);
+				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
 				glVertex2d(m_pos.x, m_pos.y);
 				glTexCoord2f(0.0f, 1.0f);
@@ -619,6 +618,10 @@ Player::Player() : Entity()
 	//LoadGLTextures( /*"idle",*/"Art/player.png");
 }
 
+void Player::setOpacity(float light)
+{
+	opacity = light/4;
+}
 
 Player::~Player()
 {
