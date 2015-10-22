@@ -4,6 +4,8 @@
 
 Entity::Entity()
 {
+	//	Fire = false;
+	currentFrame = 0;
 }
 
 

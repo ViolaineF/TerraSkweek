@@ -7,6 +7,7 @@ class Entity
 {
 protected :
 	Position m_pos;
+	int currentFrame;
 	int m_life;
 	int m_def;
 	char m_dir;
@@ -14,6 +15,7 @@ protected :
 	AudioFile s_hurt;
 	AudioFile s_death;
 	Weapon m_weapon;
+	bool m_firing;
 
 public:
 	Entity();

@@ -5,7 +5,6 @@
 Enemy::Enemy() : Entity()
 {
 	afraid = false;
-	currentFrame = 0;
 }
 
 int Enemy::LoadGLTextures(string type,string name)
