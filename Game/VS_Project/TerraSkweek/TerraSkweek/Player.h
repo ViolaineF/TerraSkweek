@@ -13,8 +13,10 @@ private :
 	vector<GLuint>	up;
 	vector<GLuint>	down;
 	vector<GLuint>	fire;
+	float opacity;
 
 public:
+	void setOpacity(float);
 	void LoadAllTextures();
 	int LoadGLTextures(string, string);
 	void Draw();
