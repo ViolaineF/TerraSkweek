@@ -8,6 +8,10 @@ class Player : public Entity
 {
 private : 
 	vector<GLuint>	idle;
+	vector<GLuint>	left;
+	vector<GLuint>	up;
+	vector<GLuint>	down;
+	vector<GLuint>	fire;
 
 public:
 	void LoadAllTextures();
