@@ -22,6 +22,7 @@ public:
 	Entity(Position, int, int, char, Weapon, AudioFile, AudioFile);
 	void SwitchDir(char);
 	char GetDir();
+	int GetLife();
 	void SetLife(int);
 	void MoveLeft();
 	void MoveRight();

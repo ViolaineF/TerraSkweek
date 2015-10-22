@@ -120,6 +120,8 @@ int Player::LoadGLTextures(string type,string name)
 
 void Player::Draw()
 {
+	cout << m_life << endl;
+
 	const int vitesse = 4000;
 	currentFrame = (currentFrame + 1) % vitesse;
 	int frame = currentFrame * 4 / vitesse;

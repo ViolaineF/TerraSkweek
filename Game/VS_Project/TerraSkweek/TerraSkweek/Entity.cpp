@@ -19,6 +19,11 @@ char Entity::GetDir()
 	return m_dir;
 }
 
+int Entity::GetLife()
+{
+	return m_life;
+}
+
 void Entity::SetLife(int x)
 {
 	m_life = x;

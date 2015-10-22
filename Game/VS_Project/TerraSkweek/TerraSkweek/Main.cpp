@@ -323,7 +323,7 @@ void PlayerMovt(int x) {
 
 	//------------------------ MOVE ALL ENEMIES AND GET IF DAMAGE
 	slime_01.Move(player.GetPos());
-
+	//slime_01.Move(player);
 
 
 	//Update screen

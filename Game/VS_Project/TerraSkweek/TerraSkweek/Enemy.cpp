@@ -70,6 +70,8 @@ void Enemy::Move(Position playerPos)
 		float horizontalDiff = m_pos.x - playerPos.x;
 		float verticalDiff = m_pos.y - playerPos.y;
 
+		//float horizontalDiff = m_pos.x - player.GetPos().x;
+		//float verticalDiff = m_pos.y - player.GetPos().y;
 
 		if (horizontalDiff >= -margin && horizontalDiff <= margin) {
 			dir = 1;// Move vertically
@@ -105,9 +107,9 @@ void Enemy::Move(Position playerPos)
 
 	//---------------------------- CHECK COLLISION
 
-	if (m_pos == playerPos) { // If enemy is on the player
-		//player.Hurt(m_damage);
-	}
+	//if (m_pos == player.GetPos()) { // If enemy is on the player
+		//player.SetLife(player.GetLife() - m_damage);
+	//}
 
 
 }
