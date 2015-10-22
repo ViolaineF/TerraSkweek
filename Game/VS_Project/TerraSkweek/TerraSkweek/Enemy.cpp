@@ -104,13 +104,7 @@ void Enemy::Move(Position playerPos)
 		}
 
 	}
-
-	//---------------------------- CHECK COLLISION
-
-	//if (m_pos == player.GetPos()) { // If enemy is on the player
-		//player.SetLife(player.GetLife() - m_damage);
-	//}
-
+	
 
 }
 

@@ -30,7 +30,6 @@ private:
 	int map[10][10];
 	vector<GLuint>	textures;
 	vector<Enemy*> vecEnemies;
-	//vector<Player> vecPlayers;
 
 public:
 	int Map(int, int); // return map values

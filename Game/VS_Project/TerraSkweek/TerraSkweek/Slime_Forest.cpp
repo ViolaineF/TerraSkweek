@@ -6,9 +6,9 @@ Slime_Forest::Slime_Forest()
 {
 	int random_spawn = rand() % 2;
 	if (random_spawn == 0)
-		m_pos = { 9,9,0 };
+		m_pos = { 8,8,0 };
 	if (random_spawn == 1)
-		m_pos = { 9,9,0 };
+		m_pos = { 8,8,0 };
 
 	m_life = 1;
 	m_def = 1;
