@@ -1,9 +1,14 @@
 #include "Grid.h"
 
+//-------------- CALL EXTERN VALUES
+
+extern Player player;
 
 
-Grid::Grid()
+Grid::Grid(string biome)
 {
+	m_biome = biome;
+
 	m_score = 0;
 	m_rows = 10;
 	m_lignes = 10;
@@ -28,6 +33,30 @@ Grid::Grid()
 	}
 
 
+	//------------------------LOAD CORRESPONDING BIOME'S ENEMIES 
+	char biomeChar = biome[0];
+
+	if (biomeChar == '1') // Forest
+	{
+		vecEnemies.push_back(new Slime_Corruption());
+	}
+	else if (biomeChar == '2') // Corrupted
+	{
+		vecEnemies.push_back(new Slime_Forest());
+		vecEnemies.push_back(new Slime_Forest());
+		vecEnemies.push_back(new Slime_Forest());
+	}
+	else if(biomeChar == '3') // Crimson
+	{
+	}
+	else // Hallow
+	{
+
+	}
+	
+
+
+
 }
 
 
@@ -41,14 +70,25 @@ void Grid::SetMap(int x, int y, int a)
 	map[x][y] = a;
 }
 
-void Grid::LoadAllTextures(string biome)
+void Grid::LoadAllTextures()
 {
-	string directory = "Art/" + biome + "/";
+
+	string directory = "Art/" + m_biome + "/";
 
 	LoadGLTextures(directory + "ground.jpg");
 	LoadGLTextures(directory + "walls.jpg");
 	LoadGLTextures(directory + "converted.jpg");
 
+	//-------------------LOAD ENEMIES TEXTURES
+	
+	//for (int i = 0; i < vecEnemies.size(); i++) {
+	//	vecEnemies[i]->
+	//}
+
+	for (Enemy* c : vecEnemies)
+	{
+		c->LoadAllTextures();
+	}
 }
 
 int Grid::LoadGLTextures(string name)
@@ -221,6 +261,37 @@ void Grid::DisplayMap()
 			}
 		}
 	}// End drawing
+
+}
+
+
+void Grid::DrawEnemies()
+{
+	for (int i = 0; i < vecEnemies.size(); i++) {
+		vecEnemies[i]->Draw();
+	}
+
+	//for (Enemy* c : vecEnemies)
+	//{
+	//	c;
+	//}
+}
+
+void Grid::MoveAllEnemies()
+{
+
+	//---------- MOVING ENEMIES - 1 player
+	for (int i = 0; i < vecEnemies.size(); i++) {
+		vecEnemies[i]->Move(player.GetPos());
+	}
+
+	//---------- CHECK COLLISION PLAYER / ENEMIES - 1 player
+	for (int i = 0; i < vecEnemies.size(); i++) {
+		//if (vecEnemies[i].GetPos() == vecPlayers[0].GetPos()) { // Exact position
+		if (vecEnemies[i]->GetPos() == player.GetPos()) {
+			player.SetLife(player.GetLife() - vecEnemies[i]->GetDamage()); // Player's life is minus by the enemy's contact damage
+		}
+	}
 
 }
 

@@ -29,12 +29,12 @@ int LoadGLTextures(string name) // Load Bitmaps And Convert To Textures
 
 
 //----------------------CREATE PLAYER AND LEVELS
-Grid lvl01;
+Grid lvl01("2corrupted");
 //Grid lvl02;
 //Grid lvl03;
 //Grid lvl04;
 Player player;
-Slime_Forest slime_01;
+//Slime_Forest slime_01;
 
 
 int refreshRate = 30; // in miliseconds
@@ -53,7 +53,7 @@ void PlayerMovt(int x);
 
 
 void main() {
-
+	cout << "ok";
 
 	//------------------LOAD RANDOM
 	srand(time(NULL)); // Create a seed to start the random from
@@ -61,7 +61,7 @@ void main() {
 
 	//------------------ LOAD PLAYER' SAVE
 	lvl01.LoadGame("player1.txt");
-	
+		
 
 	//Gestion de la fenetre
 	glutInitWindowPosition(10, 10);
@@ -70,9 +70,9 @@ void main() {
 	glutCreateWindow("TerraSkweek");
 
 	//----------------------- LOAD EVERYBODY'S SPRITES
-	lvl01.LoadAllTextures("corrupted");
+	lvl01.LoadAllTextures();
 	player.LoadAllTextures();
-	slime_01.LoadAllTextures();
+	//slime_01.LoadAllTextures();
 
 
 	
@@ -171,6 +171,7 @@ void PrintImg(float i, float j, float width, float height, int textureIt) {
 //}
 
 //----------------------------CONTINUOUS PLAYER MOVEMENT + ENEMIES
+
 void PlayerMovt(int x) {
 
 	// Save previous position to revert changes if the new one is invalid
@@ -322,9 +323,7 @@ void PlayerMovt(int x) {
 
 
 	//------------------------ MOVE ALL ENEMIES AND GET IF DAMAGE
-	slime_01.Move(player.GetPos());
-	//slime_01.Move(player);
-
+	//slime_01.Move(player.GetPos());
 
 	//Update screen
 	glutPostRedisplay();
@@ -333,15 +332,20 @@ void PlayerMovt(int x) {
 	glutTimerFunc(refreshRate, PlayerMovt, 0);
 }
 
+
 //----------------------------DRAW LABYRINTHE - PLAYER - ENEMIES - UI
 void DrawLevel() {
-	
+
 	// Draw map
 	lvl01.DisplayMap();
-
-	 // Add player
+	
+	// Add player
 	player.Draw();
-	slime_01.Draw();
+
+	//Draw Enemies
+	lvl01.MoveAllEnemies();
+	lvl01.DrawEnemies();
+	//slime_01.Draw();
 
 	// Translate Map
 	glLoadIdentity();

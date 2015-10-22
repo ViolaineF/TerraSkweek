@@ -5,7 +5,7 @@
 
 class Enemy : public Entity
 {
-private :
+protected :
 	bool afraid;
 	int m_damage;
 	int currentFrame;
@@ -16,6 +16,8 @@ public:
 	int LoadGLTextures(string, string);
 	//void Move(Player);
 	void Move(Position);
+	int GetDamage();
+	virtual void LoadAllTextures();
 	void Draw();
 	~Enemy();
 };

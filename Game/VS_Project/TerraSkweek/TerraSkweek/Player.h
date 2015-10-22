@@ -7,6 +7,7 @@
 class Player : public Entity
 {
 private : 
+	//string m_name;
 	vector<GLuint>	idle;
 	vector<GLuint>	left;
 	vector<GLuint>	up;

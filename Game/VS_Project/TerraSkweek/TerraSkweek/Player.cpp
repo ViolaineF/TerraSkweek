@@ -608,6 +608,8 @@ void Player::Draw()
 
 Player::Player() : Entity()
 {
+	//m_name = name;
+
 	m_pos = { 4,4,0 };
 	m_life = 5;
 	m_def = 10;

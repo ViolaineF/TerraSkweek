@@ -20,6 +20,7 @@
 class Grid
 {
 private:
+	string m_biome;
 	int m_screen;
 	int m_selected;
 	int m_score;
@@ -28,14 +29,19 @@ private:
 	int m_lignes;
 	int map[10][10];
 	vector<GLuint>	textures;
+	vector<Enemy*> vecEnemies;
+	//vector<Player> vecPlayers;
 
 public:
 	int Map(int, int); // return map values
 	void SetMap(int, int, int);
-	void LoadAllTextures(string);
+	void LoadAllTextures();
 	int LoadGLTextures(string);
 	void PrintImg(int, int, int, int, int);
 	void DisplayMap();
+
+	void DrawEnemies();
+	void MoveAllEnemies();
 
 	void SaveGame(string);
 	void LoadGame(string);
@@ -46,7 +52,7 @@ public:
 	void Pause();
 	void EndGame();
 
-	Grid();
+	Grid(string);
 	~Grid();
 };
 

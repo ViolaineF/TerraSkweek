@@ -114,6 +114,15 @@ void Enemy::Move(Position playerPos)
 
 }
 
+int Enemy::GetDamage()
+{
+	return m_damage;
+}
+
+void Enemy::LoadAllTextures()
+{
+}
+
 
 void Enemy::Draw()
 {
