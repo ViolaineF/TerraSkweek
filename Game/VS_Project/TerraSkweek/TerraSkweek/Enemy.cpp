@@ -6,6 +6,8 @@ Enemy::Enemy() : Entity()
 {
 	afraid = false;
 	currentFrame = 0;
+	m_speed = 0.1;
+	m_damage = 1;
 }
 
 int Enemy::LoadGLTextures(string type,string name)
@@ -30,6 +32,84 @@ int Enemy::LoadGLTextures(string type,string name)
 	return true;       // Return Success
 
 	}
+}
+
+//void Enemy::Move(Player player)
+void Enemy::Move(Position playerPos)
+{
+	bool m_random = 0;
+	// RANDOM MOVE
+	if (m_random) {
+
+		int dir = rand() % 4; // Create a value between 0 and 3 (inclusive)
+
+		switch (dir)//Move accordingly
+		{
+		case 0:// UP 
+			MoveUp();
+			break;
+		case 1:// DOWN
+			MoveDown();
+			break;
+		case 2:// RIGHT
+			MoveRight();
+			break;
+		case 3:// LEFT
+			MoveLeft();
+			break;
+		}
+
+	}
+	// CHASE PLAYER
+	else {
+
+		int dir = 1;
+		float margin = 0.2;
+		// Difference accepted between the position of the enemy and the player, within wich it's supposed null
+
+		float horizontalDiff = m_pos.x - playerPos.x;
+		float verticalDiff = m_pos.y - playerPos.y;
+
+
+		if (horizontalDiff >= -margin && horizontalDiff <= margin) {
+			dir = 1;// Move vertically
+		}
+		else if (verticalDiff >= -margin && verticalDiff <= margin) {
+			dir = 0;// Move horizontally
+		}
+		else {
+			dir = rand() % 2; // Create a value between 0 and 1 (move horizontally or vertically)
+		}
+
+		switch (dir)
+		{
+		case 0:
+			if (horizontalDiff > 0) {// Enemy is at the right of PacMan 
+				MoveLeft();
+			}
+			else {
+				MoveRight();
+			}
+			break;
+		case 1:
+			if (verticalDiff < 0) {// Enemy is at the top of PacMan 
+				MoveDown();
+			}
+			else {
+				MoveUp();
+			}
+			break;
+		}
+
+	}
+
+	//---------------------------- CHECK COLLISION
+
+	if (m_pos == playerPos) { // If enemy is on the player
+		//player.Hurt(m_damage);
+	}
+
+
 }
 
 
