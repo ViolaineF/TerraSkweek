@@ -35,6 +35,8 @@ private:
 	int m_damage;
 	float m_speed;
 	int m_type;
+	bool m_impact;
+	bool m_destroy;
 	AudioFile s_fire;
 	AudioFile s_impact;
 	std::vector<GLuint>	textures;
@@ -42,9 +44,15 @@ private:
 public:
 	Weapon();
 	Weapon(string, char, Position);
+
 	void MoveFire();
 	void DrawSprite(Position);
 	void DrawFire();
+
+	Position GetPos();
+	int GetDamage();
+	char GetDir();
+
 	int LoadGLTextures(string);
 	~Weapon();
 };

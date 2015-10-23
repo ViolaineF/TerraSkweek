@@ -140,6 +140,26 @@ void Enemy::LoadAllTextures()
 
 void Enemy::Draw()
 {
+	//-------------------- CHECK LIFE FIRST
+	if (m_life <= 0) {
+
+		glPushMatrix();
+		glBegin(GL_QUADS);
+
+		glColor3d(1.0, 0.0, 0.0); glVertex2d(m_pos.x, m_pos.y);
+		glColor3d(1.0, 0.0, 0.0); glVertex2d(m_pos.x + 1, m_pos.y);
+		glColor3d(1.0, 0.0, 0.0); glVertex2d(m_pos.x + 1, m_pos.y + 1);
+		glColor3d(1.0, 0.0, 0.0); glVertex2d(m_pos.x, m_pos.y + 1);
+
+		glEnd();
+		glPopMatrix();
+		glutPostRedisplay();
+
+		m_death--;
+
+	}
+
+
 	//const int vitesse = 1200;
 	//currentFrame = (currentFrame + 1) % vitesse;
 	//int frame = currentFrame * 3 / vitesse;
@@ -165,7 +185,6 @@ void Enemy::Draw()
 	//	glPopMatrix();
 	//	glutPostRedisplay();
 	//}
-
 
 	if (afraid == false)
 	{

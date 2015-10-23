@@ -16,6 +16,7 @@ protected :
 	AudioFile s_death;
 	Weapon m_weapon;
 	bool m_firing;
+	int m_death;
 
 public:
 	Entity();
@@ -31,7 +32,7 @@ public:
 	void Teleport(Position);
 	Position GetPos();
 	void Attack();
-	void Death();
+	//void Death();
 
 
 	~Entity();

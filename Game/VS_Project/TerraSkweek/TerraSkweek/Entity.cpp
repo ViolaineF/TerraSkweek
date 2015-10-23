@@ -6,6 +6,7 @@ Entity::Entity()
 {
 	//	Fire = false;
 	currentFrame = 0;
+	m_death = 5;
 }
 
 
@@ -64,9 +65,10 @@ void Entity::Attack()
 	m_firing = true;
 }
 
-void Entity::Death()
-{
-}
+//void Entity::Death()
+//{
+//
+//}
 
 Entity::Entity(Position pos, int life , int def, char dir, Weapon weap, AudioFile hurt, AudioFile death)
 {

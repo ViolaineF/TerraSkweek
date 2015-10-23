@@ -71,6 +71,21 @@ void Weapon::DrawFire()
 	glutPostRedisplay();
 }
 
+Position Weapon::GetPos()
+{
+	return m_pos;
+}
+
+int Weapon::GetDamage()
+{
+	return m_damage;
+}
+
+char Weapon::GetDir()
+{
+	return m_dir;
+}
+
 int Weapon::LoadGLTextures(string name)
 {
 	//GLuint essai = SOIL_load_OGL_texture

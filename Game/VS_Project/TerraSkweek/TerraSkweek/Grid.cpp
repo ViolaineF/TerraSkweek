@@ -268,6 +268,14 @@ void Grid::DisplayMap()
 
 void Grid::DrawEnemies()
 {
+	//--------------- DELETE ALL DEAD ENEMIES
+	for (unsigned int i = 0; i < vecEnemies.size(); i++) {
+		if (vecEnemies[i]->GetLife() <= 0) { // If the Enemy has no more life
+			vecEnemies.erase(vecEnemies.begin() + i);
+		}
+	}
+
+	//--------------- DRAW THE REMAINING ONES
 	for (unsigned int i = 0; i < vecEnemies.size(); i++) {
 		vecEnemies[i]->Draw();
 	}
@@ -288,7 +296,7 @@ void Grid::MoveAllEnemies()
 		vecEnemies[i]->Move(player.GetPos(), light);
 
 
-		//---------- CHECK COLLISION PLAYER / ENEMIES - 1 player
+		//---------- CHECK COLLISION WITH PLAYER - 1 player
 		if (vecEnemies[i]->GetPos() == player.GetPos()) {
 			player.SetLife(player.GetLife() - vecEnemies[i]->GetDamage()); // Player's life is minus by the enemy's contact damage
 		}
@@ -338,12 +346,62 @@ void Grid::NewFire(string emitter, char dir, Position pos)
 void Grid::MoveAllFires()
 {
 	for (unsigned int i = 0; i < vecWeapons.size(); i++) {
-		vecWeapons[i]->MoveFire();
+		vecWeapons[i]->MoveFire(); // Move the fire sprite
+
+		//---------- CHECK COLLISION WITH ENEMIES
+		for (unsigned int j = 0; j < vecEnemies.size(); j++) {
+			if (vecWeapons[i]->GetPos() == vecEnemies[j]->GetPos()) {
+				vecEnemies[j]->SetLife(vecEnemies[j]->GetLife() - vecWeapons[i]->GetDamage()); // Minus Enemy's life by the fire's damage
+				vecWeapons.erase(vecWeapons.begin() + i);
+				return; // No need to check walls
+			}
+		}
+
+		//----------- CHECK WALL COLLISION
+		int pXleft = round(vecWeapons[i]->GetPos().x - 0.4);
+		int pXright = round(vecWeapons[i]->GetPos().x + 0.4);
+		int pYup = round(vecWeapons[i]->GetPos().y - 0.4);
+		int pYdown = round(vecWeapons[i]->GetPos().y + 0.4);
+
+		switch (vecWeapons[i]->GetDir())
+		{
+		case 'u':
+			if ((map[pXleft][pYup] == 1) || (map[pXright][pYup] == 1)) { // Check upward
+				vecWeapons.erase(vecWeapons.begin() + i);
+			}
+			break;
+
+		case 'd':
+			if ((map[pXleft][pYdown] == 1) || (map[pXright][pYdown] == 1)) { // Check downward
+				vecWeapons.erase(vecWeapons.begin() + i);
+			}
+			break;
+
+		case 'r':
+			if ((map[pXright][pYdown] == 1) || (map[pXright][pYup] == 1)) { // Check the right side
+				vecWeapons.erase(vecWeapons.begin() + i);
+			}
+			break;
+
+		case 'l':
+			if ((map[pXleft][pYup] == 1) || (map[pXleft][pYdown] == 1)) { // Check the left side
+				vecWeapons.erase(vecWeapons.begin() + i);
+			}
+			break;
+		}
+
+
 	}
 }
 
 void Grid::DrawAllFires()
 {
+	//----------------------- DELETE ALL DESTROYED FIRE SPRITE
+/*	for (unsigned int i = 0; i < vecWeapons.size(); i++) {
+		vecWeapons[i]->DrawFire();
+	}*/
+
+	//------------------------ DRAW THE REMAINING ONES
 	for (unsigned int i = 0; i < vecWeapons.size(); i++) {
 		vecWeapons[i]->DrawFire();
 	}
