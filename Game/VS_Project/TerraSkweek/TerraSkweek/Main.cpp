@@ -402,6 +402,7 @@ void invisibility(unsigned char key, int y, int z) {
 
 		player.setOpacity(light);// à placer dans une boucle infinie pour detecter toujours la valeur de "light"
 	}
+	cout << light << endl;
 }
 
 //-------------------------- PLAYER MOVEMENTS

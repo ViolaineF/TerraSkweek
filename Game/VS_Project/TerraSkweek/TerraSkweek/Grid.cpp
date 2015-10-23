@@ -3,6 +3,7 @@
 //-------------- CALL EXTERN VALUES
 
 extern Player player;
+extern float light;
 
 
 Grid::Grid(string biome)
@@ -267,7 +268,7 @@ void Grid::DisplayMap()
 
 void Grid::DrawEnemies()
 {
-	for (int i = 0; i < vecEnemies.size(); i++) {
+	for (unsigned int i = 0; i < vecEnemies.size(); i++) {
 		vecEnemies[i]->Draw();
 	}
 
@@ -279,12 +280,12 @@ void Grid::DrawEnemies()
 
 void Grid::MoveAllEnemies()
 {
-	for (int i = 0; i < vecEnemies.size(); i++) {
+	for (unsigned int i = 0; i < vecEnemies.size(); i++) {
 		// Save previous position if it collide with a wall
 		Position prevPos = { vecEnemies[i]->GetPos().x , vecEnemies[i]->GetPos().y , vecEnemies[i]->GetPos().z };
 
 		//--------------------- MOVING ENEMIES
-		vecEnemies[i]->Move(player.GetPos());
+		vecEnemies[i]->Move(player.GetPos(), light);
 
 
 		//---------- CHECK COLLISION PLAYER / ENEMIES - 1 player

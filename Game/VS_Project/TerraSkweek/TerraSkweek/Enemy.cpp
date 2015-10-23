@@ -8,6 +8,7 @@ Enemy::Enemy() : Entity()
 	currentFrame = 0;
 	m_speed = 0.1;
 	m_damage = 1;
+	m_randomIt = 4;
 }
 
 int Enemy::LoadGLTextures(string type,string name)
@@ -35,33 +36,56 @@ int Enemy::LoadGLTextures(string type,string name)
 }
 
 //void Enemy::Move(Player player)
-void Enemy::Move(Position playerPos)
+void Enemy::Move(Position playerPos, float light)
 {
-	bool m_random = 0;
+	int maxMoves = 20;
+
+	if (light < 1) { // If the player is invisible, move randomly
+		m_random = 1;
+	}
+	else {
+		m_random = 0;
+	}
+
+	cout << m_randomIt;
+
 	// RANDOM MOVE
 	if (m_random) {
-
-		int dir = rand() % 4; // Create a value between 0 and 3 (inclusive)
-
-		switch (dir)//Move accordingly
+		if (m_randomIt == maxMoves) {// If the enemy must choose a new direction
+			// Create a value between 0 and 3 (inclusive) & Use it to define m_dir (char)
+			switch (rand() % 4)
+			{
+			case 0 : m_dir = 'u';
+				break;
+			case 1: m_dir = 'd';
+				break;
+			case 2: m_dir = 'r';
+				break;
+			case 3: m_dir = 'l';
+				break;
+			}
+		}
+		switch (m_dir)//Move accordingly
 		{
-		case 0:// UP 
+		case 'u':// UP 
 			MoveUp();
 			break;
-		case 1:// DOWN
+		case 'd':// DOWN
 			MoveDown();
 			break;
-		case 2:// RIGHT
+		case 'r':// RIGHT
 			MoveRight();
 			break;
-		case 3:// LEFT
+		case 'l':// LEFT
 			MoveLeft();
 			break;
 		}
 
+		m_randomIt--;
+
 	}
 	// CHASE PLAYER
-	else {
+	else  {
 
 		int dir = 1;
 		float margin = 0.2;
@@ -103,6 +127,11 @@ void Enemy::Move(Position playerPos)
 			break;
 		}
 
+	}
+
+
+	if (m_randomIt == 0) {
+		m_randomIt = maxMoves; // Reset the iterator, the enemy will choose another direction on the next move
 	}
 	
 
