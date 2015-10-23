@@ -30,12 +30,8 @@ int LoadGLTextures(string name) // Load Bitmaps And Convert To Textures
 
 //----------------------CREATE PLAYER AND LEVELS
 Grid lvl01("2corrupted");
-//Grid lvl02;
-//Grid lvl03;
-//Grid lvl04;
-Player player;
-//Slime_Forest slime_01;
 
+Player player;
 
 
 
@@ -70,7 +66,7 @@ void main() {
 
 
 	//------------------ LOAD PLAYER' SAVE
-	lvl01.LoadGame("player1.txt");
+	//lvl01.LoadGame("player1.txt");
 		
 
 	//Gestion de la fenetre
@@ -90,7 +86,7 @@ void main() {
 	glutDisplayFunc(Display);
 	glutReshapeFunc(Redim);
 	glutSpecialFunc(KeyAction); // Switch player's direction
-	glutKeyboardFunc(invisibility);// Keyboard keys to control the HUD
+	glutKeyboardFunc(invisibility);// Keyboard keys to control the HUD // and Fire
 	//glutTimerFunc(700, EnemiesTimer, 0); // Direction for the enemiesd
 	glutTimerFunc(refreshRate, PlayerMovt, 0); // Continuous movement of the player
 	//glutIdleFunc(Idle);
@@ -332,9 +328,11 @@ void PlayerMovt(int x) {
 	}
 
 
-	//------------------------ MOVE ALL ENEMIES AND GET IF DAMAGE
-	//slime_01.Move(player.GetPos());
+	//------------------------ MOVE ALL ENEMIES 
 	lvl01.MoveAllEnemies();
+
+	//------------------------ MOVE ALL FIRE
+	lvl01.MoveAllFires();
 
 	//Update screen
 	glutPostRedisplay();
@@ -355,7 +353,9 @@ void DrawLevel() {
 
 	//Draw Enemies
 	lvl01.DrawEnemies();
-	//slime_01.Draw();
+
+	//Draw Fires
+	lvl01.DrawAllFires();
 
 	// Translate Map
 	glLoadIdentity();
@@ -402,7 +402,20 @@ void invisibility(unsigned char key, int y, int z) {
 
 		player.setOpacity(light);// à placer dans une boucle infinie pour detecter toujours la valeur de "light"
 	}
-	cout << light << endl;
+	//cout << light << endl;
+
+// -------------------------------- PLAYER FIRE
+	if (key == ' ') {
+
+		player.Attack();
+		lvl01.NewFire("player", player.GetDir(), player.GetPos());
+		cout << "NewFire" << endl;
+	}
+
+
+
+
+
 }
 
 //-------------------------- PLAYER MOVEMENTS

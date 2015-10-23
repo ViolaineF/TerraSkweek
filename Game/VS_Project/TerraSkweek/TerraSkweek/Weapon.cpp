@@ -18,12 +18,57 @@ Weapon::Weapon()
 {
 }
 
+Weapon::Weapon(string emitter, char dir, Position pos)
+{
+	m_dir = dir;
+	m_pos = pos;
+
+	if (emitter == "player") {
+		m_damage = 1;
+		m_speed = 0.1;
+		//LoadGlTextures("playerWeap");
+	}
+
+}
+
+void Weapon::MoveFire()
+{
+	switch (m_dir)// Move accordingly
+	{
+	case 'u':// UP
+		m_pos.y -= m_speed;
+		break;
+	case 'd':// DOWN
+		m_pos.y += m_speed;
+		break;
+	case 'r':// RIGHT
+		m_pos.x += m_speed;
+		break;
+	case 'l':// LEFT
+		m_pos.x -= m_speed;
+		break;
+	}
+
+}
+
 void Weapon::DrawSprite(Position)
 {
+
 }
 
 void Weapon::DrawFire()
 {
+	glPushMatrix();
+	glBegin(GL_QUADS);
+
+	glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x, m_pos.y);
+	glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x + 1, m_pos.y);
+	glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x + 1, m_pos.y + 1);
+	glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x, m_pos.y + 1);
+
+	glEnd();
+	glPopMatrix();
+	glutPostRedisplay();
 }
 
 int Weapon::LoadGLTextures(string name)

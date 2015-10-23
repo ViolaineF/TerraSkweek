@@ -61,6 +61,7 @@ Position Entity::GetPos()
 
 void Entity::Attack()
 {
+	m_firing = true;
 }
 
 void Entity::Death()

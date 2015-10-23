@@ -16,14 +16,14 @@ Grid::Grid(string biome)
 
 	int mapTemp[10][10] = {
 		1,1,1,1,1,1,1,1,1,1,
-		1,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,1,0,0,0,0,1,
 		1,0,0,0,1,0,0,0,0,1,
+		1,1,0,0,1,0,0,1,1,1,
+		1,0,1,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,1,
-		1,0,0,1,1,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,1,
+		1,0,0,1,1,1,1,0,0,1,
+		1,0,0,0,0,0,1,0,0,1,
+		1,0,0,0,0,0,1,0,0,1,
 		1,1,1,1,1,1,1,1,1,1,
 	};
 
@@ -303,7 +303,6 @@ void Grid::MoveAllEnemies()
 		{
 		case 'u':
 			if ((map[pXleft][pYup] == 1) || (map[pXright][pYup] == 1)) { // Check upward
-				cout << "OUT!" << endl;
 				vecEnemies[i]->Teleport(prevPos);
 			}
 			break;
@@ -329,6 +328,25 @@ void Grid::MoveAllEnemies()
 
 	}
 
+}
+
+void Grid::NewFire(string emitter, char dir, Position pos)
+{
+		vecWeapons.push_back(new Weapon(emitter, dir, pos));
+}
+
+void Grid::MoveAllFires()
+{
+	for (unsigned int i = 0; i < vecWeapons.size(); i++) {
+		vecWeapons[i]->MoveFire();
+	}
+}
+
+void Grid::DrawAllFires()
+{
+	for (unsigned int i = 0; i < vecWeapons.size(); i++) {
+		vecWeapons[i]->DrawFire();
+	}
 }
 
 void Grid::Redim(int x, int y)

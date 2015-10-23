@@ -46,14 +46,10 @@ void Enemy::Move(Position playerPos, float light)
 	else {
 		m_random = 0;
 	}
-
-	cout << m_randomIt;
-
 	// RANDOM MOVE
 	if (m_random) {
 		if (m_randomIt == maxMoves) {// If the enemy must choose a new direction
-			// Create a value between 0 and 3 (inclusive) & Use it to define m_dir (char)
-			switch (rand() % 4)
+			switch (rand() % 4)// Create a value between 0 and 3 (inclusive) & Use it to define m_dir (char)
 			{
 			case 0 : m_dir = 'u';
 				break;
@@ -65,7 +61,7 @@ void Enemy::Move(Position playerPos, float light)
 				break;
 			}
 		}
-		switch (m_dir)//Move accordingly
+		switch (m_dir)// Move accordingly
 		{
 		case 'u':// UP 
 			MoveUp();
@@ -81,33 +77,30 @@ void Enemy::Move(Position playerPos, float light)
 			break;
 		}
 
-		m_randomIt--;
+		m_randomIt--; // Decrease the numbers of moves left in this direction
 
 	}
 	// CHASE PLAYER
 	else  {
 
-		int dir = 1;
+		int axisDir = 1;
 		float margin = 0.2;
 		// Difference accepted between the position of the enemy and the player, within wich it's supposed null
 
 		float horizontalDiff = m_pos.x - playerPos.x;
 		float verticalDiff = m_pos.y - playerPos.y;
 
-		//float horizontalDiff = m_pos.x - player.GetPos().x;
-		//float verticalDiff = m_pos.y - player.GetPos().y;
-
 		if (horizontalDiff >= -margin && horizontalDiff <= margin) {
-			dir = 1;// Move vertically
+			axisDir = 1;// Move vertically
 		}
 		else if (verticalDiff >= -margin && verticalDiff <= margin) {
-			dir = 0;// Move horizontally
+			axisDir = 0;// Move horizontally
 		}
 		else {
-			dir = rand() % 2; // Create a value between 0 and 1 (move horizontally or vertically)
+			axisDir = rand() % 2; // Create a value between 0 and 1 (move horizontally or vertically)
 		}
 
-		switch (dir)
+		switch (axisDir)
 		{
 		case 0:
 			if (horizontalDiff > 0) {// Enemy is at the right of PacMan 
@@ -126,10 +119,8 @@ void Enemy::Move(Position playerPos, float light)
 			}
 			break;
 		}
-
 	}
-
-
+	
 	if (m_randomIt == 0) {
 		m_randomIt = maxMoves; // Reset the iterator, the enemy will choose another direction on the next move
 	}
@@ -149,28 +140,44 @@ void Enemy::LoadAllTextures()
 
 void Enemy::Draw()
 {
-	const int vitesse = 1200;
-	currentFrame = (currentFrame + 1) % vitesse;
-	int frame = currentFrame * 3 / vitesse;
+	//const int vitesse = 1200;
+	//currentFrame = (currentFrame + 1) % vitesse;
+	//int frame = currentFrame * 3 / vitesse;
+
+	//if (afraid == false)
+	//{
+	//	glPushMatrix();
+	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	//	glEnable(GL_TEXTURE_2D);
+	//	glEnable(GL_BLEND);
+	//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//	glBindTexture(GL_TEXTURE_2D, run[frame]);
+	//	glBegin(GL_QUADS);
+	//	glColor3d(1.0, 1.0, 1.0);
+	//	glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
+	//	glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 1, m_pos.y);
+	//	glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 1, m_pos.y + 1);
+	//	glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 1);
+	//	
+	//	glEnd();
+	//	glDisable(GL_TEXTURE_2D);
+	//	glPopMatrix();
+	//	glutPostRedisplay();
+	//}
+
 
 	if (afraid == false)
 	{
 		glPushMatrix();
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glEnable(GL_TEXTURE_2D);
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glBindTexture(GL_TEXTURE_2D, run[frame]);
 		glBegin(GL_QUADS);
-		glColor3d(1.0, 1.0, 1.0);
-		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
-		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 1, m_pos.y);
-		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 1, m_pos.y + 1);
-		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 1);
-		
+
+		glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x, m_pos.y);
+		glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x + 1, m_pos.y);
+		glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x + 1, m_pos.y + 1);
+		glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x, m_pos.y + 1);
+
 		glEnd();
-		glDisable(GL_TEXTURE_2D);
 		glPopMatrix();
 		glutPostRedisplay();
 	}

@@ -30,9 +30,10 @@ class Weapon
 {
 private:
 	Position m_posSprite;
-	//Texture m_sprites;
+	Position m_pos;
+	char m_dir;
 	int m_damage;
-	int m_speed;
+	float m_speed;
 	int m_type;
 	AudioFile s_fire;
 	AudioFile s_impact;
@@ -40,6 +41,8 @@ private:
 
 public:
 	Weapon();
+	Weapon(string, char, Position);
+	void MoveFire();
 	void DrawSprite(Position);
 	void DrawFire();
 	int LoadGLTextures(string);

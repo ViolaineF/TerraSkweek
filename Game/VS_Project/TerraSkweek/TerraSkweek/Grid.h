@@ -30,6 +30,7 @@ private:
 	int map[10][10];
 	vector<GLuint>	textures;
 	vector<Enemy*> vecEnemies;
+	vector<Weapon*> vecWeapons;
 
 public:
 	int Map(int, int); // return map values
@@ -41,6 +42,10 @@ public:
 
 	void DrawEnemies();
 	void MoveAllEnemies();
+
+	void NewFire(string, char, Position);
+	void MoveAllFires();
+	void DrawAllFires();
 
 	void SaveGame(string);
 	void LoadGame(string);
