@@ -72,7 +72,8 @@ void main() {
 	//Gestion de la fenetre
 	glutInitWindowPosition(10, 10);
 	glutInitWindowSize(500, 500);
-	glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE);
+//	glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE);		A remplacer pour l'affichage sur d'autres PC par GLUT_DOUBLE
+	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 	glutCreateWindow("TerraSkweek");
 
 	//----------------------- LOAD EVERYBODY'S SPRITES
@@ -370,7 +371,8 @@ void Display() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	DrawLevel(); // Affiche le niveau
-	glFlush();
+//	glFlush();		A remplacer par glutSwapBuffers.
+//	glutSwapBuffers();
 
 }
 
