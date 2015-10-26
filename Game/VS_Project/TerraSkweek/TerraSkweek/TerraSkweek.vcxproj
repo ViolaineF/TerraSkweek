@@ -167,9 +167,11 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Pixie_Hallow.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="River.cpp" />
     <ClCompile Include="Slime_Corruption.cpp" />
     <ClCompile Include="Slime_Crimson.cpp" />
     <ClCompile Include="Slime_Forest.cpp" />
+    <ClCompile Include="TNT.cpp" />
     <ClCompile Include="Unicorn_Hallow.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="Zombie_Forest.cpp" />
@@ -187,9 +189,11 @@
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Pixie_Hallow.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="River.h" />
     <ClInclude Include="Slime_Corruption.h" />
     <ClInclude Include="Slime_Crimson.h" />
     <ClInclude Include="Slime_Forest.h" />
+    <ClInclude Include="TNT.h" />
     <ClInclude Include="Unicorn_Hallow.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="Zombie_Forest.h" />

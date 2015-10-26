@@ -19,8 +19,8 @@ Grid::Grid(string biome)
 		1,0,0,0,1,0,0,0,0,1,
 		1,0,0,0,1,0,0,0,0,1,
 		1,1,0,0,1,0,0,1,1,1,
-		1,0,1,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,1,
+		1,1,1,0,0,0,0,0,0,1,
+		1,1,3,3,0,0,0,0,0,1,
 		1,0,0,1,1,1,1,0,0,1,
 		1,0,0,0,0,0,1,0,0,1,
 		1,0,0,0,0,0,1,0,0,1,
@@ -46,6 +46,7 @@ Grid::Grid(string biome)
 		vecEnemies.push_back(new Slime_Forest());
 		vecEnemies.push_back(new Slime_Forest());
 		vecEnemies.push_back(new Slime_Forest());
+		vecTNT.push_back(new TNT(3, 3, 1));
 	}
 	else if(biomeChar == '3') // Crimson
 	{
@@ -55,9 +56,6 @@ Grid::Grid(string biome)
 
 	}
 	
-
-
-
 }
 
 
@@ -68,7 +66,9 @@ Grid::~Grid()
 
 void Grid::SetMap(int x, int y, int a)
 {
-	map[x][y] = a;
+	if(map[x][y] == 0)
+		map[x][y] = a;
+
 }
 
 void Grid::LoadAllTextures()
@@ -78,7 +78,8 @@ void Grid::LoadAllTextures()
 
 	LoadGLTextures(directory + "ground.jpg");
 	LoadGLTextures(directory + "walls.jpg");
-	LoadGLTextures(directory + "converted.jpg");
+	LoadGLTextures("Art/converted.jpg");
+	LoadGLTextures(directory + "gap.jpg");
 
 	//-------------------LOAD ENEMIES TEXTURES
 	
@@ -89,6 +90,11 @@ void Grid::LoadAllTextures()
 	for (Enemy* c : vecEnemies)
 	{
 		c->LoadAllTextures();
+	}
+
+	for (TNT* d : vecTNT)
+	{
+		d->LoadAllTextures();
 	}
 }
 
@@ -258,6 +264,9 @@ void Grid::DisplayMap()
 				break;
 			case 2:// Converted Floor
 				PrintImg(i, j, 1, 1, 2);
+				break;			
+			case 3:// Floor + river
+				PrintImg(i, j, 1, 1, 3);
 				break;
 			}
 		}
@@ -265,6 +274,14 @@ void Grid::DisplayMap()
 
 }
 
+void Grid::DrawSpecialCases()
+{
+
+	//--------------- DRAW THE REMAINING ONES
+	for (unsigned int i = 0; i < vecTNT.size(); i++) {
+		vecTNT[i]->Draw();
+	}
+}
 
 void Grid::DrawEnemies()
 {
@@ -280,6 +297,7 @@ void Grid::DrawEnemies()
 		vecEnemies[i]->Draw();
 	}
 
+	
 	//for (Enemy* c : vecEnemies)
 	//{
 	//	c;

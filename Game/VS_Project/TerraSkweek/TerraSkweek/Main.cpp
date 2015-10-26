@@ -34,7 +34,6 @@ Grid lvl01("2corrupted");
 Player player;
 
 
-
 //----------------------A SUPPRIMER POUR UTILISER LE DETECTEUR DE LUMIERE
 
 int currentFrame;
@@ -353,6 +352,9 @@ void DrawLevel() {
 	player.Draw();
 
 	//Draw Enemies
+	lvl01.DrawSpecialCases();
+
+	//Draw Enemies
 	lvl01.DrawEnemies();
 
 	//Draw Fires
@@ -413,9 +415,6 @@ void invisibility(unsigned char key, int y, int z) {
 		lvl01.NewFire("player", player.GetDir(), player.GetPos());
 		cout << "NewFire" << endl;
 	}
-
-
-
 
 
 }

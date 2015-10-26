@@ -156,7 +156,6 @@ void Enemy::Draw()
 		glutPostRedisplay();
 
 		m_death--;
-
 	}
 
 

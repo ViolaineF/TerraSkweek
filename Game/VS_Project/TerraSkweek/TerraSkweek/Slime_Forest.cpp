@@ -1,7 +1,6 @@
 #include "Slime_Forest.h"
 
 
-
 Slime_Forest::Slime_Forest()
 {
 	int random_spawn = rand() % 2;

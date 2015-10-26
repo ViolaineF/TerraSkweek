@@ -28,7 +28,7 @@ bool operator!=(const Position &a, const Position &b);
 
 class Weapon
 {
-private:
+protected:
 	Position m_posSprite;
 	Position m_pos;
 	char m_dir;
@@ -39,7 +39,11 @@ private:
 	bool m_destroy;
 	AudioFile s_fire;
 	AudioFile s_impact;
-	std::vector<GLuint>	textures;
+
+	std::vector<GLuint>	gun;
+	std::vector<GLuint>	freeze;
+	std::vector<GLuint>	invincible;
+	std::vector<GLuint>	tnt;
 
 public:
 	Weapon();
@@ -53,7 +57,7 @@ public:
 	int GetDamage();
 	char GetDir();
 
-	int LoadGLTextures(string);
+	int LoadGLTextures(string, string);
 	~Weapon();
 };
 

@@ -2,6 +2,8 @@
 #define GRID_H
 
 #include "Player.h"
+#include "TNT.h"
+#include "River.h"
 #include "Corruptor_Corruption.h"
 #include "Crimera_Crimson.h"
 #include "DemonEye_Forest.h"
@@ -30,6 +32,7 @@ private:
 	int map[10][10];
 	vector<GLuint>	textures;
 	vector<Enemy*> vecEnemies;
+	vector<TNT*> vecTNT;
 	vector<Weapon*> vecWeapons;
 
 public:
@@ -40,6 +43,7 @@ public:
 	void PrintImg(int, int, int, int, int);
 	void DisplayMap();
 
+	void DrawSpecialCases();
 	void DrawEnemies();
 	void MoveAllEnemies();
 

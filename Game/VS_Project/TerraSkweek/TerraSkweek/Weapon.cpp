@@ -51,8 +51,12 @@ void Weapon::MoveFire()
 
 }
 
-void Weapon::DrawSprite(Position)
+void Weapon::DrawSprite(Position drop)
 {
+	m_posSprite.x = drop.x;
+	m_posSprite.y = drop.y;
+	m_posSprite.z = drop.z;
+
 
 }
 
@@ -86,25 +90,86 @@ char Weapon::GetDir()
 	return m_dir;
 }
 
-int Weapon::LoadGLTextures(string name)
+int Weapon::LoadGLTextures(string type, string nameIncomplete)
 {
-	//GLuint essai = SOIL_load_OGL_texture
-	//	(
-	//		name.c_str(),
-	//		SOIL_LOAD_AUTO,
-	//		SOIL_CREATE_NEW_ID,
-	//		SOIL_FLAG_INVERT_Y
-	//		);
+	
+	string name = "Art/" + nameIncomplete;
 
-	//textures.push_back(essai); // Add to the texture vector
+	if(type == "gun")
+	{ 
+	GLuint essai = SOIL_load_OGL_texture
+		(
+			name.c_str(),
+			SOIL_LOAD_AUTO,
+			SOIL_CREATE_NEW_ID,
+			SOIL_FLAG_INVERT_Y
+		);
 
-	//if (textures.at(textures.size() - 1) == 0)
-	//	return false;
-
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
+	gun.push_back(essai); // Add to the texture vector
+	if (gun.at(gun.size() - 1) == 0)
+		return false;
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	return true;       // Return Success
+
+//	LoadGLTextures("gun", "Art/Weapon_01.png");
+
+	}
+
+	if (type == "freeze")
+	{
+		GLuint essai = SOIL_load_OGL_texture
+			(
+				name.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
+
+		freeze.push_back(essai); // Add to the texture vector
+		if (freeze.at(freeze.size() - 1) == 0)
+			return false;
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		return true;       // Return Success
+	}
+
+	if (type == "invincible")
+	{
+		GLuint essai = SOIL_load_OGL_texture
+			(
+				name.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
+
+		invincible.push_back(essai); // Add to the texture vector
+		if (invincible.at(invincible.size() - 1) == 0)
+			return false;
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		return true;       // Return Success
+	}
+
+	if (type == "tnt")
+	{
+		GLuint essai = SOIL_load_OGL_texture
+			(
+				name.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
+
+		tnt.push_back(essai); // Add to the texture vector
+		if (tnt.at(tnt.size() - 1) == 0)
+			return false;
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		return true;       // Return Success
+	}
+
 }
 
 
