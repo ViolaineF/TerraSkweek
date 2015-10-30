@@ -44,7 +44,8 @@ protected:
 	std::vector<GLuint>	freeze;
 	std::vector<GLuint>	invincible;
 	std::vector<GLuint>	tnt;
-
+	std::vector<GLuint>	river;
+	
 public:
 	Weapon();
 	Weapon(string, char, Position);

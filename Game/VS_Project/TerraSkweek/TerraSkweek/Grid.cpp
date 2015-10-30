@@ -47,6 +47,8 @@ Grid::Grid(string biome)
 		vecEnemies.push_back(new Slime_Forest());
 		vecEnemies.push_back(new Slime_Forest());
 		vecTNT.push_back(new TNT(3, 3, 1));
+		vecRiver.push_back(new River(7, 7, 1, 'l', biomeChar));
+		vecRiver.push_back(new River(7, 6, 1, 'l', biomeChar));
 	}
 	else if(biomeChar == '3') // Crimson
 	{
@@ -95,6 +97,11 @@ void Grid::LoadAllTextures()
 	for (TNT* d : vecTNT)
 	{
 		d->LoadAllTextures();
+	}
+
+	for (River* e : vecRiver)
+	{
+		e->LoadAllTextures();
 	}
 }
 
@@ -277,10 +284,15 @@ void Grid::DisplayMap()
 void Grid::DrawSpecialCases()
 {
 
-	//--------------- DRAW THE REMAINING ONES
+	//--------------- DRAW ALL SPECIAL CASES
 	for (unsigned int i = 0; i < vecTNT.size(); i++) {
 		vecTNT[i]->Draw();
 	}
+
+	for (unsigned int i = 0; i < vecRiver.size(); i++) {
+		vecRiver[i]->Draw();
+	}
+	
 }
 
 void Grid::DrawEnemies()
@@ -306,6 +318,20 @@ void Grid::DrawEnemies()
 
 void Grid::MoveAllEnemies()
 {
+	for (unsigned int i = 0; i < vecTNT.size(); i++)
+	{
+		if (vecTNT[i]->GetPos() == player.GetPos()) {
+			vecTNT[i]->activation(); // TNT is activated
+		}
+	}
+
+	for (unsigned int i = 0; i < vecRiver.size(); i++)
+	{
+		if (vecRiver[i]->GetPos() == player.GetPos()) {
+			vecRiver[i]->activation(); // River force is activated
+		}
+	}
+
 	for (unsigned int i = 0; i < vecEnemies.size(); i++) {
 		// Save previous position if it collide with a wall
 		Position prevPos = { vecEnemies[i]->GetPos().x , vecEnemies[i]->GetPos().y , vecEnemies[i]->GetPos().z };

@@ -33,6 +33,7 @@ private:
 	vector<GLuint>	textures;
 	vector<Enemy*> vecEnemies;
 	vector<TNT*> vecTNT;
+	vector<River*> vecRiver;
 	vector<Weapon*> vecWeapons;
 
 public:

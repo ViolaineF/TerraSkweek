@@ -45,7 +45,7 @@ int currentFrame;
 int refreshRate = 30; // in miliseconds
 float light;
 
-void PrintImg(float, float, float, float, int);
+//void PrintImg(float, float, float, float, int);
 //void PrintNbr(int, int, int);
 void Display();
 void Redim(int x, int y);
@@ -99,7 +99,7 @@ void main() {
 }
 
 
-
+/*
 
 //------------------ PRINT IMAGES TO SCREEN
 void PrintImg(float i, float j, float width, float height, int textureIt) {
@@ -118,6 +118,11 @@ void PrintImg(float i, float j, float width, float height, int textureIt) {
 	glDisable(GL_TEXTURE_2D);
 
 }
+
+*/
+
+
+
 
 //------------------ PRINT INT INTO IMGs
 //void PrintNbr(int x, int y, int val) {
