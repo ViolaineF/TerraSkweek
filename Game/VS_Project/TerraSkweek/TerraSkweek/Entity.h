@@ -24,6 +24,7 @@ public:
 	void SwitchDir(char);
 	char GetDir();
 	int GetLife();
+	int GetWeapon();
 	void SetLife(int);
 	void MoveLeft();
 	void MoveRight();

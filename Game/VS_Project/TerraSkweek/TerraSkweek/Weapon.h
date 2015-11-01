@@ -5,7 +5,6 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
-#include <iostream>
 #include <cmath>
 #include <time.h>
 #include <stdio.h> 
@@ -57,6 +56,7 @@ public:
 	Position GetPos();
 	int GetDamage();
 	char GetDir();
+	int GetType();
 
 	int LoadGLTextures(string, string);
 	~Weapon();

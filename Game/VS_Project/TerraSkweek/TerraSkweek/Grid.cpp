@@ -103,6 +103,7 @@ void Grid::LoadAllTextures()
 	{
 		e->LoadAllTextures();
 	}
+	hud.LoadAllTextures();
 }
 
 int Grid::LoadGLTextures(string name)
@@ -285,6 +286,8 @@ void Grid::DrawSpecialCases()
 {
 
 	//--------------- DRAW ALL SPECIAL CASES
+	hud.displayScore(player.GetLife(), player.GetWeapon());
+
 	for (unsigned int i = 0; i < vecTNT.size(); i++) {
 		vecTNT[i]->Draw();
 	}
@@ -315,6 +318,7 @@ void Grid::DrawEnemies()
 	//	c;
 	//}
 }
+
 
 void Grid::MoveAllEnemies()
 {

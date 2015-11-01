@@ -562,8 +562,5 @@ void KeyAction(int key, int x, int y) {
 //		player.Hurt(1);
 //		player.Teleport(m_start);
 //	}
-//
-//
-//
 //}
 //

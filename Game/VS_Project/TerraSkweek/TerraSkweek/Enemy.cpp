@@ -201,7 +201,6 @@ void Enemy::Draw()
 	}
 }
 
-
 Enemy::~Enemy()
 {
 }

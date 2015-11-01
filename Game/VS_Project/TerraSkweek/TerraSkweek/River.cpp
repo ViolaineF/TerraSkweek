@@ -41,8 +41,6 @@ void River::LoadAllTextures()
 		LoadGLTextures("river", "2corrupted/riverSplash_03.png");
 		break;
 	}
-
-
 }
 
 

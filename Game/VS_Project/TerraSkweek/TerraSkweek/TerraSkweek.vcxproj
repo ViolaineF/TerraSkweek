@@ -164,6 +164,7 @@
     <ClCompile Include="FaceMonster_Crimson.cpp" />
     <ClCompile Include="Gastopod_Hallow.cpp" />
     <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Pixie_Hallow.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="FaceMonster_Crimson.h" />
     <ClInclude Include="Gastopod_Hallow.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="Pixie_Hallow.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="River.h" />

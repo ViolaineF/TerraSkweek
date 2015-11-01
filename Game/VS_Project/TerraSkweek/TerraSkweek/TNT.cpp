@@ -69,8 +69,6 @@ void TNT::LoadAllTextures()
 }
 
 
-
-
 void TNT::Draw()
 {
 

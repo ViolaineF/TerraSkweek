@@ -25,6 +25,11 @@ int Entity::GetLife()
 	return m_life;
 }
 
+int Entity::GetWeapon()
+{
+	return m_weapon.GetType();
+}
+
 void Entity::SetLife(int x)
 {
 	m_life = x;

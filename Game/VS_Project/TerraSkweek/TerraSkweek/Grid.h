@@ -1,6 +1,7 @@
 #ifndef GRID_H
 #define GRID_H
 
+#include "HUD.h"
 #include "Player.h"
 #include "TNT.h"
 #include "River.h"
@@ -35,6 +36,7 @@ private:
 	vector<TNT*> vecTNT;
 	vector<River*> vecRiver;
 	vector<Weapon*> vecWeapons;
+	HUD hud;
 
 public:
 	int Map(int, int); // return map values

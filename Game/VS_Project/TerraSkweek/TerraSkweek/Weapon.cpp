@@ -28,7 +28,6 @@ Weapon::Weapon(string emitter, char dir, Position pos)
 		m_speed = 0.1;
 		//LoadGlTextures("playerWeap");
 	}
-
 }
 
 void Weapon::MoveFire()
@@ -48,7 +47,6 @@ void Weapon::MoveFire()
 		m_pos.x -= m_speed;
 		break;
 	}
-
 }
 
 void Weapon::DrawSprite(Position drop)
@@ -56,8 +54,6 @@ void Weapon::DrawSprite(Position drop)
 	m_posSprite.x = drop.x;
 	m_posSprite.y = drop.y;
 	m_posSprite.z = drop.z;
-
-
 }
 
 void Weapon::DrawFire()
@@ -189,6 +185,10 @@ int Weapon::LoadGLTextures(string type, string nameIncomplete)
 
 }
 
+int Weapon::GetType()
+{
+	return m_type;
+}
 
 Weapon::~Weapon()
 {
