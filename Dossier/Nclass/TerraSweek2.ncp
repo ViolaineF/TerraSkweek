@@ -1,0 +1,237 @@
+<Project>
+  <Name>TerraSweek2</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>diag</Name>
+    <Language>CSharp</Language>
+    <Entities>
+      <Entity type="Comment">
+        <Text>#include "SFML\Audio.hpp"</Text>
+        <Location left="698" top="372" />
+        <Size width="160" height="75" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>#include "GL\glut.h"
+#include "SOIL\SOIL.h"
+#include &lt;string&gt;
+
+using namespace std;</Text>
+        <Location left="698" top="629" />
+        <Size width="160" height="115" />
+      </Entity>
+      <Entity type="Class">
+        <Name>Animation</Name>
+        <Access>Public</Access>
+        <Location left="536" top="608" />
+        <Size width="162" height="187" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">bool animated</Member>
+        <Member type="Field">vector&lt;GLuint&gt; textures</Member>
+        <Member type="Constructor">public Animation()</Member>
+        <Member type="Method">int LoadGLTextures()</Member>
+        <Member type="Method">void Draw(bool animated)</Member>
+        <Member type="Method">void LoadAllTextures(string directory)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Weapon</Name>
+        <Access>Public</Access>
+        <Location left="324" top="473" />
+        <Size width="162" height="230" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">position m_posSprite</Member>
+        <Member type="Field">Textures m_sprites</Member>
+        <Member type="Field">int m_damage</Member>
+        <Member type="Field">int m_vitesse</Member>
+        <Member type="Field">int m_type</Member>
+        <Member type="Field">AudioFile fire</Member>
+        <Member type="Field">AudioFile impactFire</Member>
+        <Member type="Method">void DrawSprite(position posEnemy)</Member>
+        <Member type="Method">void DrawFire()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>AudioFile</Name>
+        <Access>Public</Access>
+        <Location left="536" top="359" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">bool m_sound</Member>
+        <Member type="Field">SoundBuffer buffer</Member>
+        <Member type="Field">Sound sound</Member>
+        <Member type="Field">Music music</Member>
+        <Member type="Method">void Play()</Member>
+        <Member type="Method">void Stop()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>MAIN</Name>
+        <Access>Public</Access>
+        <Location left="174" top="1585" />
+        <Size width="471" height="279" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Grid</Name>
+        <Access>Public</Access>
+        <Location left="324" top="1220" />
+        <Size width="162" height="298" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">int m_screen</Member>
+        <Member type="Field">int m_selected</Member>
+        <Member type="Field">int m_score</Member>
+        <Member type="Field">int m_timer</Member>
+        <Member type="Method">void SaveGame()</Member>
+        <Member type="Method">void LoadGame()</Member>
+        <Member type="Method">void NewGame()</Member>
+        <Member type="Method">void DisplayMap()</Member>
+        <Member type="Method">void HUD()</Member>
+        <Member type="Method">void Slide(int dir)</Member>
+        <Member type="Method">void Pause()</Member>
+        <Member type="Method">void EndGame()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Structure">
+        <Name>position</Name>
+        <Access>Public</Access>
+        <Location left="75" top="172" />
+        <Size width="162" height="187" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">int x</Member>
+        <Member type="Field">int y</Member>
+        <Member type="Field">bool z</Member>
+        <Member type="Method">public static bool operator==(position a, position b)</Member>
+        <Member type="Method">public static bool operator !=(position a, position b)</Member>
+      </Entity>
+      <Entity type="Class">
+        <Name>Enemy</Name>
+        <Access>Public</Access>
+        <Location left="89" top="1002" />
+        <Size width="162" height="125" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Player</Name>
+        <Access>Public</Access>
+        <Location left="554" top="989" />
+        <Size width="162" height="136" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">void ChangeWeapon(weapon a)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Entity</Name>
+        <Access>Public</Access>
+        <Location left="324" top="751" />
+        <Size width="162" height="400" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">position m_pos</Member>
+        <Member type="Field">int m_life</Member>
+        <Member type="Field">int m_defense</Member>
+        <Member type="Field">int m_dir</Member>
+        <Member type="Field">AudioFile hurt</Member>
+        <Member type="Field">AudioFile death</Member>
+        <Member type="Field">weapon m_weapon</Member>
+        <Member type="Field">Textures m_sprites</Member>
+        <Member type="Method">void Draw()</Member>
+        <Member type="Method">void SetLife(int life)</Member>
+        <Member type="Method">void MoveRight()</Member>
+        <Member type="Method">void MoveLeft()</Member>
+        <Member type="Method">void MoveUp()</Member>
+        <Member type="Method">void MoveDown()</Member>
+        <Member type="Method">void Teleport(position a)</Member>
+        <Member type="Method">position GetPos()</Member>
+        <Member type="Method">void Attack()</Member>
+        <Member type="Method">void Death()</Member>
+        <Member type="Constructor">public Entity(position pos, int life, int def, int dir, weapon weap, AudioFile hurt, AudioFile death)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Object</Name>
+        <Access>Public</Access>
+        <Location left="306" top="149" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">Position m_pos</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Association" first="2" second="3">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="4" second="3">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>511</X>
+          <Y>514</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>511</X>
+          <Y>581</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="3" second="10">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>405</X>
+          <Y>728</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>405</X>
+          <Y>726</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="6" second="5">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="10" second="9">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>529</X>
+          <Y>1064</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="10" second="8">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="9" second="6">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Association" first="8" second="6">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Dependency" first="7" second="11">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+</Project>

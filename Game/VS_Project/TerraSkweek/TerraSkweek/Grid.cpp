@@ -20,7 +20,7 @@ Grid::Grid(string biome)
 		1,0,0,0,1,0,0,0,0,1,
 		1,1,0,0,1,0,0,1,1,1,
 		1,1,1,0,0,0,0,0,0,1,
-		1,1,3,3,0,0,0,0,0,1,
+		1,1,0,0,0,0,0,0,0,1,
 		1,0,0,1,1,1,1,0,0,1,
 		1,0,0,0,0,0,1,0,0,1,
 		1,0,0,0,0,0,1,0,0,1,
@@ -49,6 +49,7 @@ Grid::Grid(string biome)
 		vecTNT.push_back(new TNT(3, 3, 1));
 		vecArrow.push_back(new Arrow(7, 7, 1, 'l'));
 		vecArrow.push_back(new Arrow(7, 6, 1, 'l'));
+		vecCaseAnimated.push_back(new CaseAnimation(2,5, "cracking"));
 	}
 	else if(biomeChar == '3') // Crimson
 	{
@@ -87,7 +88,6 @@ void Grid::LoadAllTextures()
 	LoadGLTextures( directory + "ground.jpg"); // 0
 	LoadGLTextures( directory + "walls.jpg"); // 1
 	LoadGLTextures( "Art/converted.jpg"); // 2
-	LoadGLTextures( directory + "gap.jpg"); // 3
 
 
 	//-------------------LOAD ENEMIES TEXTURES
@@ -277,23 +277,24 @@ void Grid::DisplayMap()
 			case 1:// Wall
 				PrintImg(i, j, 1, 1, 1);
 				break;
+
 			case 2:// Converted Floor
 				PrintImg(i, j, 1, 1, 2);
-				break;			
-			case 3:// Floor + arrow
-				PrintImg(i, j, 1, 1, 3);
+				break;	
+
+			case 3: // something
 				break;
+
 			case 4 : // Conversion animation
 				PrintImg(i, j, 1, 1, 0); // Corrupted floor
 
 				// add conversion animation over it
 				for (int k = 0; k < vecCaseAnimated.size(); k++) {
-					if (vecCaseAnimated[k]->Draw()) {
+					if (vecCaseAnimated[k]->Draw(1)) {
 						SetMap(i, j, 2); // If the animation is complete, convert floor
 						vecCaseAnimated.erase(vecCaseAnimated.begin() + k);// Destroy it
 					}
 				}
-
 				break;
 			}
 		}
@@ -313,6 +314,10 @@ void Grid::DrawSpecialCases()
 
 	for (unsigned int i = 0; i < vecArrow.size(); i++) {
 		vecArrow[i]->Draw();
+	}
+
+	for (unsigned int i = 0; i < vecCaseAnimated.size(); i++) {
+		vecCaseAnimated[i]->Draw(0);
 	}
 
 	//---------- CHECK COLLISION WITH PLAYER - 1 player
@@ -335,6 +340,13 @@ void Grid::DrawSpecialCases()
 				player.MoveDown();
 		}
 	}
+
+	for (unsigned int i = 0; i < vecCaseAnimated.size(); i++) {
+		if (vecCaseAnimated[i]->GetPos() == player.GetPos()) {
+			vecCaseAnimated[i]->Draw(1);
+		}
+	}
+
 	
 }
 
