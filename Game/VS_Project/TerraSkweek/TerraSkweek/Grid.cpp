@@ -185,17 +185,17 @@ void Grid::LoadGame(string save)
 			//--------------- EXTRACT ROWS AND LIGNES
 			if (m_rows == 0) { // if m_rows has not been extracted yet
 				m_rows = extractInt;
-				cout << m_rows << endl;
+				//cout << m_rows << endl;
 			}
 			else if (m_lignes == 0) { // if m_lignes has not been extracted yet
 				m_lignes = extractInt;
-				cout << m_lignes << endl;
+				//cout << m_lignes << endl;
 			}
 			else if (i < m_rows) {
 				//--------------- LOOP FOR THE MAP
 				if (j < m_lignes){
 						map[i][j] = extractInt;
-						cout << map[i][j];
+						//cout << map[i][j];
 						j++;
 				}
 				if (j == m_lignes) {
@@ -206,7 +206,7 @@ void Grid::LoadGame(string save)
 			else
 			{ //-------------------- GET SCORE
 				m_score = extractInt;
-				cout << endl << m_score << endl;
+				//cout << endl << m_score << endl;
 			}
 
 			//------------------EXTRACT NEW DATA

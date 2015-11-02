@@ -22,11 +22,14 @@ Weapon::Weapon(string emitter, char dir, Position pos)
 {
 	m_dir = dir;
 	m_pos = pos;
+	currentFrame = 0;
+	m_impact = 0;
 
 	if (emitter == "player") {
 		m_damage = 1;
 		m_speed = 0.1;
-		//LoadGlTextures("playerWeap");
+		m_type = 1;
+		LoadAllTextures();
 	}
 }
 
@@ -58,34 +61,56 @@ void Weapon::DrawSprite(Position drop)
 
 void Weapon::DrawFire()
 {
+	const int vitesse = 1200;
+	currentFrame = (currentFrame + 1) % vitesse;
+	int frame = currentFrame * (fireAnimation.size()) / vitesse;
+
 	if (m_impact) {
 
 		glPushMatrix();
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glBindTexture(GL_TEXTURE_2D, fireAnimation[frame]);
 		glBegin(GL_QUADS);
-
-		glColor3d(1.0, 0.0, 0.0); glVertex2d(m_pos.x, m_pos.y);
-		glColor3d(1.0, 0.0, 0.0); glVertex2d(m_pos.x + 1, m_pos.y);
-		glColor3d(1.0, 0.0, 0.0); glVertex2d(m_pos.x + 1, m_pos.y + 1);
-		glColor3d(1.0, 0.0, 0.0); glVertex2d(m_pos.x, m_pos.y + 1);
+		glColor3d(1.0, 1.0, 1.0);
+		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
+		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 1, m_pos.y);
+		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 1, m_pos.y + 1);
+		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 1);
 
 		glEnd();
+		glDisable(GL_TEXTURE_2D);
 		glPopMatrix();
 		glutPostRedisplay();
 
-		m_destroy = true;
+		if (frame == (fireAnimation.size() - 1)) {
+			m_destroy = true;
+		}
 	}
 	else {
-		glPushMatrix();
-		glBegin(GL_QUADS);
 
-		glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x, m_pos.y);
-		glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x + 1, m_pos.y);
-		glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x + 1, m_pos.y + 1);
-		glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x, m_pos.y + 1);
+		glPushMatrix();
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glBindTexture(GL_TEXTURE_2D, fireAnimation[0]);
+		glBegin(GL_QUADS);
+		glColor3d(1.0, 1.0, 1.0);
+		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
+		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 1, m_pos.y);
+		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 1, m_pos.y + 1);
+		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 1);
 
 		glEnd();
+		glDisable(GL_TEXTURE_2D);
 		glPopMatrix();
 		glutPostRedisplay();
+
 	}
 
 
@@ -106,9 +131,44 @@ char Weapon::GetDir()
 	return m_dir;
 }
 
+void Weapon::LoadAllTextures()
+{
+	if (m_type == 1) {
+		LoadGLTextures("fireAnimation", "Bullet_01.png");
+		LoadGLTextures("fireAnimation", "Bullet_01_impact_1.png");
+		LoadGLTextures("fireAnimation", "Bullet_01_impact_2.png");
+		LoadGLTextures("fireAnimation", "Bullet_01_impact_3.png");
+		LoadGLTextures("fireAnimation", "Bullet_01_impact_4.png");
+
+	}
+	
+}
+
 int Weapon::LoadGLTextures(string type, string nameIncomplete)
 {	
 	string name = "Art/" + nameIncomplete;
+
+	if (type == "fireAnimation")
+	{
+		GLuint essai = SOIL_load_OGL_texture
+			(
+				name.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
+
+		fireAnimation.push_back(essai); // Add to the texture vector
+		if (fireAnimation.at(fireAnimation.size() - 1) == 0)
+			return false;
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		return true;       // Return Success
+
+						   //	LoadGLTextures("gun", "Art/Weapon_01.png");
+
+	}
+
 
 	if(type == "gun")
 	{ 
@@ -207,6 +267,12 @@ int Weapon::LoadGLTextures(string type, string nameIncomplete)
 int Weapon::GetType()
 {
 	return m_type;
+}
+
+
+void Weapon::SetType(int type)
+{
+	m_type = type;
 }
 
 void Weapon::SetImpact(bool a)

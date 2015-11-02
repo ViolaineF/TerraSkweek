@@ -36,14 +36,17 @@ protected:
 	int m_type;
 	bool m_impact;
 	bool m_destroy;
+	int currentFrame;
 	AudioFile s_fire;
 	AudioFile s_impact;
 
-	std::vector<GLuint>	gun;
-	std::vector<GLuint>	freeze;
-	std::vector<GLuint>	invincible;
-	std::vector<GLuint>	tnt;
-	std::vector<GLuint>	arrow;
+	vector<GLuint>	fireAnimation;
+
+	vector<GLuint>	gun;
+	vector<GLuint>	freeze;
+	vector<GLuint>	invincible;
+	vector<GLuint>	tnt;
+	vector<GLuint>	arrow;
 	
 public:
 	Weapon();
@@ -57,10 +60,12 @@ public:
 	int GetDamage();
 	char GetDir();
 	int GetType();
+	void SetType(int);
 
 	void SetImpact(bool);
 	bool IsDestroyed();
 
+	void LoadAllTextures();
 	int LoadGLTextures(string, string);
 	~Weapon();
 };
