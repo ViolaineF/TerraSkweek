@@ -302,8 +302,8 @@ void Grid::DrawEnemies()
 {
 	//--------------- DELETE ALL DEAD ENEMIES
 	for (unsigned int i = 0; i < vecEnemies.size(); i++) {
-		if (vecEnemies[i]->GetLife() <= 0) { // If the Enemy has no more life
-			vecEnemies.erase(vecEnemies.begin() + i);
+		if (vecEnemies[i]->IsDead()) { // If the Enemy has played its death animation entirely
+			vecEnemies.erase(vecEnemies.begin() + i);// Destroy it
 		}
 	}
 
@@ -337,7 +337,7 @@ void Grid::MoveAllEnemies()
 	}
 
 	for (unsigned int i = 0; i < vecEnemies.size(); i++) {
-		// Save previous position if it collide with a wall
+		// Save previous position if it collides with a wall
 		Position prevPos = { vecEnemies[i]->GetPos().x , vecEnemies[i]->GetPos().y , vecEnemies[i]->GetPos().z };
 
 		//--------------------- MOVING ENEMIES

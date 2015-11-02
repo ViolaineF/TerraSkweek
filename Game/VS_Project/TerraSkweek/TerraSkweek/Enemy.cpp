@@ -9,10 +9,14 @@ Enemy::Enemy() : Entity()
 	m_speed = 0.1;
 	m_damage = 1;
 	m_randomIt = 4;
+	run.resize(0);
+	death.resize(0);
 }
 
-int Enemy::LoadGLTextures(string type,string name)
+int Enemy::LoadGLTextures(string type,string directory)
 {
+	string name = "Art/" + directory;
+
 	if (type == "run") {
 	GLuint essai = SOIL_load_OGL_texture
 		(
@@ -33,6 +37,27 @@ int Enemy::LoadGLTextures(string type,string name)
 	return true;       // Return Success
 
 	}
+
+	if (type == "death") {
+		GLuint essai = SOIL_load_OGL_texture
+			(
+				name.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
+
+		death.push_back(essai); // Add to the texture vector
+
+		if (death.at(death.size() - 1) == 0)
+			return false;
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		return true;       // Return Success
+	}
+
 }
 
 //void Enemy::Move(Player player)
@@ -140,52 +165,65 @@ void Enemy::LoadAllTextures()
 
 void Enemy::Draw()
 {
+	const int vitesse = 1200;
+	currentFrame = (currentFrame + 1) % vitesse;
+	//int frame = currentFrame * 3 / vitesse;
+
 	//-------------------- CHECK LIFE FIRST
 	if (m_life <= 0) {
 
+		int frame = currentFrame * (death.size()) / vitesse;
+
+			glPushMatrix();
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glEnable(GL_TEXTURE_2D);
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glBindTexture(GL_TEXTURE_2D, death[frame]);
+			glBegin(GL_QUADS);
+			glColor3d(1.0, 1.0, 1.0);
+			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
+			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 1, m_pos.y);
+			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 1, m_pos.y + 1);
+			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 1);
+			
+			glEnd();
+			glDisable(GL_TEXTURE_2D);
+			glPopMatrix();
+			glutPostRedisplay();
+
+			if (frame == (death.size()-1)) { // If the death animation has entirely played itself, then dead is true;
+				m_death = true;
+				cout << "dead" << endl;
+			}
+
+	}
+	else if (afraid == false)
+	{
+		int frame = currentFrame * (run.size()) / vitesse;
+
 		glPushMatrix();
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glBindTexture(GL_TEXTURE_2D, run[frame]);
 		glBegin(GL_QUADS);
-
-		glColor3d(1.0, 0.0, 0.0); glVertex2d(m_pos.x, m_pos.y);
-		glColor3d(1.0, 0.0, 0.0); glVertex2d(m_pos.x + 1, m_pos.y);
-		glColor3d(1.0, 0.0, 0.0); glVertex2d(m_pos.x + 1, m_pos.y + 1);
-		glColor3d(1.0, 0.0, 0.0); glVertex2d(m_pos.x, m_pos.y + 1);
-
+		glColor3d(1.0, 1.0, 1.0);
+		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
+		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 1, m_pos.y);
+		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 1, m_pos.y + 1);
+		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 1);
+		
 		glEnd();
+		glDisable(GL_TEXTURE_2D);
 		glPopMatrix();
 		glutPostRedisplay();
-
-		m_death--;
 	}
 
-
-	//const int vitesse = 1200;
-	//currentFrame = (currentFrame + 1) % vitesse;
-	//int frame = currentFrame * 3 / vitesse;
-
-	//if (afraid == false)
-	//{
-	//	glPushMatrix();
-	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	//	glEnable(GL_TEXTURE_2D);
-	//	glEnable(GL_BLEND);
-	//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//	glBindTexture(GL_TEXTURE_2D, run[frame]);
-	//	glBegin(GL_QUADS);
-	//	glColor3d(1.0, 1.0, 1.0);
-	//	glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
-	//	glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 1, m_pos.y);
-	//	glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 1, m_pos.y + 1);
-	//	glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 1);
-	//	
-	//	glEnd();
-	//	glDisable(GL_TEXTURE_2D);
-	//	glPopMatrix();
-	//	glutPostRedisplay();
-	//}
-
-	if (afraid == false)
+/*	if (afraid == false)
 	{
 		glPushMatrix();
 		glBegin(GL_QUADS);
@@ -198,7 +236,7 @@ void Enemy::Draw()
 		glEnd();
 		glPopMatrix();
 		glutPostRedisplay();
-	}
+	}*/
 }
 
 Enemy::~Enemy()

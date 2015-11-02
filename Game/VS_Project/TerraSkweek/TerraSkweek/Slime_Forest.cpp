@@ -18,11 +18,18 @@ Slime_Forest::Slime_Forest()
 
 void Slime_Forest::LoadAllTextures()
 {
-	LoadGLTextures("run", "Art/Slime_01.png");
-	LoadGLTextures("run", "Art/Slime_02.png");
-	LoadGLTextures("run", "Art/Slime_03.png");
-	LoadGLTextures("run", "Art/Slime_04.png");
-	LoadGLTextures("run", "Art/Slime_05.png");
+	LoadGLTextures("run", "Slime_01.png");
+	LoadGLTextures("run", "Slime_02.png");
+	LoadGLTextures("run", "Slime_03.png");
+	LoadGLTextures("run", "Slime_04.png");
+	LoadGLTextures("run", "Slime_05.png");
+
+
+	LoadGLTextures("death", "2corrupted/slimer_death_1.png");
+	LoadGLTextures("death", "2corrupted/slimer_death_2.png");
+	LoadGLTextures("death", "2corrupted/slimer_death_3.png");
+	LoadGLTextures("death", "2corrupted/slimer_death_4.png");
+
 }
 
 Slime_Forest::~Slime_Forest()
