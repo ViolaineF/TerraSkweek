@@ -49,7 +49,7 @@ Grid::Grid(string biome)
 		vecTNT.push_back(new TNT(3, 3, 1));
 		vecArrow.push_back(new Arrow(7, 7, 1, 'l'));
 		vecArrow.push_back(new Arrow(7, 6, 1, 'l'));
-		vecCaseAnimated.push_back(new CaseAnimation(2,5, "cracking"));
+		//vecCaseAnimated.push_back(new CaseAnimation(2,5, "cracking"));
 	}
 	else if(biomeChar == '3') // Crimson
 	{
@@ -70,8 +70,9 @@ Grid::~Grid()
 void Grid::SetMap(int x, int y, int a)
 {
 	if (a == 4) {
-		vecCaseAnimated.push_back(new CaseAnimation(x, y, "conversion"));
 		map[x][y] = a;
+		vecCaseAnimated.push_back(new CaseAnimation(x, y, "conversion"));
+
 	}
 	else {
 		map[x][y] = a;
@@ -289,7 +290,7 @@ void Grid::DisplayMap()
 				PrintImg(i, j, 1, 1, 0); // Corrupted floor
 
 				// add conversion animation over it
-				for (int k = 0; k < vecCaseAnimated.size(); k++) {
+				for (unsigned int k = 0; k < vecCaseAnimated.size(); k++) {
 					if (vecCaseAnimated[k]->Draw(1)) {
 						SetMap(i, j, 2); // If the animation is complete, convert floor
 						vecCaseAnimated.erase(vecCaseAnimated.begin() + k);// Destroy it

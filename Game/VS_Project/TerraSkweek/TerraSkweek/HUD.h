@@ -12,6 +12,8 @@
 #include "GL\glut.h"
 #include "SOIL\SOIL.h"
 
+using namespace std;
+
 class HUD
 {
 private:
@@ -26,8 +28,8 @@ private:
 public:
 	void displayScore(int, int);
 	void LoadAllTextures();
-	void PrintImg(int, int, int, int, std::vector<GLuint>, int);
-	int LoadGLTextures(std::string, std::string);
+	void PrintImg(int, int, int, int, vector<GLuint>, int);
+	int LoadGLTextures(string, string);
 	HUD();
 };
 

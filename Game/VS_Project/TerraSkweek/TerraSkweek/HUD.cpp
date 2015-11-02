@@ -28,7 +28,7 @@ HUD::HUD()
 
 
 
-void HUD::PrintImg(int i, int j, int width, int height, std::vector<GLuint> vecTex ,int textureIt)
+void HUD::PrintImg(int i, int j, int width, int height, vector<GLuint> vecTex ,int textureIt)
 {
 
 	glEnable(GL_TEXTURE_2D); // Start textures
@@ -228,7 +228,7 @@ void HUD::LoadAllTextures()
 
 }
 
-int HUD::LoadGLTextures(std::string type, std::string name)
+int HUD::LoadGLTextures(string type, string name)
 {
 	if (type == "infos")
 	{

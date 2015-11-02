@@ -9,7 +9,7 @@ bool CaseAnimation::Draw(bool animated)
 	if (animated) {
 
 		currentFrame = (currentFrame + 1) % speed;
-		int frame = currentFrame * (convertAnim.size()) / speed;
+		unsigned int frame = currentFrame * (convertAnim.size()) / speed;
 
 		glPushMatrix();
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -60,6 +60,7 @@ bool CaseAnimation::Draw(bool animated)
 		glDisable(GL_TEXTURE_2D);
 		glPopMatrix();
 		glutPostRedisplay();
+		return 0;
 
 	}
 
@@ -72,6 +73,7 @@ Position CaseAnimation::GetPos()
 
 int CaseAnimation::LoadGLTexture(string name)
 {
+
 	GLuint essai = SOIL_load_OGL_texture
 		(
 			name.c_str(),
@@ -84,10 +86,8 @@ int CaseAnimation::LoadGLTexture(string name)
 
 	if (convertAnim.at(convertAnim.size() - 1) == 0)
 		return false;
-
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
 	return true;       // Return Success
 }
 
@@ -97,6 +97,7 @@ CaseAnimation::CaseAnimation(int x, int y, string directory)
 	float posX = x + 0.0;
 	float posY = y + 0.0;
 	m_pos = {posX, posY};
+	convertAnim.resize(0);
 
 	string fullDirectory = "Art/" + directory; 
 
