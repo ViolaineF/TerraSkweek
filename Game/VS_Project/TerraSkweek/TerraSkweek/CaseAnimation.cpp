@@ -2,43 +2,72 @@
 
 
 
-bool CaseAnimation::Draw()
+bool CaseAnimation::Draw(bool animated)
 {
 	const int speed = 1200;
-	currentFrame = (currentFrame + 1) % speed;
 
-	int frame = currentFrame * (convertAnim.size()) / speed;
+	if (animated) {
 
-	glPushMatrix();
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glBindTexture(GL_TEXTURE_2D, convertAnim[frame]);
-	glBegin(GL_QUADS);
-	glColor3d(1.0, 1.0, 1.0);
-	glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
-	glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 1, m_pos.y);
-	glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 1, m_pos.y + 1);
-	glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 1);
+		currentFrame = (currentFrame + 1) % speed;
+		int frame = currentFrame * (convertAnim.size()) / speed;
 
-	glEnd();
-	glDisable(GL_TEXTURE_2D);
-	glPopMatrix();
-	glutPostRedisplay();
+		glPushMatrix();
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glBindTexture(GL_TEXTURE_2D, convertAnim[frame]);
+		glBegin(GL_QUADS);
+		glColor3d(1.0, 1.0, 1.0);
+		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
+		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 1, m_pos.y);
+		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 1, m_pos.y + 1);
+		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 1);
 
-	// when the animation is complete, convert entirely
-	if (frame >= (convertAnim.size() - 1)) {
+		glEnd();
+		glDisable(GL_TEXTURE_2D);
+		glPopMatrix();
+		glutPostRedisplay();
 
-		cout << "anim ended" << endl;
-		return 1;
+		// when the animation is complete, convert entirely
+		if (frame >= (convertAnim.size() - 1)) {
+
+			cout << "anim ended" << endl;
+			return 1;
+		}
+		else {
+			return 0;
+		}
 	}
 	else {
-		return 0;
+
+		glPushMatrix();
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glBindTexture(GL_TEXTURE_2D, convertAnim[0]);
+		glBegin(GL_QUADS);
+		glColor3d(1.0, 1.0, 1.0);
+		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
+		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 1, m_pos.y);
+		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 1, m_pos.y + 1);
+		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 1);
+
+		glEnd();
+		glDisable(GL_TEXTURE_2D);
+		glPopMatrix();
+		glutPostRedisplay();
+
 	}
 
+}
 
+Position CaseAnimation::GetPos()
+{
+	return m_pos;
 }
 
 int CaseAnimation::LoadGLTexture(string name)

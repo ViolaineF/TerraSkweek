@@ -14,7 +14,8 @@ private :
 
 
 public:
-	bool Draw();
+	bool Draw(bool);
+	Position GetPos();
 	int LoadGLTexture(string);
 	CaseAnimation(int, int, string);
 	~CaseAnimation();
