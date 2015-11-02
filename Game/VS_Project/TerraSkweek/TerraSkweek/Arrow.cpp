@@ -19,12 +19,12 @@ Arrow::Arrow(int a, int b, bool c, char d)
 
 void Arrow::LoadAllTextures()
 {
-	LoadGLTextures("arrow", "2corrupted/arrow_01.png");
-	LoadGLTextures("arrow", "2corrupted/arrow_02.png");
-	LoadGLTextures("arrow", "2corrupted/arrow_03.png");
-	LoadGLTextures("arrow", "2corrupted/arrowSplash_01.png");
-	LoadGLTextures("arrow", "2corrupted/arrowSplash_02.png");
-	LoadGLTextures("arrow", "2corrupted/arrowSplash_03.png");
+	LoadGLTextures("arrow", "arrow_01.png");
+	LoadGLTextures("arrow", "arrow_02.png");
+	LoadGLTextures("arrow", "arrow_03.png");
+	LoadGLTextures("arrow", "arrow_active_01.png");
+	LoadGLTextures("arrow", "arrow_active_02.png");
+	LoadGLTextures("arrow", "arrow_active_03.png");
 }
 
 
