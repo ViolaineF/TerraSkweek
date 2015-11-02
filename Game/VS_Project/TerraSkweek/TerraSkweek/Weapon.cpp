@@ -58,17 +58,37 @@ void Weapon::DrawSprite(Position drop)
 
 void Weapon::DrawFire()
 {
-	glPushMatrix();
-	glBegin(GL_QUADS);
+	if (m_impact) {
 
-	glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x, m_pos.y);
-	glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x + 1, m_pos.y);
-	glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x + 1, m_pos.y + 1);
-	glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x, m_pos.y + 1);
+		glPushMatrix();
+		glBegin(GL_QUADS);
 
-	glEnd();
-	glPopMatrix();
-	glutPostRedisplay();
+		glColor3d(1.0, 0.0, 0.0); glVertex2d(m_pos.x, m_pos.y);
+		glColor3d(1.0, 0.0, 0.0); glVertex2d(m_pos.x + 1, m_pos.y);
+		glColor3d(1.0, 0.0, 0.0); glVertex2d(m_pos.x + 1, m_pos.y + 1);
+		glColor3d(1.0, 0.0, 0.0); glVertex2d(m_pos.x, m_pos.y + 1);
+
+		glEnd();
+		glPopMatrix();
+		glutPostRedisplay();
+
+		m_destroy = true;
+	}
+	else {
+		glPushMatrix();
+		glBegin(GL_QUADS);
+
+		glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x, m_pos.y);
+		glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x + 1, m_pos.y);
+		glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x + 1, m_pos.y + 1);
+		glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x, m_pos.y + 1);
+
+		glEnd();
+		glPopMatrix();
+		glutPostRedisplay();
+	}
+
+
 }
 
 Position Weapon::GetPos()
@@ -87,8 +107,7 @@ char Weapon::GetDir()
 }
 
 int Weapon::LoadGLTextures(string type, string nameIncomplete)
-{
-	
+{	
 	string name = "Art/" + nameIncomplete;
 
 	if(type == "gun")
@@ -188,6 +207,16 @@ int Weapon::LoadGLTextures(string type, string nameIncomplete)
 int Weapon::GetType()
 {
 	return m_type;
+}
+
+void Weapon::SetImpact(bool a)
+{
+	m_impact = a;
+}
+
+bool Weapon::IsDestroyed()
+{
+	return m_destroy;
 }
 
 Weapon::~Weapon()

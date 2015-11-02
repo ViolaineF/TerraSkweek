@@ -6,7 +6,7 @@ Entity::Entity()
 {
 	//	Fire = false;
 	currentFrame = 0;
-	m_death = 5;
+	m_death = false;
 }
 
 
@@ -28,6 +28,11 @@ int Entity::GetLife()
 int Entity::GetWeapon()
 {
 	return m_weapon.GetType();
+}
+
+bool Entity::IsDead()
+{
+	return m_death;
 }
 
 void Entity::SetLife(int x)

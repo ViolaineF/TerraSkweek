@@ -302,8 +302,8 @@ void Grid::DrawEnemies()
 {
 	//--------------- DELETE ALL DEAD ENEMIES
 	for (unsigned int i = 0; i < vecEnemies.size(); i++) {
-		if (vecEnemies[i]->GetLife() <= 0) { // If the Enemy has no more life
-			vecEnemies.erase(vecEnemies.begin() + i);
+		if (vecEnemies[i]->IsDead()) { // If the Enemy has played its death animation entirely
+			vecEnemies.erase(vecEnemies.begin() + i);// Destroy it
 		}
 	}
 
@@ -337,7 +337,7 @@ void Grid::MoveAllEnemies()
 	}
 
 	for (unsigned int i = 0; i < vecEnemies.size(); i++) {
-		// Save previous position if it collide with a wall
+		// Save previous position if it collides with a wall
 		Position prevPos = { vecEnemies[i]->GetPos().x , vecEnemies[i]->GetPos().y , vecEnemies[i]->GetPos().z };
 
 		//--------------------- MOVING ENEMIES
@@ -400,7 +400,7 @@ void Grid::MoveAllFires()
 		for (unsigned int j = 0; j < vecEnemies.size(); j++) {
 			if (vecWeapons[i]->GetPos() == vecEnemies[j]->GetPos()) {
 				vecEnemies[j]->SetLife(vecEnemies[j]->GetLife() - vecWeapons[i]->GetDamage()); // Minus Enemy's life by the fire's damage
-				vecWeapons.erase(vecWeapons.begin() + i);
+				vecWeapons[i]->SetImpact(1);
 				return; // No need to check walls
 			}
 		}
@@ -415,25 +415,25 @@ void Grid::MoveAllFires()
 		{
 		case 'u':
 			if ((map[pXleft][pYup] == 1) || (map[pXright][pYup] == 1)) { // Check upward
-				vecWeapons.erase(vecWeapons.begin() + i);
+				vecWeapons[i]->SetImpact(1);
 			}
 			break;
 
 		case 'd':
 			if ((map[pXleft][pYdown] == 1) || (map[pXright][pYdown] == 1)) { // Check downward
-				vecWeapons.erase(vecWeapons.begin() + i);
+				vecWeapons[i]->SetImpact(1);
 			}
 			break;
 
 		case 'r':
 			if ((map[pXright][pYdown] == 1) || (map[pXright][pYup] == 1)) { // Check the right side
-				vecWeapons.erase(vecWeapons.begin() + i);
+				vecWeapons[i]->SetImpact(1);
 			}
 			break;
 
 		case 'l':
 			if ((map[pXleft][pYup] == 1) || (map[pXleft][pYdown] == 1)) { // Check the left side
-				vecWeapons.erase(vecWeapons.begin() + i);
+				vecWeapons[i]->SetImpact(1);
 			}
 			break;
 		}
@@ -444,10 +444,12 @@ void Grid::MoveAllFires()
 
 void Grid::DrawAllFires()
 {
-	//----------------------- DELETE ALL DESTROYED FIRE SPRITE
-/*	for (unsigned int i = 0; i < vecWeapons.size(); i++) {
-		vecWeapons[i]->DrawFire();
-	}*/
+	//----------------------- DELETE ALL FIRE THAT HAS IMPACTED SOMEWHERE
+	for (unsigned int i = 0; i < vecWeapons.size(); i++) {
+		if (vecWeapons[i]->IsDestroyed()) {
+			vecWeapons.erase(vecWeapons.begin() + i);
+		}
+	}
 
 	//------------------------ DRAW THE REMAINING ONES
 	for (unsigned int i = 0; i < vecWeapons.size(); i++) {

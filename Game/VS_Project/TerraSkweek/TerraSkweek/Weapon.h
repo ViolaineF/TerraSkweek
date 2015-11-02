@@ -58,6 +58,9 @@ public:
 	char GetDir();
 	int GetType();
 
+	void SetImpact(bool);
+	bool IsDestroyed();
+
 	int LoadGLTextures(string, string);
 	~Weapon();
 };

@@ -16,7 +16,7 @@ protected :
 	AudioFile s_death;
 	Weapon m_weapon;
 	bool m_firing;
-	int m_death;
+	bool m_death;
 
 public:
 	Entity();
@@ -25,6 +25,7 @@ public:
 	char GetDir();
 	int GetLife();
 	int GetWeapon();
+	bool IsDead();
 	void SetLife(int);
 	void MoveLeft();
 	void MoveRight();
