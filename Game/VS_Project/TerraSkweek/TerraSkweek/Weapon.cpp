@@ -184,7 +184,7 @@ int Weapon::LoadGLTextures(string type, string nameIncomplete)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		return true;       // Return Success
 	}
-	if (type == "river")
+	if (type == "arrow")
 	{
 		GLuint essai = SOIL_load_OGL_texture
 			(
@@ -194,8 +194,8 @@ int Weapon::LoadGLTextures(string type, string nameIncomplete)
 				SOIL_FLAG_INVERT_Y
 				);
 
-		river.push_back(essai); // Add to the texture vector
-		if (river.at(river.size() - 1) == 0)
+		arrow.push_back(essai); // Add to the texture vector
+		if (arrow.at(arrow.size() - 1) == 0)
 			return false;
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

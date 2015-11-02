@@ -43,7 +43,7 @@ protected:
 	std::vector<GLuint>	freeze;
 	std::vector<GLuint>	invincible;
 	std::vector<GLuint>	tnt;
-	std::vector<GLuint>	river;
+	std::vector<GLuint>	arrow;
 	
 public:
 	Weapon();

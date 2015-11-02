@@ -47,8 +47,8 @@ Grid::Grid(string biome)
 		vecEnemies.push_back(new Slime_Forest());
 		vecEnemies.push_back(new Slime_Forest());
 		vecTNT.push_back(new TNT(3, 3, 1));
-		vecRiver.push_back(new River(7, 7, 1, 'l', biomeChar));
-		vecRiver.push_back(new River(7, 6, 1, 'l', biomeChar));
+		vecArrow.push_back(new Arrow(7, 7, 1, 'l'));
+		vecArrow.push_back(new Arrow(7, 6, 1, 'l'));
 	}
 	else if(biomeChar == '3') // Crimson
 	{
@@ -99,7 +99,7 @@ void Grid::LoadAllTextures()
 		d->LoadAllTextures();
 	}
 
-	for (River* e : vecRiver)
+	for (Arrow* e : vecArrow)
 	{
 		e->LoadAllTextures();
 	}
@@ -273,7 +273,7 @@ void Grid::DisplayMap()
 			case 2:// Converted Floor
 				PrintImg(i, j, 1, 1, 2);
 				break;			
-			case 3:// Floor + river
+			case 3:// Floor + arrow
 				PrintImg(i, j, 1, 1, 3);
 				break;
 			}
@@ -292,8 +292,29 @@ void Grid::DrawSpecialCases()
 		vecTNT[i]->Draw();
 	}
 
-	for (unsigned int i = 0; i < vecRiver.size(); i++) {
-		vecRiver[i]->Draw();
+	for (unsigned int i = 0; i < vecArrow.size(); i++) {
+		vecArrow[i]->Draw();
+	}
+
+	//---------- CHECK COLLISION WITH PLAYER - 1 player
+	for (unsigned int i = 0; i < vecTNT.size(); i++) {
+		if (vecTNT[i]->GetPos() == player.GetPos()) {
+			vecTNT[i]->activation(); // Activation of TNT timer
+		}
+	}
+
+	for (unsigned int i = 0; i < vecArrow.size(); i++) {
+		if (vecArrow[i]->GetPos() == player.GetPos()) {
+			vecArrow[i]->activation(); // Player's movement forced in the direction of the Arrow
+			if (vecArrow[i]->GetDir() == 'r')
+				player.MoveRight();
+			if (vecArrow[i]->GetDir() == 'l')
+				player.MoveLeft();
+			if (vecArrow[i]->GetDir() == 'u')
+				player.MoveUp();
+			if (vecArrow[i]->GetDir() == 'd')
+				player.MoveDown();
+		}
 	}
 	
 }
@@ -329,10 +350,10 @@ void Grid::MoveAllEnemies()
 		}
 	}
 
-	for (unsigned int i = 0; i < vecRiver.size(); i++)
+	for (unsigned int i = 0; i < vecArrow.size(); i++)
 	{
-		if (vecRiver[i]->GetPos() == player.GetPos()) {
-			vecRiver[i]->activation(); // River force is activated
+		if (vecArrow[i]->GetPos() == player.GetPos()) {
+			vecArrow[i]->activation(); // arrow force is activated
 		}
 	}
 

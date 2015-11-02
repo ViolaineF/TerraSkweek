@@ -4,7 +4,7 @@
 #include "HUD.h"
 #include "Player.h"
 #include "TNT.h"
-#include "River.h"
+#include "Arrow.h"
 #include "Corruptor_Corruption.h"
 #include "Crimera_Crimson.h"
 #include "DemonEye_Forest.h"
@@ -34,7 +34,7 @@ private:
 	vector<GLuint>	textures;
 	vector<Enemy*> vecEnemies;
 	vector<TNT*> vecTNT;
-	vector<River*> vecRiver;
+	vector<Arrow*> vecArrow;
 	vector<Weapon*> vecWeapons;
 	HUD hud;
 

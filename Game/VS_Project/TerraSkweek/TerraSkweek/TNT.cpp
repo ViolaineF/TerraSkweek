@@ -61,8 +61,8 @@ TNT::TNT(int a, int b, bool c)
 
 void TNT::LoadAllTextures()
 {
-	LoadGLTextures("tnt", "2corrupted/river_01.jpg");
-	LoadGLTextures("tnt", "converted_river_01.jpg");
+	LoadGLTextures("tnt", "2corrupted/arrow_01.jpg");
+	LoadGLTextures("tnt", "converted_arrow_01.jpg");
 	LoadGLTextures("tnt", "TNT_01.png");
 	LoadGLTextures("tnt", "TNT_01.png");
 	LoadGLTextures("tnt", "TNT_01.png");
