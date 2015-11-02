@@ -5,26 +5,73 @@
 HUD::HUD()
 {
 	if (Level == 1)
+	{
 		LevelScore = 20;
-	else if (Level == 1)
-		LevelScore = 20;
+		timer = 210;
+	}
 	else if (Level == 2)
+	{
 		LevelScore = 20;
+		timer = 210;
+	}
 	else if (Level == 3)
+	{
 		LevelScore = 20;
+		timer = 210;
+	}
 	else if (Level == 4)
+	{
 		LevelScore = 20;
+		timer = 210;
+	}
 }
+
+
+
+void HUD::PrintImg(int i, int j, int width, int height, std::vector<GLuint> vecTex ,int textureIt)
+{
+	glEnable(GL_TEXTURE_2D); // Start textures
+	glBindTexture(GL_TEXTURE_2D, vecTex[textureIt]);
+	glBegin(GL_QUADS);
+
+	glColor3d(1.0, 1.0, 1.0);
+	glTexCoord2f(0.0f, 0.0f); glVertex2d(i, j);
+	glTexCoord2f(0.0f, 1.0f); glVertex2d(i + height, j);
+	glTexCoord2f(1.0f, 1.0f); glVertex2d(i + height, j + width);
+	glTexCoord2f(1.0f, 0.0f); glVertex2d(i, j + width);
+
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
+}
+
 
 
 void HUD::displayScore(int life, int weapon)
 {
+
 	if (life == 0)
 	{
 //		lose
 //		onScreen = true;
 //		screen = 7;
 	}
+	
+	switch (weapon)
+	{
+	case 0:
+		PrintImg(1, 1, 1, 5, icons, 1);
+		break;
+	case 1:
+		PrintImg(1, 1, 1, 5, icons, 2);
+		break;
+	case 2:
+		PrintImg(1, 1, 1, 5, icons, 3);
+		break;
+		//		lose
+		//		onScreen = true;
+		//		screen = 7;
+	}
+	
 
 //	if (LevelScore == 0 && Level == 0)
 //	{
@@ -55,8 +102,9 @@ void HUD::displayScore(int life, int weapon)
 
 //______________________ Afficher SCORE : 0000
 
+/*
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, hudTex[10]);
+	glBindTexture(GL_TEXTURE_2D, hudTex[0]);
 	glBegin(GL_QUADS);
 	glColor3d(1.0, 1.0, 1.0);
 	glTexCoord2f(0.0f, 0.0f); glVertex2d(1, 1);
@@ -108,67 +156,132 @@ void HUD::displayScore(int life, int weapon)
 	//______________________ Afficher LIFE : ...	
 
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, hudTex[11]);
+	glBindTexture(GL_TEXTURE_2D, infos[2]);
 	glBegin(GL_QUADS);
 	glColor3d(1.0, 1.0, 1.0);
-	glTexCoord2f(0.0f, 0.0f); glVertex2d(12, 1);
-	glTexCoord2f(1.0f, 0.0f); glVertex2d(15, 1);
-	glTexCoord2f(1.0f, 1.0f); glVertex2d(15, 0);
-	glTexCoord2f(0.0f, 1.0f); glVertex2d(12, 0);
+	glTexCoord2f(0.0f, 0.0f); glVertex2d(0, 1);
+	glTexCoord2f(1.0f, 0.0f); glVertex2d(1, 1);
+	glTexCoord2f(1.0f, 1.0f); glVertex2d(1, 0);
+	glTexCoord2f(0.0f, 1.0f); glVertex2d(0, 0);
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
+
+
+	glPushMatrix();
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBindTexture(GL_TEXTURE_2D, hudTex[3]);
+	glBegin(GL_QUADS);
+	glColor3d(1.0, 1.0, 1.0);
+	glTexCoord2f(1.0f, 1.0f); glVertex2d(0, 0);
+	glTexCoord2f(0.0f, 1.0f); glVertex2d( + 1, 0);
+	glTexCoord2f(0.0f, 0.0f); glVertex2d(0 + 1,0 + 1);
+	glTexCoord2f(1.0f, 0.0f); glVertex2d(0, 0+ 1);
+
+
 
 	for (i = 0; i < life; i++)
 	{
 		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, hudTex[13]);
+		glBindTexture(GL_TEXTURE_2D, infos[13]);
 		glBegin(GL_QUADS);
 		glColor3d(1.0, 1.0, 1.0);
-		glTexCoord2f(0.0f, 0.0f); glVertex2d(15 + i, 1);
-		glTexCoord2f(1.0f, 0.0f); glVertex2d(16 + i, 1);
-		glTexCoord2f(1.0f, 1.0f); glVertex2d(16 + i, 0);
-		glTexCoord2f(0.0f, 1.0f); glVertex2d(15 + i, 0);
+		glTexCoord2f(0.0f, 0.0f); glVertex2d(1 + i, 1);
+		glTexCoord2f(1.0f, 0.0f); glVertex2d(0 + i, 1);
+		glTexCoord2f(1.0f, 1.0f); glVertex2d(0 + i, 0);
+		glTexCoord2f(0.0f, 1.0f); glVertex2d(1 + i, 0);
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
-
 	}
+*/
+
+	PrintImg(1, 1, 1, 5, infos, 0);
+	PrintImg(7, 1, 1, 1, icons, 1);
+	PrintImg(8, 1, 1, 1, nbrs, 1);
+
 }
 
 void HUD::LoadAllTextures()
 {
-	LoadGLTextures("HUD/S0.png");				//	0
-	LoadGLTextures("HUD/S1.png");
-	LoadGLTextures("HUD/S2.png");
-	LoadGLTextures("HUD/S3.png");
-	LoadGLTextures("HUD/S4.png");
-	LoadGLTextures("HUD/S5.png");				//	5
-	LoadGLTextures("HUD/S6.png");
-	LoadGLTextures("HUD/S7.png");
-	LoadGLTextures("HUD/S8.png");
-	LoadGLTextures("HUD/S9.png");
-	LoadGLTextures("HUD/Score.png");			//	10
-	LoadGLTextures("HUD/Life.png");
-	LoadGLTextures("HUD/weapon.png");
-	LoadGLTextures("HUD/LifeIco.png");
+	LoadGLTextures("nbrs","HUD/S0.png");				//	0
+	LoadGLTextures("nbrs","HUD/S1.png");
+	LoadGLTextures("nbrs","HUD/S2.png");
+	LoadGLTextures("nbrs","HUD/S3.png");
+	LoadGLTextures("nbrs","HUD/S4.png");
+	LoadGLTextures("nbrs","HUD/S5.png");				//	5
+	LoadGLTextures("nbrs","HUD/S6.png");
+	LoadGLTextures("nbrs","HUD/S7.png");
+	LoadGLTextures("nbrs","HUD/S8.png");
+	LoadGLTextures("nbrs","HUD/S9.png");
+	LoadGLTextures("infos","HUD/Score.png");			//	10
+	LoadGLTextures("infos","HUD/Life.png");
+	LoadGLTextures("infos","HUD/weapon.png");
+	LoadGLTextures("icons", "HUD/LifeIco.png");
+	LoadGLTextures("icons", "weapon_01.png");
+	LoadGLTextures("icons", "weapon_02.png");
+	LoadGLTextures("icons", "weapon_03.png");
+
 }
 
-int HUD::LoadGLTextures(std::string name)
+int HUD::LoadGLTextures(std::string type, std::string name)
 {
-	GLuint essai = SOIL_load_OGL_texture
-		(
-			name.c_str(),
-			SOIL_LOAD_AUTO,
-			SOIL_CREATE_NEW_ID,
-			SOIL_FLAG_INVERT_Y
-			);
+	if (type == "infos")
+	{
+		GLuint essai = SOIL_load_OGL_texture
+			(
+				name.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
 
-	hudTex.push_back(essai); // Add to the texture vector
+		infos.push_back(essai); // Add to the texture vector
 
-	if (hudTex.at(hudTex.size() - 1) == 0)
-		return false;
+		if (infos.at(infos.size() - 1) == 0)
+			return false;
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		return true;       // Return Success
+	}
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	else if (type == "nbrs")
+	{
+		GLuint essai = SOIL_load_OGL_texture
+			(
+				name.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
 
-	return true;       // Return Success
+		nbrs.push_back(essai); // Add to the texture vector
+
+		if (nbrs.at(nbrs.size() - 1) == 0)
+			return false;
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		return true;       // Return Success
+	}
+
+	else if (type == "icons")
+	{
+		GLuint essai = SOIL_load_OGL_texture
+			(
+				name.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
+
+		icons.push_back(essai); // Add to the texture vector
+
+		if (icons.at(icons.size() - 1) == 0)
+			return false;
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		return true;       // Return Success
+	}
 }

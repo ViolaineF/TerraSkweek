@@ -17,12 +17,17 @@ class HUD
 private:
 	int Level;
 	int LevelScore = 0, totalScore = 0, previousScore = 0, frag = 0;
+	int timer;
 	std::vector<int> scoreTab{ 0,0,0,0 };
-	std::vector<GLuint>	hudTex;
+	std::vector<GLuint>	nbrs;
+	std::vector<GLuint>	infos;
+	std::vector<GLuint>	icons;
+
 public:
 	void displayScore(int, int);
 	void LoadAllTextures();
-	int LoadGLTextures(std::string);
+	void PrintImg(int, int, int, int, std::vector<GLuint>, int);
+	int LoadGLTextures(std::string, std::string);
 	HUD();
 };
 
