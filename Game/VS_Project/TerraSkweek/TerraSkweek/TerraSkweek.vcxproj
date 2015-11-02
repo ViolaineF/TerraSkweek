@@ -155,6 +155,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AudioFile.cpp" />
+    <ClCompile Include="CaseAnimation.cpp" />
     <ClCompile Include="Corruptor_Corruption.cpp" />
     <ClCompile Include="Crimera_Crimson.cpp" />
     <ClCompile Include="DemonEye_Forest.cpp" />
@@ -179,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioFile.h" />
+    <ClInclude Include="CaseAnimation.h" />
     <ClInclude Include="Corruptor_Corruption.h" />
     <ClInclude Include="Crimera_Crimson.h" />
     <ClInclude Include="DemonEye_Forest.h" />

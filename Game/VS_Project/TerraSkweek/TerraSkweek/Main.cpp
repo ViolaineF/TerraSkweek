@@ -182,9 +182,6 @@ void PrintImg(float i, float j, float width, float height, int textureIt) {
 
 void PlayerMovt(int x) {
 
-
-	cout << player.GetDir() << endl;
-
 	if (player.IsMoving()) {
 
 	// Save previous position to revert changes if the new one is invalid
@@ -216,10 +213,10 @@ void PlayerMovt(int x) {
 	int pYup = round(player.GetPos().y - 0.4);
 	int pYdown = round(player.GetPos().y + 0.4);
 
-	int pXleftConv = round(player.GetPos().x - 0.3);
-	int pXrightConv = round(player.GetPos().x + 0.3);
-	int pYupConv = round(player.GetPos().y - 0.3);
-	int pYdownConv = round(player.GetPos().y + 0.3);
+	int pXleftConv = round(player.GetPos().x - 0.4);
+	int pXrightConv = round(player.GetPos().x + 0.4);
+	int pYupConv = round(player.GetPos().y - 0.4);
+	int pYdownConv = round(player.GetPos().y + 0.4);
 
 
 	// ----------------- CHECK WALLS AND CONVERT v2
@@ -232,7 +229,7 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			lvl01.SetMap(pXleftConv, pYupConv, 2);
+			lvl01.SetMap(pXleftConv, pYupConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
@@ -247,7 +244,7 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			lvl01.SetMap(pXrightConv, pYupConv, 2);
+			lvl01.SetMap(pXrightConv, pYupConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
@@ -265,7 +262,7 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			lvl01.SetMap(pXleftConv, pYdownConv, 2);
+			lvl01.SetMap(pXleftConv, pYdownConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
@@ -280,7 +277,7 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			lvl01.SetMap(pXrightConv, pYdownConv, 2);
+			lvl01.SetMap(pXrightConv, pYdownConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
@@ -298,7 +295,7 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			lvl01.SetMap(pXrightConv, pYdownConv, 2);
+			lvl01.SetMap(pXrightConv, pYdownConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
@@ -313,7 +310,7 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			lvl01.SetMap(pXrightConv, pYupConv, 2);
+			lvl01.SetMap(pXrightConv, pYupConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
@@ -331,7 +328,7 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			lvl01.SetMap(pXleftConv, pYupConv, 2);
+			lvl01.SetMap(pXleftConv, pYupConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
@@ -346,7 +343,7 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			lvl01.SetMap(pXleftConv, pYdownConv, 2);
+			lvl01.SetMap(pXleftConv, pYdownConv, 4);
 			break;
 		case 2: //Ground converted
 			break;

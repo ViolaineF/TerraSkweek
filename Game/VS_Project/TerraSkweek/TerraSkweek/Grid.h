@@ -17,6 +17,7 @@
 #include "Slime_Forest.h"
 #include "Unicorn_Hallow.h"
 #include "Zombie_Forest.h"
+#include "CaseAnimation.h"
 
 
 
@@ -31,7 +32,8 @@ private:
 	int m_rows;
 	int m_lignes;
 	int map[10][10];
-	vector<GLuint>	textures;
+	vector<GLuint> textures;
+	vector<CaseAnimation*> vecCaseAnimated;
 	vector<Enemy*> vecEnemies;
 	vector<TNT*> vecTNT;
 	vector<Arrow*> vecArrow;

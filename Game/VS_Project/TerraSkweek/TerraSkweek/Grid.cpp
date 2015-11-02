@@ -68,9 +68,14 @@ Grid::~Grid()
 
 void Grid::SetMap(int x, int y, int a)
 {
-	if(map[x][y] == 0)
+	if (a == 4) {
+		vecCaseAnimated.push_back(new CaseAnimation(x, y, "conversion"));
 		map[x][y] = a;
-
+	}
+	else {
+		map[x][y] = a;
+	}
+		
 }
 
 void Grid::LoadAllTextures()
@@ -78,17 +83,15 @@ void Grid::LoadAllTextures()
 
 	string directory = "Art/" + m_biome + "/";
 
-	LoadGLTextures(directory + "ground.jpg");
-	LoadGLTextures(directory + "walls.jpg");
-	LoadGLTextures("Art/converted.jpg");
-	LoadGLTextures(directory + "gap.jpg");
+	//--------------BASE TEXTURES
+	LoadGLTextures( directory + "ground.jpg"); // 0
+	LoadGLTextures( directory + "walls.jpg"); // 1
+	LoadGLTextures( "Art/converted.jpg"); // 2
+	LoadGLTextures( directory + "gap.jpg"); // 3
+
 
 	//-------------------LOAD ENEMIES TEXTURES
 	
-	//for (int i = 0; i < vecEnemies.size(); i++) {
-	//	vecEnemies[i]->
-	//}
-
 	for (Enemy* c : vecEnemies)
 	{
 		c->LoadAllTextures();
@@ -108,23 +111,26 @@ void Grid::LoadAllTextures()
 
 int Grid::LoadGLTextures(string name)
 {
-	GLuint essai = SOIL_load_OGL_texture
-		(
-			name.c_str(),
-			SOIL_LOAD_AUTO,
-			SOIL_CREATE_NEW_ID,
-			SOIL_FLAG_INVERT_Y
-			);
+	//-------------BASE TEXTURES
 
-	textures.push_back(essai); // Add to the texture vector
+		GLuint essai = SOIL_load_OGL_texture
+			(
+				name.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
 
-	if (textures.at(textures.size() - 1) == 0)
-		return false;
+		textures.push_back(essai); // Add to the texture vector
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		if (textures.at(textures.size() - 1) == 0)
+			return false;
 
-	return true;       // Return Success
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		return true;       // Return Success
+	
 }
 
 int Grid::Map(int x, int y)
@@ -254,6 +260,7 @@ void Grid::PrintImg(int i, int j, int width, int height, int textureIt)
 //------------------------------------- DRAW MAP
 void Grid::DisplayMap()
 {
+
 	for (int i = 0; i < m_rows; i++) {
 		for (int j = 0; j < m_lignes; j++) {
 			switch (map[i][j])
@@ -275,6 +282,18 @@ void Grid::DisplayMap()
 				break;			
 			case 3:// Floor + arrow
 				PrintImg(i, j, 1, 1, 3);
+				break;
+			case 4 : // Conversion animation
+				PrintImg(i, j, 1, 1, 0); // Corrupted floor
+
+				// add conversion animation over it
+				for (int k = 0; k < vecCaseAnimated.size(); k++) {
+					if (vecCaseAnimated[k]->Draw()) {
+						SetMap(i, j, 2); // If the animation is complete, convert floor
+						vecCaseAnimated.erase(vecCaseAnimated.begin() + k);// Destroy it
+					}
+				}
+
 				break;
 			}
 		}

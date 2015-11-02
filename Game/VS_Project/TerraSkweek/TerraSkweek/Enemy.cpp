@@ -165,14 +165,14 @@ void Enemy::LoadAllTextures()
 
 void Enemy::Draw()
 {
-	const int vitesse = 1200;
-	currentFrame = (currentFrame + 1) % vitesse;
+	const int speed = 1200;
+	currentFrame = (currentFrame + 1) % speed;
 	//int frame = currentFrame * 3 / vitesse;
 
 	//-------------------- CHECK LIFE FIRST
 	if (m_life <= 0) {
 
-		int frame = currentFrame * (death.size()) / vitesse;
+		int frame = currentFrame * (death.size()) / speed;
 
 			glPushMatrix();
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -201,7 +201,7 @@ void Enemy::Draw()
 	}
 	else if (afraid == false)
 	{
-		int frame = currentFrame * (run.size()) / vitesse;
+		int frame = currentFrame * (run.size()) / speed;
 
 		glPushMatrix();
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
