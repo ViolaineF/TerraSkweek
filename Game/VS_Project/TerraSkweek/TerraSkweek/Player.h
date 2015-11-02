@@ -13,6 +13,7 @@ private :
 	vector<GLuint>	up;
 	vector<GLuint>	down;
 	vector<GLuint>	fire;
+	bool m_moving;
 	float opacity;
 
 public:
@@ -20,6 +21,9 @@ public:
 	void LoadAllTextures();
 	int LoadGLTextures(string, string);
 	void Draw();
+	void SetMoving(bool);
+	bool IsMoving();
+
 	Player();
 	~Player();
 };

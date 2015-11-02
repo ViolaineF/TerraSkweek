@@ -1,51 +1,35 @@
-#include "River.h"
+#include "Arrow.h"
 
-River::River()
+Arrow::Arrow()
 {
 	activated = false;
 	frameActuelle = 0;
 }
 
-River::River(int a, int b, bool c, char d ,char biomeChar)
+Arrow::Arrow(int a, int b, bool c, char d)
 {
 	m_posSprite.x = a;
 	m_posSprite.y = b;
 	m_posSprite.z = c;
 	direction = d;
-	biome = biomeChar;
 	activated = false;
 	frameActuelle = 0;
 }
 
 
-void River::LoadAllTextures()
+void Arrow::LoadAllTextures()
 {
-	switch (biome)
-	{
-
-	case '1':
-		LoadGLTextures("river", "river_01.png");
-		LoadGLTextures("river", "river_02.png");
-		LoadGLTextures("river", "river_03.png");
-		LoadGLTextures("river", "riverSplash_01.png");
-		LoadGLTextures("river", "riverSplash_02.png");
-		LoadGLTextures("river", "riverSplash_03.png");
-		break;
-
-	case '2':
-		LoadGLTextures("river", "2corrupted/river_01.png");
-		LoadGLTextures("river", "2corrupted/river_02.png");
-		LoadGLTextures("river", "2corrupted/river_03.png");
-		LoadGLTextures("river", "2corrupted/riverSplash_01.png");
-		LoadGLTextures("river", "2corrupted/riverSplash_02.png");
-		LoadGLTextures("river", "2corrupted/riverSplash_03.png");
-		break;
-	}
+	LoadGLTextures("arrow", "2corrupted/river_01.png");
+	LoadGLTextures("arrow", "2corrupted/river_02.png");
+	LoadGLTextures("arrow", "2corrupted/river_03.png");
+	LoadGLTextures("arrow", "2corrupted/riverSplash_01.png");
+	LoadGLTextures("arrow", "2corrupted/riverSplash_02.png");
+	LoadGLTextures("arrow", "2corrupted/riverSplash_03.png");
 }
 
 
 
-void River::Draw()
+void Arrow::Draw()
 {
 	if (direction == 'l')
 	{
@@ -64,7 +48,7 @@ void River::Draw()
 				glEnable(GL_TEXTURE_2D);
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, river[frame + 3]);
+				glBindTexture(GL_TEXTURE_2D, arrow[frame + 3]);
 				glBegin(GL_QUADS);
 				glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
 				glVertex2d(m_posSprite.x, m_posSprite.y); glTexCoord2f(1.0f, 1.0f);
@@ -96,7 +80,7 @@ void River::Draw()
 				glEnable(GL_TEXTURE_2D);
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, river[frame]);
+				glBindTexture(GL_TEXTURE_2D, arrow[frame]);
 				glBegin(GL_QUADS);
 				glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
 				glVertex2d(m_posSprite.x, m_posSprite.y); glTexCoord2f(1.0f, 1.0f);
@@ -127,7 +111,7 @@ void River::Draw()
 				glEnable(GL_TEXTURE_2D);
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, river[frame + 3]);
+				glBindTexture(GL_TEXTURE_2D, arrow[frame + 3]);
 				glBegin(GL_QUADS);
 				glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
 				glVertex2d(m_posSprite.x, m_posSprite.y); glTexCoord2f(1.0f, 1.0f);
@@ -159,7 +143,7 @@ void River::Draw()
 				glEnable(GL_TEXTURE_2D);
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, river[frame]);
+				glBindTexture(GL_TEXTURE_2D, arrow[frame]);
 				glBegin(GL_QUADS);
 				glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
 				glVertex2d(m_posSprite.x, m_posSprite.y); glTexCoord2f(1.0f, 1.0f);
@@ -190,7 +174,7 @@ void River::Draw()
 				glEnable(GL_TEXTURE_2D);
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, river[frame + 3]);
+				glBindTexture(GL_TEXTURE_2D, arrow[frame + 3]);
 				glBegin(GL_QUADS);
 				glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
 				glVertex2d(m_posSprite.x, m_posSprite.y); glTexCoord2f(1.0f, 1.0f);
@@ -222,7 +206,7 @@ void River::Draw()
 				glEnable(GL_TEXTURE_2D);
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, river[frame]);
+				glBindTexture(GL_TEXTURE_2D, arrow[frame]);
 				glBegin(GL_QUADS);
 				glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
 				glVertex2d(m_posSprite.x, m_posSprite.y); glTexCoord2f(1.0f, 1.0f);
@@ -253,7 +237,7 @@ void River::Draw()
 				glEnable(GL_TEXTURE_2D);
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, river[frame + 3]);
+				glBindTexture(GL_TEXTURE_2D, arrow[frame + 3]);
 				glBegin(GL_QUADS);
 				glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
 				glVertex2d(m_posSprite.x, m_posSprite.y); glTexCoord2f(1.0f, 1.0f);
@@ -285,7 +269,7 @@ void River::Draw()
 				glEnable(GL_TEXTURE_2D);
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, river[frame]);
+				glBindTexture(GL_TEXTURE_2D, arrow[frame]);
 				glBegin(GL_QUADS);
 				glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
 				glVertex2d(m_posSprite.x, m_posSprite.y); glTexCoord2f(1.0f, 1.0f);
@@ -301,11 +285,11 @@ void River::Draw()
 
 }
 
-void River::activation()
+void Arrow::activation()
 {
 	activated = true;
 }
 
-River::~River()
+Arrow::~Arrow()
 {
 }

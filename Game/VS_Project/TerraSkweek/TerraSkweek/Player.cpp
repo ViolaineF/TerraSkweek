@@ -605,6 +605,16 @@ void Player::Draw()
 	
 }
 
+void Player::SetMoving(bool a)
+{
+	m_moving = a;
+}
+
+bool Player::IsMoving()
+{
+	return m_moving;
+}
+
 Player::Player() : Entity()
 {
 	//m_name = name;
@@ -615,6 +625,7 @@ Player::Player() : Entity()
 	m_dir = 'l';
 	m_speed = 0.1;
 	idle.resize(0);
+	m_moving = 0;
 	//LoadGLTextures( /*"idle",*/"Art/player.png");
 }
 

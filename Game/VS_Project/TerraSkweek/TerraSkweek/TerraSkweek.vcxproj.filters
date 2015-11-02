@@ -75,10 +75,10 @@
     <ClCompile Include="TNT.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="River.cpp">
+    <ClCompile Include="HUD.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="HUD.cpp">
+    <ClCompile Include="Arrow.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -140,10 +140,10 @@
     <ClInclude Include="TNT.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="River.h">
+    <ClInclude Include="HUD.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="HUD.h">
+    <ClInclude Include="Arrow.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>

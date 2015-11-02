@@ -55,7 +55,7 @@ void DrawLevel();
 //void Idle();
 //void EnemiesTimer(int x);
 void PlayerMovt(int x);
-
+void NoKeyAction();
 
 void main() {
 	cout << "ok";
@@ -71,14 +71,13 @@ void main() {
 	//Gestion de la fenetre
 	glutInitWindowPosition(10, 10);
 	glutInitWindowSize(500, 500);
-//	glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE);		A remplacer pour l'affichage sur d'autres PC par GLUT_DOUBLE
-	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
+	glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE);		//A remplacer pour l'affichage sur d'autres PC par GLUT_DOUBLE
+//	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 	glutCreateWindow("TerraSkweek");
 
 	//----------------------- LOAD EVERYBODY'S SPRITES
 	lvl01.LoadAllTextures();
 	player.LoadAllTextures();
-	//slime_01.LoadAllTextures();
 
 
 	
@@ -86,16 +85,14 @@ void main() {
 	glutDisplayFunc(Display);
 	glutReshapeFunc(Redim);
 	glutSpecialFunc(KeyAction); // Switch player's direction
+
 	glutKeyboardFunc(invisibility);// Keyboard keys to control the HUD // and Fire
 	//glutTimerFunc(700, EnemiesTimer, 0); // Direction for the enemiesd
 	glutTimerFunc(refreshRate, PlayerMovt, 0); // Continuous movement of the player
 	//glutIdleFunc(Idle);
 
 
-
 	glutMainLoop();
-
-	
 }
 
 
@@ -185,6 +182,11 @@ void PrintImg(float i, float j, float width, float height, int textureIt) {
 
 void PlayerMovt(int x) {
 
+
+	cout << player.GetDir() << endl;
+
+	if (player.IsMoving()) {
+
 	// Save previous position to revert changes if the new one is invalid
 	Position playerPrevPos = { player.GetPos().x, player.GetPos().y, player.GetPos().z };
 
@@ -202,6 +204,7 @@ void PlayerMovt(int x) {
 	case 'd':
 		player.MoveDown();
 		break;
+
 	}
 
 	int newX = (player.GetPos().x); // for easier (and shorter) operation
@@ -222,8 +225,8 @@ void PlayerMovt(int x) {
 	// ----------------- CHECK WALLS AND CONVERT v2
 	switch (player.GetDir())
 	{
-	case 'u' :
-		switch (lvl01.Map(pXleft,pYup))
+	case 'u':
+		switch (lvl01.Map(pXleft, pYup))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
@@ -233,6 +236,9 @@ void PlayerMovt(int x) {
 			break;
 		case 2: //Ground converted
 			break;
+		case 3: //Gap
+			// player's m_life--;
+			break;
 		}
 
 		switch (lvl01.Map(pXright, pYup))
@@ -241,9 +247,12 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			lvl01.SetMap(pXrightConv , pYupConv, 2);
+			lvl01.SetMap(pXrightConv, pYupConv, 2);
 			break;
 		case 2: //Ground converted
+			break;
+		case 3: //Gap
+				// player's m_life--;
 			break;
 		}
 
@@ -260,6 +269,9 @@ void PlayerMovt(int x) {
 			break;
 		case 2: //Ground converted
 			break;
+		case 3: //Gap
+				// player's m_life--;
+			break;
 		}
 
 		switch (lvl01.Map(pXright, pYdown))
@@ -271,12 +283,15 @@ void PlayerMovt(int x) {
 			lvl01.SetMap(pXrightConv, pYdownConv, 2);
 			break;
 		case 2: //Ground converted
+			break;
+		case 3: //Gap
+				// player's m_life--;
 			break;
 		}
 
 		break;
 
-	case 'r' : 
+	case 'r':
 		switch (lvl01.Map(pXright, pYdown))
 		{
 		case 1:// Walls
@@ -286,6 +301,9 @@ void PlayerMovt(int x) {
 			lvl01.SetMap(pXrightConv, pYdownConv, 2);
 			break;
 		case 2: //Ground converted
+			break;
+		case 3: //Gap
+				// player's m_life--;
 			break;
 		}
 
@@ -299,8 +317,10 @@ void PlayerMovt(int x) {
 			break;
 		case 2: //Ground converted
 			break;
+		case 3: //Gap
+				// player's m_life--;
+			break;
 		}
-
 		break;
 
 
@@ -315,6 +335,9 @@ void PlayerMovt(int x) {
 			break;
 		case 2: //Ground converted
 			break;
+		case 3: //Gap
+				// player's m_life--;
+			break;
 		}
 
 		switch (lvl01.Map(pXleft, pYdown))
@@ -327,11 +350,13 @@ void PlayerMovt(int x) {
 			break;
 		case 2: //Ground converted
 			break;
+		case 3: //Gap
+				// player's m_life--;
+			break;
 		}
-
 		break;
 	}
-
+}
 
 	//------------------------ MOVE ALL ENEMIES 
 	lvl01.MoveAllEnemies();
@@ -344,6 +369,8 @@ void PlayerMovt(int x) {
 
 	//Reset Timer
 	glutTimerFunc(refreshRate, PlayerMovt, 0);
+
+	player.SetMoving(0);
 }
 
 
@@ -378,7 +405,7 @@ void Display() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	DrawLevel(); // Affiche le niveau
-//	glFlush();		A remplacer par glutSwapBuffers.
+	glFlush();		//A remplacer par glutSwapBuffers.
 //	glutSwapBuffers();
 
 }
@@ -420,29 +447,32 @@ void invisibility(unsigned char key, int y, int z) {
 		lvl01.NewFire("player", player.GetDir(), player.GetPos());
 		cout << "NewFire" << endl;
 	}
-
-
 }
+
 
 //-------------------------- PLAYER MOVEMENTS
 void KeyAction(int key, int x, int y) {
 
-			switch (key)
-		{
-		case GLUT_KEY_LEFT:
-			player.SwitchDir('l');
-			break;
-		case GLUT_KEY_RIGHT:
-			player.SwitchDir('r');
-			break;
-		case GLUT_KEY_UP:
-			player.SwitchDir('u');
-			break;
-		case GLUT_KEY_DOWN:
-			player.SwitchDir('d');
-			break;
-		}
+		switch (key)
+	{
+	case GLUT_KEY_LEFT:
+		player.SwitchDir('l');
+		player.SetMoving(1);
+		break;
+	case GLUT_KEY_RIGHT:
+		player.SwitchDir('r');
+		player.SetMoving(1);
+		break;
+	case GLUT_KEY_UP:
+		player.SwitchDir('u');
+		player.SetMoving(1);
+		break;
+	case GLUT_KEY_DOWN:
+		player.SwitchDir('d');
+		player.SetMoving(1);
+		break;
 
+	}
 }
 
 
@@ -482,7 +512,6 @@ void KeyAction(int key, int x, int y) {
 //			break;
 //		}
 //
-//
 //		//Check if Teleportation
 //		if ((ghost1.GetPos().x == m_teleportLeft.x - 1) && (ghost1.GetPos().y == m_teleportLeft.y)) {// If Player is on the Teleport platform on the Left of the screen
 //			ghost1.Teleport(m_teleportRight);//Teleport to the Right of the screen
@@ -504,7 +533,6 @@ void KeyAction(int key, int x, int y) {
 //
 //
 //}
-
 
 
 //-----------------------------WHAT HAPPENS WHEN NOTHING HAPPENS :)
@@ -563,4 +591,4 @@ void KeyAction(int key, int x, int y) {
 //		player.Teleport(m_start);
 //	}
 //}
-//
+
