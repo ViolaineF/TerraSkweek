@@ -30,6 +30,7 @@ HUD::HUD()
 
 void HUD::PrintImg(int i, int j, int width, int height, std::vector<GLuint> vecTex ,int textureIt)
 {
+
 	glEnable(GL_TEXTURE_2D); // Start textures
 	glBindTexture(GL_TEXTURE_2D, vecTex[textureIt]);
 	glBegin(GL_QUADS);
@@ -42,6 +43,7 @@ void HUD::PrintImg(int i, int j, int width, int height, std::vector<GLuint> vecT
 
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
+
 }
 
 

@@ -30,7 +30,7 @@ int LoadGLTextures(string name) // Load Bitmaps And Convert To Textures
 
 //----------------------CREATE PLAYER AND LEVELS
 Grid lvl01("2corrupted");
-
+HUD hud;
 Player player;
 
 
@@ -59,6 +59,7 @@ void NoKeyAction();
 
 void main() {
 	cout << "ok";
+	hud.LoadAllTextures();
 
 	//------------------LOAD RANDOM
 	srand(time(NULL)); // Create a seed to start the random from
@@ -392,6 +393,9 @@ void DrawLevel() {
 	// Translate Map
 	glLoadIdentity();
 	glTranslatef(-player.GetPos().x + 4, -player.GetPos().y + 4, 0);
+	glPushMatrix();
+	hud.displayScore(player.GetLife(), player.GetWeapon());
+	glPopMatrix();
 	glutSwapBuffers();
 
 }
