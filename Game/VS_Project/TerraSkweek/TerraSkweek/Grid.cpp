@@ -79,13 +79,13 @@ Grid::~Grid()
 
 void Grid::SetMap(int x, int y, int a)
 {
+	map[x][y] = a;
+
 	if (a == 4) {
-		map[x][y] = a;
 		vecCaseAnimated.push_back(new CaseAnimation(x, y, "conversion"));
 
 	}
 	else {
-		map[x][y] = a;
 	}
 		
 }
@@ -298,14 +298,6 @@ void Grid::DisplayMap()
 			case 4 : // Conversion animation
 				PrintImg(i, j, 1, 1, 0); // Corrupted floor
 
-				// add conversion animation over it
-				for (unsigned int k = 0; k < vecCaseAnimated.size(); k++) {
-					if (vecCaseAnimated[k]->Draw(1)) {
-						SetMap(i, j, 2); // If the animation is complete, convert floor
-						vecCaseAnimated.erase(vecCaseAnimated.begin() + k);// Destroy it
-						k--;
-					}
-				}
 				break;
 			}
 		}
@@ -315,6 +307,15 @@ void Grid::DisplayMap()
 
 void Grid::DrawSpecialCases()
 {
+	// add conversion animation over corrupted floor
+	for (unsigned int k = 0; k < vecCaseAnimated.size(); k++) {
+		if (vecCaseAnimated[k]->Draw(1)) {
+			SetMap(vecCaseAnimated[k]->GetPos().x, vecCaseAnimated[k]->GetPos().y, 2); // If the animation is complete, convert floor
+			vecCaseAnimated.erase(vecCaseAnimated.begin() + k);// Destroy it
+			k--;
+		}
+	}
+
 	for (unsigned int i = 0; i < vecTNT.size(); i++) {
 		vecTNT[i]->Draw();
 	}
