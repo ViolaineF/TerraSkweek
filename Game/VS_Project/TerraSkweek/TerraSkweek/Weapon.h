@@ -54,7 +54,7 @@ public:
 	Weapon(Position, bool, int);
 	Weapon(string, char, Position);
 
-	void MoveFire();
+	bool MoveFire();
 	//void DrawSprite(Position);
 	void DrawFire();
 
@@ -64,6 +64,7 @@ public:
 	int GetType();
 	void SetType(int);
 
+	void SetCurrentFrame(int);
 	void SetImpact(bool);
 	bool IsDestroyed();
 
