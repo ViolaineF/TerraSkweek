@@ -185,7 +185,7 @@ void Player::Draw()
 {
 	//cout << m_life << endl;
 
-	const int vitesse = 4000;
+	const int vitesse = 400;
 	currentFrame = (currentFrame + 1) % vitesse;
 	unsigned int frame = currentFrame * 4 / vitesse;
 	
@@ -430,8 +430,6 @@ void Player::Draw()
 
 	else if (m_firing)
 	{
-
-
 		if ((m_life <= 150 && m_life >= 50))
 		{
 			switch (m_dir)
@@ -722,6 +720,11 @@ void Player::SetWeapon(int type)
 bool Player::IsMoving()
 {
 	return m_moving;
+}
+
+bool Player::IsFiring()
+{
+	return m_firing;
 }
 
 Player::Player() : Entity()
