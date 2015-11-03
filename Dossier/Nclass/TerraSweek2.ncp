@@ -6,7 +6,7 @@
     <Entities>
       <Entity type="Comment">
         <Text>#include "SFML\Audio.hpp"</Text>
-        <Location left="698" top="372" />
+        <Location left="673" top="303" />
         <Size width="160" height="75" />
       </Entity>
       <Entity type="Comment">
@@ -28,8 +28,8 @@ using namespace std;</Text>
         <Member type="Field">vector&lt;GLuint&gt; textures</Member>
         <Member type="Constructor">public Animation()</Member>
         <Member type="Method">int LoadGLTextures()</Member>
-        <Member type="Method">void Draw(bool animated)</Member>
-        <Member type="Method">void LoadAllTextures(string directory)</Member>
+        <Member type="Method">void Draw(bool animated, position Pos)</Member>
+        <Member type="Method">void LoadAllTextures(string directory, int nbrText)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
@@ -94,7 +94,7 @@ using namespace std;</Text>
       <Entity type="Structure">
         <Name>position</Name>
         <Access>Public</Access>
-        <Location left="75" top="172" />
+        <Location left="719" top="425" />
         <Size width="162" height="187" />
         <Collapsed>False</Collapsed>
         <Member type="Field">int x</Member>
@@ -145,15 +145,6 @@ using namespace std;</Text>
         <Member type="Method">void Attack()</Member>
         <Member type="Method">void Death()</Member>
         <Member type="Constructor">public Entity(position pos, int life, int def, int dir, weapon weap, AudioFile hurt, AudioFile death)</Member>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Class">
-        <Name>Object</Name>
-        <Access>Public</Access>
-        <Location left="306" top="149" />
-        <Size width="162" height="216" />
-        <Collapsed>False</Collapsed>
-        <Member type="Field">Position m_pos</Member>
         <Modifier>None</Modifier>
       </Entity>
     </Entities>
@@ -226,11 +217,11 @@ using namespace std;</Text>
         <Direction>Unidirectional</Direction>
         <AssociationType>Association</AssociationType>
       </Relationship>
-      <Relationship type="Dependency" first="7" second="11">
+      <Relationship type="Dependency" first="7" second="2">
         <Label>
         </Label>
-        <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Horizontal</EndOrientation>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
       </Relationship>
     </Relationships>
   </ProjectItem>
