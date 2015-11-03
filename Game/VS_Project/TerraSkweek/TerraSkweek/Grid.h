@@ -31,7 +31,7 @@ private:
 	int m_timer;
 	int m_rows;
 	int m_lignes;
-	int map[10][10];
+	int map[20][20];
 	vector<GLuint> textures;
 	vector<CaseAnimation*> vecCaseAnimated;
 	vector<Enemy*> vecEnemies;
