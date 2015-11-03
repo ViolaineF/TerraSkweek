@@ -198,13 +198,15 @@ void HUD::displayScore(float life, int weapon)
 
 	switch (weapon)
 	{
-	case 0: PrintImg(22, 0, 1, 1, icons, 1);
+	case 0: PrintImg(22, 0, 1, 1, icons, 0);
 		break;
-	case 1: PrintImg(22, 0, 1, 1, icons, 2);		
+	case 1: PrintImg(22, 0, 1, 1, icons, 1);		
 		break;
-	case 2: PrintImg(22, 0, 1, 1, icons, 3);		
+	case 2: PrintImg(22, 0, 1, 1, icons, 2);		
 		break;
-	case 3: PrintImg(22, 0, 1, 1, icons, 4);		
+	case 3: PrintImg(22, 0, 1, 1, icons, 3);		
+		break;
+	case 4: PrintImg(22, 0, 1, 1, icons, 4);
 		break;
 	}
 
