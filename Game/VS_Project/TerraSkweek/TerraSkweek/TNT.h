@@ -14,7 +14,7 @@ public:
 	bool checkExp();
 	void activation();
 	TNT();
-	TNT(int, int, bool);
+	TNT(float, float, bool);
 	void LoadAllTextures();
 	~TNT();
 };

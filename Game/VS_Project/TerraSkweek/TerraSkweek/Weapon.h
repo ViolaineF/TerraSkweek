@@ -28,7 +28,7 @@ bool operator!=(const Position &a, const Position &b);
 class Weapon
 {
 protected:
-	Position m_posSprite;
+	//Position m_posSprite;
 	Position m_pos;
 	char m_dir;
 	int m_damage;
@@ -37,6 +37,7 @@ protected:
 	bool m_impact;
 	bool m_destroy;
 	int currentFrame;
+	bool m_drop; 
 	AudioFile s_fire;
 	AudioFile s_impact;
 
@@ -50,10 +51,11 @@ protected:
 	
 public:
 	Weapon();
+	Weapon(Position, bool, int);
 	Weapon(string, char, Position);
 
 	void MoveFire();
-	void DrawSprite(Position);
+	//void DrawSprite(Position);
 	void DrawFire();
 
 	Position GetPos();

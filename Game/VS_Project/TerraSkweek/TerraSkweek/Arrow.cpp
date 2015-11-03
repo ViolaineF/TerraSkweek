@@ -6,11 +6,10 @@ Arrow::Arrow()
 	frameActuelle = 0;
 }
 
-Arrow::Arrow(int a, int b, bool c, char d)
+Arrow::Arrow(float a, float b, bool c, char d)
 {
-	m_posSprite.x = a;
-	m_posSprite.y = b;
-	m_posSprite.z = c;
+	m_pos = { a, b, c };
+	m_drop = true; // Because it's not moving nor animated
 	direction = d;
 	activated = false;
 	frameActuelle = 0;
@@ -35,7 +34,6 @@ void Arrow::Draw()
 	{
 		if (activated)
 		{
-			DrawSprite(m_posSprite);
 			const int vitesse = 600;
 			frameActuelle = (frameActuelle + 1) % vitesse;
 			int frame = frameActuelle * 3 / vitesse;
@@ -51,10 +49,10 @@ void Arrow::Draw()
 				glBindTexture(GL_TEXTURE_2D, arrow[frame + 3]);
 				glBegin(GL_QUADS);
 				glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_posSprite.x, m_posSprite.y); glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_posSprite.x + 1, m_posSprite.y); glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_posSprite.x + 1, m_posSprite.y + 1);	glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_posSprite.x, m_posSprite.y + 1);	glEnd();
+				glVertex2d(m_pos.x, m_pos.y); glTexCoord2f(1.0f, 1.0f);
+				glVertex2d(m_pos.x + 1, m_pos.y); glTexCoord2f(1.0f, 0.0f);
+				glVertex2d(m_pos.x + 1, m_pos.y + 1);	glTexCoord2f(0.0f, 0.0f);
+				glVertex2d(m_pos.x, m_pos.y + 1);	glEnd();
 				glDisable(GL_TEXTURE_2D);
 				glPopMatrix();
 				glutPostRedisplay();
@@ -67,7 +65,6 @@ void Arrow::Draw()
 		}
 		else
 		{
-			DrawSprite(m_posSprite);
 			const int vitesse = 600;
 			frameActuelle = (frameActuelle + 1) % vitesse;
 			int frame = frameActuelle * 3 / vitesse;
@@ -83,10 +80,10 @@ void Arrow::Draw()
 				glBindTexture(GL_TEXTURE_2D, arrow[frame]);
 				glBegin(GL_QUADS);
 				glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_posSprite.x, m_posSprite.y); glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_posSprite.x + 1, m_posSprite.y); glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_posSprite.x + 1, m_posSprite.y + 1);	glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_posSprite.x, m_posSprite.y + 1);	glEnd();
+				glVertex2d(m_pos.x, m_pos.y); glTexCoord2f(1.0f, 1.0f);
+				glVertex2d(m_pos.x + 1, m_pos.y); glTexCoord2f(1.0f, 0.0f);
+				glVertex2d(m_pos.x + 1, m_pos.y + 1);	glTexCoord2f(0.0f, 0.0f);
+				glVertex2d(m_pos.x, m_pos.y + 1);	glEnd();
 				glDisable(GL_TEXTURE_2D);
 				glPopMatrix();
 				glutPostRedisplay();
@@ -98,7 +95,6 @@ void Arrow::Draw()
 	{
 		if (activated)
 		{
-			DrawSprite(m_posSprite);
 			const int vitesse = 600;
 			frameActuelle = (frameActuelle + 1) % vitesse;
 			int frame = frameActuelle * 3 / vitesse;
@@ -114,10 +110,10 @@ void Arrow::Draw()
 				glBindTexture(GL_TEXTURE_2D, arrow[frame + 3]);
 				glBegin(GL_QUADS);
 				glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_posSprite.x, m_posSprite.y); glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_posSprite.x + 1, m_posSprite.y); glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_posSprite.x + 1, m_posSprite.y + 1);	glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_posSprite.x, m_posSprite.y + 1);	glEnd();
+				glVertex2d(m_pos.x, m_pos.y); glTexCoord2f(1.0f, 1.0f);
+				glVertex2d(m_pos.x + 1, m_pos.y); glTexCoord2f(1.0f, 0.0f);
+				glVertex2d(m_pos.x + 1, m_pos.y + 1);	glTexCoord2f(0.0f, 0.0f);
+				glVertex2d(m_pos.x, m_pos.y + 1);	glEnd();
 				glDisable(GL_TEXTURE_2D);
 				glPopMatrix();
 				glutPostRedisplay();
@@ -130,7 +126,6 @@ void Arrow::Draw()
 		}
 		else
 		{
-			DrawSprite(m_posSprite);
 			const int vitesse = 600;
 			frameActuelle = (frameActuelle + 1) % vitesse;
 			int frame = frameActuelle * 3 / vitesse;
@@ -146,10 +141,10 @@ void Arrow::Draw()
 				glBindTexture(GL_TEXTURE_2D, arrow[frame]);
 				glBegin(GL_QUADS);
 				glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_posSprite.x, m_posSprite.y); glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_posSprite.x + 1, m_posSprite.y); glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_posSprite.x + 1, m_posSprite.y + 1);	glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_posSprite.x, m_posSprite.y + 1);	glEnd();
+				glVertex2d(m_pos.x, m_pos.y); glTexCoord2f(1.0f, 1.0f);
+				glVertex2d(m_pos.x + 1, m_pos.y); glTexCoord2f(1.0f, 0.0f);
+				glVertex2d(m_pos.x + 1, m_pos.y + 1);	glTexCoord2f(0.0f, 0.0f);
+				glVertex2d(m_pos.x, m_pos.y + 1);	glEnd();
 				glDisable(GL_TEXTURE_2D);
 				glPopMatrix();
 				glutPostRedisplay();
@@ -161,7 +156,6 @@ void Arrow::Draw()
 	{
 		if (activated)
 		{
-			DrawSprite(m_posSprite);
 			const int vitesse = 600;
 			frameActuelle = (frameActuelle + 1) % vitesse;
 			int frame = frameActuelle * 3 / vitesse;
@@ -177,10 +171,10 @@ void Arrow::Draw()
 				glBindTexture(GL_TEXTURE_2D, arrow[frame + 3]);
 				glBegin(GL_QUADS);
 				glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_posSprite.x, m_posSprite.y); glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_posSprite.x + 1, m_posSprite.y); glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_posSprite.x + 1, m_posSprite.y + 1);	glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_posSprite.x, m_posSprite.y + 1);	glEnd();
+				glVertex2d(m_pos.x, m_pos.y); glTexCoord2f(1.0f, 1.0f);
+				glVertex2d(m_pos.x + 1, m_pos.y); glTexCoord2f(1.0f, 0.0f);
+				glVertex2d(m_pos.x + 1, m_pos.y + 1);	glTexCoord2f(0.0f, 0.0f);
+				glVertex2d(m_pos.x, m_pos.y + 1);	glEnd();
 				glDisable(GL_TEXTURE_2D);
 				glPopMatrix();
 				glutPostRedisplay();
@@ -193,7 +187,6 @@ void Arrow::Draw()
 		}
 		else
 		{
-			DrawSprite(m_posSprite);
 			const int vitesse = 600;
 			frameActuelle = (frameActuelle + 1) % vitesse;
 			int frame = frameActuelle * 3 / vitesse;
@@ -209,10 +202,10 @@ void Arrow::Draw()
 				glBindTexture(GL_TEXTURE_2D, arrow[frame]);
 				glBegin(GL_QUADS);
 				glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_posSprite.x, m_posSprite.y); glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_posSprite.x + 1, m_posSprite.y); glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_posSprite.x + 1, m_posSprite.y + 1);	glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_posSprite.x, m_posSprite.y + 1);	glEnd();
+				glVertex2d(m_pos.x, m_pos.y); glTexCoord2f(1.0f, 1.0f);
+				glVertex2d(m_pos.x + 1, m_pos.y); glTexCoord2f(1.0f, 0.0f);
+				glVertex2d(m_pos.x + 1, m_pos.y + 1);	glTexCoord2f(0.0f, 0.0f);
+				glVertex2d(m_pos.x, m_pos.y + 1);	glEnd();
 				glDisable(GL_TEXTURE_2D);
 				glPopMatrix();
 				glutPostRedisplay();
@@ -224,7 +217,6 @@ void Arrow::Draw()
 	{
 		if (activated)
 		{
-			DrawSprite(m_posSprite);
 			const int vitesse = 600;
 			frameActuelle = (frameActuelle + 1) % vitesse;
 			int frame = frameActuelle * 3 / vitesse;
@@ -240,10 +232,10 @@ void Arrow::Draw()
 				glBindTexture(GL_TEXTURE_2D, arrow[frame + 3]);
 				glBegin(GL_QUADS);
 				glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_posSprite.x, m_posSprite.y); glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_posSprite.x + 1, m_posSprite.y); glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_posSprite.x + 1, m_posSprite.y + 1);	glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_posSprite.x, m_posSprite.y + 1);	glEnd();
+				glVertex2d(m_pos.x, m_pos.y); glTexCoord2f(1.0f, 1.0f);
+				glVertex2d(m_pos.x + 1, m_pos.y); glTexCoord2f(1.0f, 0.0f);
+				glVertex2d(m_pos.x + 1, m_pos.y + 1);	glTexCoord2f(0.0f, 0.0f);
+				glVertex2d(m_pos.x, m_pos.y + 1);	glEnd();
 				glDisable(GL_TEXTURE_2D);
 				glPopMatrix();
 				glutPostRedisplay();
@@ -256,7 +248,6 @@ void Arrow::Draw()
 		}
 		else
 		{
-			DrawSprite(m_posSprite);
 			const int vitesse = 600;
 			frameActuelle = (frameActuelle + 1) % vitesse;
 			int frame = frameActuelle * 3 / vitesse;
@@ -272,10 +263,10 @@ void Arrow::Draw()
 				glBindTexture(GL_TEXTURE_2D, arrow[frame]);
 				glBegin(GL_QUADS);
 				glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_posSprite.x, m_posSprite.y); glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_posSprite.x + 1, m_posSprite.y); glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_posSprite.x + 1, m_posSprite.y + 1);	glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_posSprite.x, m_posSprite.y + 1);	glEnd();
+				glVertex2d(m_pos.x, m_pos.y); glTexCoord2f(1.0f, 1.0f);
+				glVertex2d(m_pos.x + 1, m_pos.y); glTexCoord2f(1.0f, 0.0f);
+				glVertex2d(m_pos.x + 1, m_pos.y + 1);	glTexCoord2f(0.0f, 0.0f);
+				glVertex2d(m_pos.x, m_pos.y + 1);	glEnd();
 				glDisable(GL_TEXTURE_2D);
 				glPopMatrix();
 				glutPostRedisplay();

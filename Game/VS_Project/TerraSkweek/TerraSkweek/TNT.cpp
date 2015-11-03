@@ -9,11 +9,10 @@ TNT::TNT()
 	frameActuelle = 0;
 }
 
-TNT::TNT(int a, int b, bool c)
+TNT::TNT(float a, float b, bool c)
 {
-	m_posSprite.x = a;
-	m_posSprite.y = b;
-	m_posSprite.z = c;
+	m_pos = { a, b, c };
+	m_drop = true; // Because it's not moving nor animated by default
 	activated = false;
 	exploded = false;
 	endTNT = false;
@@ -74,7 +73,6 @@ void TNT::Draw()
 
 	if (activated && exploded == false && endTNT == false)
 	{
-		DrawSprite(m_posSprite);
 		const int vitesse = 3700;
 		frameActuelle = (frameActuelle + 1) % vitesse;
 		int frame = frameActuelle * 4 / vitesse;
@@ -90,10 +88,10 @@ void TNT::Draw()
 			glBindTexture(GL_TEXTURE_2D, tnt[4 - frame]);
 			glBegin(GL_QUADS);
 			glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
-			glVertex2d(m_posSprite.x, m_posSprite.y); glTexCoord2f(1.0f, 1.0f);
-			glVertex2d(m_posSprite.x + 1, m_posSprite.y); glTexCoord2f(1.0f, 0.0f);
-			glVertex2d(m_posSprite.x + 1, m_posSprite.y + 1);	glTexCoord2f(0.0f, 0.0f);
-			glVertex2d(m_posSprite.x, m_posSprite.y + 1);	glEnd();
+			glVertex2d(m_pos.x, m_pos.y); glTexCoord2f(1.0f, 1.0f);
+			glVertex2d(m_pos.x + 1, m_pos.y); glTexCoord2f(1.0f, 0.0f);
+			glVertex2d(m_pos.x + 1, m_pos.y + 1);	glTexCoord2f(0.0f, 0.0f);
+			glVertex2d(m_pos.x, m_pos.y + 1);	glEnd();
 			glDisable(GL_TEXTURE_2D);
 			glPopMatrix();
 			glutPostRedisplay();
@@ -115,10 +113,10 @@ void TNT::Draw()
 		glBindTexture(GL_TEXTURE_2D, tnt[0]);
 		glBegin(GL_QUADS);
 		glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
-		glVertex2d(m_posSprite.x, m_posSprite.y); glTexCoord2f(1.0f, 1.0f);
-		glVertex2d(m_posSprite.x + 1, m_posSprite.y); glTexCoord2f(1.0f, 0.0f);
-		glVertex2d(m_posSprite.x + 1, m_posSprite.y + 1);	glTexCoord2f(0.0f, 0.0f);
-		glVertex2d(m_posSprite.x, m_posSprite.y + 1);	glEnd();
+		glVertex2d(m_pos.x, m_pos.y); glTexCoord2f(1.0f, 1.0f);
+		glVertex2d(m_pos.x + 1, m_pos.y); glTexCoord2f(1.0f, 0.0f);
+		glVertex2d(m_pos.x + 1, m_pos.y + 1);	glTexCoord2f(0.0f, 0.0f);
+		glVertex2d(m_pos.x, m_pos.y + 1);	glEnd();
 		glDisable(GL_TEXTURE_2D);
 		glPopMatrix();
 		glutPostRedisplay();
@@ -140,10 +138,10 @@ void TNT::Draw()
 			glBindTexture(GL_TEXTURE_2D, tnt[0 + frame]);
 			glBegin(GL_QUADS);
 			glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
-			glVertex2d(m_posSprite.x - 1, m_posSprite.y - 1); glTexCoord2f(1.0f, 1.0f);
-			glVertex2d(m_posSprite.x + 2, m_posSprite.y - 1); glTexCoord2f(1.0f, 0.0f);
-			glVertex2d(m_posSprite.x + 2, m_posSprite.y + 2);	glTexCoord2f(0.0f, 0.0f);
-			glVertex2d(m_posSprite.x - 1, m_posSprite.y + 2);	glEnd();
+			glVertex2d(m_pos.x, m_pos.y); glTexCoord2f(1.0f, 1.0f);
+			glVertex2d(m_pos.x + 1, m_pos.y); glTexCoord2f(1.0f, 0.0f);
+			glVertex2d(m_pos.x + 1, m_pos.y + 1);	glTexCoord2f(0.0f, 0.0f);
+			glVertex2d(m_pos.x, m_pos.y + 1);	glEnd();
 			glDisable(GL_TEXTURE_2D);
 			glPopMatrix();
 			glutPostRedisplay();
@@ -166,10 +164,10 @@ void TNT::Draw()
 		glBindTexture(GL_TEXTURE_2D, tnt[4]);
 		glBegin(GL_QUADS);
 		glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
-		glVertex2d(m_posSprite.x - 1, m_posSprite.y - 1); glTexCoord2f(1.0f, 1.0f);
-		glVertex2d(m_posSprite.x + 2, m_posSprite.y - 1); glTexCoord2f(1.0f, 0.0f);
-		glVertex2d(m_posSprite.x + 2, m_posSprite.y + 2);	glTexCoord2f(0.0f, 0.0f);
-		glVertex2d(m_posSprite.x - 1, m_posSprite.y + 2);	glEnd();
+		glVertex2d(m_pos.x, m_pos.y); glTexCoord2f(1.0f, 1.0f);
+		glVertex2d(m_pos.x + 1, m_pos.y); glTexCoord2f(1.0f, 0.0f);
+		glVertex2d(m_pos.x + 1, m_pos.y + 1);	glTexCoord2f(0.0f, 0.0f);
+		glVertex2d(m_pos.x, m_pos.y + 1);	glEnd();
 		glDisable(GL_TEXTURE_2D);
 		glPopMatrix();
 		glutPostRedisplay();

@@ -12,7 +12,7 @@ public:
 	void Draw();
 	void activation();
 	Arrow();
-	Arrow(int, int, bool, char);
+	Arrow(float, float, bool, char);
 	void LoadAllTextures();
 	~Arrow();
 };

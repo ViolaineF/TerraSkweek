@@ -14,19 +14,6 @@ Grid::Grid(string biome)
 	m_rows = 20;
 	m_lignes = 20;
 
-	//int mapTemp[10][10] = {
-	//	1,1,1,1,1,1,1,1,1,1,
-	//	1,0,0,0,1,0,0,0,0,1,
-	//	1,0,0,0,1,0,0,0,0,1,
-	//	1,1,0,0,1,0,0,1,1,1,
-	//	1,1,1,0,0,0,0,0,0,1,
-	//	1,1,0,0,0,0,0,0,0,1,
-	//	1,0,0,1,1,1,1,0,0,1,
-	//	1,0,0,0,0,0,1,0,0,1,
-	//	1,0,0,0,0,0,1,0,0,1,
-	//	1,1,1,1,1,1,1,1,1,1,
-	//};
-
 	int mapTemp[20][20] = {
 		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 		1,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,
@@ -376,7 +363,11 @@ void Grid::DrawEnemies()
 	//--------------- DELETE ALL DEAD ENEMIES
 	for (unsigned int i = 0; i < vecEnemies.size(); i++) {
 		if (vecEnemies[i]->IsDead()) { // If the Enemy has played its death animation entirely
-			vecEnemies.erase(vecEnemies.begin() + i);// Destroy it
+
+			//------------------DROPS LOOT ON DEATH
+			vecWeapons.push_back(new Weapon(vecEnemies[i]->GetPos(), true, 1)); // Create new weapon sprite
+			
+			vecEnemies.erase(vecEnemies.begin() + i);// Destroy enemy
 		}
 	}
 
