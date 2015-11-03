@@ -199,11 +199,11 @@ void HUD::displayScore(int life, int weapon)
 		glDisable(GL_TEXTURE_2D);
 	}
 */
-	glPushMatrix();
+//	glPushMatrix();
 	PrintImg(1, 1, 1, 5, infos, 0);
 	PrintImg(7, 1, 1, 1, icons, 1);
 	PrintImg(8, 1, 1, 1, nbrs, 1);
-	glPopMatrix();
+//	glPopMatrix();
 }
 
 void HUD::LoadAllTextures()

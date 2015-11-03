@@ -377,6 +377,9 @@ void PlayerMovt(int x) {
 //----------------------------DRAW LABYRINTHE - PLAYER - ENEMIES - UI
 void DrawLevel() {
 
+	glPushMatrix();
+	glTranslatef(-player.GetPos().x + 4, -player.GetPos().y + 4, 0);
+
 	// Draw map
 	lvl01.DisplayMap();
 	
@@ -394,14 +397,14 @@ void DrawLevel() {
 
 	// Translate Map
 	glLoadIdentity();
-	glTranslatef(-player.GetPos().x + 4, -player.GetPos().y + 4, 0);
-	glPushMatrix();
-	hud.displayScore(player.GetLife(), player.GetWeapon());
-	glPopMatrix();
+
 	glutSwapBuffers();
+	glPopMatrix();
 
 	//Draw HUD
+
 	hud.displayScore(player.GetLife(), player.GetWeapon());
+
 }
 
 void Display() {

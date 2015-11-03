@@ -38,7 +38,6 @@ private:
 	vector<TNT*> vecTNT;
 	vector<Arrow*> vecArrow;
 	vector<Weapon*> vecWeapons;
-	HUD hud;
 
 public:
 	int Map(int, int); // return map values

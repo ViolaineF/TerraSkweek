@@ -107,7 +107,6 @@ void Grid::LoadAllTextures()
 	{
 		e->LoadAllTextures();
 	}
-	hud.LoadAllTextures();
 }
 
 int Grid::LoadGLTextures(string name)
