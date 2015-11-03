@@ -391,12 +391,12 @@ void DrawLevel() {
 
 	// Draw map
 	lvl01.DisplayMap();
-	
-	// Add player
-	player.Draw();
 
 	//Draw Enemies
 	lvl01.DrawSpecialCases();
+
+	// Add player
+	player.Draw();
 
 	//Draw Enemies
 	lvl01.DrawEnemies();
@@ -459,8 +459,7 @@ void invisibility(unsigned char key, int y, int z) {
 	//cout << light << endl;
 
 // -------------------------------- PLAYER FIRE
-	if (key == ' ') {
-
+	if (key == ' ' && (player.IsFiring() == false)) {
 		player.Attack();
 		lvl01.NewFire(player.GetWeapon(), player.GetDir(), player.GetPos());
 	}

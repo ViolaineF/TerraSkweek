@@ -463,7 +463,8 @@ void Grid::MoveAllEnemies()
 
 void Grid::NewFire(int type, char dir, Position pos)
 {
-		vecWeapons.push_back(new Weapon(type, dir, pos));
+	vecWeapons.push_back(new Weapon(type, dir, pos));
+	
 }
 
 void Grid::MoveAllFires()

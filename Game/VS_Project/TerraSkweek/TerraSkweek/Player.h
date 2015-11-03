@@ -27,6 +27,7 @@ public:
 	void SetMoving(bool);
 	void SetWeapon(int);
 	bool IsMoving();
+	bool IsFiring();
 
 	Player();
 	~Player();
