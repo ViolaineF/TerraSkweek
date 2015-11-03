@@ -26,6 +26,90 @@ HUD::HUD()
 	}
 }
 
+void HUD::LoadAllTextures()
+{
+	LoadGLTextures("nbrs", "HUD/S0.png");				//	0
+	LoadGLTextures("nbrs", "HUD/S1.png");
+	LoadGLTextures("nbrs", "HUD/S2.png");
+	LoadGLTextures("nbrs", "HUD/S3.png");
+	LoadGLTextures("nbrs", "HUD/S4.png");
+	LoadGLTextures("nbrs", "HUD/S5.png");				//	5
+	LoadGLTextures("nbrs", "HUD/S6.png");
+	LoadGLTextures("nbrs", "HUD/S7.png");
+	LoadGLTextures("nbrs", "HUD/S8.png");
+	LoadGLTextures("nbrs", "HUD/S9.png");				//	9
+	LoadGLTextures("infos", "HUD/Score.png");			//	0
+	LoadGLTextures("infos", "HUD/Life.png");
+	LoadGLTextures("infos", "HUD/loose.png");			//	2
+	LoadGLTextures("icons", "HUD/LifeIco.png");			//	0
+	LoadGLTextures("icons", "weapon_01.png");
+	LoadGLTextures("icons", "weapon_02.png");
+	LoadGLTextures("icons", "weapon_03.png");
+	LoadGLTextures("icons", "weapon_04.png");			//	4
+
+}
+
+int HUD::LoadGLTextures(string type, string nameIncomplete)
+{
+	string name = "Art/" + nameIncomplete;
+
+	if (type == "infos")
+	{
+		GLuint essai = SOIL_load_OGL_texture
+			(
+				name.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
+
+		infos.push_back(essai); // Add to the texture vector
+
+		if (infos.at(infos.size() - 1) == 0)
+			return false;
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		return true;       // Return Success
+	}
+
+	else if (type == "nbrs")
+	{
+		GLuint essai = SOIL_load_OGL_texture
+			(
+				name.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
+
+		nbrs.push_back(essai); // Add to the texture vector
+
+		if (nbrs.at(nbrs.size() - 1) == 0)
+			return false;
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		return true;       // Return Success
+	}
+
+	else if (type == "icons")
+	{
+		GLuint essai = SOIL_load_OGL_texture
+			(
+				name.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
+
+		icons.push_back(essai); // Add to the texture vector
+
+		if (icons.at(icons.size() - 1) == 0)
+			return false;
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		return true;       // Return Success
+	}
+}
 
 void HUD::PrintImg(int i, int j, int width, int height, vector<GLuint> vecTex ,int textureIt)
 {
@@ -144,7 +228,7 @@ void HUD::displayScore(float life, int weapon)
 	}
 
 
-	// Draw Life	
+	// Draw Life icon
 
 
 	PrintImg(15, 0, 1, 3, infos, 1);
@@ -189,7 +273,18 @@ void HUD::displayScore(float life, int weapon)
 
 	// Draw Timer
 
-	PrintImg(22, 0, 1, 3, infos, 1);
+	t_unite = timer % 10;
+	t_dizaine = timer / 10 % 10;
+	t_centaine = timer / 100 % 10;
+
+	PrintImg(25, 0, 1, 1, nbrs, t_centaine);
+	PrintImg(26, 0, 1, 1, nbrs, t_dizaine);
+	PrintImg(27, 0, 1, 1, nbrs, t_unite);
+
+	if(timer <= 0)
+		PrintImg(12, 4, 6, 6, infos, 2);
+
+	// Draw Weapon icon
 
 	switch (weapon)
 	{
@@ -207,87 +302,7 @@ void HUD::displayScore(float life, int weapon)
 
 }
 
-void HUD::LoadAllTextures()
+void HUD::checkTimer(int a)
 {
-	LoadGLTextures("nbrs", "HUD/S0.png");				//	0
-	LoadGLTextures("nbrs", "HUD/S1.png");
-	LoadGLTextures("nbrs", "HUD/S2.png");
-	LoadGLTextures("nbrs", "HUD/S3.png");
-	LoadGLTextures("nbrs", "HUD/S4.png");
-	LoadGLTextures("nbrs", "HUD/S5.png");				//	5
-	LoadGLTextures("nbrs", "HUD/S6.png");
-	LoadGLTextures("nbrs", "HUD/S7.png");
-	LoadGLTextures("nbrs", "HUD/S8.png");
-	LoadGLTextures("nbrs", "HUD/S9.png");
-	LoadGLTextures("infos", "HUD/Score.png");			//	10
-	LoadGLTextures("infos", "HUD/Life.png");
-//	LoadGLTextures("infos", "HUD/weapon.png");
-	LoadGLTextures("icons", "HUD/LifeIco.png");
-	LoadGLTextures("icons", "weapon_01.png");
-	LoadGLTextures("icons", "weapon_02.png");
-	LoadGLTextures("icons", "weapon_03.png");
-	LoadGLTextures("icons", "weapon_04.png");
-
-}
-
-int HUD::LoadGLTextures(string type, string nameIncomplete)
-{
-	string name = "Art/" + nameIncomplete;
-
-	if (type == "infos")
-	{
-		GLuint essai = SOIL_load_OGL_texture
-			(
-				name.c_str(),
-				SOIL_LOAD_AUTO,
-				SOIL_CREATE_NEW_ID,
-				SOIL_FLAG_INVERT_Y
-				);
-
-		infos.push_back(essai); // Add to the texture vector
-
-		if (infos.at(infos.size() - 1) == 0)
-			return false;
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		return true;       // Return Success
-	}
-
-	else if (type == "nbrs")
-	{
-		GLuint essai = SOIL_load_OGL_texture
-			(
-				name.c_str(),
-				SOIL_LOAD_AUTO,
-				SOIL_CREATE_NEW_ID,
-				SOIL_FLAG_INVERT_Y
-				);
-
-		nbrs.push_back(essai); // Add to the texture vector
-
-		if (nbrs.at(nbrs.size() - 1) == 0)
-			return false;
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		return true;       // Return Success
-	}
-
-	else if (type == "icons")
-	{
-		GLuint essai = SOIL_load_OGL_texture
-			(
-				name.c_str(),
-				SOIL_LOAD_AUTO,
-				SOIL_CREATE_NEW_ID,
-				SOIL_FLAG_INVERT_Y
-				);
-
-		icons.push_back(essai); // Add to the texture vector
-
-		if (icons.at(icons.size() - 1) == 0)
-			return false;
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		return true;       // Return Success
-	}
+	timer = a;
 }

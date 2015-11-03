@@ -1,3 +1,5 @@
+#include <ctime>
+#include <cstdio>
 #include "Grid.h"
 
 
@@ -35,7 +37,9 @@ Player player;
 const float res = 0.015;
 float screenWidth;
 float screenHeight;
-
+clock_t Clock;
+double ClockDuration;
+int Timer = 180;
 
 //----------------------A SUPPRIMER POUR UTILISER LE DETECTEUR DE LUMIERE
 
@@ -411,7 +415,10 @@ void DrawLevel() {
 	glPopMatrix();
 
 	//Draw HUD
-
+	ClockDuration = (clock() - Clock) / (double)CLOCKS_PER_SEC;
+	if (!Timer <= 0)
+		Timer = 180 - ClockDuration;
+	hud.checkTimer(Timer);
 	hud.displayScore(player.GetLife(), player.GetWeapon());
 
 }
