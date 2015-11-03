@@ -61,14 +61,19 @@ int Enemy::LoadGLTextures(string type,string directory)
 }
 
 //void Enemy::Move(Player player)
-void Enemy::Move(Position playerPos, float light)
+bool Enemy::Move(Position playerPos, float light)
 {
+	if (m_life <= 0) {
+		return false;
+	}
+
+
 	int maxMoves = 20;
 
 	if (light < 1) { // If the player is invisible, move randomly
 		m_random = 1;
 	}
-	else {
+	else { // Chase the player
 		m_random = 0;
 	}
 	// RANDOM MOVE
@@ -150,6 +155,7 @@ void Enemy::Move(Position playerPos, float light)
 		m_randomIt = maxMoves; // Reset the iterator, the enemy will choose another direction on the next move
 	}
 	
+	return true;
 
 }
 
@@ -167,7 +173,6 @@ void Enemy::Draw()
 {
 	const int speed = 1200;
 	currentFrame = (currentFrame + 1) % speed;
-	//int frame = currentFrame * 3 / vitesse;
 
 	//-------------------- CHECK LIFE FIRST
 	if (m_life <= 0) {
@@ -195,7 +200,6 @@ void Enemy::Draw()
 
 			if (frame == (death.size()-1)) { // If the death animation has entirely played itself, then dead is true;
 				m_death = true;
-				cout << "dead" << endl;
 			}
 
 	}

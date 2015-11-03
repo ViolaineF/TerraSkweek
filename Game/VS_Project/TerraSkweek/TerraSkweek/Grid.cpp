@@ -418,46 +418,48 @@ void Grid::MoveAllEnemies()
 		Position prevPos = { vecEnemies[i]->GetPos().x , vecEnemies[i]->GetPos().y , vecEnemies[i]->GetPos().z };
 
 		//--------------------- MOVING ENEMIES
-		vecEnemies[i]->Move(player.GetPos(), light);
+		if (vecEnemies[i]->Move(player.GetPos(), light)) { // If the enemy is moving, then move it and check, else check nothing
+														  
+		    //---------- CHECK COLLISION WITH PLAYER - 1 player
+			if (vecEnemies[i]->GetPos() == player.GetPos()) {
+				player.SetLife(player.GetLife() - vecEnemies[i]->GetDamage()); // Player's life is minus by the enemy's contact damage
+			}
 
+			//----------- CHECK WALL COLLISION
+			int pXleft = round(vecEnemies[i]->GetPos().x - 0.4);
+			int pXright = round(vecEnemies[i]->GetPos().x + 0.4);
+			int pYup = round(vecEnemies[i]->GetPos().y - 0.4);
+			int pYdown = round(vecEnemies[i]->GetPos().y + 0.4);
 
-		//---------- CHECK COLLISION WITH PLAYER - 1 player
-		if (vecEnemies[i]->GetPos() == player.GetPos()) {
-			player.SetLife(player.GetLife() - vecEnemies[i]->GetDamage()); // Player's life is minus by the enemy's contact damage
+			switch (vecEnemies[i]->GetDir())
+			{
+			case 'u':
+				if ((map[pXleft][pYup] == 1) || (map[pXright][pYup] == 1)) { // Check upward
+					vecEnemies[i]->Teleport(prevPos);
+				}
+				break;
+
+			case 'd':
+				if ((map[pXleft][pYdown] == 1) || (map[pXright][pYdown] == 1)) { // Check downward
+					vecEnemies[i]->Teleport(prevPos);
+				}
+				break;
+
+			case 'r':
+				if ((map[pXright][pYdown] == 1) || (map[pXright][pYup] == 1)) { // Check the right side
+					vecEnemies[i]->Teleport(prevPos);
+				}
+				break;
+
+			case 'l':
+				if ((map[pXleft][pYup] == 1) || (map[pXleft][pYdown] == 1)) { // Check the left side
+					vecEnemies[i]->Teleport(prevPos);
+				}
+				break;
+			}
+
 		}
 
-		//----------- CHECK WALL COLLISION
-		int pXleft = round(vecEnemies[i]->GetPos().x - 0.4);
-		int pXright = round(vecEnemies[i]->GetPos().x + 0.4);
-		int pYup = round(vecEnemies[i]->GetPos().y - 0.4);
-		int pYdown = round(vecEnemies[i]->GetPos().y + 0.4);
-
-		switch (vecEnemies[i]->GetDir())
-		{
-		case 'u':
-			if ((map[pXleft][pYup] == 1) || (map[pXright][pYup] == 1)) { // Check upward
-				vecEnemies[i]->Teleport(prevPos);
-			}
-			break;
-
-		case 'd':
-			if ((map[pXleft][pYdown] == 1) || (map[pXright][pYdown] == 1)) { // Check downward
-				vecEnemies[i]->Teleport(prevPos);
-			}
-			break;
-
-		case 'r':
-			if ((map[pXright][pYdown] == 1) || (map[pXright][pYup] == 1)) { // Check the right side
-				vecEnemies[i]->Teleport(prevPos);
-			}
-			break;
-
-		case 'l':
-			if ((map[pXleft][pYup] == 1) || (map[pXleft][pYdown] == 1)) { // Check the left side
-				vecEnemies[i]->Teleport(prevPos);
-			}
-			break;
-		}
 
 	}
 
