@@ -44,13 +44,13 @@ void HUD::PrintImg(int i, int j, int width, int height, vector<GLuint> vecTex ,i
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
 
+
 }
 
 
 
 void HUD::displayScore(int life, int weapon)
 {
-
 	if (life == 0)
 	{
 //		lose
@@ -106,7 +106,7 @@ void HUD::displayScore(int life, int weapon)
 
 /*
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, hudTex[0]);
+	glBindTexture(GL_TEXTURE_2D, infos[0]);
 	glBegin(GL_QUADS);
 	glColor3d(1.0, 1.0, 1.0);
 	glTexCoord2f(0.0f, 0.0f); glVertex2d(1, 1);
@@ -115,7 +115,7 @@ void HUD::displayScore(int life, int weapon)
 	glTexCoord2f(0.0f, 1.0f); glVertex2d(1, 0);
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
-
+	
 	int i = 0;
 	int j = 0;
 
@@ -199,11 +199,11 @@ void HUD::displayScore(int life, int weapon)
 		glDisable(GL_TEXTURE_2D);
 	}
 */
-
+	glPushMatrix();
 	PrintImg(1, 1, 1, 5, infos, 0);
 	PrintImg(7, 1, 1, 1, icons, 1);
 	PrintImg(8, 1, 1, 1, nbrs, 1);
-
+	glPopMatrix();
 }
 
 void HUD::LoadAllTextures()

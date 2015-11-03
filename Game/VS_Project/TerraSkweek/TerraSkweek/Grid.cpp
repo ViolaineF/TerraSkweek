@@ -306,8 +306,6 @@ void Grid::DisplayMap()
 void Grid::DrawSpecialCases()
 {
 
-	//--------------- DRAW ALL SPECIAL CASES
-	hud.displayScore(player.GetLife(), player.GetWeapon());
 
 	for (unsigned int i = 0; i < vecTNT.size(); i++) {
 		vecTNT[i]->Draw();
