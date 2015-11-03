@@ -34,7 +34,7 @@ int LoadGLTextures(string name) // Load Bitmaps And Convert To Textures
 Grid lvl01("2corrupted");
 HUD hud;
 Player player;
-const float res = 0.015;
+const float res = 0.0137;
 float screenWidth;
 float screenHeight;
 clock_t Clock;
@@ -130,8 +130,6 @@ void PrintImg(float i, float j, float width, float height, int textureIt) {
 }
 
 */
-
-
 
 
 //------------------ PRINT INT INTO IMGs
