@@ -33,6 +33,8 @@ Grid lvl01("2corrupted");
 HUD hud;
 Player player;
 const float res = 0.015;
+float screenWidth;
+float screenHeight;
 
 
 //----------------------A SUPPRIMER POUR UTILISER LE DETECTEUR DE LUMIERE
@@ -76,6 +78,9 @@ void main() {
 //	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 	glutCreateWindow("TerraSkweek");
 	glutFullScreen();           // making the window full screen
+
+	screenWidth = glutGet(GLUT_WINDOW_WIDTH);
+	screenHeight = glutGet(GLUT_WINDOW_HEIGHT);
 
 
 	//----------------------- LOAD EVERYBODY'S SPRITES
@@ -181,6 +186,8 @@ void PrintImg(float i, float j, float width, float height, int textureIt) {
 //	}
 //
 //}
+
+
 
 //----------------------------CONTINUOUS PLAYER MOVEMENT + ENEMIES
 
@@ -379,7 +386,8 @@ void PlayerMovt(int x) {
 void DrawLevel() {
 
 	glPushMatrix();
-	glTranslatef(-player.GetPos().x + 4, -player.GetPos().y + 4, 0);
+	//glTranslatef(-player.GetPos().x + 0.5*glutGet(GLUT_WINDOW_WIDTH), -player.GetPos().y + 0.5*glutGet(GLUT_WINDOW_HEIGHT), 0);
+	glTranslatef(-player.GetPos().x + 10, -player.GetPos().y + 10, 0);
 
 	// Draw map
 	lvl01.DisplayMap();
@@ -424,6 +432,7 @@ void Redim(int x, int y) {
 	glViewport(0, 0, x, y);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
+	//gluOrtho2D(0.0, (double)(res*screenWidth), (double)(res*screenHeight), 0.0);
 	gluOrtho2D(0.0, (double)(res*glutGet(GLUT_WINDOW_WIDTH)), (double)(res*glutGet(GLUT_WINDOW_HEIGHT)), 0.0);
 
 }
