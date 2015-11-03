@@ -25,6 +25,7 @@ public:
 	int LoadGLTextures(string, string);
 	void Draw();
 	void SetMoving(bool);
+	void SetWeapon(int);
 	bool IsMoving();
 
 	Player();

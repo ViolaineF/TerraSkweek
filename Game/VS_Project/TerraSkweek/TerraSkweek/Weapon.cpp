@@ -18,6 +18,25 @@ bool operator!=(const Position &a, const Position &b)
 
 Weapon::Weapon()
 {
+	m_pos = { 0.0,0.0,0 };
+	m_dir = 'l';
+	m_damage = 1;
+	m_speed = 0.1;
+	m_type = 1;
+	currentFrame = 0;
+	m_impact = false;
+	m_drop = false;
+	m_destroy = false;
+	//s_fire;
+	//s_impact;
+
+	fireAnimation.resize(0);
+
+	gun.resize(0);
+	freeze.resize(0);
+	invincible.resize(0);
+	tnt.resize(0);
+	arrow.resize(0);
 }
 
 Weapon::Weapon(Position pos, bool dropped, int type)
@@ -31,7 +50,7 @@ Weapon::Weapon(Position pos, bool dropped, int type)
 	LoadAllTextures();
 }
 
-Weapon::Weapon(string emitter, char dir, Position pos)
+Weapon::Weapon(int type, char dir, Position pos)
 {
 	m_dir = dir;
 	m_pos = pos;
@@ -39,11 +58,16 @@ Weapon::Weapon(string emitter, char dir, Position pos)
 	m_impact = 0;
 	m_drop = 0;
 	m_destroy = false;
+	m_type = type;
 
-	if (emitter == "player") {
+	if (type == 1) {
 		m_damage = 1;
 		m_speed = 0.1;
-		m_type = 1;
+		LoadAllTextures();
+	}
+	if (type == 2) {
+		m_damage = 2;
+		m_speed = 0.2;
 		LoadAllTextures();
 	}
 }

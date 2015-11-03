@@ -714,6 +714,11 @@ void Player::SetMoving(bool a)
 	m_moving = a;
 }
 
+void Player::SetWeapon(int type)
+{
+	m_weapon.SetType(type);
+}
+
 bool Player::IsMoving()
 {
 	return m_moving;

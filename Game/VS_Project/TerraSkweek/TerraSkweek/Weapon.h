@@ -52,7 +52,7 @@ protected:
 public:
 	Weapon();
 	Weapon(Position, bool, int);
-	Weapon(string, char, Position);
+	Weapon(int, char, Position);
 
 	bool MoveFire();
 	//void DrawSprite(Position);

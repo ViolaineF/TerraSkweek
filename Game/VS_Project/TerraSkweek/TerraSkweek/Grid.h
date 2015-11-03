@@ -52,7 +52,7 @@ public:
 	void DrawEnemies();
 	void MoveAllEnemies();
 
-	void NewFire(string, char, Position);
+	void NewFire(int, char, Position);
 	void MoveAllFires();
 	void DrawAllFires();
 

@@ -303,6 +303,7 @@ void Grid::DisplayMap()
 					if (vecCaseAnimated[k]->Draw(1)) {
 						SetMap(i, j, 2); // If the animation is complete, convert floor
 						vecCaseAnimated.erase(vecCaseAnimated.begin() + k);// Destroy it
+						k--;
 					}
 				}
 				break;
@@ -314,8 +315,6 @@ void Grid::DisplayMap()
 
 void Grid::DrawSpecialCases()
 {
-
-
 	for (unsigned int i = 0; i < vecTNT.size(); i++) {
 		vecTNT[i]->Draw();
 	}
@@ -381,6 +380,7 @@ void Grid::DrawEnemies()
 			}
 			
 			vecEnemies.erase(vecEnemies.begin() + i);// Destroy enemy
+			i--;
 		}
 	}
 
@@ -388,12 +388,6 @@ void Grid::DrawEnemies()
 	for (unsigned int i = 0; i < vecEnemies.size(); i++) {
 		vecEnemies[i]->Draw();
 	}
-
-	
-	//for (Enemy* c : vecEnemies)
-	//{
-	//	c;
-	//}
 }
 
 
@@ -412,6 +406,7 @@ void Grid::MoveAllEnemies()
 			vecArrow[i]->activation(); // arrow force is activated
 		}
 	}
+
 
 	for (unsigned int i = 0; i < vecEnemies.size(); i++) {
 		// Save previous position if it collides with a wall
@@ -465,9 +460,9 @@ void Grid::MoveAllEnemies()
 
 }
 
-void Grid::NewFire(string emitter, char dir, Position pos)
+void Grid::NewFire(int type, char dir, Position pos)
 {
-		vecWeapons.push_back(new Weapon(emitter, dir, pos));
+		vecWeapons.push_back(new Weapon(type, dir, pos));
 }
 
 void Grid::MoveAllFires()
@@ -519,6 +514,11 @@ void Grid::MoveAllFires()
 			}
 
 		}
+		else if (player.GetPos() == vecWeapons[i]->GetPos()) { // Player get the dropped weapon
+			player.SetWeapon(vecWeapons[i]->GetType());
+			vecWeapons.erase(vecWeapons.begin() + i);
+			i--;
+		}
 
 	}
 }
@@ -529,6 +529,7 @@ void Grid::DrawAllFires()
 	for (unsigned int i = 0; i < vecWeapons.size(); i++) {
 		if (vecWeapons[i]->IsDestroyed()) { // The impact animation has ended
 			vecWeapons.erase(vecWeapons.begin() + i);
+			i--;
 		}
 	}
 

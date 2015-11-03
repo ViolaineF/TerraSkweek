@@ -453,8 +453,7 @@ void invisibility(unsigned char key, int y, int z) {
 	if (key == ' ') {
 
 		player.Attack();
-		lvl01.NewFire("player", player.GetDir(), player.GetPos());
-		cout << "NewFire" << endl;
+		lvl01.NewFire(player.GetWeapon(), player.GetDir(), player.GetPos());
 	}
 }
 
