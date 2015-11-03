@@ -32,6 +32,7 @@ int LoadGLTextures(string name) // Load Bitmaps And Convert To Textures
 Grid lvl01("2corrupted");
 HUD hud;
 Player player;
+const float res = 0.015;
 
 
 //----------------------A SUPPRIMER POUR UTILISER LE DETECTEUR DE LUMIERE
@@ -423,7 +424,7 @@ void Redim(int x, int y) {
 	glViewport(0, 0, x, y);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(0.0, (double)(0.01*glutGet(GLUT_WINDOW_WIDTH)), (double)(0.01*glutGet(GLUT_WINDOW_HEIGHT)), 0.0);
+	gluOrtho2D(0.0, (double)(res*glutGet(GLUT_WINDOW_WIDTH)), (double)(res*glutGet(GLUT_WINDOW_HEIGHT)), 0.0);
 
 }
 
