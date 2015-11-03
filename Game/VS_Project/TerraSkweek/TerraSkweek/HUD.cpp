@@ -4,6 +4,7 @@
 
 HUD::HUD()
 {
+	
 	if (Level == 1)
 	{
 		LevelScore = 20;
@@ -111,7 +112,7 @@ int HUD::LoadGLTextures(string type, string nameIncomplete)
 	}
 }
 
-void HUD::PrintImg(int i, int j, int width, int height, vector<GLuint> vecTex ,int textureIt)
+void HUD::PrintImg(float i, float j, float width, float height, vector<GLuint> vecTex ,int textureIt)
 {
 	glEnable(GL_TEXTURE_2D); // Start textures
 	glBindTexture(GL_TEXTURE_2D, vecTex[textureIt]);
@@ -127,7 +128,7 @@ void HUD::PrintImg(int i, int j, int width, int height, vector<GLuint> vecTex ,i
 	glDisable(GL_TEXTURE_2D);
 }
 
-void HUD::PrintLife(int i, int j, int width, int height, int textureIt, float saturation)
+void HUD::PrintLife(float i, float j, float width, float height, int textureIt, float saturation)
 {
 	glEnable(GL_TEXTURE_2D); // Start textures
 	glBindTexture(GL_TEXTURE_2D, icons[textureIt]);
@@ -172,10 +173,12 @@ void HUD::displayScore(float life, int weapon)
 		//			CheckLife();
 //	}
 
+//	resolution = resolution / glutGet(GLUT_WINDOW_WIDTH);
 
 //Draw SCORE : 0000000
 
-	PrintImg(1, 0, 1, 5, infos, 0);
+
+	PrintImg(2000.0/glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), 5* resolution / glutGet(GLUT_WINDOW_WIDTH), infos, 0);
 	int i = 0;
 	int j = 0;
 
@@ -186,35 +189,30 @@ void HUD::displayScore(float life, int weapon)
 		scoreTab[0] = 0;
 		LevelScore = 9;
 	}
-
 	else if (scoreTab[1] < 0)
 	{
 		scoreTab[1] = 0;
 		scoreTab[2]++;
 		LevelScore = 9;
 	}
-
 	else if (scoreTab[2] > 0)
 	{
 		scoreTab[2] = 0;
 		scoreTab[3] ++;
 		LevelScore = 9;
 	}
-
 	else if (scoreTab[3] > 0)
 	{
 		scoreTab[3] = 0;
 		scoreTab[4] ++;
 		LevelScore = 9;
 	}
-
 	else if (scoreTab[4] > 0)
 	{
 		scoreTab[4] = 0;
 		scoreTab[5] ++;
 		LevelScore = 9;
 	}
-
 	else if (scoreTab[5] > 0)
 	{
 		scoreTab[5] = 0;
@@ -224,79 +222,78 @@ void HUD::displayScore(float life, int weapon)
 	
 	for (i = 0; i < 7; i++)
 	{
-		PrintImg(12 - i, 0, 1, 1, nbrs, 1);
+		PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - i*0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, 1);
 	}
-
 
 	// Draw Life icon
 
-
-	PrintImg(15, 0, 1, 3, infos, 1);
-	
+	PrintImg(22000 / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), 3* resolution / glutGet(GLUT_WINDOW_WIDTH), infos, 1);
+	float PaddingLife = 26000.0;
 	float val_life = life / 50;
 	cout << "life = " << life << endl;
 	cout << "val_life = " << val_life << endl;
 		if (life == 150)
 	{
-		PrintLife(18, 0, 1, 1, 0, 1.0);
-		PrintLife(19, 0, 1, 1, 0, 1.0);
-		PrintLife(20, 0, 1, 1, 0, 1.0);
+		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 1.0);
+		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH) + 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 1.0);
+		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH) + 1, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 1.0);
 	}
 
 	else if (life < 150 && life > 100)
 	{
-		PrintLife(18, 0, 1, 1, 0, 1.0);
-		PrintLife(19, 0, 1, 1, 0, 1.0);
-		PrintLife(20, 0, 1, 1, 0, val_life/3);
+		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH) , 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 1.0);
+		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH) + 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 1.0);
+		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH) + 1, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, val_life/3);
 	}
 
 	else if (life < 100 && life > 50)
 	{
-		PrintLife(18, 0, 1, 1, 0, 1.0);
-		PrintLife(19, 0, 1, 1, 0, val_life / 2);
-		PrintLife(20, 0, 1, 1, 0, 0.0);
+		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH) , 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 1.0);
+		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH) + 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, val_life / 2);
+		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH) + 1, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 0.0);
 	}
 
 	else if (life < 50 && life > 0)
 	{
-		PrintLife(18, 0, 1, 1, 0, val_life);
-		PrintLife(19, 0, 1, 1, 0, 0.0);
-		PrintLife(20, 0, 1, 1, 0, 0.0);
+		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH) , 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, val_life);
+		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH) + 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 0.0);
+		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH) + 1, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 0.0);
 	}
 
 	else
 	{
-		PrintLife(18, 0, 1, 1, 0, 0.0);
-		PrintLife(19, 0, 1, 1, 0, 0.0);
-		PrintLife(20, 0, 1, 1, 0, 0.0);
+		PrintLife(18, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 0.0);
+		PrintLife(19, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 0.0);
+		PrintLife(20, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 0.0);
 	}
 
 	// Draw Timer
+	PrintImg(34000 / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), 3*resolution / glutGet(GLUT_WINDOW_WIDTH), infos, 1);
 
 	t_unite = timer % 10;
 	t_dizaine = timer / 10 % 10;
 	t_centaine = timer / 100 % 10;
 
-	PrintImg(25, 0, 1, 1, nbrs, t_centaine);
-	PrintImg(26, 0, 1, 1, nbrs, t_dizaine);
-	PrintImg(27, 0, 1, 1, nbrs, t_unite);
+	PrintImg(39000 / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, t_centaine);
+	PrintImg(39000 / glutGet(GLUT_WINDOW_WIDTH) + 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, t_dizaine);
+	PrintImg(39000 / glutGet(GLUT_WINDOW_WIDTH) + 1, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, t_unite);
 
 	if(timer <= 0)
-		PrintImg(12, 4, 6, 6, infos, 2);
+		PrintImg(12, 4, 6* resolution / glutGet(GLUT_WINDOW_WIDTH), 6* resolution / glutGet(GLUT_WINDOW_WIDTH), infos, 2);
 
 	// Draw Weapon icon
 
 	switch (weapon)
 	{
-	case 0: PrintImg(28, 0, 1, 1, icons, 0);
+	case 0: PrintImg(45000 / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), icons, 0);
 		break;
-	case 1: PrintImg(28, 0, 1, 1, icons, 1);
+	case 1: PrintImg(45000 / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), icons, 1);
 		break;
-	case 2: PrintImg(28, 0, 1, 1, icons, 2);
+	case 2: PrintImg(45000 / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), icons, 2);
 		break;
-	case 3: PrintImg(28, 0, 1, 1, icons, 3);
+	case 3: PrintImg(45000 / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), icons, 3);
 		break;
-	case 4: PrintImg(28, 0, 1, 1, icons, 4);
+	case 4: PrintImg(45000 / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), icons, 4);
 		break;
 	}
 

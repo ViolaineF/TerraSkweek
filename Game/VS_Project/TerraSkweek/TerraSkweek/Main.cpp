@@ -76,8 +76,8 @@ void main() {
 		
 
 	//Gestion de la fenetre
-	//glutInitWindowPosition(10, 10);
-	//glutInitWindowSize(500, 500);
+	/*glutInitWindowPosition(10, 10);
+	glutInitWindowSize(500, 500);*/
 	glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE);		//A remplacer pour l'affichage sur d'autres PC par GLUT_DOUBLE
 //	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 	glutCreateWindow("TerraSkweek");
@@ -439,7 +439,7 @@ void Redim(int x, int y) {
 	glViewport(0, 0, x, y);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	//gluOrtho2D(0.0, (double)(res*screenWidth), (double)(res*screenHeight), 0.0);
+	//gluOrtho2D(0.0, (double)(20), (double)(20), 0.0);
 	gluOrtho2D(0.0, (double)(res*glutGet(GLUT_WINDOW_WIDTH)), (double)(res*glutGet(GLUT_WINDOW_HEIGHT)), 0.0);
 
 }

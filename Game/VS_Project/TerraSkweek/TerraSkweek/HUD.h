@@ -23,6 +23,8 @@ private:
 	int t_unite = timer % 10;
 	int t_dizaine = timer / 10 % 10;
 	int t_centaine = timer / 100 % 10;
+	float resolution = 1400.0;
+
 	vector<int> timerTab{ 1,8,0};
 	vector<int> scoreTab{ 0,0,0,0,0,0,0};
 	vector<GLuint> nbrs;
@@ -32,8 +34,8 @@ private:
 public:
 	void displayScore(float, int);
 	void LoadAllTextures();
-	void PrintImg(int, int, int, int, vector<GLuint>, int);
-	void PrintLife(int, int, int, int, int, float);
+	void PrintImg(float, float, float, float, vector<GLuint>, int);
+	void PrintLife(float, float, float, float, int, float);
 	void checkTimer(int);
 	int LoadGLTextures(string, string);
 	HUD();
