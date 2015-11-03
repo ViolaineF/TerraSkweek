@@ -21,10 +21,22 @@ void Player::LoadAllTextures()
 	LoadGLTextures("down", "Art/player/player_left_02.png");
 	LoadGLTextures("down", "Art/player/player_left_03.png");
 	LoadGLTextures("down", "Art/player/player_left_04.png");
-	LoadGLTextures("fire", "Art/player/player_fire_01.png");
-	LoadGLTextures("fire", "Art/player/player_fire_02.png");
-	LoadGLTextures("fire", "Art/player/player_fire_03.png");
-	LoadGLTextures("fire", "Art/player/player_fire_04.png");
+	LoadGLTextures("fire_idle", "Art/player/player_fire_01.png");
+	LoadGLTextures("fire_idle", "Art/player/player_fire_02.png");
+	LoadGLTextures("fire_idle", "Art/player/player_fire_03.png");
+	LoadGLTextures("fire_idle", "Art/player/player_fire_04.png");
+	LoadGLTextures("fire_left", "Art/player/player_fire_01.png");
+	LoadGLTextures("fire_left", "Art/player/player_fire_02.png");
+	LoadGLTextures("fire_left", "Art/player/player_fire_03.png");
+	LoadGLTextures("fire_left", "Art/player/player_fire_04.png");
+	LoadGLTextures("fire_up", "Art/player/player_fire_01.png");
+	LoadGLTextures("fire_up", "Art/player/player_fire_02.png");
+	LoadGLTextures("fire_up", "Art/player/player_fire_03.png");
+	LoadGLTextures("fire_up", "Art/player/player_fire_04.png");
+	LoadGLTextures("fire_down", "Art/player/player_fire_01.png");
+	LoadGLTextures("fire_down", "Art/player/player_fire_02.png");
+	LoadGLTextures("fire_down", "Art/player/player_fire_03.png");
+	LoadGLTextures("fire_down", "Art/player/player_fire_04.png");
 
 }
 
@@ -98,8 +110,8 @@ int Player::LoadGLTextures(string type,string name)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		return true;       // Return Success
 	}
-
-	if (type == "fire") {
+	
+	if (type == "fire_idle") {
 		GLuint essai = SOIL_load_OGL_texture
 			(
 				name.c_str(),
@@ -108,13 +120,65 @@ int Player::LoadGLTextures(string type,string name)
 				SOIL_FLAG_INVERT_Y
 				);
 
-		fire.push_back(essai); // Add to the texture vector
-		if (fire.at(fire.size() - 1) == 0)
+		fire_idle.push_back(essai); // Add to the texture vector
+		if (fire_idle.at(fire_idle.size() - 1) == 0)
 			return false;
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		return true;       // Return Success
 	}
+
+	if (type == "fire_left") {
+		GLuint essai = SOIL_load_OGL_texture
+			(
+				name.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
+
+		fire_left.push_back(essai); // Add to the texture vector
+		if (fire_left.at(fire_left.size() - 1) == 0)
+			return false;
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		return true;       // Return Success
+	}
+
+	if (type == "fire_up") {
+		GLuint essai = SOIL_load_OGL_texture
+			(
+				name.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
+
+		fire_up.push_back(essai); // Add to the texture vector
+		if (fire_up.at(fire_up.size() - 1) == 0)
+			return false;
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		return true;       // Return Success
+	}
+
+	if (type == "fire_down") {
+		GLuint essai = SOIL_load_OGL_texture
+			(
+				name.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
+
+		fire_down.push_back(essai); // Add to the texture vector
+		if (fire_down.at(fire_down.size() - 1) == 0)
+			return false;
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		return true;       // Return Success
+	}
+
 }
 
 void Player::Draw()
@@ -127,7 +191,7 @@ void Player::Draw()
 	
 	if (!m_firing)
 	{
-		if (m_life < 6 && m_life > 3)
+		if (m_life < 150 && m_life > 50)
 		{
 			switch (m_dir)
 			{
@@ -244,7 +308,7 @@ void Player::Draw()
 				break;
 			}
 		}
-		if (m_life <= 3)
+		if (m_life <= 50)
 		{
 			switch (m_dir)
 				{
@@ -366,7 +430,9 @@ void Player::Draw()
 
 	else if (m_firing)
 	{
-		if ((m_life < 6 && m_life > 3))
+
+
+		if ((m_life < 150 && m_life > 50))
 		{
 			switch (m_dir)
 			{
@@ -376,7 +442,7 @@ void Player::Draw()
 				glEnable(GL_TEXTURE_2D);
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, idle[frame]);
+				glBindTexture(GL_TEXTURE_2D, fire_idle[frame]);
 				glBegin(GL_QUADS);
 				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
@@ -390,6 +456,10 @@ void Player::Draw()
 				glEnd();
 				glDisable(GL_TEXTURE_2D);
 				glPopMatrix();
+
+				if (frame >= fire_idle.size() - 1)
+					m_firing = false;
+
 				break;
 
 			case 'l':
@@ -398,7 +468,7 @@ void Player::Draw()
 				glEnable(GL_TEXTURE_2D);
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, left[frame]);
+				glBindTexture(GL_TEXTURE_2D, fire_left[frame]);
 				glBegin(GL_QUADS);
 				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
@@ -412,8 +482,11 @@ void Player::Draw()
 				glEnd();
 				glDisable(GL_TEXTURE_2D);
 				glPopMatrix();
-				break;
 
+				if (frame >= fire_left.size() - 1)
+					m_firing = false;
+
+				break;
 
 			case 'r':
 				glPushMatrix();
@@ -421,7 +494,7 @@ void Player::Draw()
 				glEnable(GL_TEXTURE_2D);
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, left[frame]);
+				glBindTexture(GL_TEXTURE_2D, fire_left[frame]);
 				glBegin(GL_QUADS);
 				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
@@ -435,6 +508,10 @@ void Player::Draw()
 				glEnd();
 				glDisable(GL_TEXTURE_2D);
 				glPopMatrix();
+
+				if (frame >= fire_left.size() - 1)
+					m_firing = false;
+
 				break;
 
 			case 'u':
@@ -443,7 +520,7 @@ void Player::Draw()
 				glEnable(GL_TEXTURE_2D);
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, up[frame]);
+				glBindTexture(GL_TEXTURE_2D, fire_up[frame]);
 				glBegin(GL_QUADS);
 				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
@@ -457,6 +534,10 @@ void Player::Draw()
 				glEnd();
 				glDisable(GL_TEXTURE_2D);
 				glPopMatrix();
+
+				if (frame >= fire_up.size() - 1)
+					m_firing = false;
+
 				break;
 
 			case 'd':
@@ -466,7 +547,7 @@ void Player::Draw()
 				glEnable(GL_TEXTURE_2D);
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, down[frame]);
+				glBindTexture(GL_TEXTURE_2D, fire_down[frame]);
 				glBegin(GL_QUADS);
 				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
@@ -480,10 +561,15 @@ void Player::Draw()
 				glEnd();
 				glDisable(GL_TEXTURE_2D);
 				glPopMatrix();
+				
+				if (frame >= fire_down.size() - 1)
+					m_firing = false;
+
 				break;
+
 			}
 		}
-		if (m_life <= 3)
+		if (m_life <= 50)
 		{
 			switch (m_dir)
 				{
@@ -494,7 +580,7 @@ void Player::Draw()
 				glEnable(GL_TEXTURE_2D);
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, idle[frame]);
+				glBindTexture(GL_TEXTURE_2D, fire_idle[frame]);
 				glBegin(GL_QUADS);
 				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
@@ -508,6 +594,10 @@ void Player::Draw()
 				glEnd();
 				glDisable(GL_TEXTURE_2D);
 				glPopMatrix();
+
+				if (frame >= fire_idle.size() - 1)
+					m_firing = false;
+
 				break;
 
 			case 'l':
@@ -516,7 +606,7 @@ void Player::Draw()
 				glEnable(GL_TEXTURE_2D);
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, left[frame]);
+				glBindTexture(GL_TEXTURE_2D, fire_left[frame]);
 				glBegin(GL_QUADS);
 				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
@@ -530,8 +620,11 @@ void Player::Draw()
 				glEnd();
 				glDisable(GL_TEXTURE_2D);
 				glPopMatrix();
-				break;
 
+				if (frame >= fire_left.size() - 1)
+					m_firing = false;
+
+				break;
 
 			case 'r':
 				glPushMatrix();
@@ -539,7 +632,7 @@ void Player::Draw()
 				glEnable(GL_TEXTURE_2D);
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, left[frame]);
+				glBindTexture(GL_TEXTURE_2D, fire_left[frame]);
 				glBegin(GL_QUADS);
 				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
@@ -553,6 +646,10 @@ void Player::Draw()
 				glEnd();
 				glDisable(GL_TEXTURE_2D);
 				glPopMatrix();
+
+				if (frame >= fire_left.size() - 1)
+					m_firing = false;
+
 				break;
 
 			case 'u':
@@ -561,7 +658,7 @@ void Player::Draw()
 				glEnable(GL_TEXTURE_2D);
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, up[frame]);
+				glBindTexture(GL_TEXTURE_2D, fire_up[frame]);
 				glBegin(GL_QUADS);
 				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
@@ -575,6 +672,9 @@ void Player::Draw()
 				glEnd();
 				glDisable(GL_TEXTURE_2D);
 				glPopMatrix();
+				if (frame >= fire_up.size() - 1)
+					m_firing = false;
+
 				break;
 
 			case 'd':
@@ -584,7 +684,7 @@ void Player::Draw()
 				glEnable(GL_TEXTURE_2D);
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, down[frame]);
+				glBindTexture(GL_TEXTURE_2D, fire_down[frame]);
 				glBegin(GL_QUADS);
 				glColor4d(1.0, 1.0, 1.0, opacity);
 				glTexCoord2f(1.0f, 1.0f);
@@ -598,6 +698,10 @@ void Player::Draw()
 				glEnd();
 				glDisable(GL_TEXTURE_2D);
 				glPopMatrix();
+
+				if (frame >= fire_down.size() - 1)
+					m_firing = false;
+
 				break;
 			}
 		}

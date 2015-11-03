@@ -12,7 +12,10 @@ private :
 	vector<GLuint>	left;
 	vector<GLuint>	up;
 	vector<GLuint>	down;
-	vector<GLuint>	fire;
+	vector<GLuint>	fire_idle;
+	vector<GLuint>	fire_left;
+	vector<GLuint>	fire_up;
+	vector<GLuint>	fire_down;
 	bool m_moving;
 	float opacity;
 
