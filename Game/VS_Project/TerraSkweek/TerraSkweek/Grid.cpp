@@ -43,6 +43,10 @@ Grid::Grid(string biome)
 		}
 	}
 
+	//------------------------LOAD ENEMY SPAWNER
+
+//	vecCaseAnimated.push_back(new CaseAnimation(10,10,"1forest/spawner"));
+
 
 	//------------------------LOAD CORRESPONDING BIOME'S ENEMIES 
 	char biomeChar = biome[0];
@@ -96,9 +100,9 @@ void Grid::LoadAllTextures()
 	string directory = "Art/" + m_biome + "/";
 
 	//--------------BASE TEXTURES
-	LoadGLTextures( directory + "ground.jpg"); // 0
-	LoadGLTextures( directory + "walls.jpg"); // 1
-	LoadGLTextures( "Art/converted.jpg"); // 2
+	LoadGLTextures( directory + "ground.png"); // 0
+	LoadGLTextures( directory + "walls.png"); // 1
+	LoadGLTextures( "Art/converted.png"); // 2
 
 
 	//-------------------LOAD ENEMIES TEXTURES
@@ -257,11 +261,11 @@ void Grid::PrintImg(int i, int j, int width, int height, int textureIt)
 	glBindTexture(GL_TEXTURE_2D, textures[textureIt]);
 	glBegin(GL_QUADS);
 
-	glColor3d(1.0, 1.0, 1.0);
+	glColor4d(1.0, 1.0, 1.0, 1.0);
 	glTexCoord2f(0.0f, 0.0f); glVertex2d(i,j);
-	glTexCoord2f(0.0f, 1.0f); glVertex2d(i + height, j);
-	glTexCoord2f(1.0f, 1.0f); glVertex2d(i + height, j + width);
-	glTexCoord2f(1.0f, 0.0f); glVertex2d(i, j + width);
+	glTexCoord2f(0.0f, 1.0f); glVertex2d(i + height+0.1, j);
+	glTexCoord2f(1.0f, 1.0f); glVertex2d(i + height+ 0.1, j + width+ 0.1);
+	glTexCoord2f(1.0f, 0.0f); glVertex2d(i, j + width+ 0.1);
 
 	glEnd();
 	glDisable(GL_TEXTURE_2D);

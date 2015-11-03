@@ -132,8 +132,6 @@ void PrintImg(float i, float j, float width, float height, int textureIt) {
 */
 
 
-
-
 //------------------ PRINT INT INTO IMGs
 //void PrintNbr(int x, int y, int val) {
 //
