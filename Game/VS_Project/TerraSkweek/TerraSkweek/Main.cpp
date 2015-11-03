@@ -70,11 +70,13 @@ void main() {
 		
 
 	//Gestion de la fenetre
-	glutInitWindowPosition(10, 10);
-	glutInitWindowSize(500, 500);
+	//glutInitWindowPosition(10, 10);
+	//glutInitWindowSize(500, 500);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE);		//A remplacer pour l'affichage sur d'autres PC par GLUT_DOUBLE
 //	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 	glutCreateWindow("TerraSkweek");
+	glutFullScreen();           // making the window full screen
+
 
 	//----------------------- LOAD EVERYBODY'S SPRITES
 	lvl01.LoadAllTextures();
@@ -416,7 +418,7 @@ void Redim(int x, int y) {
 	glViewport(0, 0, x, y);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(0.0, (double)10, (double)10, 0.0);
+	gluOrtho2D(0.0, (double)(0.01*glutGet(GLUT_WINDOW_WIDTH)), (double)(0.01*glutGet(GLUT_WINDOW_HEIGHT)), 0.0);
 
 }
 
