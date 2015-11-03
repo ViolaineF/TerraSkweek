@@ -471,50 +471,52 @@ void Grid::NewFire(string emitter, char dir, Position pos)
 void Grid::MoveAllFires()
 {
 	for (unsigned int i = 0; i < vecWeapons.size(); i++) {
-		vecWeapons[i]->MoveFire(); // Move the fire sprite
-
-		//---------- CHECK COLLISION WITH ENEMIES
-		for (unsigned int j = 0; j < vecEnemies.size(); j++) {
-			if (vecWeapons[i]->GetPos() == vecEnemies[j]->GetPos()) {
-				vecEnemies[j]->SetLife(vecEnemies[j]->GetLife() - vecWeapons[i]->GetDamage()); // Minus Enemy's life by the fire's damage
-				vecWeapons[i]->SetImpact(1);
-				return; // No need to check walls
-			}
-		}
-
-		//----------- CHECK WALL COLLISION
-		int pXleft = round(vecWeapons[i]->GetPos().x - 0.4);
-		int pXright = round(vecWeapons[i]->GetPos().x + 0.4);
-		int pYup = round(vecWeapons[i]->GetPos().y - 0.4);
-		int pYdown = round(vecWeapons[i]->GetPos().y + 0.4);
-
-		switch (vecWeapons[i]->GetDir())
+		if (vecWeapons[i]->MoveFire()) // Move the fire sprite, if it's not moving then don't check the following
 		{
-		case 'u':
-			if ((map[pXleft][pYup] == 1) || (map[pXright][pYup] == 1)) { // Check upward
-				vecWeapons[i]->SetImpact(1);
+			//---------- CHECK COLLISION WITH ENEMIES
+			for (unsigned int j = 0; j < vecEnemies.size(); j++) {
+				if (vecWeapons[i]->GetPos() == vecEnemies[j]->GetPos()) {
+					vecEnemies[j]->SetLife(vecEnemies[j]->GetLife() - vecWeapons[i]->GetDamage()); // Minus Enemy's life by the fire's damage
+					vecWeapons[i]->SetImpact(1); // Stop the sprite ...
+					//vecWeapons[i]->SetCurrentFrame(1); // ... And start the impact animation
+					return; // No need to check walls
+				}
 			}
-			break;
 
-		case 'd':
-			if ((map[pXleft][pYdown] == 1) || (map[pXright][pYdown] == 1)) { // Check downward
-				vecWeapons[i]->SetImpact(1);
-			}
-			break;
+			//----------- CHECK WALL COLLISION
+			int pXleft = round(vecWeapons[i]->GetPos().x - 0.4);
+			int pXright = round(vecWeapons[i]->GetPos().x + 0.4);
+			int pYup = round(vecWeapons[i]->GetPos().y - 0.4);
+			int pYdown = round(vecWeapons[i]->GetPos().y + 0.4);
 
-		case 'r':
-			if ((map[pXright][pYdown] == 1) || (map[pXright][pYup] == 1)) { // Check the right side
-				vecWeapons[i]->SetImpact(1);
-			}
-			break;
+			switch (vecWeapons[i]->GetDir())
+			{
+			case 'u':
+				if ((map[pXleft][pYup] == 1) || (map[pXright][pYup] == 1)) { // Check upward
+					vecWeapons[i]->SetImpact(1);
+				}
+				break;
 
-		case 'l':
-			if ((map[pXleft][pYup] == 1) || (map[pXleft][pYdown] == 1)) { // Check the left side
-				vecWeapons[i]->SetImpact(1);
+			case 'd':
+				if ((map[pXleft][pYdown] == 1) || (map[pXright][pYdown] == 1)) { // Check downward
+					vecWeapons[i]->SetImpact(1);
+				}
+				break;
+
+			case 'r':
+				if ((map[pXright][pYdown] == 1) || (map[pXright][pYup] == 1)) { // Check the right side
+					vecWeapons[i]->SetImpact(1);
+				}
+				break;
+
+			case 'l':
+				if ((map[pXleft][pYup] == 1) || (map[pXleft][pYdown] == 1)) { // Check the left side
+					vecWeapons[i]->SetImpact(1);
+				}
+				break;
 			}
-			break;
+
 		}
-
 
 	}
 }
@@ -523,7 +525,7 @@ void Grid::DrawAllFires()
 {
 	//----------------------- DELETE ALL FIRE THAT HAS IMPACTED SOMEWHERE
 	for (unsigned int i = 0; i < vecWeapons.size(); i++) {
-		if (vecWeapons[i]->IsDestroyed()) {
+		if (vecWeapons[i]->IsDestroyed()) { // The impact animation has ended
 			vecWeapons.erase(vecWeapons.begin() + i);
 		}
 	}

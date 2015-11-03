@@ -27,6 +27,7 @@ Weapon::Weapon(Position pos, bool dropped, int type)
 	currentFrame = 0; // Weapon texture
 	m_drop = 1;
 	m_type = type;
+	m_destroy = false;
 	LoadAllTextures();
 }
 
@@ -37,6 +38,7 @@ Weapon::Weapon(string emitter, char dir, Position pos)
 	currentFrame = 0;
 	m_impact = 0;
 	m_drop = 0;
+	m_destroy = false;
 
 	if (emitter == "player") {
 		m_damage = 1;
@@ -46,7 +48,7 @@ Weapon::Weapon(string emitter, char dir, Position pos)
 	}
 }
 
-void Weapon::MoveFire()
+bool Weapon::MoveFire()
 {
 	if (!m_drop && !m_impact) { // Move only if it's not a dropped weapon nor impacted nor an Arrow nor TNT
 		
@@ -66,7 +68,10 @@ void Weapon::MoveFire()
 			break;
 		}
 
+		return true;
 	}
+
+	return false; // If not moving
 
 }
 
@@ -79,7 +84,7 @@ void Weapon::MoveFire()
 
 void Weapon::DrawFire()
 {
-	if (m_drop) { // Draw a weapon sprite
+	if (m_drop && !m_impact) { // Draw a weapon sprite
 
 		glPushMatrix();
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -87,7 +92,7 @@ void Weapon::DrawFire()
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glBindTexture(GL_TEXTURE_2D, fireAnimation[0]);
+		glBindTexture(GL_TEXTURE_2D, gun[0]);
 		glBegin(GL_QUADS);
 		glColor3d(1.0, 1.0, 1.0);
 		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
@@ -107,7 +112,7 @@ void Weapon::DrawFire()
 		currentFrame = (currentFrame + 1) % vitesse;
 		int frame = currentFrame * (fireAnimation.size()) / vitesse;
 
-		if (m_impact) {
+		if (m_impact) { // Impact animation
 
 			glPushMatrix();
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -132,7 +137,7 @@ void Weapon::DrawFire()
 				m_destroy = true;
 			}
 		}
-		else {
+		else { // Moving sprite
 
 			glPushMatrix();
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -140,7 +145,7 @@ void Weapon::DrawFire()
 			glEnable(GL_TEXTURE_2D);
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			glBindTexture(GL_TEXTURE_2D, fireAnimation[1]);
+			glBindTexture(GL_TEXTURE_2D, fireAnimation[0]);
 			glBegin(GL_QUADS);
 			glColor3d(1.0, 1.0, 1.0);
 			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
@@ -183,7 +188,7 @@ void Weapon::LoadAllTextures()
 	switch (m_type)
 	{
 	case 1 :
-		LoadGLTextures("fireAnimation", "Weapon_01.png"); // Weapon sprite
+		LoadGLTextures("gun", "Weapon_01.png"); // Weapon sprite
 		LoadGLTextures("fireAnimation", "Bullet_01.png"); // Fire sprite
 		LoadGLTextures("fireAnimation", "Bullet_01_impact_1.png"); // Fire on impact animation
 		LoadGLTextures("fireAnimation", "Bullet_01_impact_2.png");
@@ -193,7 +198,7 @@ void Weapon::LoadAllTextures()
 		break;
 
 	case 2 :
-		LoadGLTextures("fireAnimation", "Weapon_02.png"); // Weapon sprite
+		LoadGLTextures("gun", "Weapon_02.png"); // Weapon sprite
 		LoadGLTextures("fireAnimation", "Bullet_02.png"); // Fire sprite
 		LoadGLTextures("fireAnimation", "Bullet_02_impact_1.png"); // Fire on impact animation
 		LoadGLTextures("fireAnimation", "Bullet_02_impact_2.png");
@@ -335,6 +340,11 @@ int Weapon::GetType()
 void Weapon::SetType(int type)
 {
 	m_type = type;
+}
+
+void Weapon::SetCurrentFrame(int x)
+{
+	currentFrame = x;
 }
 
 void Weapon::SetImpact(bool a)
