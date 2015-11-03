@@ -20,7 +20,7 @@ private:
 	int Level;
 	int LevelScore = 0, totalScore = 0, previousScore = 0, frag = 0;
 	int timer;
-	vector<int> scoreTab{ 0,0,0,0,0,0,0,0 };
+	vector<int> scoreTab{ 0,0,0,0,0,0,0};
 	vector<GLuint> nbrs;
 	vector<GLuint> infos;
 	vector<GLuint> icons;

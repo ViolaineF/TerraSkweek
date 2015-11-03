@@ -137,75 +137,71 @@ void HUD::displayScore(float life, int weapon)
 		scoreTab[6] ++;
 		LevelScore = 9;
 	}
-
-	else if (scoreTab[6] > 0)
+	
+	for (i = 0; i < 7; i++)
 	{
-		scoreTab[6] = 0;
-		scoreTab[7] ++;
-		LevelScore = 9;
+		PrintImg(12 - i, 0, 1, 1, nbrs, 1);
 	}
 
-	for (i = 0; i < 4; i++)
-	{
-		PrintImg(8 - i, 0, 1, 1, nbrs, 1);
-	}
 
-	//______________________ Afficher LIFE : ...	
+	// Draw Life	
 
-	/**/
-	PrintImg(14, 0, 1, 3, infos, 1);
+
+	PrintImg(15, 0, 1, 3, infos, 1);
 	
 	float val_life = life / 50;
 	cout << "life = " << life << endl;
 	cout << "val_life = " << val_life << endl;
 		if (life == 150)
 	{
-		PrintLife(17, 0, 1, 1, 0, 1.0);
 		PrintLife(18, 0, 1, 1, 0, 1.0);
 		PrintLife(19, 0, 1, 1, 0, 1.0);
+		PrintLife(20, 0, 1, 1, 0, 1.0);
 	}
 
 	else if (life < 150 && life > 100)
 	{
-		PrintLife(17, 0, 1, 1, 0, 1.0);
 		PrintLife(18, 0, 1, 1, 0, 1.0);
-		PrintLife(19, 0, 1, 1, 0, val_life/3);
+		PrintLife(19, 0, 1, 1, 0, 1.0);
+		PrintLife(20, 0, 1, 1, 0, val_life/3);
 	}
 
 	else if (life < 100 && life > 50)
 	{
-		PrintLife(17, 0, 1, 1, 0, 1.0);
-		PrintLife(18, 0, 1, 1, 0, val_life / 2);
-		PrintLife(19, 0, 1, 1, 0, 0.0);
+		PrintLife(18, 0, 1, 1, 0, 1.0);
+		PrintLife(19, 0, 1, 1, 0, val_life / 2);
+		PrintLife(20, 0, 1, 1, 0, 0.0);
 	}
 
 	else if (life < 50 && life > 0)
 	{
-		PrintLife(17, 0, 1, 1, 0, val_life);
-		PrintLife(18, 0, 1, 1, 0, 0.0);
+		PrintLife(18, 0, 1, 1, 0, val_life);
 		PrintLife(19, 0, 1, 1, 0, 0.0);
+		PrintLife(20, 0, 1, 1, 0, 0.0);
 	}
 
 	else
 	{
-		PrintLife(17, 0, 1, 1, 0, 0.0);
 		PrintLife(18, 0, 1, 1, 0, 0.0);
 		PrintLife(19, 0, 1, 1, 0, 0.0);
+		PrintLife(20, 0, 1, 1, 0, 0.0);
 	}
 
-	
+	// Draw Timer
+
+	PrintImg(22, 0, 1, 3, infos, 1);
 
 	switch (weapon)
 	{
-	case 0: PrintImg(22, 0, 1, 1, icons, 0);
+	case 0: PrintImg(28, 0, 1, 1, icons, 0);
 		break;
-	case 1: PrintImg(22, 0, 1, 1, icons, 1);		
+	case 1: PrintImg(28, 0, 1, 1, icons, 1);
 		break;
-	case 2: PrintImg(22, 0, 1, 1, icons, 2);		
+	case 2: PrintImg(28, 0, 1, 1, icons, 2);
 		break;
-	case 3: PrintImg(22, 0, 1, 1, icons, 3);		
+	case 3: PrintImg(28, 0, 1, 1, icons, 3);
 		break;
-	case 4: PrintImg(22, 0, 1, 1, icons, 4);
+	case 4: PrintImg(28, 0, 1, 1, icons, 4);
 		break;
 	}
 
