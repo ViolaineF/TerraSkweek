@@ -30,50 +30,39 @@ HUD::HUD()
 
 void HUD::PrintImg(int i, int j, int width, int height, vector<GLuint> vecTex ,int textureIt)
 {
-
 	glEnable(GL_TEXTURE_2D); // Start textures
 	glBindTexture(GL_TEXTURE_2D, vecTex[textureIt]);
 	glBegin(GL_QUADS);
 
-	glColor3d(1.0, 1.0, 1.0);
-	glTexCoord2f(0.0f, 0.0f); glVertex2d(i, j);
-	glTexCoord2f(0.0f, 1.0f); glVertex2d(i + height, j);
-	glTexCoord2f(1.0f, 1.0f); glVertex2d(i + height, j + width);
-	glTexCoord2f(1.0f, 0.0f); glVertex2d(i, j + width);
+	glColor4d(1.0, 1.0, 1.0, 1.0);
+	glTexCoord2f(0.0f, 1.0f); glVertex2d(i, j);
+	glTexCoord2f(1.0f, 1.0f); glVertex2d(i + height, j);
+	glTexCoord2f(1.0f, 0.0f); glVertex2d(i + height, j + width);
+	glTexCoord2f(0.0f, 0.0f); glVertex2d(i, j + width);
 
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
-
-
 }
 
-
-
-void HUD::displayScore(int life, int weapon)
+void HUD::PrintLife(int i, int j, int width, int height, int textureIt, float life)
 {
-	if (life == 0)
-	{
-//		lose
-//		onScreen = true;
-//		screen = 7;
-	}
-	
-	switch (weapon)
-	{
-	case 0:
-		PrintImg(1, 1, 1, 5, icons, 1);
-		break;
-	case 1:
-		PrintImg(1, 1, 1, 5, icons, 2);
-		break;
-	case 2:
-		PrintImg(1, 1, 1, 5, icons, 3);
-		break;
-		//		lose
-		//		onScreen = true;
-		//		screen = 7;
-	}
-	
+	float sat = 1.0 / life;
+	glEnable(GL_TEXTURE_2D); // Start textures
+	glBindTexture(GL_TEXTURE_2D, icons[textureIt]);
+	glBegin(GL_QUADS);
+
+	glColor4d(sat, sat, sat, sat);
+	glTexCoord2f(0.0f, 1.0f); glVertex2d(i, j);
+	glTexCoord2f(1.0f, 1.0f); glVertex2d(i + height, j);
+	glTexCoord2f(1.0f, 0.0f); glVertex2d(i + height, j + width);
+	glTexCoord2f(0.0f, 0.0f); glVertex2d(i, j + width);
+
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
+}
+
+void HUD::displayScore(float life, int weapon)
+{
 
 //	if (LevelScore == 0 && Level == 0)
 //	{
@@ -102,20 +91,9 @@ void HUD::displayScore(int life, int weapon)
 //	}
 
 
-//______________________ Afficher SCORE : 0000
+//Draw SCORE : 0000000
 
-/*
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, infos[0]);
-	glBegin(GL_QUADS);
-	glColor3d(1.0, 1.0, 1.0);
-	glTexCoord2f(0.0f, 0.0f); glVertex2d(1, 1);
-	glTexCoord2f(1.0f, 0.0f); glVertex2d(5, 1);
-	glTexCoord2f(1.0f, 1.0f); glVertex2d(5, 0);
-	glTexCoord2f(0.0f, 1.0f); glVertex2d(1, 0);
-	glEnd();
-	glDisable(GL_TEXTURE_2D);
-	
+	PrintImg(1, 0, 1, 5, infos, 0);
 	int i = 0;
 	int j = 0;
 
@@ -141,95 +119,124 @@ void HUD::displayScore(int life, int weapon)
 		LevelScore = 9;
 	}
 
+	else if (scoreTab[3] > 0)
+	{
+		scoreTab[3] = 0;
+		scoreTab[4] ++;
+		LevelScore = 9;
+	}
+
+	else if (scoreTab[4] > 0)
+	{
+		scoreTab[4] = 0;
+		scoreTab[5] ++;
+		LevelScore = 9;
+	}
+
+	else if (scoreTab[5] > 0)
+	{
+		scoreTab[5] = 0;
+		scoreTab[6] ++;
+		LevelScore = 9;
+	}
+
+	else if (scoreTab[6] > 0)
+	{
+		scoreTab[6] = 0;
+		scoreTab[7] ++;
+		LevelScore = 9;
+	}
+
 	for (i = 0; i < 4; i++)
 	{
-		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, hudTex[scoreTab[i]]);
-		glBegin(GL_QUADS);
-		glColor3d(1.0, 1.0, 1.0);
-		glTexCoord2f(0.0f, 0.0f); glVertex2d(8 - i, 1);
-		glTexCoord2f(1.0f, 0.0f); glVertex2d(9 - i, 1);
-		glTexCoord2f(1.0f, 1.0f); glVertex2d(9 - i, 0);
-		glTexCoord2f(0.0f, 1.0f); glVertex2d(8 - i, 0);
-		glEnd();
-		glDisable(GL_TEXTURE_2D);
+		PrintImg(8 - i, 0, 1, 1, nbrs, 1);
 	}
 
 	//______________________ Afficher LIFE : ...	
 
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, infos[2]);
-	glBegin(GL_QUADS);
-	glColor3d(1.0, 1.0, 1.0);
-	glTexCoord2f(0.0f, 0.0f); glVertex2d(0, 1);
-	glTexCoord2f(1.0f, 0.0f); glVertex2d(1, 1);
-	glTexCoord2f(1.0f, 1.0f); glVertex2d(1, 0);
-	glTexCoord2f(0.0f, 1.0f); glVertex2d(0, 0);
-	glEnd();
-	glDisable(GL_TEXTURE_2D);
+	/**/
+	PrintImg(14, 0, 1, 3, infos, 1);
 
+	float val_life = life / 50;
 
-	glPushMatrix();
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glBindTexture(GL_TEXTURE_2D, hudTex[3]);
-	glBegin(GL_QUADS);
-	glColor3d(1.0, 1.0, 1.0);
-	glTexCoord2f(1.0f, 1.0f); glVertex2d(0, 0);
-	glTexCoord2f(0.0f, 1.0f); glVertex2d( + 1, 0);
-	glTexCoord2f(0.0f, 0.0f); glVertex2d(0 + 1,0 + 1);
-	glTexCoord2f(1.0f, 0.0f); glVertex2d(0, 0+ 1);
-
-
-
-	for (i = 0; i < life; i++)
+	if (life == 150)
 	{
-		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, infos[13]);
-		glBegin(GL_QUADS);
-		glColor3d(1.0, 1.0, 1.0);
-		glTexCoord2f(0.0f, 0.0f); glVertex2d(1 + i, 1);
-		glTexCoord2f(1.0f, 0.0f); glVertex2d(0 + i, 1);
-		glTexCoord2f(1.0f, 1.0f); glVertex2d(0 + i, 0);
-		glTexCoord2f(0.0f, 1.0f); glVertex2d(1 + i, 0);
-		glEnd();
-		glDisable(GL_TEXTURE_2D);
+		PrintLife(17, 0, 1, 1, 0, 1.0);
+		PrintLife(18, 0, 1, 1, 0, 1.0);
+		PrintLife(19, 0, 1, 1, 0, 1.0);
 	}
-*/
-//	glPushMatrix();
-	PrintImg(1, 1, 1, 5, infos, 0);
-	PrintImg(7, 1, 1, 1, icons, 1);
-	PrintImg(8, 1, 1, 1, nbrs, 1);
-//	glPopMatrix();
+
+	else if (life < 150 && life > 100)
+	{
+		PrintLife(17, 0, 1, 1, 0, 1.0);
+		PrintLife(18, 0, 1, 1, 0, 1.0);
+		PrintLife(19, 0, 1, 1, 0, val_life/3);
+	}
+
+	else if (life < 100 && life > 50)
+	{
+		PrintLife(17, 0, 1, 1, 0, 1.0);
+		PrintLife(18, 0, 1, 1, 0, val_life / 2);
+		PrintLife(19, 0, 1, 1, 0, 0.0);
+	}
+
+	else if (life < 50 && life > 0)
+	{
+		PrintLife(17, 0, 1, 1, 0, val_life);
+		PrintLife(18, 0, 1, 1, 0, 0.0);
+		PrintLife(19, 0, 1, 1, 0, 0.0);
+	}
+
+	else
+	{
+		PrintLife(17, 0, 1, 1, 0, 0.0);
+		PrintLife(18, 0, 1, 1, 0, 0.0);
+		PrintLife(19, 0, 1, 1, 0, 0.0);
+	}
+
+	
+
+	switch (weapon)
+	{
+	case 0: PrintImg(22, 0, 1, 1, icons, 1);
+		break;
+	case 1: PrintImg(22, 0, 1, 1, icons, 2);		
+		break;
+	case 2: PrintImg(22, 0, 1, 1, icons, 3);		
+		break;
+	case 3: PrintImg(22, 0, 1, 1, icons, 4);		
+		break;
+	}
+
 }
 
 void HUD::LoadAllTextures()
 {
-	LoadGLTextures("nbrs","HUD/S0.png");				//	0
-	LoadGLTextures("nbrs","HUD/S1.png");
-	LoadGLTextures("nbrs","HUD/S2.png");
-	LoadGLTextures("nbrs","HUD/S3.png");
-	LoadGLTextures("nbrs","HUD/S4.png");
-	LoadGLTextures("nbrs","HUD/S5.png");				//	5
-	LoadGLTextures("nbrs","HUD/S6.png");
-	LoadGLTextures("nbrs","HUD/S7.png");
-	LoadGLTextures("nbrs","HUD/S8.png");
-	LoadGLTextures("nbrs","HUD/S9.png");
-	LoadGLTextures("infos","HUD/Score.png");			//	10
-	LoadGLTextures("infos","HUD/Life.png");
-	LoadGLTextures("infos","HUD/weapon.png");
+	LoadGLTextures("nbrs", "HUD/S0.png");				//	0
+	LoadGLTextures("nbrs", "HUD/S1.png");
+	LoadGLTextures("nbrs", "HUD/S2.png");
+	LoadGLTextures("nbrs", "HUD/S3.png");
+	LoadGLTextures("nbrs", "HUD/S4.png");
+	LoadGLTextures("nbrs", "HUD/S5.png");				//	5
+	LoadGLTextures("nbrs", "HUD/S6.png");
+	LoadGLTextures("nbrs", "HUD/S7.png");
+	LoadGLTextures("nbrs", "HUD/S8.png");
+	LoadGLTextures("nbrs", "HUD/S9.png");
+	LoadGLTextures("infos", "HUD/Score.png");			//	10
+	LoadGLTextures("infos", "HUD/Life.png");
+//	LoadGLTextures("infos", "HUD/weapon.png");
 	LoadGLTextures("icons", "HUD/LifeIco.png");
 	LoadGLTextures("icons", "weapon_01.png");
 	LoadGLTextures("icons", "weapon_02.png");
 	LoadGLTextures("icons", "weapon_03.png");
+	LoadGLTextures("icons", "weapon_04.png");
 
 }
 
-int HUD::LoadGLTextures(string type, string name)
+int HUD::LoadGLTextures(string type, string nameIncomplete)
 {
+	string name = "Art/" + nameIncomplete;
+
 	if (type == "infos")
 	{
 		GLuint essai = SOIL_load_OGL_texture
