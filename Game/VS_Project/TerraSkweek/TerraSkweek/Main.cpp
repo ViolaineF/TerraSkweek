@@ -59,7 +59,6 @@ void NoKeyAction();
 
 void main() {
 	cout << "ok";
-	hud.LoadAllTextures();
 
 	//------------------LOAD RANDOM
 	srand(time(NULL)); // Create a seed to start the random from
@@ -81,6 +80,7 @@ void main() {
 	//----------------------- LOAD EVERYBODY'S SPRITES
 	lvl01.LoadAllTextures();
 	player.LoadAllTextures();
+	hud.LoadAllTextures();
 
 
 	
@@ -400,6 +400,8 @@ void DrawLevel() {
 	glPopMatrix();
 	glutSwapBuffers();
 
+	//Draw HUD
+	hud.displayScore(player.GetLife(), player.GetWeapon());
 }
 
 void Display() {
