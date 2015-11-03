@@ -187,11 +187,11 @@ void Player::Draw()
 
 	const int vitesse = 4000;
 	currentFrame = (currentFrame + 1) % vitesse;
-	int frame = currentFrame * 4 / vitesse;
+	unsigned int frame = currentFrame * 4 / vitesse;
 	
 	if (!m_firing)
 	{
-		if (m_life < 150 && m_life > 50)
+		if (m_life <= 150 && m_life >= 50)
 		{
 			switch (m_dir)
 			{
@@ -308,7 +308,7 @@ void Player::Draw()
 				break;
 			}
 		}
-		if (m_life <= 50)
+		if (m_life < 50)
 		{
 			switch (m_dir)
 				{
@@ -432,7 +432,7 @@ void Player::Draw()
 	{
 
 
-		if ((m_life < 150 && m_life > 50))
+		if ((m_life <= 150 && m_life >= 50))
 		{
 			switch (m_dir)
 			{
@@ -569,7 +569,7 @@ void Player::Draw()
 
 			}
 		}
-		if (m_life <= 50)
+		if (m_life < 50)
 		{
 			switch (m_dir)
 				{
@@ -729,7 +729,7 @@ Player::Player() : Entity()
 	//m_name = name;
 
 	m_pos = { 4,4,0 };
-	m_life = 5;
+	m_life = 150;
 	m_def = 10;
 	m_dir = 'l';
 	m_speed = 0.1;

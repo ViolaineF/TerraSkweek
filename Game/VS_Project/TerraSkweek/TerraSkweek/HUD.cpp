@@ -27,7 +27,6 @@ HUD::HUD()
 }
 
 
-
 void HUD::PrintImg(int i, int j, int width, int height, vector<GLuint> vecTex ,int textureIt)
 {
 	glEnable(GL_TEXTURE_2D); // Start textures
@@ -44,14 +43,13 @@ void HUD::PrintImg(int i, int j, int width, int height, vector<GLuint> vecTex ,i
 	glDisable(GL_TEXTURE_2D);
 }
 
-void HUD::PrintLife(int i, int j, int width, int height, int textureIt, float life)
+void HUD::PrintLife(int i, int j, int width, int height, int textureIt, float saturation)
 {
-	float sat = 1.0 / life;
 	glEnable(GL_TEXTURE_2D); // Start textures
 	glBindTexture(GL_TEXTURE_2D, icons[textureIt]);
 	glBegin(GL_QUADS);
 
-	glColor4d(sat, sat, sat, sat);
+	glColor4d(saturation, saturation, saturation, saturation);
 	glTexCoord2f(0.0f, 1.0f); glVertex2d(i, j);
 	glTexCoord2f(1.0f, 1.0f); glVertex2d(i + height, j);
 	glTexCoord2f(1.0f, 0.0f); glVertex2d(i + height, j + width);
@@ -156,10 +154,11 @@ void HUD::displayScore(float life, int weapon)
 
 	/**/
 	PrintImg(14, 0, 1, 3, infos, 1);
-
+	
 	float val_life = life / 50;
-
-	if (life == 150)
+	cout << "life = " << life << endl;
+	cout << "val_life = " << val_life << endl;
+		if (life == 150)
 	{
 		PrintLife(17, 0, 1, 1, 0, 1.0);
 		PrintLife(18, 0, 1, 1, 0, 1.0);
