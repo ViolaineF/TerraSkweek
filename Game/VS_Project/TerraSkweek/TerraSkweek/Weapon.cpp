@@ -48,7 +48,7 @@ Weapon::Weapon(string emitter, char dir, Position pos)
 
 void Weapon::MoveFire()
 {
-	if (!m_drop) { // Move only if it's not a dropped weapon nor an Arrow or TNT
+	if (!m_drop && !m_impact) { // Move only if it's not a dropped weapon nor impacted nor an Arrow nor TNT
 		
 		switch (m_dir)// Move accordingly
 		{
@@ -102,7 +102,7 @@ void Weapon::DrawFire()
 
 	}
 	else { // Draw a fire sprite
-
+		
 		const int vitesse = 1200;
 		currentFrame = (currentFrame + 1) % vitesse;
 		int frame = currentFrame * (fireAnimation.size()) / vitesse;
