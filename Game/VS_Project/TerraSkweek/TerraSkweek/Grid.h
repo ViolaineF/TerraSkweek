@@ -1,6 +1,7 @@
 #ifndef GRID_H
 #define GRID_H
 
+#include <typeinfo>
 #include "HUD.h"
 #include "Player.h"
 #include "TNT.h"

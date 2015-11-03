@@ -365,7 +365,20 @@ void Grid::DrawEnemies()
 		if (vecEnemies[i]->IsDead()) { // If the Enemy has played its death animation entirely
 
 			//------------------DROPS LOOT ON DEATH
-			vecWeapons.push_back(new Weapon(vecEnemies[i]->GetPos(), true, 1)); // Create new weapon sprite
+			string enemyType = typeid(*vecEnemies[i]).name(); // Get the type of enemy
+
+			if (enemyType == "class Slime_Forest") { // Slime forest Enemy - drops stats
+				
+				int dropType = rand() % 100 + 1; // Give an int between 1 and 100;
+
+				if (dropType >= 1 && dropType <= 25) { // 50% chance to drop weapon 1
+					vecWeapons.push_back(new Weapon(vecEnemies[i]->GetPos(), true, 1));// Create new weapon sprite
+				}
+				else if (dropType >= 26 && dropType <= 100) {
+					vecWeapons.push_back(new Weapon(vecEnemies[i]->GetPos(), true, 2));
+				}
+							
+			}
 			
 			vecEnemies.erase(vecEnemies.begin() + i);// Destroy enemy
 		}

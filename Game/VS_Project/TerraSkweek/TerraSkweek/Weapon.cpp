@@ -180,7 +180,9 @@ char Weapon::GetDir()
 
 void Weapon::LoadAllTextures()
 {
-	if (m_type == 1) {
+	switch (m_type)
+	{
+	case 1 :
 		LoadGLTextures("fireAnimation", "Weapon_01.png"); // Weapon sprite
 		LoadGLTextures("fireAnimation", "Bullet_01.png"); // Fire sprite
 		LoadGLTextures("fireAnimation", "Bullet_01_impact_1.png"); // Fire on impact animation
@@ -188,8 +190,20 @@ void Weapon::LoadAllTextures()
 		LoadGLTextures("fireAnimation", "Bullet_01_impact_3.png");
 		LoadGLTextures("fireAnimation", "Bullet_01_impact_4.png");
 
+		break;
+
+	case 2 :
+		LoadGLTextures("fireAnimation", "Weapon_02.png"); // Weapon sprite
+		LoadGLTextures("fireAnimation", "Bullet_02.png"); // Fire sprite
+		LoadGLTextures("fireAnimation", "Bullet_02_impact_1.png"); // Fire on impact animation
+		LoadGLTextures("fireAnimation", "Bullet_02_impact_2.png");
+		LoadGLTextures("fireAnimation", "Bullet_02_impact_3.png");
+		LoadGLTextures("fireAnimation", "Bullet_02_impact_4.png");
+		
+		break;
+
 	}
-	
+
 }
 
 int Weapon::LoadGLTextures(string type, string nameIncomplete)
