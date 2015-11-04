@@ -298,17 +298,17 @@ void Grid::NewGame(string save)
 
 
 //------------------------------------- PRINT IMAGES TO SCREEN
-void Grid::PrintImg(int i, int j, int width, int height, int textureIt)
+void Grid::PrintImg(float i, float j, float width, float height, int textureIt)
 {
 	glEnable(GL_TEXTURE_2D); // Start textures
 	glBindTexture(GL_TEXTURE_2D, textures[textureIt]);
 	glBegin(GL_QUADS);
 
 	glColor3d(1.0, 1.0, 1.0);
-	glTexCoord2f(0.0f, 0.0f); glVertex2d(i,j);
-	glTexCoord2f(0.0f, 1.0f); glVertex2d(i + height+0.1, j);
-	glTexCoord2f(1.0f, 1.0f); glVertex2d(i + height+ 0.1, j + width+ 0.1);
-	glTexCoord2f(1.0f, 0.0f); glVertex2d(i, j + width+ 0.1);
+	glTexCoord2f(0.0f, 0.0f); glVertex2d(i - 0.5*height, j - 0.5*width);
+	glTexCoord2f(0.0f, 1.0f); glVertex2d(i + height, j - 0.5*width);
+	glTexCoord2f(1.0f, 1.0f); glVertex2d(i + height, j + width);
+	glTexCoord2f(1.0f, 0.0f); glVertex2d(i - 0.5*height, j + width);
 
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
@@ -323,30 +323,30 @@ void Grid::DisplayMap()
 			switch (map[i][j])
 			{
 			case 0:// Floor
-				PrintImg(i, j, 1, 1, 0);
+				PrintImg(i, j, 0.75, 0.75, 0);
 				break;
 			case 1:// Wall
-				PrintImg(i, j, 1, 1, 1);
+				PrintImg(i, j, 0.75, 0.75, 1);
 				break;
 
 			case 2:// Converted Floor
-				PrintImg(i, j, 1, 1, 2);
+				PrintImg(i, j, 0.75, 0.75, 2);
 				break;	
 
 			case 3: // Semi-Converted animation
-				PrintImg(i, j, 1, 1, 0); // Corrupted floor
+				PrintImg(i, j, 0.75, 0.75, 0); // Corrupted floor
 				break;
 
 			case 4 : // Conversion animation
-				PrintImg(i, j, 1, 1, 0); // Corrupted floor
+				PrintImg(i, j, 0.75, 0.75, 0); // Corrupted floor
 				break;
 
 			case 5: // Cracked floor
-				PrintImg(i, j, 1, 1, 0); // Corrupted floor
+				PrintImg(i, j, 0.75, 0.75, 0); // Corrupted floor
 				break;
 
 			case 6: // Fall
-				PrintImg(i, j, 1, 1, 4); // Corrupted floor
+				PrintImg(i, j, 0.75, 0.75, 4); // Corrupted floor
 				break;
 			}
 		}
@@ -367,6 +367,10 @@ void Grid::DrawSpecialCases()
 			if (typeid(*vecCaseAnimated[i]) == typeid(CrackedFloor)) {
 				SetMap(vecCaseAnimated[i]->GetPos().x, vecCaseAnimated[i]->GetPos().y, 6); // ... Convert floor
 			}
+
+			//if (typeid(*vecCaseAnimated[i]) == typeid(SemiConverted)) {
+			//	SetMap(vecCaseAnimated[i]->GetPos().x, vecCaseAnimated[i]->GetPos().y, 2); // ... Convert floor
+			//}
 			
 
 			m_score = m_score + 1;	// SCORE + converted tile
@@ -381,6 +385,13 @@ void Grid::DrawSpecialCases()
 
 				//------------------PLAY SOUND
 				sfx_gap.PlayAudio();
+			}
+
+			if (typeid(*vecCaseAnimated[i]) == typeid(SemiConverted)) {
+				vecCaseAnimated[i]->SetAnimated(true);
+
+				//------------------PLAY SOUND
+
 			}
 		}
 		
@@ -397,13 +408,7 @@ void Grid::DrawSpecialCases()
 	{
 		vecArrow[i]->Draw();
 
-		if (vecCaseAnimated[i]->Draw()) 
-		{// If the animation is complete ...
-
-
-		}
-
-		else if (vecCaseAnimated[i]->GetPos() == player.GetPos()) 
+		if (vecArrow[i]->GetPos() == player.GetPos())
 		{
 			vecArrow[i]->activation(); // Player's movement forced in the direction of the Arrow
 			cout << "moving" << endl;

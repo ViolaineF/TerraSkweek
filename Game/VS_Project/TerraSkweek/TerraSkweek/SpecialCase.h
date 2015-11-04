@@ -12,6 +12,7 @@ protected :
 	int currentFrame;
 	vector<GLuint> animation;
 	bool animated;
+	float m_spriteSize;
 
 
 public:

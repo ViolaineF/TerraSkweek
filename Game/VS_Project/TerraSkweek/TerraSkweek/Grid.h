@@ -54,7 +54,7 @@ public:
 	void SetMap(int, int, int);
 	void LoadAllTextures();
 	int LoadGLTextures(string);
-	void PrintImg(int, int, int, int, int);
+	void PrintImg(float, float, float, float, int);
 	void DisplayMap();
 
 	void DrawSpecialCases();

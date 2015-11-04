@@ -66,18 +66,15 @@ void main() {
 
 	//------------------LOAD RANDOM
 	srand(time(NULL)); // Create a seed to start the random from
-
-
-
+	
 	//------------------ LOAD PLAYER' SAVE
 	//lvl01.LoadGame("player1.txt");
-		
 
 	//Gestion de la fenetre
 	glutInitWindowPosition(10, 10);
 	glutInitWindowSize(500, 500);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE);		//A remplacer pour l'affichage sur d'autres PC par GLUT_DOUBLE
-//	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
+	//glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 	glutCreateWindow("TerraSkweek");
 	//glutFullScreen();           // making the window full screen
 
@@ -207,22 +204,23 @@ void PlayerMovt(int x) {
 	case 'd':
 		player.MoveDown();
 		break;
-
 	}
 
 	int newX = (player.GetPos().x); // for easier (and shorter) operation
 	int newY = (player.GetPos().y);
 	//int newZ = player.GetPos().z;
 
-	int pXleft = round(player.GetPos().x - 0.4);
-	int pXright = round(player.GetPos().x + 0.4);
-	int pYup = round(player.GetPos().y - 0.4);
-	int pYdown = round(player.GetPos().y + 0.4);
+	float off = 0.1;
 
-	int pXleftConv = round(player.GetPos().x - 0.4);
-	int pXrightConv = round(player.GetPos().x + 0.4);
-	int pYupConv = round(player.GetPos().y - 0.4);
-	int pYdownConv = round(player.GetPos().y + 0.4);
+	int pXleft = round(player.GetPos().x - off);
+	int pXright = round(player.GetPos().x + off);
+	int pYup = round(player.GetPos().y - off);
+	int pYdown = round(player.GetPos().y + off);
+
+	int pXleftConv = round(player.GetPos().x - off);
+	int pXrightConv = round(player.GetPos().x + off);
+	int pYupConv = round(player.GetPos().y - off);
+	int pYdownConv = round(player.GetPos().y + off);
 
 	// ----------------- CHECK WALLS AND CONVERT v2
 	switch (player.GetDir())

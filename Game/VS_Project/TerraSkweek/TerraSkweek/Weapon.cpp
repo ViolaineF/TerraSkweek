@@ -5,7 +5,7 @@
 bool operator==(const Position &a, const Position &b)
 {
 	//return (a.x == b.x && a.y==b.y && a.z==b.z);
-	float margin = 0.2;
+	float margin = 0.4;
 	return (a.x <= (b.x+margin) && a.x >= (b.x-margin) && a.y <= (b.y + margin) && a.y >= (b.y - margin) && a.z == b.z);
 
 }
@@ -54,6 +54,8 @@ Weapon::Weapon(int type, char dir, Position pos)
 {
 	m_dir = dir;
 	m_pos = pos;
+
+	m_middle = 0.15;
 
 	currentFrame = 0;
 	m_impact = 0;
@@ -130,8 +132,6 @@ bool Weapon::MoveFire()
 
 void Weapon::DrawFire()
 {
-	m_middle = 0.15;
-
 	if (m_drop && !m_impact) { // Draw a weapon sprite
 
 		glPushMatrix();
@@ -143,10 +143,10 @@ void Weapon::DrawFire()
 		glBindTexture(GL_TEXTURE_2D, gun[0]);
 		glBegin(GL_QUADS);
 		glColor3d(1.0, 1.0, 1.0);
-		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
-		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 1, m_pos.y);
-		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 1, m_pos.y + 1);
-		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 1);
+		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - 2* m_middle, m_pos.y - 2*m_middle);
+		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 4 * m_middle, m_pos.y - 2*m_middle);
+		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 4 * m_middle, m_pos.y + 4 * m_middle);
+		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - 2*m_middle, m_pos.y + 4 * m_middle);
 
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
