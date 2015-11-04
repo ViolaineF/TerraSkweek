@@ -32,7 +32,7 @@ void AudioFile::PlayAudio()
 {
 	if (m_sound) { // if it's a sound
 
-		sound.setVolume(4);
+		sound.setVolume(8);
 		sound.setBuffer(buffer);
 
 		if (!sound.Stopped)

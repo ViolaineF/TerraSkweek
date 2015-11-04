@@ -628,6 +628,7 @@ void Grid::MoveAllFires()
 			player.SetWeapon(vecWeapons[i]->GetType());
 			vecWeapons.erase(vecWeapons.begin() + i);
 			i--;
+			sfx_loot.PlayAudio();
 		}
 
 	}
