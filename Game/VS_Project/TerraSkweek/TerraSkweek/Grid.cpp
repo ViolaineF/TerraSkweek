@@ -79,7 +79,9 @@ Grid::Grid(string biome)
 		vecEnemies.push_back(new Slime_Forest());
 		vecTNT.push_back(new TNT(3, 3, 1));
 		vecArrow.push_back(new Arrow(7, 7, 1, 'l'));
-		vecArrow.push_back(new Arrow(7, 6, 1, 'l'));
+		vecArrow.push_back(new Arrow(7, 6, 1, 'r'));
+		vecArrow.push_back(new Arrow(8, 5, 1, 'd'));
+		vecArrow.push_back(new Arrow(8, 4, 1, 'd'));
 		//vecCaseAnimated.push_back(new SpecialCase(2,5, "cracking"));
 	}
 	else if(biomeChar == '3') // Crimson
@@ -386,11 +388,59 @@ void Grid::DrawSpecialCases()
 
 	for (unsigned int i = 0; i < vecTNT.size(); i++) {
 		vecTNT[i]->Draw();
+
 	}
 
-	for (unsigned int i = 0; i < vecArrow.size(); i++) {
+		///////////////////////////////////////////////////////////////////////////
+	
+	for (unsigned int i = 0; i < vecArrow.size(); i++) 
+	{
 		vecArrow[i]->Draw();
+
+		if (vecCaseAnimated[i]->Draw()) 
+		{// If the animation is complete ...
+
+
+		}
+
+		else if (vecCaseAnimated[i]->GetPos() == player.GetPos()) 
+		{
+			vecArrow[i]->activation(); // Player's movement forced in the direction of the Arrow
+			cout << "moving" << endl;
+
+			Position Player_pos = player.GetPos();
+
+			if (vecArrow[i]->GetDir() == 'r')
+			{
+				Player_pos.x = Player_pos.x + 10;
+				player.Teleport(Player_pos);
+			}
+
+			if (vecArrow[i]->GetDir() == 'l')
+			{
+				Player_pos.x = Player_pos.x - 10;
+				player.Teleport(Player_pos);
+			}
+			if (vecArrow[i]->GetDir() == 'u')
+			{
+				Player_pos.x = Player_pos.y + 10;
+				player.Teleport(Player_pos);
+			}
+			if (vecArrow[i]->GetDir() == 'd')
+			{
+				Player_pos.x = Player_pos.y - 10;
+				player.Teleport(Player_pos);
+			}
+
+		}
 	}
+	
+
+	
+
+	///////////////////////////////////////////////////////////////////////////
+
+
 
 
 	//---------- CHECK COLLISION WITH PLAYER - 1 player
@@ -401,20 +451,70 @@ void Grid::DrawSpecialCases()
 		}
 	}
 
+
+	/*
 	for (unsigned int i = 0; i < vecArrow.size(); i++) {
+
 		if (vecArrow[i]->GetPos() == player.GetPos()) {
 			vecArrow[i]->activation(); // Player's movement forced in the direction of the Arrow
+			cout << "moving" << endl;
+
+			
+			Position Player_pos = player.GetPos();
+
 			if (vecArrow[i]->GetDir() == 'r')
-				player.MoveRight();
+			{
+				Player_pos.x = Player_pos.x + 1;
+				player.Teleport(Player_pos);
+			}
 			if (vecArrow[i]->GetDir() == 'l')
-				player.MoveLeft();
+			{
+				Player_pos.x = Player_pos.x - 1;
+				player.Teleport(Player_pos);
+			}
 			if (vecArrow[i]->GetDir() == 'u')
-				player.MoveUp();
+			{
+				Player_pos.x = Player_pos.y + 1;
+				player.Teleport(Player_pos);
+			}			
 			if (vecArrow[i]->GetDir() == 'd')
+			{
+				Player_pos.x = Player_pos.y - 1;
+				player.Teleport(Player_pos);
+			}
+			//player.MoveDown();
+
+			
+
+
+			if (vecArrow[i]->GetDir() == 'r')
+			{
+				player.MoveRight();
+				cout << "moving" << endl;
+			}
+			if (vecArrow[i]->GetDir() == 'l')
+			{
+				player.MoveLeft();
+				cout << "moving" << endl;
+
+			}
+			if (vecArrow[i]->GetDir() == 'u')
+			{
+				player.MoveUp();
+				cout << "moving" << endl;
+
+			}
+			if (vecArrow[i]->GetDir() == 'd')
+			{
 				player.MoveDown();
+				cout << "moving" << endl;
+
+			}
+
+
 		}
 	}
-
+	*/
 
 	//switch (map[player.GetPos().x][player.GetPos().y])
 	//{
@@ -426,11 +526,6 @@ void Grid::DrawSpecialCases()
 
 	//}
 
-
-
-
-
-	
 }
 
 void Grid::DrawEnemies()
