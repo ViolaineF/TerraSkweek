@@ -258,7 +258,12 @@ void HUD::displayScore(int score, float life, int weapon)
 	PrintImg(22000 / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), 3* resolution / glutGet(GLUT_WINDOW_WIDTH), infos, 1);
 	float PaddingLife = 26000.0;
 	float val_life = life / 50;
+<<<<<<< HEAD
 
+=======
+	//cout << "life = " << life << endl;
+	//cout << "val_life = " << val_life << endl;
+>>>>>>> 7819f507f69f4114fdfd82d5f72b2dbd2cad27f0
 		if (life == 150)
 	{
 		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 1.0);

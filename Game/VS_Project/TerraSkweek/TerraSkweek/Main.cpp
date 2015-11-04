@@ -33,10 +33,10 @@ int LoadGLTextures(string name) // Load Bitmaps And Convert To Textures
 Grid lvl01("2corrupted");
 HUD hud;
 Player player;
-const float res = 0.0137;
-float screenWidth;
-float screenHeight;
-
+const float res = 0.01471;
+int windowWidth = 200;
+int windowHeight = 200;
+bool getWindowSize = true;
 
 //----------------------A SUPPRIMER POUR UTILISER LE DETECTEUR DE LUMIERE
 
@@ -68,6 +68,7 @@ void main() {
 	srand(time(NULL)); // Create a seed to start the random from
 
 
+
 	//------------------ LOAD PLAYER' SAVE
 	//lvl01.LoadGame("player1.txt");
 		
@@ -80,17 +81,12 @@ void main() {
 	glutCreateWindow("TerraSkweek");
 	glutFullScreen();           // making the window full screen
 
-	screenWidth = glutGet(GLUT_WINDOW_WIDTH);
-	screenHeight = glutGet(GLUT_WINDOW_HEIGHT);
-
 
 	//----------------------- LOAD EVERYBODY'S SPRITES
 	lvl01.LoadAllTextures();
 	player.LoadAllTextures();
 	hud.LoadAllTextures();
-
-
-	
+		
 	//Gestion des evenements
 	glutDisplayFunc(Display);
 	glutReshapeFunc(Redim);
@@ -228,7 +224,6 @@ void PlayerMovt(int x) {
 	int pYupConv = round(player.GetPos().y - 0.4);
 	int pYdownConv = round(player.GetPos().y + 0.4);
 
-
 	// ----------------- CHECK WALLS AND CONVERT v2
 	switch (player.GetDir())
 	{
@@ -243,8 +238,14 @@ void PlayerMovt(int x) {
 			break;
 		case 2: //Ground converted
 			break;
-		case 3: //Gap
-			// player's m_life--;
+		case 3: //Semi-converted case
+			lvl01.SetMap(pXleftConv, pYupConv, 4);
+
+			for (int i = -1; i < 2; i++) {
+				for (int j = -1; j < 2; j++) {
+					lvl01.SetMap(pXleftConv+i, pYupConv+j, 4);
+				}
+			}
 			break;
 		}
 
@@ -258,8 +259,14 @@ void PlayerMovt(int x) {
 			break;
 		case 2: //Ground converted
 			break;
-		case 3: //Gap
-				// player's m_life--;
+		case 3: //Semi-converted case
+			lvl01.SetMap(pXrightConv, pYupConv, 4);
+
+			for (int i = -1; i < 2; i++) {
+				for (int j = -1; j < 2; j++) {
+					lvl01.SetMap(pXrightConv + i, pYupConv + j, 4);
+				}
+			}
 			break;
 		}
 
@@ -276,8 +283,14 @@ void PlayerMovt(int x) {
 			break;
 		case 2: //Ground converted
 			break;
-		case 3: //Gap
-				// player's m_life--;
+		case 3: //Semi-converted case
+			lvl01.SetMap(pXleftConv, pYdownConv, 4);
+
+			for (int i = -1; i < 2; i++) {
+				for (int j = -1; j < 2; j++) {
+					lvl01.SetMap(pXleftConv + i, pYdownConv + j, 4);
+				}
+			}
 			break;
 		}
 
@@ -291,8 +304,14 @@ void PlayerMovt(int x) {
 			break;
 		case 2: //Ground converted
 			break;
-		case 3: //Gap
-				// player's m_life--;
+		case 3: //Semi-converted case
+			lvl01.SetMap(pXrightConv, pYdownConv, 4);
+
+			for (int i = -1; i < 2; i++) {
+				for (int j = -1; j < 2; j++) {
+					lvl01.SetMap(pXrightConv + i, pYdownConv + j, 4);
+				}
+			}
 			break;
 		}
 
@@ -309,8 +328,14 @@ void PlayerMovt(int x) {
 			break;
 		case 2: //Ground converted
 			break;
-		case 3: //Gap
-				// player's m_life--;
+		case 3: //Semi-converted case
+			lvl01.SetMap(pXrightConv, pYdownConv, 4);
+
+			for (int i = -1; i < 2; i++) {
+				for (int j = -1; j < 2; j++) {
+					lvl01.SetMap(pXrightConv + i, pYdownConv + j, 4);
+				}
+			}
 			break;
 		}
 
@@ -324,8 +349,14 @@ void PlayerMovt(int x) {
 			break;
 		case 2: //Ground converted
 			break;
-		case 3: //Gap
-				// player's m_life--;
+		case 3: //Semi-converted case
+			lvl01.SetMap(pXrightConv, pYupConv, 4);
+
+			for (int i = -1; i < 2; i++) {
+				for (int j = -1; j < 2; j++) {
+					lvl01.SetMap(pXrightConv + i, pYupConv + j, 4);
+				}
+			}
 			break;
 		}
 		break;
@@ -342,8 +373,14 @@ void PlayerMovt(int x) {
 			break;
 		case 2: //Ground converted
 			break;
-		case 3: //Gap
-				// player's m_life--;
+		case 3: //Semi-converted case
+			lvl01.SetMap(pXleftConv, pYupConv, 4);
+
+			for (int i = -1; i < 2; i++) {
+				for (int j = -1; j < 2; j++) {
+					lvl01.SetMap(pXleftConv + i, pYupConv + j, 4);
+				}
+			}
 			break;
 		}
 
@@ -357,8 +394,14 @@ void PlayerMovt(int x) {
 			break;
 		case 2: //Ground converted
 			break;
-		case 3: //Gap
-				// player's m_life--;
+		case 3: //Semi-converted case
+			lvl01.SetMap(pXleftConv, pYdownConv, 4);
+
+			for (int i = -1; i < 2; i++) {
+				for (int j = -1; j < 2; j++) {
+					lvl01.SetMap(pXleftConv + i, pYdownConv + j, 4);
+				}
+			}
 			break;
 		}
 		break;
@@ -427,11 +470,22 @@ void Display() {
 
 void Redim(int x, int y) {
 
+	if (getWindowSize) { // Get the window' size once
+		cout << glutGet(GLUT_WINDOW_WIDTH) << endl;
+		cout << glutGet(GLUT_WINDOW_HEIGHT) << endl;
+		windowWidth = glutGet(GLUT_WINDOW_WIDTH);
+		windowHeight = glutGet(GLUT_WINDOW_HEIGHT);
+
+		getWindowSize = false;
+	}
+
 	glViewport(0, 0, x, y);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	//gluOrtho2D(0.0, (double)(20), (double)(20), 0.0);
-	gluOrtho2D(0.0, (double)(res*glutGet(GLUT_WINDOW_WIDTH)), (double)(res*glutGet(GLUT_WINDOW_HEIGHT)), 0.0);
+	gluOrtho2D(0.0, (double)(res*windowWidth), (double)(res*windowHeight), 0.0);
+	//gluOrtho2D(0.0, (double)(res*glutGet(GLUT_SCREEN_WIDTH)), (double)(res*glutGet(GLUT_SCREEN_HEIGHT)), 0.0);
+	//gluOrtho2D(0.0, (double)(res*glutGet(GLUT_WINDOW_WIDTH)), (double)(res*glutGet(GLUT_WINDOW_HEIGHT)), 0.0);
 
 }
 
