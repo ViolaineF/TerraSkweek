@@ -9,10 +9,11 @@
 #include <string>
 #include <vector>
 #include <ctype.h>
-#include "GL\glut.h"
-#include "SOIL\SOIL.h"
 #include <ctime>
 #include <cstdio>
+#include "GL\glut.h"
+#include "SOIL\SOIL.h"
+
 
 using namespace std;
 
@@ -28,7 +29,6 @@ private:
 	float resolution = 1400.0;
 	clock_t Clock;
 	double ClockDuration;
-	int Timer = 180;
 
 	vector<int> timerTab{ 1,8,0};
 	vector<int> scoreTab{ 0,0,0,0,0,0,0};
@@ -37,11 +37,11 @@ private:
 	vector<GLuint> icons;
 
 public:
-	void displayScore(float, int);
+	void displayScore(int, float, int);
 	void LoadAllTextures();
 	void PrintImg(float, float, float, float, vector<GLuint>, int);
 	void PrintLife(float, float, float, float, int, float);
 	int LoadGLTextures(string, string);
-	HUD();
+	HUD(int);
 };
 

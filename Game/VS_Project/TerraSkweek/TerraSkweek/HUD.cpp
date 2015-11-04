@@ -2,27 +2,28 @@
 
 
 
-HUD::HUD()
+HUD::HUD(int Lv)
 {
 	
+	Level = Lv;
 	if (Level == 1)
 	{
-		LevelScore = 20;
+		LevelScore = 0;
 		timer = 210;
 	}
 	else if (Level == 2)
 	{
-		LevelScore = 20;
+		LevelScore = 0;
 		timer = 210;
 	}
 	else if (Level == 3)
 	{
-		LevelScore = 20;
+		LevelScore = 0;
 		timer = 210;
 	}
 	else if (Level == 4)
 	{
-		LevelScore = 20;
+		LevelScore = 0;
 		timer = 210;
 	}
 }
@@ -144,7 +145,7 @@ void HUD::PrintLife(float i, float j, float width, float height, int textureIt, 
 	glDisable(GL_TEXTURE_2D);
 }
 
-void HUD::displayScore(float life, int weapon)
+void HUD::displayScore(int score, float life, int weapon)
 {
 
 //	if (LevelScore == 0 && Level == 0)
@@ -181,57 +182,83 @@ void HUD::displayScore(float life, int weapon)
 	PrintImg(2000.0/glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), 5* resolution / glutGet(GLUT_WINDOW_WIDTH), infos, 0);
 	int i = 0;
 	int j = 0;
+	int s_I = score % 10;
+	int s_X = score / 10 % 10;
+	int s_C = score / 100 % 10;
+	int s_M = score / 1000 % 10;
+	int s_XM = score / 10000 % 10;
+	int s_XXM = score / 100000 % 10;
+	int s_XXXM = score / 1000000 % 10;
 
+
+	cout << "s_I " << s_I << endl;
+	cout << "s_X " << s_X << endl;
+	cout << "s_C " << s_I << endl;
+	cout << "s_M " << s_I << endl;
+	cout << "s_XM " << s_I << endl;
+	cout << "s_XXM " << s_I << endl;
+	/*
 	scoreTab[0] = LevelScore;
-	if (scoreTab[0] > 0)
+	if (s_I > 9)
 	{
 		scoreTab[1] ++;
 		scoreTab[0] = 0;
 		LevelScore = 9;
 	}
-	else if (scoreTab[1] < 0)
+	else if (s_X > 9)
 	{
 		scoreTab[1] = 0;
 		scoreTab[2]++;
 		LevelScore = 9;
 	}
-	else if (scoreTab[2] > 0)
+	else if (s_C > 9)
 	{
 		scoreTab[2] = 0;
 		scoreTab[3] ++;
 		LevelScore = 9;
 	}
-	else if (scoreTab[3] > 0)
+	else if (s_M > 9)
 	{
 		scoreTab[3] = 0;
 		scoreTab[4] ++;
 		LevelScore = 9;
 	}
-	else if (scoreTab[4] > 0)
+	else if (s_XM > 9)
 	{
 		scoreTab[4] = 0;
 		scoreTab[5] ++;
 		LevelScore = 9;
 	}
-	else if (scoreTab[5] > 0)
+	else if (s_XXM > 9)
 	{
 		scoreTab[5] = 0;
 		scoreTab[6] ++;
 		LevelScore = 9;
 	}
+
 	
+
 	for (i = 0; i < 7; i++)
 	{
 		PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - i*0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, 1);
 	}
+	*/
+	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 1 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_C);
+	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 2 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_I);
+	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 3 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_X);
+	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 4 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_C);
+	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 5 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_M);
+	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 6 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_XM);
+	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 7 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_XXM);
+	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 7 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_XXXM);
+
 
 	// Draw Life icon
 
 	PrintImg(22000 / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), 3* resolution / glutGet(GLUT_WINDOW_WIDTH), infos, 1);
 	float PaddingLife = 26000.0;
 	float val_life = life / 50;
-	cout << "life = " << life << endl;
-	cout << "val_life = " << val_life << endl;
+
 		if (life == 150)
 	{
 		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 1.0);
@@ -269,8 +296,8 @@ void HUD::displayScore(float life, int weapon)
 
 	// Draw Timer
 	ClockDuration = (clock() - Clock) / (double)CLOCKS_PER_SEC;
-	if (!Timer <= 0)
-		Timer = 180 - ClockDuration;
+	if (!timer <= 0)
+		timer = 180 - ClockDuration;
 
 	PrintImg(34000 / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), 3*resolution / glutGet(GLUT_WINDOW_WIDTH), infos, 1);
 
@@ -281,6 +308,7 @@ void HUD::displayScore(float life, int weapon)
 	PrintImg(39000 / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, t_centaine);
 	PrintImg(39000 / glutGet(GLUT_WINDOW_WIDTH) + 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, t_dizaine);
 	PrintImg(39000 / glutGet(GLUT_WINDOW_WIDTH) + 1, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, t_unite);
+
 
 	if(timer <= 0)
 		PrintImg(12, 4, 6* resolution / glutGet(GLUT_WINDOW_WIDTH), 6* resolution / glutGet(GLUT_WINDOW_WIDTH), infos, 2);
