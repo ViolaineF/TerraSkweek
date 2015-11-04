@@ -41,6 +41,11 @@ private:
 	vector<TNT*> vecTNT;
 	vector<Arrow*> vecArrow;
 	vector<Weapon*> vecWeapons;
+	AudioFile sfx_e_death{ "Ennemy_death.wav", 1 };
+	AudioFile sfx_e_fire{ "ennemy_shoot.wav", 1 };
+	AudioFile sfx_loot{ "Powerup.wav", 1 };
+	AudioFile sfx_gap{ "timer_explosion.wav", 1 };
+	AudioFile sfx_bullet_hit{ "explosion.wav", 1 };
 
 public:
 	int Map(int, int); // return map values
