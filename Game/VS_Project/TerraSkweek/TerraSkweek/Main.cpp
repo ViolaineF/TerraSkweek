@@ -34,9 +34,9 @@ Grid lvl01("2corrupted");
 HUD hud{ 1 };
 Player player;
 extern int m_score;
-const float res = 0.01471;
 int windowWidth = 200;
 int windowHeight = 200;
+const float res = 0.01471;
 
 //----------------------A SUPPRIMER POUR UTILISER LE DETECTEUR DE LUMIERE
 

@@ -3,6 +3,9 @@
 //----------------------- REF TO EXTERN VARIABLES
 extern int windowWidth;
 extern int windowHeight;
+extern const float res;
+
+
 
 
 
@@ -178,12 +181,12 @@ void HUD::displayScore(int score, float life, int weapon)
 		//			CheckLife();
 //	}
 
-//	resolution = resolution / glutGet(GLUT_WINDOW_WIDTH);
+//	resolution = resolution / windowWidth;
 
 //Draw SCORE : 0000000
+	float dim = resolution*windowWidth*0.04;
 
-
-	PrintImg(2000.0/glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), 5* resolution / glutGet(GLUT_WINDOW_WIDTH), infos, 0);
+	PrintImg(0.5*dim, 0, dim, 5*dim, infos, 0);
 	int i = 0;
 	int j = 0;
 	int s_I = score % 10;
@@ -202,55 +205,58 @@ void HUD::displayScore(int score, float life, int weapon)
 	//cout << "s_XM " << s_I << endl;
 	//cout << "s_XXM " << s_I << endl;
 
-	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 1 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_I);
-	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 2 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_X);
-	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 3 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_C);
-	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 4 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_M);
-	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 5 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_XM);
-	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 6 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_XXM);
-	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 7 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_XXXM);
+	const float offset = 0.2;
+	const float start = 9.3;
+
+	PrintImg(start * dim, 0, dim, dim, nbrs, s_I);
+	PrintImg(start * dim - offset, 0, dim, dim, nbrs, s_X);
+	PrintImg(start * dim - 2*offset, 0, dim, dim, nbrs, s_C);
+	PrintImg(start * dim - 3*offset, 0, dim, dim, nbrs, s_M);
+	PrintImg(start * dim - 4*offset, 0, dim, dim, nbrs, s_XM);
+	PrintImg(start * dim - 5*offset, 0, dim, dim, nbrs, s_XXM);
+	PrintImg(start * dim - 6*offset, 0, dim, dim, nbrs, s_XXXM);
 
 
 	// Draw Life icon
 
-	PrintImg(22000 / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), 3* resolution / glutGet(GLUT_WINDOW_WIDTH), infos, 1);
+	PrintImg(22000 / windowWidth, 0, resolution / windowWidth, 3* resolution / windowWidth, infos, 1);
 	float PaddingLife = 26000.0;
 	float val_life = life / 50;
 
 
 		if (life == 150)
 	{
-		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 1.0);
-		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH) + 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 1.0);
-		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH) + 1, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 1.0);
+		PrintLife(PaddingLife / windowWidth, 0, resolution / windowWidth, resolution / windowWidth, 0, 1.0);
+		PrintLife(PaddingLife / windowWidth + 0.5, 0, resolution / windowWidth, resolution / windowWidth, 0, 1.0);
+		PrintLife(PaddingLife / windowWidth + 1, 0, resolution / windowWidth, resolution / windowWidth, 0, 1.0);
 	}
 
 	else if (life < 150 && life > 100)
 	{
-		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH) , 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 1.0);
-		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH) + 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 1.0);
-		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH) + 1, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, val_life/3);
+		PrintLife(PaddingLife / windowWidth , 0, resolution / windowWidth, resolution / windowWidth, 0, 1.0);
+		PrintLife(PaddingLife / windowWidth + 0.5, 0, resolution / windowWidth, resolution / windowWidth, 0, 1.0);
+		PrintLife(PaddingLife / windowWidth + 1, 0, resolution / windowWidth, resolution / windowWidth, 0, val_life/3);
 	}
 
 	else if (life < 100 && life > 50)
 	{
-		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH) , 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 1.0);
-		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH) + 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, val_life / 2);
-		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH) + 1, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 0.0);
+		PrintLife(PaddingLife / windowWidth , 0, resolution / windowWidth, resolution / windowWidth, 0, 1.0);
+		PrintLife(PaddingLife / windowWidth + 0.5, 0, resolution / windowWidth, resolution / windowWidth, 0, val_life / 2);
+		PrintLife(PaddingLife / windowWidth + 1, 0, resolution / windowWidth, resolution / windowWidth, 0, 0.0);
 	}
 
 	else if (life < 50 && life > 0)
 	{
-		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH) , 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, val_life);
-		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH) + 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 0.0);
-		PrintLife(PaddingLife / glutGet(GLUT_WINDOW_WIDTH) + 1, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 0.0);
+		PrintLife(PaddingLife / windowWidth , 0, resolution / windowWidth, resolution / windowWidth, 0, val_life);
+		PrintLife(PaddingLife / windowWidth + 0.5, 0, resolution / windowWidth, resolution / windowWidth, 0, 0.0);
+		PrintLife(PaddingLife / windowWidth + 1, 0, resolution / windowWidth, resolution / windowWidth, 0, 0.0);
 	}
 
 	else
 	{
-		PrintLife(18, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 0.0);
-		PrintLife(19, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 0.0);
-		PrintLife(20, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), 0, 0.0);
+		PrintLife(18, 0, resolution / windowWidth, resolution / windowWidth, 0, 0.0);
+		PrintLife(19, 0, resolution / windowWidth, resolution / windowWidth, 0, 0.0);
+		PrintLife(20, 0, resolution / windowWidth, resolution / windowWidth, 0, 0.0);
 	}
 
 	// Draw Timer
@@ -258,33 +264,33 @@ void HUD::displayScore(int score, float life, int weapon)
 	if (!timer <= 0)
 		timer = 180 - ClockDuration;
 
-	PrintImg(34000 / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), 3*resolution / glutGet(GLUT_WINDOW_WIDTH), infos, 1);
+	PrintImg(34000 / windowWidth, 0, resolution / windowWidth, 3*resolution / windowWidth, infos, 1);
 
 	t_unite = timer % 10;
 	t_dizaine = timer / 10 % 10;
 	t_centaine = timer / 100 % 10;
 
-	PrintImg(39000 / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, t_centaine);
-	PrintImg(39000 / glutGet(GLUT_WINDOW_WIDTH) + 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, t_dizaine);
-	PrintImg(39000 / glutGet(GLUT_WINDOW_WIDTH) + 1, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, t_unite);
+	PrintImg(39000 / windowWidth, 0, resolution / windowWidth, resolution / windowWidth, nbrs, t_centaine);
+	PrintImg(39000 / windowWidth + 0.5, 0, resolution / windowWidth, resolution / windowWidth, nbrs, t_dizaine);
+	PrintImg(39000 / windowWidth + 1, 0, resolution / windowWidth, resolution / windowWidth, nbrs, t_unite);
 
 
 	if(timer <= 0)
-		PrintImg(12, 4, 6* resolution / glutGet(GLUT_WINDOW_WIDTH), 6* resolution / glutGet(GLUT_WINDOW_WIDTH), infos, 2);
+		PrintImg(12, 4, 6* resolution / windowWidth, 6* resolution / windowWidth, infos, 2);
 
 	// Draw Weapon icon
 
 	switch (weapon)
 	{
-	case 0: PrintImg(45000 / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), icons, 0);
+	case 0: PrintImg(45000 / windowWidth, 0, resolution / windowWidth, resolution / windowWidth, icons, 0);
 		break;
-	case 1: PrintImg(45000 / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), icons, 1);
+	case 1: PrintImg(45000 / windowWidth, 0, resolution / windowWidth, resolution / windowWidth, icons, 1);
 		break;
-	case 2: PrintImg(45000 / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), icons, 2);
+	case 2: PrintImg(45000 / windowWidth, 0, resolution / windowWidth, resolution / windowWidth, icons, 2);
 		break;
-	case 3: PrintImg(45000 / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), icons, 3);
+	case 3: PrintImg(45000 / windowWidth, 0, resolution / windowWidth, resolution / windowWidth, icons, 3);
 		break;
-	case 4: PrintImg(45000 / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), icons, 4);
+	case 4: PrintImg(45000 / windowWidth, 0, resolution / windowWidth, resolution / windowWidth, icons, 4);
 		break;
 	}
 

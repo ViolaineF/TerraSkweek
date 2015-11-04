@@ -17,6 +17,8 @@
 
 using namespace std;
 
+extern const float res;
+
 class HUD
 {
 private:
@@ -26,7 +28,7 @@ private:
 	int t_unite = timer % 10;
 	int t_dizaine = timer / 10 % 10;
 	int t_centaine = timer / 100 % 10;
-	float resolution = 1400.0;
+	float resolution = res;
 	clock_t Clock;
 	double ClockDuration;
 
