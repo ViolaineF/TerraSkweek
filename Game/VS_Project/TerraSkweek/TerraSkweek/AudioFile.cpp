@@ -12,10 +12,10 @@ AudioFile::AudioFile(string file, bool sound)
 	m_sound = sound;
 
 	if (sound) {// if it's a sound
-		buffer.loadFromFile("sounds/" + file);
+		buffer.loadFromFile("sfx/" + file);
 	}
 	else {// if it's a background music
-		music.openFromFile("sounds/" + file);
+		music.openFromFile("bgm/" + file);
 	}
 }
 
