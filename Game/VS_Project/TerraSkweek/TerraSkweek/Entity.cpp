@@ -7,6 +7,7 @@ Entity::Entity()
 	//	Fire = false;
 	currentFrame = 0;
 	m_death = false;
+	m_spriteSize = 0.25;
 }
 
 

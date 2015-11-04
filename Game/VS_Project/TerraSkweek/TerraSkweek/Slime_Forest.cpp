@@ -1,7 +1,7 @@
 #include "Slime_Forest.h"
 
 
-Slime_Forest::Slime_Forest()
+Slime_Forest::Slime_Forest() : Enemy()
 {
 	int random_spawn = rand() % 2;
 	if (random_spawn == 0)

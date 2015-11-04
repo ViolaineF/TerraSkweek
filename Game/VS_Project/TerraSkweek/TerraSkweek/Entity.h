@@ -17,6 +17,7 @@ protected :
 	Weapon m_weapon;
 	bool m_firing;
 	bool m_death;
+	float m_spriteSize;
 
 public:
 	Entity();

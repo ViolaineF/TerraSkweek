@@ -11,6 +11,7 @@ Enemy::Enemy() : Entity()
 	m_randomIt = 4;
 	run.resize(0);
 	death.resize(0);
+	
 }
 
 int Enemy::LoadGLTextures(string type,string directory)
@@ -188,10 +189,10 @@ void Enemy::Draw()
 			glBindTexture(GL_TEXTURE_2D, death[frame]);
 			glBegin(GL_QUADS);
 			glColor3d(1.0, 1.0, 1.0);
-			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
-			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 1, m_pos.y);
-			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 1, m_pos.y + 1);
-			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 1);
+			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 2* m_spriteSize, m_pos.y + 2*m_spriteSize);
+			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2* m_spriteSize);
 			
 			glEnd();
 			glDisable(GL_TEXTURE_2D);
@@ -216,10 +217,10 @@ void Enemy::Draw()
 		glBindTexture(GL_TEXTURE_2D, run[frame]);
 		glBegin(GL_QUADS);
 		glColor3d(1.0, 1.0, 1.0);
-		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
-		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 1, m_pos.y);
-		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 1, m_pos.y + 1);
-		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 1);
+		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
+		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 2* m_spriteSize, m_pos.y + 2* m_spriteSize);
+		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2* m_spriteSize);
 		
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
@@ -239,10 +240,10 @@ void Enemy::Draw()
 		glBindTexture(GL_TEXTURE_2D, freeze[frame]);
 		glBegin(GL_QUADS);
 		glColor3d(1.0, 1.0, 1.0);
-		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
-		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 1, m_pos.y);
-		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 1, m_pos.y + 1);
-		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 1);
+		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
+		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 2* m_spriteSize, m_pos.y + 2* m_spriteSize);
+		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2* m_spriteSize);
 
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
@@ -262,10 +263,10 @@ void Enemy::Draw()
 		glPushMatrix();
 		glBegin(GL_QUADS);
 
-		glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x, m_pos.y);
-		glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x + 1, m_pos.y);
-		glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x + 1, m_pos.y + 1);
-		glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x, m_pos.y + 1);
+		glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+		glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
+		glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x + 2* m_spriteSize, m_pos.y + 2* m_spriteSize);
+		glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2* m_spriteSize);
 
 		glEnd();
 		glPopMatrix();
