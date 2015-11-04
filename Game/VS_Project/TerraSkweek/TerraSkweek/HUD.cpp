@@ -184,7 +184,8 @@ void HUD::displayScore(int score, float life, int weapon)
 //	resolution = resolution / windowWidth;
 
 //Draw SCORE : 0000000
-	float dim = resolution*windowWidth*0.04;
+
+	float dim = resolution*windowWidth*0.035;
 
 	PrintImg(0.5*dim, 0, dim, 5*dim, infos, 0);
 	int i = 0;
@@ -205,58 +206,59 @@ void HUD::displayScore(int score, float life, int weapon)
 	//cout << "s_XM " << s_I << endl;
 	//cout << "s_XXM " << s_I << endl;
 
-	const float offset = 0.2;
-	const float start = 9.3;
+	float offset = 0.7*dim;
+	float start = 9.5*dim;
 
-	PrintImg(start * dim, 0, dim, dim, nbrs, s_I);
-	PrintImg(start * dim - offset, 0, dim, dim, nbrs, s_X);
-	PrintImg(start * dim - 2*offset, 0, dim, dim, nbrs, s_C);
-	PrintImg(start * dim - 3*offset, 0, dim, dim, nbrs, s_M);
-	PrintImg(start * dim - 4*offset, 0, dim, dim, nbrs, s_XM);
-	PrintImg(start * dim - 5*offset, 0, dim, dim, nbrs, s_XXM);
-	PrintImg(start * dim - 6*offset, 0, dim, dim, nbrs, s_XXXM);
+	PrintImg(start, 0, dim, dim, nbrs, s_I);
+	PrintImg(start - offset, 0, dim, dim, nbrs, s_X);
+	PrintImg(start - 2*offset, 0, dim, dim, nbrs, s_C);
+	PrintImg(start - 3*offset, 0, dim, dim, nbrs, s_M);
+	PrintImg(start - 4*offset, 0, dim, dim, nbrs, s_XM);
+	PrintImg(start - 5*offset, 0, dim, dim, nbrs, s_XXM);
+	PrintImg(start - 6*offset, 0, dim, dim, nbrs, s_XXXM);
 
 
 	// Draw Life icon
+	float startLife = start + 2.5*offset;
 
-	PrintImg(22000 / windowWidth, 0, resolution / windowWidth, 3* resolution / windowWidth, infos, 1);
-	float PaddingLife = 26000.0;
+	PrintImg(startLife, 0, dim, 3*dim, infos, 1);
+	float PaddingLife = startLife+5*offset;
 	float val_life = life / 50;
 
 
 		if (life == 150)
 	{
-		PrintLife(PaddingLife / windowWidth, 0, resolution / windowWidth, resolution / windowWidth, 0, 1.0);
-		PrintLife(PaddingLife / windowWidth + 0.5, 0, resolution / windowWidth, resolution / windowWidth, 0, 1.0);
-		PrintLife(PaddingLife / windowWidth + 1, 0, resolution / windowWidth, resolution / windowWidth, 0, 1.0);
+		PrintLife(PaddingLife, 0, dim, dim, 0, 1.0);
+		PrintLife(PaddingLife + offset, 0, dim, dim, 0, 1.0);
+		PrintLife(PaddingLife + 2*offset, 0, dim, dim, 0, 1.0);
 	}
 
 	else if (life < 150 && life > 100)
 	{
-		PrintLife(PaddingLife / windowWidth , 0, resolution / windowWidth, resolution / windowWidth, 0, 1.0);
-		PrintLife(PaddingLife / windowWidth + 0.5, 0, resolution / windowWidth, resolution / windowWidth, 0, 1.0);
-		PrintLife(PaddingLife / windowWidth + 1, 0, resolution / windowWidth, resolution / windowWidth, 0, val_life/3);
+		PrintLife(PaddingLife , 0, dim, dim, 0, 1.0);
+		PrintLife(PaddingLife + offset, 0, dim, dim, 0, 1.0);
+		PrintLife(PaddingLife + 2*offset, 0, dim, dim, 0, val_life/3);
 	}
 
 	else if (life < 100 && life > 50)
 	{
-		PrintLife(PaddingLife / windowWidth , 0, resolution / windowWidth, resolution / windowWidth, 0, 1.0);
-		PrintLife(PaddingLife / windowWidth + 0.5, 0, resolution / windowWidth, resolution / windowWidth, 0, val_life / 2);
-		PrintLife(PaddingLife / windowWidth + 1, 0, resolution / windowWidth, resolution / windowWidth, 0, 0.0);
+		PrintLife(PaddingLife , 0, dim, dim, 0, 1.0);
+		PrintLife(PaddingLife + offset, 0, dim, dim, 0, val_life / 2);
+		PrintLife(PaddingLife + 2*offset, 0, dim, dim, 0, 0.0);
 	}
 
 	else if (life < 50 && life > 0)
 	{
-		PrintLife(PaddingLife / windowWidth , 0, resolution / windowWidth, resolution / windowWidth, 0, val_life);
-		PrintLife(PaddingLife / windowWidth + 0.5, 0, resolution / windowWidth, resolution / windowWidth, 0, 0.0);
-		PrintLife(PaddingLife / windowWidth + 1, 0, resolution / windowWidth, resolution / windowWidth, 0, 0.0);
+		PrintLife(PaddingLife , 0, dim, dim, 0, val_life);
+		PrintLife(PaddingLife + offset, 0, dim, dim, 0, 0.0);
+		PrintLife(PaddingLife + 2*offset, 0, dim, dim, 0, 0.0);
 	}
 
 	else
 	{
-		PrintLife(18, 0, resolution / windowWidth, resolution / windowWidth, 0, 0.0);
-		PrintLife(19, 0, resolution / windowWidth, resolution / windowWidth, 0, 0.0);
-		PrintLife(20, 0, resolution / windowWidth, resolution / windowWidth, 0, 0.0);
+		PrintLife(18, 0, dim, dim, 0, 0.0);
+		PrintLife(19, 0, dim, dim, 0, 0.0);
+		PrintLife(20, 0, dim, dim, 0, 0.0);
 	}
 
 	// Draw Timer
@@ -264,33 +266,37 @@ void HUD::displayScore(int score, float life, int weapon)
 	if (!timer <= 0)
 		timer = 180 - ClockDuration;
 
-	PrintImg(34000 / windowWidth, 0, resolution / windowWidth, 3*resolution / windowWidth, infos, 1);
+	float startTimer = PaddingLife + 5 * offset;
+	
+	PrintImg(startTimer, 0, dim, 3*dim, infos, 1);
 
 	t_unite = timer % 10;
 	t_dizaine = timer / 10 % 10;
 	t_centaine = timer / 100 % 10;
 
-	PrintImg(39000 / windowWidth, 0, resolution / windowWidth, resolution / windowWidth, nbrs, t_centaine);
-	PrintImg(39000 / windowWidth + 0.5, 0, resolution / windowWidth, resolution / windowWidth, nbrs, t_dizaine);
-	PrintImg(39000 / windowWidth + 1, 0, resolution / windowWidth, resolution / windowWidth, nbrs, t_unite);
+	PrintImg(startTimer + 5*offset, 0, dim, dim, nbrs, t_centaine);
+	PrintImg(startTimer + 6*offset, 0, dim, dim, nbrs, t_dizaine);
+	PrintImg(startTimer + 7*offset, 0, dim, dim, nbrs, t_unite);
 
 
 	if(timer <= 0)
-		PrintImg(12, 4, 6* resolution / windowWidth, 6* resolution / windowWidth, infos, 2);
+		PrintImg(12, 4, 6* dim, 6* dim, infos, 2);
 
 	// Draw Weapon icon
 
+	float startWeaponIcon = startTimer + 10 * offset;
+
 	switch (weapon)
 	{
-	case 0: PrintImg(45000 / windowWidth, 0, resolution / windowWidth, resolution / windowWidth, icons, 0);
+	case 0: PrintImg(startWeaponIcon, 0, dim, dim, icons, 0);
 		break;
-	case 1: PrintImg(45000 / windowWidth, 0, resolution / windowWidth, resolution / windowWidth, icons, 1);
+	case 1: PrintImg(startWeaponIcon, 0, dim, dim, icons, 1);
 		break;
-	case 2: PrintImg(45000 / windowWidth, 0, resolution / windowWidth, resolution / windowWidth, icons, 2);
+	case 2: PrintImg(startWeaponIcon, 0, dim, dim, icons, 2);
 		break;
-	case 3: PrintImg(45000 / windowWidth, 0, resolution / windowWidth, resolution / windowWidth, icons, 3);
+	case 3: PrintImg(startWeaponIcon, 0, dim, dim, icons, 3);
 		break;
-	case 4: PrintImg(45000 / windowWidth, 0, resolution / windowWidth, resolution / windowWidth, icons, 4);
+	case 4: PrintImg(startWeaponIcon, 0, dim, dim, icons, 4);
 		break;
 	}
 
