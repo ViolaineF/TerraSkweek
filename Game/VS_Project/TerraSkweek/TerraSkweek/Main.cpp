@@ -1,5 +1,4 @@
-#include <ctime>
-#include <cstdio>
+
 #include "Grid.h"
 
 
@@ -37,9 +36,7 @@ Player player;
 const float res = 0.0137;
 float screenWidth;
 float screenHeight;
-clock_t Clock;
-double ClockDuration;
-int Timer = 180;
+
 
 //----------------------A SUPPRIMER POUR UTILISER LE DETECTEUR DE LUMIERE
 
@@ -389,6 +386,7 @@ void DrawLevel() {
 
 	glPushMatrix();
 	//glTranslatef(-player.GetPos().x + 0.5*glutGet(GLUT_WINDOW_WIDTH), -player.GetPos().y + 0.5*glutGet(GLUT_WINDOW_HEIGHT), 0);
+	// Translate Map
 	glTranslatef(-player.GetPos().x + 10, -player.GetPos().y + 10, 0);
 
 	// Draw map
@@ -406,17 +404,12 @@ void DrawLevel() {
 	//Draw Fires
 	lvl01.DrawAllFires();
 
-	// Translate Map
-	glLoadIdentity();
 
+	glLoadIdentity();
 	glutSwapBuffers();
 	glPopMatrix();
 
 	//Draw HUD
-	ClockDuration = (clock() - Clock) / (double)CLOCKS_PER_SEC;
-	if (!Timer <= 0)
-		Timer = 180 - ClockDuration;
-	hud.checkTimer(Timer);
 	hud.displayScore(player.GetLife(), player.GetWeapon());
 
 }

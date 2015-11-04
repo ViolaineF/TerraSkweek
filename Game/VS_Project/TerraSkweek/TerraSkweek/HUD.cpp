@@ -268,6 +268,10 @@ void HUD::displayScore(float life, int weapon)
 	}
 
 	// Draw Timer
+	ClockDuration = (clock() - Clock) / (double)CLOCKS_PER_SEC;
+	if (!Timer <= 0)
+		Timer = 180 - ClockDuration;
+
 	PrintImg(34000 / glutGet(GLUT_WINDOW_WIDTH), 0, resolution / glutGet(GLUT_WINDOW_WIDTH), 3*resolution / glutGet(GLUT_WINDOW_WIDTH), infos, 1);
 
 	t_unite = timer % 10;
@@ -299,7 +303,3 @@ void HUD::displayScore(float life, int weapon)
 
 }
 
-void HUD::checkTimer(int a)
-{
-	timer = a;
-}

@@ -315,6 +315,13 @@ void Grid::DrawSpecialCases()
 	for (unsigned int k = 0; k < vecCaseAnimated.size(); k++) {
 		if (vecCaseAnimated[k]->Draw(1)) {
 			SetMap(vecCaseAnimated[k]->GetPos().x, vecCaseAnimated[k]->GetPos().y, 2); // If the animation is complete, convert floor
+
+
+			//-----------SCORE ++
+
+
+
+
 			vecCaseAnimated.erase(vecCaseAnimated.begin() + k);// Destroy it
 			k--;
 		}
@@ -367,6 +374,10 @@ void Grid::DrawEnemies()
 	//--------------- DELETE ALL DEAD ENEMIES
 	for (unsigned int i = 0; i < vecEnemies.size(); i++) {
 		if (vecEnemies[i]->IsDead()) { // If the Enemy has played its death animation entirely
+
+			//--------------------SCORE ++
+
+
 
 			//------------------DROPS LOOT ON DEATH
 			string enemyType = typeid(*vecEnemies[i]).name(); // Get the type of enemy

@@ -11,6 +11,8 @@
 #include <ctype.h>
 #include "GL\glut.h"
 #include "SOIL\SOIL.h"
+#include <ctime>
+#include <cstdio>
 
 using namespace std;
 
@@ -24,6 +26,9 @@ private:
 	int t_dizaine = timer / 10 % 10;
 	int t_centaine = timer / 100 % 10;
 	float resolution = 1400.0;
+	clock_t Clock;
+	double ClockDuration;
+	int Timer = 180;
 
 	vector<int> timerTab{ 1,8,0};
 	vector<int> scoreTab{ 0,0,0,0,0,0,0};
@@ -36,7 +41,6 @@ public:
 	void LoadAllTextures();
 	void PrintImg(float, float, float, float, vector<GLuint>, int);
 	void PrintLife(float, float, float, float, int, float);
-	void checkTimer(int);
 	int LoadGLTextures(string, string);
 	HUD();
 };
