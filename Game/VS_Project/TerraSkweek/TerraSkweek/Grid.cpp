@@ -43,6 +43,22 @@ Grid::Grid(string biome)
 		}
 	}
 
+	//------------------------LOAD SEMI CONVERTED CASE
+
+	for (int i = 0; i < m_rows; i++) {
+		for (int j = 0; j < m_lignes; j++) {
+			if (map[i][j] != 1) {
+				int chance = rand() % 100 + 1; // Give an int between 1 and 100;
+
+				if (chance == 1 && chance <= 5) {
+					map[i][j] = 3; // Semi-converted case index
+				}
+			}
+
+
+		}
+	}
+
 	//------------------------LOAD ENEMY SPAWNER
 
 //	vecCaseAnimated.push_back(new CaseAnimation(10,10,"1forest/spawner"));
@@ -87,7 +103,6 @@ void Grid::SetMap(int x, int y, int a)
 
 	if (a == 4) {
 		vecCaseAnimated.push_back(new CaseAnimation(x, y, "conversion"));
-
 	}
 	else {
 	}
@@ -103,6 +118,7 @@ void Grid::LoadAllTextures()
 	LoadGLTextures( directory + "ground.png"); // 0
 	LoadGLTextures( directory + "walls.png"); // 1
 	LoadGLTextures( "Art/converted.png"); // 2
+	LoadGLTextures( "Art/semi_converted.png"); // 3
 
 
 	//-------------------LOAD ENEMIES TEXTURES
@@ -296,12 +312,12 @@ void Grid::DisplayMap()
 				PrintImg(i, j, 1, 1, 2);
 				break;	
 
-			case 3: // something
+			case 3: // Semi-converted case
+				PrintImg(i, j, 1, 1, 3);
 				break;
 
 			case 4 : // Conversion animation
 				PrintImg(i, j, 1, 1, 0); // Corrupted floor
-
 				break;
 			}
 		}

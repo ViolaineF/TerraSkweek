@@ -228,7 +228,6 @@ void PlayerMovt(int x) {
 	int pYupConv = round(player.GetPos().y - 0.4);
 	int pYdownConv = round(player.GetPos().y + 0.4);
 
-
 	// ----------------- CHECK WALLS AND CONVERT v2
 	switch (player.GetDir())
 	{
@@ -243,8 +242,14 @@ void PlayerMovt(int x) {
 			break;
 		case 2: //Ground converted
 			break;
-		case 3: //Gap
-			// player's m_life--;
+		case 3: //Semi-converted case
+			lvl01.SetMap(pXleftConv, pYupConv, 4);
+
+			for (int i = -1; i < 2; i++) {
+				for (int j = -1; j < 2; j++) {
+					lvl01.SetMap(pXleftConv+i, pYupConv+j, 4);
+				}
+			}
 			break;
 		}
 
@@ -258,8 +263,14 @@ void PlayerMovt(int x) {
 			break;
 		case 2: //Ground converted
 			break;
-		case 3: //Gap
-				// player's m_life--;
+		case 3: //Semi-converted case
+			lvl01.SetMap(pXrightConv, pYupConv, 4);
+
+			for (int i = -1; i < 2; i++) {
+				for (int j = -1; j < 2; j++) {
+					lvl01.SetMap(pXrightConv + i, pYupConv + j, 4);
+				}
+			}
 			break;
 		}
 
@@ -276,8 +287,14 @@ void PlayerMovt(int x) {
 			break;
 		case 2: //Ground converted
 			break;
-		case 3: //Gap
-				// player's m_life--;
+		case 3: //Semi-converted case
+			lvl01.SetMap(pXleftConv, pYdownConv, 4);
+
+			for (int i = -1; i < 2; i++) {
+				for (int j = -1; j < 2; j++) {
+					lvl01.SetMap(pXleftConv + i, pYdownConv + j, 4);
+				}
+			}
 			break;
 		}
 
@@ -291,8 +308,14 @@ void PlayerMovt(int x) {
 			break;
 		case 2: //Ground converted
 			break;
-		case 3: //Gap
-				// player's m_life--;
+		case 3: //Semi-converted case
+			lvl01.SetMap(pXrightConv, pYdownConv, 4);
+
+			for (int i = -1; i < 2; i++) {
+				for (int j = -1; j < 2; j++) {
+					lvl01.SetMap(pXrightConv + i, pYdownConv + j, 4);
+				}
+			}
 			break;
 		}
 
@@ -309,8 +332,14 @@ void PlayerMovt(int x) {
 			break;
 		case 2: //Ground converted
 			break;
-		case 3: //Gap
-				// player's m_life--;
+		case 3: //Semi-converted case
+			lvl01.SetMap(pXrightConv, pYdownConv, 4);
+
+			for (int i = -1; i < 2; i++) {
+				for (int j = -1; j < 2; j++) {
+					lvl01.SetMap(pXrightConv + i, pYdownConv + j, 4);
+				}
+			}
 			break;
 		}
 
@@ -324,8 +353,14 @@ void PlayerMovt(int x) {
 			break;
 		case 2: //Ground converted
 			break;
-		case 3: //Gap
-				// player's m_life--;
+		case 3: //Semi-converted case
+			lvl01.SetMap(pXrightConv, pYupConv, 4);
+
+			for (int i = -1; i < 2; i++) {
+				for (int j = -1; j < 2; j++) {
+					lvl01.SetMap(pXrightConv + i, pYupConv + j, 4);
+				}
+			}
 			break;
 		}
 		break;
@@ -342,8 +377,14 @@ void PlayerMovt(int x) {
 			break;
 		case 2: //Ground converted
 			break;
-		case 3: //Gap
-				// player's m_life--;
+		case 3: //Semi-converted case
+			lvl01.SetMap(pXleftConv, pYupConv, 4);
+
+			for (int i = -1; i < 2; i++) {
+				for (int j = -1; j < 2; j++) {
+					lvl01.SetMap(pXleftConv + i, pYupConv + j, 4);
+				}
+			}
 			break;
 		}
 
@@ -357,8 +398,14 @@ void PlayerMovt(int x) {
 			break;
 		case 2: //Ground converted
 			break;
-		case 3: //Gap
-				// player's m_life--;
+		case 3: //Semi-converted case
+			lvl01.SetMap(pXleftConv, pYdownConv, 4);
+
+			for (int i = -1; i < 2; i++) {
+				for (int j = -1; j < 2; j++) {
+					lvl01.SetMap(pXleftConv + i, pYdownConv + j, 4);
+				}
+			}
 			break;
 		}
 		break;
