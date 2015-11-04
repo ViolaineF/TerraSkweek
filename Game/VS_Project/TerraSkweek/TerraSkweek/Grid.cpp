@@ -43,23 +43,26 @@ Grid::Grid(string biome)
 		}
 	}
 
-	//------------------------LOAD SEMI CONVERTED CASE
+	//------------------------LOAD SEMI CONVERTED CASE V1
 
-	for (int i = 0; i < m_rows; i++) {
-		for (int j = 0; j < m_lignes; j++) {
-			if (map[i][j] != 1) {
-				int chance = rand() % 100 + 1; // Give an int between 1 and 100;
+	//for (int i = 0; i < m_rows; i++) {
+	//	for (int j = 0; j < m_lignes; j++) {
+	//		if (map[i][j] != 1) {
+	//			int chance = rand() % 100 + 1; // Give an int between 1 and 100;
 
-				if (chance == 1 && chance <= 5) {
-					map[i][j] = 3; // Semi-converted case index
-				}
-			}
-		}
-	}
+	//			if (chance == 1 && chance <= 5) {
+	//				map[i][j] = 3; // Semi-converted case index
+	//			}
+	//		}
+	//	}
+	//}
+
+
+
 
 	//------------------------LOAD ENEMY SPAWNER
 
-//	vecCaseAnimated.push_back(new CaseAnimation(10,10,"1forest/spawner"));
+//	vecCaseAnimated.push_back(new SpecialCase(10,10,"1forest/spawner"));
 
 
 	//------------------------LOAD CORRESPONDING BIOME'S ENEMIES 
@@ -77,7 +80,7 @@ Grid::Grid(string biome)
 		vecTNT.push_back(new TNT(3, 3, 1));
 		vecArrow.push_back(new Arrow(7, 7, 1, 'l'));
 		vecArrow.push_back(new Arrow(7, 6, 1, 'l'));
-		//vecCaseAnimated.push_back(new CaseAnimation(2,5, "cracking"));
+		//vecCaseAnimated.push_back(new SpecialCase(2,5, "cracking"));
 	}
 	else if(biomeChar == '3') // Crimson
 	{
@@ -92,7 +95,7 @@ Grid::Grid(string biome)
 
 Grid::~Grid()
 {
-
+	
 }
 
 void Grid::SetMap(int x, int y, int a)
@@ -100,7 +103,7 @@ void Grid::SetMap(int x, int y, int a)
 	map[x][y] = a;
 
 	if (a == 4) {
-		vecCaseAnimated.push_back(new CaseAnimation(x, y, "conversion"));
+		vecCaseAnimated.push_back(new SimpleConversion(x, y, "conversion"));
 	}
 	else {
 	}
@@ -117,6 +120,8 @@ void Grid::LoadAllTextures()
 	LoadGLTextures( directory + "walls.png"); // 1
 	LoadGLTextures( "Art/converted.png"); // 2
 	LoadGLTextures( "Art/semi_converted.png"); // 3
+	LoadGLTextures( directory + "fall.png"); // 4
+
 
 
 	//-------------------LOAD ENEMIES TEXTURES
@@ -135,6 +140,28 @@ void Grid::LoadAllTextures()
 	{
 		e->LoadAllTextures();
 	}
+
+
+	//------------------------LOAD SEMI-CONVERTED CASE 
+	//------------------------LOAD CRACKED FLOOR
+	for (int i = 0; i < m_rows; i++) {
+		for (int j = 0; j < m_lignes; j++) {
+			if (map[i][j] != 1) { // Avoid spwaning in a wall
+				int chance = rand() % 100 + 1; // Give an int between 1 and 100;
+
+				if (chance == 1 && chance <= 5) { // 5% chance ---------------------------------SEMI CONVERTED FLOOR
+					map[i][j] = 3;
+					vecCaseAnimated.push_back(new SemiConverted(i, j, "semiConverted"));
+				}
+
+				if (chance > 5 && chance <= 10) { // 5% chance ---------------------------------CRACKED FLOOR
+					map[i][j] = 5;
+					vecCaseAnimated.push_back(new CrackedFloor(i, j, "cracking"));
+				}
+			}
+		}
+	}
+
 }
 
 int Grid::LoadGLTextures(string name)
@@ -294,12 +321,6 @@ void Grid::DisplayMap()
 			switch (map[i][j])
 			{
 			case 0:// Floor
-				//glBegin(GL_QUADS);
-				//glColor3d(1.0, 0.0, 0.0); glVertex2d(i, j);
-				//glColor3d(0.0, 1.0, 0.0); glVertex2d(i + 1, j);
-				//glColor3d(0.0, 0.0, 1.0); glVertex2d(i + 1, j + 1);
-				//glColor3d(0.0, 0.0, 0.0); glVertex2d(i, j + 1);
-				//glEnd();
 				PrintImg(i, j, 1, 1, 0);
 				break;
 			case 1:// Wall
@@ -310,12 +331,20 @@ void Grid::DisplayMap()
 				PrintImg(i, j, 1, 1, 2);
 				break;	
 
-			case 3: // Semi-converted case
-				PrintImg(i, j, 1, 1, 3);
+			case 3: // Semi-Converted animation
+				PrintImg(i, j, 1, 1, 0); // Corrupted floor
 				break;
 
 			case 4 : // Conversion animation
 				PrintImg(i, j, 1, 1, 0); // Corrupted floor
+				break;
+
+			case 5: // Cracked floor
+				PrintImg(i, j, 1, 1, 0); // Corrupted floor
+				break;
+
+			case 6: // Fall
+				PrintImg(i, j, 1, 1, 4); // Corrupted floor
 				break;
 			}
 		}
@@ -325,17 +354,31 @@ void Grid::DisplayMap()
 
 void Grid::DrawSpecialCases()
 {
-	// add conversion animation over corrupted floor
-	for (unsigned int k = 0; k < vecCaseAnimated.size(); k++) {
-		if (vecCaseAnimated[k]->Draw(1)) {
-			SetMap(vecCaseAnimated[k]->GetPos().x, vecCaseAnimated[k]->GetPos().y, 2); // If the animation is complete, convert floor
-																					  
-			// SCORE + converted tile
-			m_score = m_score + 1;
+	for (unsigned int i = 0; i < vecCaseAnimated.size(); i++) {
 
-			vecCaseAnimated.erase(vecCaseAnimated.begin() + k);// Destroy it
-			k--;
+		if (vecCaseAnimated[i]->Draw()) {// If the animation is complete ...
+
+			if (typeid(*vecCaseAnimated[i]) == typeid(SimpleConversion)) {
+				SetMap(vecCaseAnimated[i]->GetPos().x, vecCaseAnimated[i]->GetPos().y, 2); // ... Convert floor
+			}
+
+			if (typeid(*vecCaseAnimated[i]) == typeid(CrackedFloor)) {
+				SetMap(vecCaseAnimated[i]->GetPos().x, vecCaseAnimated[i]->GetPos().y, 6); // ... Convert floor
+			}
+			
+
+			m_score = m_score + 1;	// SCORE + converted tile
+
+			vecCaseAnimated.erase(vecCaseAnimated.begin() + i);// Destroy it
+			i--;
 		}
+		else if (vecCaseAnimated[i]->GetPos() == player.GetPos()) {
+
+			if (typeid(*vecCaseAnimated[i]) == typeid(CrackedFloor)) {
+				vecCaseAnimated[i]->SetAnimated(true);
+			}
+		}
+		
 	}
 
 	for (unsigned int i = 0; i < vecTNT.size(); i++) {
@@ -346,11 +389,9 @@ void Grid::DrawSpecialCases()
 		vecArrow[i]->Draw();
 	}
 
-	for (unsigned int i = 0; i < vecCaseAnimated.size(); i++) {
-		vecCaseAnimated[i]->Draw(0);
-	}
 
 	//---------- CHECK COLLISION WITH PLAYER - 1 player
+
 	for (unsigned int i = 0; i < vecTNT.size(); i++) {
 		if (vecTNT[i]->GetPos() == player.GetPos()) {
 			vecTNT[i]->activation(); // Activation of TNT timer
@@ -371,11 +412,20 @@ void Grid::DrawSpecialCases()
 		}
 	}
 
-	for (unsigned int i = 0; i < vecCaseAnimated.size(); i++) {
-		if (vecCaseAnimated[i]->GetPos() == player.GetPos()) {
-			vecCaseAnimated[i]->Draw(1);
-		}
-	}
+
+	//switch (map[player.GetPos().x][player.GetPos().y])
+	//{
+	//case 3 : // Semi-converted
+	//	break;
+	//case 5 : // Cracked Floor
+	//	vecCaseAnimated[i]->SetAnimated(true);
+	//	break;
+
+	//}
+
+
+
+
 
 	
 }
@@ -390,9 +440,8 @@ void Grid::DrawEnemies()
 			m_score = m_score + 100;
 
 			//------------------DROPS LOOT ON DEATH
-			string enemyType = typeid(*vecEnemies[i]).name(); // Get the type of enemy
 
-			if (enemyType == "class Slime_Forest") { // Slime forest Enemy - drops stats
+			if (typeid(*vecEnemies[i]) == typeid(Slime_Forest)) { // Slime forest Enemy - drops stats
 				
 				int dropType = rand() % 100 + 1; // Give an int between 1 and 100;
 

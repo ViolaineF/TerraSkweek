@@ -74,12 +74,12 @@ void main() {
 		
 
 	//Gestion de la fenetre
-	/*glutInitWindowPosition(10, 10);
-	glutInitWindowSize(500, 500);*/
+	glutInitWindowPosition(10, 10);
+	glutInitWindowSize(500, 500);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE);		//A remplacer pour l'affichage sur d'autres PC par GLUT_DOUBLE
 //	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 	glutCreateWindow("TerraSkweek");
-	glutFullScreen();           // making the window full screen
+	//glutFullScreen();           // making the window full screen
 
 
 	//----------------------- LOAD EVERYBODY'S SPRITES
@@ -247,6 +247,7 @@ void PlayerMovt(int x) {
 				}
 			}
 			break;
+
 		}
 
 		switch (lvl01.Map(pXright, pYup))

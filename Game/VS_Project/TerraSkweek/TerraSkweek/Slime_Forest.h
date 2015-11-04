@@ -1,3 +1,6 @@
+#ifndef SLIMEFOREST_H
+#define SLIMEFOREST_H
+
 #include "Enemy.h"
 
 class Slime_Forest : public Enemy
@@ -8,3 +11,4 @@ public:
 	~Slime_Forest();
 };
 
+#endif
