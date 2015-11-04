@@ -376,6 +376,9 @@ void Grid::DrawSpecialCases()
 
 			if (typeid(*vecCaseAnimated[i]) == typeid(CrackedFloor)) {
 				vecCaseAnimated[i]->SetAnimated(true);
+
+				//------------------PLAY SOUND
+				sfx_gap.PlayAudio();
 			}
 		}
 		
@@ -438,6 +441,9 @@ void Grid::DrawEnemies()
 			
 			// SCORE + frags
 			m_score = m_score + 100;
+
+			//------------------PLAY SOUND
+			sfx_e_death.PlayAudio();
 
 			//------------------DROPS LOOT ON DEATH
 
@@ -544,6 +550,8 @@ void Grid::NewFire(int type, char dir, Position pos)
 	{
 	case 1 : // Simple fire
 		vecWeapons.push_back(new Weapon(type, dir, pos));
+		//------------------PLAY SOUND
+		sfx_e_fire.PlayAudio();
 		break;
 
 	case 2: // Cross fire
@@ -551,7 +559,8 @@ void Grid::NewFire(int type, char dir, Position pos)
 		vecWeapons.push_back(new Weapon(type, 'd', pos));
 		vecWeapons.push_back(new Weapon(type, 'r', pos));
 		vecWeapons.push_back(new Weapon(type, 'l', pos));
-
+		//------------------PLAY SOUND
+		sfx_e_fire.PlayAudio();
 		break;
 
 	case 3: // Diag fire
@@ -559,7 +568,8 @@ void Grid::NewFire(int type, char dir, Position pos)
 		vecWeapons.push_back(new Weapon(type, '2', pos));
 		vecWeapons.push_back(new Weapon(type, '3', pos));
 		vecWeapons.push_back(new Weapon(type, '4', pos));
-
+		//------------------PLAY SOUND
+		sfx_e_fire.PlayAudio();
 		break;
 	}
 
@@ -632,6 +642,7 @@ void Grid::DrawAllFires()
 		if (vecWeapons[i]->IsDestroyed()) { // The impact animation has ended
 			vecWeapons.erase(vecWeapons.begin() + i);
 			i--;
+			sfx_bullet_hit.PlayAudio();
 		}
 	}
 

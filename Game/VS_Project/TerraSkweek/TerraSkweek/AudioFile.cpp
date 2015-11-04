@@ -10,12 +10,12 @@ AudioFile::AudioFile()
 AudioFile::AudioFile(string file, bool sound)
 {
 	m_sound = sound;
-
+	
 	if (sound) {// if it's a sound
-		buffer.loadFromFile("sounds/" + file);
+		buffer.loadFromFile("sfx/" + file);
 	}
 	else {// if it's a background music
-		music.openFromFile("sounds/" + file);
+		music.openFromFile("bgm/" + file);
 	}
 }
 
@@ -31,6 +31,7 @@ AudioFile::AudioFile(string file, bool sound)
 void AudioFile::PlayAudio()
 {
 	if (m_sound) { // if it's a sound
+		sound.setVolume(4);
 		sound.setBuffer(buffer);
 		sound.play();
 	}
