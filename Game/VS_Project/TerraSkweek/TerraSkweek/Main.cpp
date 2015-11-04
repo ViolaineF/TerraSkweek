@@ -33,10 +33,10 @@ int LoadGLTextures(string name) // Load Bitmaps And Convert To Textures
 Grid lvl01("2corrupted");
 HUD hud;
 Player player;
-const float res = 0.0137;
-float screenWidth;
-float screenHeight;
-
+const float res = 0.01471;
+int windowWidth = 200;
+int windowHeight = 200;
+bool getWindowSize = true;
 
 //----------------------A SUPPRIMER POUR UTILISER LE DETECTEUR DE LUMIERE
 
@@ -68,6 +68,7 @@ void main() {
 	srand(time(NULL)); // Create a seed to start the random from
 
 
+
 	//------------------ LOAD PLAYER' SAVE
 	//lvl01.LoadGame("player1.txt");
 		
@@ -80,17 +81,12 @@ void main() {
 	glutCreateWindow("TerraSkweek");
 	glutFullScreen();           // making the window full screen
 
-	screenWidth = glutGet(GLUT_WINDOW_WIDTH);
-	screenHeight = glutGet(GLUT_WINDOW_HEIGHT);
-
 
 	//----------------------- LOAD EVERYBODY'S SPRITES
 	lvl01.LoadAllTextures();
 	player.LoadAllTextures();
 	hud.LoadAllTextures();
-
-
-	
+		
 	//Gestion des evenements
 	glutDisplayFunc(Display);
 	glutReshapeFunc(Redim);
@@ -474,11 +470,22 @@ void Display() {
 
 void Redim(int x, int y) {
 
+	if (getWindowSize) { // Get the window' size once
+		cout << glutGet(GLUT_WINDOW_WIDTH) << endl;
+		cout << glutGet(GLUT_WINDOW_HEIGHT) << endl;
+		windowWidth = glutGet(GLUT_WINDOW_WIDTH);
+		windowHeight = glutGet(GLUT_WINDOW_HEIGHT);
+
+		getWindowSize = false;
+	}
+
 	glViewport(0, 0, x, y);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	//gluOrtho2D(0.0, (double)(20), (double)(20), 0.0);
-	gluOrtho2D(0.0, (double)(res*glutGet(GLUT_WINDOW_WIDTH)), (double)(res*glutGet(GLUT_WINDOW_HEIGHT)), 0.0);
+	gluOrtho2D(0.0, (double)(res*windowWidth), (double)(res*windowHeight), 0.0);
+	//gluOrtho2D(0.0, (double)(res*glutGet(GLUT_SCREEN_WIDTH)), (double)(res*glutGet(GLUT_SCREEN_HEIGHT)), 0.0);
+	//gluOrtho2D(0.0, (double)(res*glutGet(GLUT_WINDOW_WIDTH)), (double)(res*glutGet(GLUT_WINDOW_HEIGHT)), 0.0);
 
 }
 
