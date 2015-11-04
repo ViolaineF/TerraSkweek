@@ -396,11 +396,14 @@ void Grid::DrawEnemies()
 				
 				int dropType = rand() % 100 + 1; // Give an int between 1 and 100;
 
-				if (dropType >= 1 && dropType <= 25) { // 50% chance to drop weapon 1
+				if (dropType >= 1 && dropType <= 10) { // 50% chance to drop weapon 1
 					vecWeapons.push_back(new Weapon(vecEnemies[i]->GetPos(), true, 1));// Create new weapon sprite
 				}
-				else if (dropType >= 26 && dropType <= 100) {
+				else if (dropType > 10 && dropType <= 50) {
 					vecWeapons.push_back(new Weapon(vecEnemies[i]->GetPos(), true, 2));
+				}
+				else if (dropType > 50 && dropType <= 100) {
+					vecWeapons.push_back(new Weapon(vecEnemies[i]->GetPos(), true, 3));
 				}
 							
 			}
@@ -487,9 +490,32 @@ void Grid::MoveAllEnemies()
 }
 
 void Grid::NewFire(int type, char dir, Position pos)
-{
-	vecWeapons.push_back(new Weapon(type, dir, pos));
-	
+{	
+	switch (type)
+	{
+	case 1 : // Simple fire
+		vecWeapons.push_back(new Weapon(type, dir, pos));
+		break;
+
+	case 2: // Cross fire
+		vecWeapons.push_back(new Weapon(type, 'u', pos));
+		vecWeapons.push_back(new Weapon(type, 'd', pos));
+		vecWeapons.push_back(new Weapon(type, 'r', pos));
+		vecWeapons.push_back(new Weapon(type, 'l', pos));
+
+		break;
+
+	case 3: // Diag fire
+		vecWeapons.push_back(new Weapon(type, '1', pos));
+		vecWeapons.push_back(new Weapon(type, '2', pos));
+		vecWeapons.push_back(new Weapon(type, '3', pos));
+		vecWeapons.push_back(new Weapon(type, '4', pos));
+
+		break;
+	}
+
+
+
 }
 
 void Grid::MoveAllFires()

@@ -60,16 +60,27 @@ Weapon::Weapon(int type, char dir, Position pos)
 	m_destroy = false;
 	m_type = type;
 
-	if (type == 1) {
+	switch (type)
+	{
+	case 1 : // Simple Fire
 		m_damage = 1;
 		m_speed = 0.1;
-		LoadAllTextures();
-	}
-	if (type == 2) {
+		break;
+
+	case 2: // Cross fire
 		m_damage = 2;
 		m_speed = 0.2;
-		LoadAllTextures();
+		break;
+
+	case 3: // Diag fire
+		m_damage = 2;
+		m_speed = 0.2;
+		break;
+
 	}
+
+	LoadAllTextures();
+
 }
 
 bool Weapon::MoveFire()
@@ -95,7 +106,7 @@ bool Weapon::MoveFire()
 			m_pos.x += m_speed;
 			break;
 		case '2':// DOWN & RIGHT
-			m_pos.y -= m_speed;
+			m_pos.y += m_speed;
 			m_pos.x += m_speed;
 			break;
 		case '3':// DOWN & LEFT
@@ -103,7 +114,7 @@ bool Weapon::MoveFire()
 			m_pos.x -= m_speed;
 			break;
 		case '4':// UP & LEFT
-			m_pos.y += m_speed;
+			m_pos.y -= m_speed;
 			m_pos.x -= m_speed;
 			break;
 		}
@@ -245,6 +256,16 @@ void Weapon::LoadAllTextures()
 		LoadGLTextures("fireAnimation", "Bullet_02_impact_3.png");
 		LoadGLTextures("fireAnimation", "Bullet_02_impact_4.png");
 		
+		break;
+
+	case 3:
+		LoadGLTextures("gun", "Weapon_03.png"); // Weapon sprite
+		LoadGLTextures("fireAnimation", "Bullet_03.png"); // Fire sprite
+		LoadGLTextures("fireAnimation", "Bullet_03_impact_1.png"); // Fire on impact animation
+		LoadGLTextures("fireAnimation", "Bullet_03_impact_2.png");
+		LoadGLTextures("fireAnimation", "Bullet_03_impact_3.png");
+		LoadGLTextures("fireAnimation", "Bullet_03_impact_4.png");
+
 		break;
 
 	}
