@@ -46,6 +46,8 @@ private:
 	AudioFile sfx_loot{ "Powerup.wav", 1 };
 	AudioFile sfx_gap{ "timer_explosion.wav", 1 };
 	AudioFile sfx_bullet_hit{ "explosion.wav", 1 };
+	AudioFile sfx_hit{ "Hit_Hurt.wav", 1 };
+
 
 public:
 	int Map(int, int); // return map values

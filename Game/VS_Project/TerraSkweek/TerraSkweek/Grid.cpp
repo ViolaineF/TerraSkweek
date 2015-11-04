@@ -502,6 +502,7 @@ void Grid::MoveAllEnemies()
 		    //---------- CHECK COLLISION WITH PLAYER - 1 player
 			if (vecEnemies[i]->GetPos() == player.GetPos()) {
 				player.SetLife(player.GetLife() - vecEnemies[i]->GetDamage()); // Player's life is minus by the enemy's contact damage
+				sfx_hit.PlayAudio();
 			}
 
 			//----------- CHECK WALL COLLISION
@@ -539,7 +540,6 @@ void Grid::MoveAllEnemies()
 
 		}
 
-
 	}
 
 }
@@ -572,8 +572,6 @@ void Grid::NewFire(int type, char dir, Position pos)
 		sfx_e_fire.PlayAudio();
 		break;
 	}
-
-
 
 }
 

@@ -31,9 +31,14 @@ AudioFile::AudioFile(string file, bool sound)
 void AudioFile::PlayAudio()
 {
 	if (m_sound) { // if it's a sound
+
 		sound.setVolume(4);
 		sound.setBuffer(buffer);
-		sound.play();
+
+		if (!sound.Stopped)
+		{
+			sound.play();
+		}
 	}
 	else { // if it's a background music
 		music.play();

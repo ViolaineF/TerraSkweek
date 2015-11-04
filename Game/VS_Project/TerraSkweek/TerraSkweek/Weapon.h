@@ -38,8 +38,7 @@ protected:
 	bool m_destroy;
 	int currentFrame;
 	bool m_drop; 
-	AudioFile s_fire;
-	AudioFile s_impact;
+
 
 	vector<GLuint>	fireAnimation;
 
