@@ -126,12 +126,6 @@ bool Weapon::MoveFire()
 
 }
 
-//void Weapon::DrawSprite(Position drop)
-//{
-//	m_posSprite.x = drop.x;
-//	m_posSprite.y = drop.y;
-//	m_posSprite.z = drop.z;
-//}
 
 void Weapon::DrawFire()
 {
@@ -175,9 +169,9 @@ void Weapon::DrawFire()
 			glBegin(GL_QUADS);
 			glColor3d(1.0, 1.0, 1.0);
 			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
-			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 1, m_pos.y);
-			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 1, m_pos.y + 1);
-			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 1);
+			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 0.2, m_pos.y);
+			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 0.2, m_pos.y + 0.2);
+			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 0.2);
 
 			glEnd();
 			glDisable(GL_TEXTURE_2D);
@@ -200,9 +194,9 @@ void Weapon::DrawFire()
 			glBegin(GL_QUADS);
 			glColor3d(1.0, 1.0, 1.0);
 			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
-			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 1, m_pos.y);
-			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 1, m_pos.y + 1);
-			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 1);
+			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 0.2, m_pos.y);
+			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 0.2, m_pos.y + 0.2);
+			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 0.2);
 
 			glEnd();
 			glDisable(GL_TEXTURE_2D);
