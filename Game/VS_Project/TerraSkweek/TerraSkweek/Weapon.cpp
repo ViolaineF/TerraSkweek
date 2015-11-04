@@ -90,6 +90,22 @@ bool Weapon::MoveFire()
 		case 'l':// LEFT
 			m_pos.x -= m_speed;
 			break;
+		case '1':// UP & RIGHT
+			m_pos.y -= m_speed;
+			m_pos.x += m_speed;
+			break;
+		case '2':// DOWN & RIGHT
+			m_pos.y -= m_speed;
+			m_pos.x += m_speed;
+			break;
+		case '3':// DOWN & LEFT
+			m_pos.y += m_speed;
+			m_pos.x -= m_speed;
+			break;
+		case '4':// UP & LEFT
+			m_pos.y += m_speed;
+			m_pos.x -= m_speed;
+			break;
 		}
 
 		return true;
