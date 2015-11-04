@@ -2,14 +2,8 @@
 
 
 
-void CrackedFloor::Somthg()
-{
-
-}
-
 CrackedFloor::CrackedFloor(int x, int y , string directory) : SpecialCase(x, y, directory)
 {
-
 	animated = false;
 
 	string fullDirectory = "Art/" + directory;

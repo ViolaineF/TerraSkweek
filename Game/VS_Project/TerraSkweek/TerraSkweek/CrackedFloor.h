@@ -6,7 +6,6 @@
 class CrackedFloor : public SpecialCase
 {
 public:
-	void Somthg();
 	CrackedFloor(int, int, string);
 	~CrackedFloor();
 };

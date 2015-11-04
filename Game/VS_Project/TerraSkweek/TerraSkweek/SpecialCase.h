@@ -15,8 +15,7 @@ protected :
 
 
 public:
-	virtual void Somthg();
-	bool Draw();
+	virtual bool Draw();
 	void SetAnimated(bool);
 	bool IsAnimated();
 	Position GetPos();

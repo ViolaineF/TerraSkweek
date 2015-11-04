@@ -2,10 +2,6 @@
 
 
 
-void SpecialCase::Somthg()
-{
-
-}
 
 bool SpecialCase::Draw()
 {
