@@ -41,7 +41,6 @@ protected:
 
 
 	vector<GLuint>	fireAnimation;
-
 	vector<GLuint>	gun;
 	vector<GLuint>	freeze;
 	vector<GLuint>	invincible;

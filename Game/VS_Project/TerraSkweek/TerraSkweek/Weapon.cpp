@@ -168,10 +168,58 @@ void Weapon::DrawFire()
 			glBindTexture(GL_TEXTURE_2D, fireAnimation[frame]);
 			glBegin(GL_QUADS);
 			glColor3d(1.0, 1.0, 1.0);
-			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
-			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 0.2, m_pos.y);
-			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 0.2, m_pos.y + 0.2);
-			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 0.2);
+			switch (m_dir)// Move accordingly
+			{
+			case 'u':// UP
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 0.2, m_pos.y);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 0.2, m_pos.y + 0.2);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 0.2);
+				break;
+			case 'd':// DOWN
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x + 0.2, m_pos.y);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x + 0.2, m_pos.y + 0.2);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y + 0.2);
+				break;
+			case 'r':// RIGHT
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x + 0.2, m_pos.y);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 0.2, m_pos.y + 0.2);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 0.2);
+				break;
+			case 'l':// LEFT
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 0.2, m_pos.y);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x + 0.2, m_pos.y + 0.2);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y + 0.2);
+				break;
+			case '1':// UP & RIGHT
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 0.2, m_pos.y);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 0.2, m_pos.y + 0.2);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 0.2);
+				break;
+			case '2':// DOWN & RIGHT
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x + 0.2, m_pos.y);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x + 0.2, m_pos.y + 0.2);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y + 0.2);
+				break;
+			case '3':// DOWN & LEFT
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x + 0.2, m_pos.y);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 0.2, m_pos.y + 0.2);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 0.2);
+				break;
+			case '4':// UP & LEFT
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 0.2, m_pos.y);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x + 0.2, m_pos.y + 0.2);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y + 0.2);
+				break;
+			}
+
 
 			glEnd();
 			glDisable(GL_TEXTURE_2D);
@@ -193,10 +241,60 @@ void Weapon::DrawFire()
 			glBindTexture(GL_TEXTURE_2D, fireAnimation[0]);
 			glBegin(GL_QUADS);
 			glColor3d(1.0, 1.0, 1.0);
-			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
-			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 0.2, m_pos.y);
-			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 0.2, m_pos.y + 0.2);
-			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 0.2);
+
+
+			switch (m_dir)// Move accordingly
+			{
+			case 'u':// UP
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 0.2, m_pos.y);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 0.2, m_pos.y + 0.2);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 0.2);
+				break;
+			case 'd':// DOWN
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x + 0.2, m_pos.y);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x + 0.2, m_pos.y + 0.2);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y + 0.2);
+				break;
+			case 'r':// RIGHT
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x + 0.2, m_pos.y);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 0.2, m_pos.y + 0.2);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 0.2);
+				break;
+			case 'l':// LEFT
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 0.2, m_pos.y);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x + 0.2, m_pos.y + 0.2);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y + 0.2);
+				break;
+			case '1':// UP & RIGHT				
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x + 0.2, m_pos.y);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 0.2, m_pos.y + 0.2);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 0.2);
+				break;
+			case '2':// DOWN & RIGHT
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x + 0.2, m_pos.y);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x + 0.2, m_pos.y + 0.2);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y + 0.2);
+				break;
+			case '3':// DOWN & LEFT
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 0.2, m_pos.y);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x + 0.2, m_pos.y + 0.2);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y + 0.2);
+				break;
+			case '4':// UP & LEFT
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 0.2, m_pos.y);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 0.2, m_pos.y + 0.2);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 0.2);
+				break;
+			}
+
 
 			glEnd();
 			glDisable(GL_TEXTURE_2D);
