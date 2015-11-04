@@ -1,5 +1,9 @@
 #include "HUD.h"
 
+//----------------------- REF TO EXTERN VARIABLES
+extern int windowWidth;
+extern int windowHeight;
+
 
 
 HUD::HUD(int Lv)
@@ -191,12 +195,12 @@ void HUD::displayScore(int score, float life, int weapon)
 	int s_XXXM = score / 1000000 % 10;
 
 
-	cout << "s_I " << s_I << endl;
-	cout << "s_X " << s_X << endl;
-	cout << "s_C " << s_I << endl;
-	cout << "s_M " << s_I << endl;
-	cout << "s_XM " << s_I << endl;
-	cout << "s_XXM " << s_I << endl;
+	//cout << "s_I " << s_I << endl;
+	//cout << "s_X " << s_X << endl;
+	//cout << "s_C " << s_I << endl;
+	//cout << "s_M " << s_I << endl;
+	//cout << "s_XM " << s_I << endl;
+	//cout << "s_XXM " << s_I << endl;
 
 	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 1 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_I);
 	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 2 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_X);

@@ -18,8 +18,10 @@
 #include "Slime_Forest.h"
 #include "Unicorn_Hallow.h"
 #include "Zombie_Forest.h"
-#include "CaseAnimation.h"
-
+#include "SpecialCase.h"
+#include "SimpleConversion.h"
+#include "SemiConverted.h"
+#include "CrackedFloor.h"
 
 
 class Grid
@@ -34,7 +36,7 @@ private:
 	int m_lignes;
 	int map[20][20];
 	vector<GLuint> textures;
-	vector<CaseAnimation*> vecCaseAnimated;
+	vector<SpecialCase*> vecCaseAnimated;
 	vector<Enemy*> vecEnemies;
 	vector<TNT*> vecTNT;
 	vector<Arrow*> vecArrow;

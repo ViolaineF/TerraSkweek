@@ -60,7 +60,7 @@ int Enemy::LoadGLTextures(string type,string directory)
 
 }
 
-//void Enemy::Move(Player player)
+
 bool Enemy::Move(Position playerPos, float light)
 {
 	if (m_life <= 0) {
@@ -203,7 +203,7 @@ void Enemy::Draw()
 			}
 
 	}
-	else if (afraid == false)
+	else if (afraid == false && !m_freeze)
 	{
 		int frame = currentFrame * (run.size()) / speed;
 
@@ -226,6 +226,36 @@ void Enemy::Draw()
 		glPopMatrix();
 		glutPostRedisplay();
 	}
+	else if (m_freeze) {
+
+		int frame = currentFrame * (freeze.size()) / speed;
+
+		glPushMatrix();
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glBindTexture(GL_TEXTURE_2D, freeze[frame]);
+		glBegin(GL_QUADS);
+		glColor3d(1.0, 1.0, 1.0);
+		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
+		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 1, m_pos.y);
+		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 1, m_pos.y + 1);
+		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x, m_pos.y + 1);
+
+		glEnd();
+		glDisable(GL_TEXTURE_2D);
+		glPopMatrix();
+		glutPostRedisplay();
+
+		if (frame == (freeze.size() - 1)) { // If the death animation has entirely played itself, then dead is true;
+			m_freeze = false;
+		}
+
+
+
+	}
 
 /*	if (afraid == false)
 	{
@@ -245,5 +275,6 @@ void Enemy::Draw()
 
 Enemy::~Enemy()
 {
+	m_freeze = false;
 }
 

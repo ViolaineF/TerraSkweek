@@ -1,15 +1,20 @@
-#include "CaseAnimation.h"
+#include "SpecialCase.h"
 
 
 
-bool CaseAnimation::Draw(bool animated)
+void SpecialCase::Somthg()
 {
-	const int speed = 1200;
+
+}
+
+bool SpecialCase::Draw()
+{
+	const int speed = 400;
 
 	if (animated) {
 
 		currentFrame = (currentFrame + 1) % speed;
-		unsigned int frame = currentFrame * (convertAnim.size()) / speed;
+		unsigned int frame = currentFrame * (animation.size()) / speed;
 
 		glPushMatrix();
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -17,7 +22,7 @@ bool CaseAnimation::Draw(bool animated)
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glBindTexture(GL_TEXTURE_2D, convertAnim[frame]);
+		glBindTexture(GL_TEXTURE_2D, animation[frame]);
 		glBegin(GL_QUADS);
 		glColor3d(1.0, 1.0, 1.0);
 		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
@@ -31,7 +36,7 @@ bool CaseAnimation::Draw(bool animated)
 		glutPostRedisplay();
 
 		// when the animation is complete, convert entirely
-		if (frame >= (convertAnim.size() - 1)) {
+		if (frame >= (animation.size() - 1)) {
 
 			cout << "anim ended" << endl;
 			return 1;
@@ -48,7 +53,7 @@ bool CaseAnimation::Draw(bool animated)
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glBindTexture(GL_TEXTURE_2D, convertAnim[0]);
+		glBindTexture(GL_TEXTURE_2D, animation[0]);
 		glBegin(GL_QUADS);
 		glColor3d(1.0, 1.0, 1.0);
 		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x, m_pos.y);
@@ -66,12 +71,22 @@ bool CaseAnimation::Draw(bool animated)
 
 }
 
-Position CaseAnimation::GetPos()
+void SpecialCase::SetAnimated(bool anim)
+{
+	animated = anim;
+}
+
+bool SpecialCase::IsAnimated()
+{
+	return animated;
+}
+
+Position SpecialCase::GetPos()
 {
 	return m_pos;
 }
 
-int CaseAnimation::LoadGLTexture(string name)
+int SpecialCase::LoadGLTexture(string name)
 {
 
 	GLuint essai = SOIL_load_OGL_texture
@@ -82,37 +97,28 @@ int CaseAnimation::LoadGLTexture(string name)
 			SOIL_FLAG_INVERT_Y
 			);
 
-	convertAnim.push_back(essai); // Add to the texture vector
+	animation.push_back(essai); // Add to the texture vector
 
-	if (convertAnim.at(convertAnim.size() - 1) == 0)
+	if (animation.at(animation.size() - 1) == 0)
 		return false;
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	return true;       // Return Success
 }
 
-CaseAnimation::CaseAnimation(int x, int y, string directory)
+SpecialCase::SpecialCase(int x, int y, string directory)
 {
 	currentFrame = 0;
 	float posX = x + 0.0;
 	float posY = y + 0.0;
 	m_pos = {posX, posY};
-	convertAnim.resize(0);
-
-	string fullDirectory = "Art/" + directory; 
-
-	LoadGLTexture(fullDirectory + "/1.png");
-	LoadGLTexture(fullDirectory + "/2.png");
-	LoadGLTexture(fullDirectory + "/3.png");
-	LoadGLTexture(fullDirectory + "/4.png");
-	LoadGLTexture(fullDirectory + "/5.png");
-	LoadGLTexture(fullDirectory + "/6.png");
-	LoadGLTexture(fullDirectory + "/7.png");
-
+	animation.resize(0);
 
 }
 
 
-CaseAnimation::~CaseAnimation()
+
+
+SpecialCase::~SpecialCase()
 {
 }
