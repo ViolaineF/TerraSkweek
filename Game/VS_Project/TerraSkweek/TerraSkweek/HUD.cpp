@@ -197,59 +197,13 @@ void HUD::displayScore(int score, float life, int weapon)
 	cout << "s_M " << s_I << endl;
 	cout << "s_XM " << s_I << endl;
 	cout << "s_XXM " << s_I << endl;
-	/*
-	scoreTab[0] = LevelScore;
-	if (s_I > 9)
-	{
-		scoreTab[1] ++;
-		scoreTab[0] = 0;
-		LevelScore = 9;
-	}
-	else if (s_X > 9)
-	{
-		scoreTab[1] = 0;
-		scoreTab[2]++;
-		LevelScore = 9;
-	}
-	else if (s_C > 9)
-	{
-		scoreTab[2] = 0;
-		scoreTab[3] ++;
-		LevelScore = 9;
-	}
-	else if (s_M > 9)
-	{
-		scoreTab[3] = 0;
-		scoreTab[4] ++;
-		LevelScore = 9;
-	}
-	else if (s_XM > 9)
-	{
-		scoreTab[4] = 0;
-		scoreTab[5] ++;
-		LevelScore = 9;
-	}
-	else if (s_XXM > 9)
-	{
-		scoreTab[5] = 0;
-		scoreTab[6] ++;
-		LevelScore = 9;
-	}
 
-	
-
-	for (i = 0; i < 7; i++)
-	{
-		PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - i*0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, 1);
-	}
-	*/
-	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 1 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_C);
-	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 2 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_I);
-	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 3 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_X);
-	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 4 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_C);
-	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 5 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_M);
-	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 6 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_XM);
-	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 7 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_XXM);
+	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 1 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_I);
+	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 2 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_X);
+	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 3 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_C);
+	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 4 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_M);
+	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 5 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_XM);
+	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 6 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_XXM);
 	PrintImg(16000 / glutGet(GLUT_WINDOW_WIDTH) - 7 * 0.5, 0, resolution / glutGet(GLUT_WINDOW_WIDTH), resolution / glutGet(GLUT_WINDOW_WIDTH), nbrs, s_XXXM);
 
 

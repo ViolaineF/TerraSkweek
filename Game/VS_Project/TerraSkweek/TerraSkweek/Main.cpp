@@ -31,8 +31,9 @@ int LoadGLTextures(string name) // Load Bitmaps And Convert To Textures
 
 //----------------------CREATE PLAYER AND LEVELS
 Grid lvl01("2corrupted");
-HUD hud;
+HUD hud{ 1 };
 Player player;
+extern int m_score;
 const float res = 0.01471;
 int windowWidth = 200;
 int windowHeight = 200;
@@ -452,7 +453,7 @@ void DrawLevel() {
 	glPopMatrix();
 
 	//Draw HUD
-	hud.displayScore(player.GetLife(), player.GetWeapon());
+	hud.displayScore(lvl01.HUD_Score(), player.GetLife(), player.GetWeapon());
 
 }
 

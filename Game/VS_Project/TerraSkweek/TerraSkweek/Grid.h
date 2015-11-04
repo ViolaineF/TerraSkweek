@@ -61,7 +61,7 @@ public:
 	void NewGame(string);
 
 	void Redim(int, int); //not used RN
-	void HUD();
+	int HUD_Score();
 	void Pause();
 	void EndGame();
 
