@@ -36,7 +36,6 @@ Player player;
 const float res = 0.01471;
 int windowWidth = 200;
 int windowHeight = 200;
-bool getWindowSize = true;
 
 //----------------------A SUPPRIMER POUR UTILISER LE DETECTEUR DE LUMIERE
 
@@ -428,9 +427,9 @@ void PlayerMovt(int x) {
 void DrawLevel() {
 
 	glPushMatrix();
-	//glTranslatef(-player.GetPos().x + 0.5*glutGet(GLUT_WINDOW_WIDTH), -player.GetPos().y + 0.5*glutGet(GLUT_WINDOW_HEIGHT), 0);
 	// Translate Map
-	glTranslatef(-player.GetPos().x + 10, -player.GetPos().y + 10, 0);
+	//glTranslatef(-player.GetPos().x + 12, -player.GetPos().y + 8, 0);
+	glTranslatef(-player.GetPos().x + res*(windowWidth/2) - 1, -player.GetPos().y + res*(windowHeight/2) - 1, 0);
 
 	// Draw map
 	lvl01.DisplayMap();
@@ -470,14 +469,11 @@ void Display() {
 
 void Redim(int x, int y) {
 
-	if (getWindowSize) { // Get the window' size once
-		cout << glutGet(GLUT_WINDOW_WIDTH) << endl;
-		cout << glutGet(GLUT_WINDOW_HEIGHT) << endl;
-		windowWidth = glutGet(GLUT_WINDOW_WIDTH);
-		windowHeight = glutGet(GLUT_WINDOW_HEIGHT);
+	cout << glutGet(GLUT_WINDOW_WIDTH) << endl;
+	cout << glutGet(GLUT_WINDOW_HEIGHT) << endl;
+	windowWidth = glutGet(GLUT_WINDOW_WIDTH);
+	windowHeight = glutGet(GLUT_WINDOW_HEIGHT);
 
-		getWindowSize = false;
-	}
 
 	glViewport(0, 0, x, y);
 	glMatrixMode(GL_PROJECTION);
