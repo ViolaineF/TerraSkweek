@@ -206,7 +206,7 @@ void HUD::displayScore(int score, float life, int weapon)
 	//cout << "s_XM " << s_I << endl;
 	//cout << "s_XXM " << s_I << endl;
 
-	float offset = 0.7*dim;
+	float offset = 0.75*dim;
 	float start = 9.5*dim;
 
 	PrintImg(start, 0, dim, dim, nbrs, s_I);
