@@ -6,6 +6,7 @@
 class SemiConverted : public SpecialCase
 {
 public:
+	bool Draw();
 	SemiConverted(int, int, string);
 	~SemiConverted();
 };

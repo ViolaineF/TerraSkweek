@@ -178,6 +178,7 @@
     <ClCompile Include="Slime_Forest.cpp" />
     <ClCompile Include="TNT.cpp" />
     <ClCompile Include="Unicorn_Hallow.cpp" />
+    <ClCompile Include="UpCase.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="Zombie_Forest.cpp" />
   </ItemGroup>
@@ -205,6 +206,7 @@
     <ClInclude Include="Slime_Forest.h" />
     <ClInclude Include="TNT.h" />
     <ClInclude Include="Unicorn_Hallow.h" />
+    <ClInclude Include="UpCase.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="Zombie_Forest.h" />
   </ItemGroup>
