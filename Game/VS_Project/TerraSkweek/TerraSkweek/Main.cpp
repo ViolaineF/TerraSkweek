@@ -2,6 +2,7 @@
 
 
 //------------------LOADING MAP TEXTURES
+extern bool inGame;
 
 vector<GLuint>	UI;
 
@@ -54,7 +55,7 @@ int enemySpawnFrequency = 5000;
 void Display();
 void Redim(int x, int y);
 void KeyAction(int x, int y, int z);
-void invisibility(unsigned char key, int y, int z);
+void KeyButtons(unsigned char key, int y, int z);
 void DrawLevel();
 void ActivateSpawnMob(int x);
 //void Idle();
@@ -91,7 +92,7 @@ void main() {
 	glutReshapeFunc(Redim);
 	glutSpecialFunc(KeyAction); // Switch player's direction
 
-	glutKeyboardFunc(invisibility);// Keyboard keys to control the HUD // and Fire
+	glutKeyboardFunc(KeyButtons);// Keyboard keys to control the HUD // and Fire
 	//glutTimerFunc(700, EnemiesTimer, 0); // Direction for the enemiesd
 	glutTimerFunc(refreshRate, PlayerMovt, 0); // Continuous movement of the player
 	glutTimerFunc(enemySpawnFrequency, ActivateSpawnMob, 0);
@@ -184,14 +185,16 @@ void PrintImg(float i, float j, float width, float height, int textureIt) {
 
 //----------------------------- SPAWN NEW MOB
 void ActivateSpawnMob(int x) {
+	if (inGame)
+	{
+		lvl.SpawnMob();
 
-	lvl.SpawnMob();
+		//Update screen
+		glutPostRedisplay();
 
-	//Update screen
-	glutPostRedisplay();
-
-	//Reset Timer
-	glutTimerFunc(enemySpawnFrequency, ActivateSpawnMob, 0);
+		//Reset Timer
+		glutTimerFunc(enemySpawnFrequency, ActivateSpawnMob, 0);
+	}
 
 }
 
@@ -443,55 +446,47 @@ void PlayerMovt(int x) {
 void DrawLevel() {
 
 	glPushMatrix();
-	// Translate Map
-	//glTranslatef(-player.GetPos().x + 12, -player.GetPos().y + 8, 0);
-	glTranslatef(-player.GetPos().x + res*(windowWidth/2) - 1, -player.GetPos().y + res*(windowHeight/2) - 1, 0);
+
+	
+	if (inGame)
+	{
+		// Translate Map
+		//glTranslatef(-player.GetPos().x + 12, -player.GetPos().y + 8, 0);
+		glTranslatef(-player.GetPos().x + res*(windowWidth / 2) - 0.5, -player.GetPos().y + res*(windowHeight / 2) - 0.5, 0);
+
+		// Draw map
+		lvl.DisplayMap();
+
+		//Draw Enemies
+		lvl.DrawSpecialCases();
+
+		// Add player
+		player.Draw();
+
+		//Draw Enemies
+		lvl.DrawEnemies();
+
+		//Draw Fires
+		lvl.DrawAllFires();
 
 
+		glLoadIdentity();
+		glutSwapBuffers();
+		glPopMatrix();
 
+		//Draw HUD
+		hud.displayScore(lvl.HUD_Score(), player.GetLife(), player.GetWeapon());
+	}
 
+	else
+	{
+		//Draw Menu
+		menu.Display();
 
+		// Add player
+		player.Draw();
+	}
 
-
-
-
-
-
-	menu.Display();
-
-
-
-
-
-
-
-
-
-
-
-
-	// Draw map
-	lvl.DisplayMap();
-
-	//Draw Enemies
-	lvl.DrawSpecialCases();
-
-	// Add player
-	player.Draw();
-
-	//Draw Enemies
-	lvl.DrawEnemies();
-
-	//Draw Fires
-	lvl.DrawAllFires();
-
-
-	glLoadIdentity();
-	glutSwapBuffers();
-	glPopMatrix();
-
-	//Draw HUD
-	hud.displayScore(lvl.HUD_Score(), player.GetLife(), player.GetWeapon());
 
 }
 
@@ -526,7 +521,7 @@ void Redim(int x, int y) {
 
 
 //---------------------------- SCREEN/HUD CONTROLS
-void invisibility(unsigned char key, int y, int z) {
+void KeyButtons(unsigned char key, int y, int z) {
 	
 
 //-------------------------- A ENLEVER POUR LAISSER PLACE AU DETECTEUR DE LUMIERE SUR ARDUINO
@@ -546,43 +541,72 @@ void invisibility(unsigned char key, int y, int z) {
 	//cout << light << endl;
 
 // -------------------------------- PLAYER FIRE
-	if (key == ' ' && (player.IsFiring() == false)) {
-		if (!(player.HasPowderBag())) { // As long has player has no powder bag
-			player.Attack();
-			lvl.NewFire(player.GetWeapon(), player.GetDir(), player.GetPos());
-		}
-		else { // consume powder bag and convert cases
-
-			int X = round(player.GetPos().x + 0.4);
-			int Y = round(player.GetPos().y + 0.4);
-
-			switch (player.GetDir())
-			{
-			case 'u':
-				for (int i = player.GetPos().y; i > player.GetPos().y - 5; i--) {
-					lvl.SetMap(X, i, 4);
-				}
-				break;
-			case 'd':
-				for (int i = player.GetPos().y; i < player.GetPos().y + 5; i++) {
-					lvl.SetMap(X, i, 4);
-				}
-				break;
-			case 'r':
-				for (int i = player.GetPos().x; i < player.GetPos().x + 5; i++) {
-					lvl.SetMap(i, Y, 4);
-				}
-				break;
-			case 'l':
-				for (int i = player.GetPos().x; i > player.GetPos().x - 5; i--) {
-				lvl.SetMap(i, Y, 4);
-				}
-				break;
+	if (inGame)
+	{
+		if (key == ' ' && (player.IsFiring() == false)) 
+		{
+			if (!(player.HasPowderBag())) { // As long has player has no powder bag
+				player.Attack();
+				lvl.NewFire(player.GetWeapon(), player.GetDir(), player.GetPos());
 			}
-			player.SetPowderBag(false);
+			else { // consume powder bag and convert cases
 
+				int X = round(player.GetPos().x + 0.4);
+				int Y = round(player.GetPos().y + 0.4);
+
+				switch (player.GetDir())
+				{
+				case 'u':
+					for (int i = player.GetPos().y; i > player.GetPos().y - 5; i--) {
+						lvl.SetMap(X, i, 4);
+					}
+					break;
+				case 'd':
+					for (int i = player.GetPos().y; i < player.GetPos().y + 5; i++) {
+						lvl.SetMap(X, i, 4);
+					}
+					break;
+				case 'r':
+					for (int i = player.GetPos().x; i < player.GetPos().x + 5; i++) {
+						lvl.SetMap(i, Y, 4);
+					}
+					break;
+				case 'l':
+					for (int i = player.GetPos().x; i > player.GetPos().x - 5; i--) {
+						lvl.SetMap(i, Y, 4);
+					}
+					break;
+				}
+				player.SetPowderBag(false);
+			}
 		}
 	}
+	else
+	{
+		if (key == ' ') {
+			menu.Clicking();
+		}
+
+		if (key == 'p') {
+			menu.Pause();
+		}
+	}
+
+	if (key == '0') {
+		const int div = 4;
+		currentFrame = (currentFrame + 1) % div;
+		light = currentFrame * 4 / div;
+
+
+		//		const int div = 4;
+		//		fLight = (fLight) / div;
+		//		light = fLight * 4 / div;
+
+
+		player.setOpacity(light);// à placer dans une boucle infinie pour detecter toujours la valeur de "light"
+	}
+
+
 }
 
 
