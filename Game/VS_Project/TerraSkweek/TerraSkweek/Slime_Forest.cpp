@@ -32,6 +32,18 @@ void Slime_Forest::LoadAllTextures()
 	LoadGLTextures("death", "2corrupted/slimer_death_3.png");
 	LoadGLTextures("death", "2corrupted/slimer_death_4.png");
 
+	LoadGLTextures("freeze", "2corrupted/slimer_freeze_01.png");
+	LoadGLTextures("freeze", "2corrupted/slimer_freeze_02.png");
+	LoadGLTextures("freeze", "2corrupted/slimer_freeze_03.png");
+	LoadGLTextures("freeze", "2corrupted/slimer_freeze_03.png");
+	LoadGLTextures("freeze", "2corrupted/slimer_freeze_03.png");
+	LoadGLTextures("freeze", "2corrupted/slimer_freeze_03.png");
+	LoadGLTextures("freeze", "2corrupted/slimer_freeze_03.png");
+	LoadGLTextures("freeze", "2corrupted/slimer_freeze_03.png");
+	LoadGLTextures("freeze", "2corrupted/slimer_freeze_03.png");
+	LoadGLTextures("freeze", "2corrupted/slimer_freeze_03.png");
+	LoadGLTextures("freeze", "2corrupted/slimer_freeze_03.png");
+
 }
 
 Slime_Forest::~Slime_Forest()

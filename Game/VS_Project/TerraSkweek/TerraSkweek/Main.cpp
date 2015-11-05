@@ -44,8 +44,6 @@ int currentFrame;
 
 //----------------------
 
-
-
 int refreshRate = 30; // in miliseconds
 float light;
 int enemySpawnFrequency = 5000;
@@ -184,8 +182,6 @@ void PrintImg(float i, float j, float width, float height, int textureIt) {
 
 //----------------------------- SPAWN NEW MOB
 void ActivateSpawnMob(int x) {
-	
-	cout << "main tries to spawn mobs" << endl;
 
 	lvl01.SpawnMob();
 

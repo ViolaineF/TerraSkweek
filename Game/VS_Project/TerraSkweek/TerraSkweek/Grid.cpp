@@ -391,25 +391,41 @@ void Grid::DrawSpecialCases()
 
 			if (typeid(*vecCaseAnimated[i]) == typeid(CrackedFloor)) {
 				vecCaseAnimated[i]->SetAnimated(true);
-
 				//------------------PLAY SOUND
 				sfx_gap.PlayAudio();
 			}
 
-			if (typeid(*vecCaseAnimated[i]) == typeid(SemiConverted)) {
+			else if (typeid(*vecCaseAnimated[i]) == typeid(SemiConverted)) {
 				vecCaseAnimated[i]->SetAnimated(true);
-
 				//------------------PLAY SOUND
 			}
 
-			if (typeid(*vecCaseAnimated[i]) == typeid(SpecialCase)) { // Powder Bag
+			else if (vecCaseAnimated[i]->GetType() == 'p') { // Powder Bag
 				player.SetPowderBag(true); // Change player powder bag boolean
 				vecCaseAnimated.erase(vecCaseAnimated.begin() + i); // Destroy powder bag sprite
 				i--;
-
 				//------------------PLAY SOUND
 
 			}
+
+			else if (vecCaseAnimated[i]->GetType() == 'f') { // freeze power
+				for (unsigned int i = 0; i < vecEnemies.size(); i++){
+					vecEnemies[i]->SetFreeze(true);
+				}
+				vecCaseAnimated.erase(vecCaseAnimated.begin() + i); 
+				i--;
+				//------------------PLAY SOUND
+
+			}
+
+			else if (vecCaseAnimated[i]->GetType() == 'i') { // incinvible power
+				player.SetInvincible(true); 
+				vecCaseAnimated.erase(vecCaseAnimated.begin() + i);
+				i--;
+				//------------------PLAY SOUND
+
+			}
+
 		}
 		
 	}
@@ -561,23 +577,39 @@ void Grid::DrawEnemies()
 
 			if (typeid(*vecEnemies[i]) == typeid(Slime_Forest)) { // Slime forest Enemy - drops stats
 				
+				// --------------- CHANCES OF DROP
+				int tier1 = 10; // 10% for the first weapon
+				int tier2 = 10; 
+				int tier3 = 10;
+				int tier4 = 10;
+				int tier5 = 30;
+				int tier6 = 30;
+
 				int dropType = rand() % 100 + 1; // Give an int between 1 and 100;
 
-				if (dropType >= 1 && dropType <= 10) { // 10% chance to drop weapon 1
+				if (dropType >= 1 && dropType <= tier1) { // 10% chance to drop weapon 1
 					cout << "gun1" << endl;
 					vecWeapons.push_back(new Weapon(vecEnemies[i]->GetPos(), true, 1));// Create new weapon sprite
 				}
-				else if (dropType > 10 && dropType <= 50) { // 40%
+				else if (dropType > tier1 && dropType <= tier1+tier2) { // 10%
 					cout << "gun2" << endl;
 					vecWeapons.push_back(new Weapon(vecEnemies[i]->GetPos(), true, 2));
 				}
-				else if (dropType > 50 && dropType <= 75) { // 25%
+				else if (dropType > tier1+tier2 && dropType <= (tier1 + tier2+tier3)) { // 10%
 					cout << "gun3" << endl;
 					vecWeapons.push_back(new Weapon(vecEnemies[i]->GetPos(), true, 3));
 				}
-				else if (dropType > 75 && dropType <= 100) { // 25%
+				else if (dropType > (tier1 + tier2 + tier3) && dropType <= (tier1 + tier2 + tier3 +tier4)) { // 10%
 					cout << "powder" << endl;
 					vecCaseAnimated.push_back(new SpecialCase(vecEnemies[i]->GetPos(), "powderBag.png"));
+				}
+				else if (dropType >  (tier1 + tier2 + tier3 + tier4) && dropType <= (tier1 + tier2 + tier3 + tier4+tier5)) { // 25%
+					cout << "powder" << endl;
+					vecCaseAnimated.push_back(new SpecialCase(vecEnemies[i]->GetPos(), "freezePower.png"));
+				}
+				else if (dropType > (tier1 + tier2 + tier3 + tier4 + tier5) && dropType <= (tier1 + tier2 + tier3 + tier4 + tier5+tier6)) { // 25%
+					cout << "powder" << endl;
+					vecCaseAnimated.push_back(new SpecialCase(vecEnemies[i]->GetPos(), "invinciblePower.png"));
 				}
 							
 			}
@@ -589,7 +621,7 @@ void Grid::DrawEnemies()
 
 	//--------------- DRAW THE REMAINING ONES
 	for (unsigned int i = 0; i < vecEnemies.size(); i++) {
-		vecEnemies[i]->Draw();
+		vecEnemies[i]->Draw(); // if the player has freeezed the enemies, they are draw accordingly
 	}
 }
 
@@ -610,8 +642,12 @@ void Grid::MoveAllEnemies()
 		}
 	}
 
-
 	for (unsigned int i = 0; i < vecEnemies.size(); i++) {
+
+		if (vecEnemies[i]->IsFreezed()) { // if the enemies are freezed, return to skip the enemy movement
+			return;
+		}
+
 		// Save previous position if it collides with a wall
 		Position prevPos = { vecEnemies[i]->GetPos().x , vecEnemies[i]->GetPos().y , vecEnemies[i]->GetPos().z };
 
@@ -674,7 +710,7 @@ void Grid::SpawnMob()
 		return;
 	}
 
-	if (m_spawnerIndex >= vecSpawner.size()) {
+	if (m_spawnerIndex >= vecSpawner.size()-1) {
 		m_spawnerIndex = 0;
 	}
 	else {

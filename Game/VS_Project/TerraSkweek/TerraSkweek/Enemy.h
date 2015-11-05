@@ -19,11 +19,17 @@ protected :
 public:
 	Enemy();
 	Enemy(Position);
+
 	int LoadGLTextures(string, string);
+	virtual void LoadAllTextures();
+
 	bool Move(Position, float);
 	int GetDamage();
-	virtual void LoadAllTextures();
 	void Draw();
+
+	void SetFreeze(bool);
+	bool IsFreezed();
+
 	~Enemy();
 };
 

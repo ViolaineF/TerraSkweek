@@ -19,18 +19,25 @@ private :
 	bool m_moving;
 	float opacity;
 	bool m_powderbag;
+	bool m_invincible;
 
 public:
 	void setOpacity(float);
 	void LoadAllTextures();
 	int LoadGLTextures(string, string);
+
 	void Draw();
 	void SetMoving(bool);
+
 	void SetWeapon(int);
 	bool IsMoving();
 	bool IsFiring();
+
 	void SetPowderBag(bool);
 	bool HasPowderBag();
+
+	void SetInvincible(bool);
+	bool IsInvincible();
 
 	Player();
 	~Player();
