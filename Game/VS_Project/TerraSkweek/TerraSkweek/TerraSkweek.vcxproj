@@ -156,6 +156,7 @@
   <ItemGroup>
     <ClCompile Include="AudioFile.cpp" />
     <ClCompile Include="CrackedFloor.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MobSpawner.cpp" />
     <ClCompile Include="SemiConverted.cpp" />
     <ClCompile Include="SimpleConversion.cpp" />
@@ -186,6 +187,7 @@
   <ItemGroup>
     <ClInclude Include="AudioFile.h" />
     <ClInclude Include="CrackedFloor.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="MobSpawner.h" />
     <ClInclude Include="SemiConverted.h" />
     <ClInclude Include="SimpleConversion.h" />
