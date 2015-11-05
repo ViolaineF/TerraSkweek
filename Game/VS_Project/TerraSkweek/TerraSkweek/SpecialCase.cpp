@@ -82,6 +82,11 @@ Position SpecialCase::GetPos()
 	return m_pos;
 }
 
+char SpecialCase::GetType()
+{
+	return m_type;
+}
+
 int SpecialCase::LoadGLTexture(string name)
 {
 
@@ -110,6 +115,7 @@ SpecialCase::SpecialCase(int x, int y, string directory)
 	m_pos = {posX, posY, 0};
 	animation.resize(0);
 	m_spriteSize = 0.25;
+	m_type = '0';
 
 }
 
@@ -119,6 +125,11 @@ SpecialCase::SpecialCase(Position pos, string directory) // Powder Bag construct
 	m_pos = pos;
 	animation.resize(0);
 	m_spriteSize = 0.25;
+	char type = directory[0];// Get the first char of the directory 
+	// p - powder bag 
+	// f - freeze enemy
+	// i - invincible
+	m_type = type;
 
 	animated = false;
 

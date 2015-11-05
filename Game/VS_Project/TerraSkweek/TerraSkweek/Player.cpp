@@ -737,6 +737,16 @@ bool Player::HasPowderBag()
 	return m_powderbag;
 }
 
+void Player::SetInvincible(bool a)
+{
+	m_invincible = a;
+}
+
+bool Player::IsInvincible()
+{
+	return m_invincible;
+}
+
 Player::Player() : Entity()
 {
 	//m_name = name;
@@ -749,6 +759,7 @@ Player::Player() : Entity()
 	idle.resize(0);
 	m_moving = 0;
 	m_powderbag = false;
+	m_invincible = false; 
 	//LoadGLTextures( /*"idle",*/"Art/player.png");
 }
 
@@ -759,6 +770,7 @@ void Player::setOpacity(float light)
 
 Player::~Player()
 {
+
 }
 
 

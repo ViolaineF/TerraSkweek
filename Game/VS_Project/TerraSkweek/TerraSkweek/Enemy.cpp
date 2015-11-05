@@ -72,6 +72,28 @@ int Enemy::LoadGLTextures(string type,string directory)
 		return true;       // Return Success
 	}
 
+	if (type == "freeze") {
+		GLuint essai = SOIL_load_OGL_texture
+			(
+				name.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
+
+		freeze.push_back(essai); // Add to the texture vector
+
+		if (freeze.at(freeze.size() - 1) == 0)
+			return false;
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		return true;       // Return Success
+
+	}
+
+
 }
 
 
@@ -80,7 +102,6 @@ bool Enemy::Move(Position playerPos, float light)
 	if (m_life <= 0) { // If its dead but not deleted yet, no need to move
 		return false;
 	}
-
 
 	int maxMoves = 20;
 
@@ -283,6 +304,16 @@ void Enemy::Draw()
 		glPopMatrix();
 		glutPostRedisplay();
 	}*/
+}
+
+void Enemy::SetFreeze(bool a)
+{
+	m_freeze = a;
+}
+
+bool Enemy::IsFreezed()
+{
+	return m_freeze;
 }
 
 Enemy::~Enemy()
