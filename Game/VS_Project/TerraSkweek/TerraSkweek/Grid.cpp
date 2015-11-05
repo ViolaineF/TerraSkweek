@@ -14,6 +14,7 @@ Grid::Grid(string biome)
 	m_rows = 20;
 	m_lignes = 20;
 	m_spawnerIndex = 0;
+	vecSpawner.resize(0);
 
 	int mapTemp[20][20] = {
 		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -66,32 +67,31 @@ Grid::Grid(string biome)
 //	vecCaseAnimated.push_back(new SpecialCase(10,10,"1forest/spawner"));
 
 
-	//------------------------LOAD CORRESPONDING BIOME'S ENEMIES 
-	char biomeChar = biome[0];
+	//------------------------LOAD CORRESPONDING BIOME'S STATS 
+	char biomeChar = m_biome[0];
 
-	if (biomeChar == '1') // Forest
+	switch (biomeChar)
 	{
-		vecEnemies.push_back(new Slime_Corruption());
-	}
-	else if (biomeChar == '2') // Corrupted
-	{
-		//vecEnemies.push_back(new Slime_Forest());
-		//vecEnemies.push_back(new Slime_Forest());
-		//vecEnemies.push_back(new Slime_Forest());
+	case '1': // Forest
+		m_maxMobs = 10;
+		break;
+	case '2': // Corrupted
+		cout << "biome corrupted" << endl;
+		m_maxMobs = 5;
 		vecTNT.push_back(new TNT(3, 3, 1));
 		vecArrow.push_back(new Arrow(7, 7, 1, 'l'));
 		vecArrow.push_back(new Arrow(7, 6, 1, 'r'));
 		vecArrow.push_back(new Arrow(8, 5, 1, 'd'));
 		vecArrow.push_back(new Arrow(8, 4, 1, 'd'));
-		//vecCaseAnimated.push_back(new SpecialCase(2,5, "cracking"));
+		break;
+	case '3': // Crimson
+		m_maxMobs = 30;
+		break;
+	case '4': // Hallow
+		m_maxMobs = 40;
+		break;
 	}
-	else if(biomeChar == '3') // Crimson
-	{
-	}
-	else // Hallow
-	{
 
-	}
 	
 }
 
@@ -670,6 +670,10 @@ void Grid::MoveAllEnemies()
 
 void Grid::SpawnMob()
 {	
+	if (vecEnemies.size() > m_maxMobs) { // If too many mobs, don't spawn any
+		return;
+	}
+
 	if (m_spawnerIndex >= vecSpawner.size()) {
 		m_spawnerIndex = 0;
 	}
@@ -678,8 +682,65 @@ void Grid::SpawnMob()
 	}
 
 	vecSpawner[m_spawnerIndex]->SetAnimated(true); // Animate the spawner
-			
-	vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos())); // Add an enemy
+	
+	//------------------------LOAD CORRESPONDING BIOME'S ENEMIES 
+	int enemyGrade = rand() % 100 + 1; // Give an int between 1 and 100;;
+
+	char biomeChar = m_biome[0];
+	cout << "spawning " << biomeChar << endl;
+
+	switch (biomeChar)
+	{
+	case '1': // Forest
+		if (enemyGrade >= 1 && enemyGrade <= 50) { // 50%
+			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos())); // Add an enemy
+		}
+		else if (enemyGrade > 50 && enemyGrade <= 85) { // 35%
+			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
+		}
+		else if (enemyGrade > 85 && enemyGrade <= 100) { // 15%
+			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
+		}
+		break;
+
+	case '2': // Corrupted
+		cout << "spawn corrupted mobs" << endl;
+		if (enemyGrade >= 1 && enemyGrade <= 50) { // 50%
+			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos())); // Add an enemy
+		}
+		else if (enemyGrade > 50 && enemyGrade <= 85) { // 35%
+			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
+		}
+		else if (enemyGrade > 85 && enemyGrade <= 100) { // 15%
+			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
+		}
+		break;
+
+	case '3': // Crimson
+		if (enemyGrade >= 1 && enemyGrade <= 50) { // 50%
+			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos())); // Add an enemy
+		}
+		else if (enemyGrade > 50 && enemyGrade <= 85) { // 35%
+			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
+		}
+		else if (enemyGrade > 85 && enemyGrade <= 100) { // 15%
+			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
+		}
+		break;
+
+	case '4': // Hallow
+		if (enemyGrade >= 1 && enemyGrade <= 50) { // 50%
+			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos())); // Add an enemy
+		}
+		else if (enemyGrade > 50 && enemyGrade <= 85) { // 35%
+			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
+		}
+		else if (enemyGrade > 85 && enemyGrade <= 100) { // 15%
+			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
+		}
+		break;
+	}
+
 
 	//------------------PLAY SOUND
 	//sfx_gap.PlayAudio();

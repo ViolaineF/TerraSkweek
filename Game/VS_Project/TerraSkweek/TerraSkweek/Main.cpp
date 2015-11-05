@@ -57,7 +57,7 @@ void Redim(int x, int y);
 void KeyAction(int x, int y, int z);
 void invisibility(unsigned char key, int y, int z);
 void DrawLevel();
-void SpawnMob(int x);
+void ActivateSpawnMob(int x);
 //void Idle();
 //void EnemiesTimer(int x);
 void PlayerMovt(int x);
@@ -94,7 +94,7 @@ void main() {
 	glutKeyboardFunc(invisibility);// Keyboard keys to control the HUD // and Fire
 	//glutTimerFunc(700, EnemiesTimer, 0); // Direction for the enemiesd
 	glutTimerFunc(refreshRate, PlayerMovt, 0); // Continuous movement of the player
-	glutTimerFunc(enemySpawnFrequency, SpawnMob, 0);
+	glutTimerFunc(enemySpawnFrequency, ActivateSpawnMob, 0);
 	//glutIdleFunc(Idle);
 
 
@@ -183,7 +183,9 @@ void PrintImg(float i, float j, float width, float height, int textureIt) {
 //}
 
 //----------------------------- SPAWN NEW MOB
-void SpawnMob(int x) {
+void ActivateSpawnMob(int x) {
+	
+	cout << "main tries to spawn mobs" << endl;
 
 	lvl01.SpawnMob();
 
@@ -191,7 +193,7 @@ void SpawnMob(int x) {
 	glutPostRedisplay();
 
 	//Reset Timer
-	glutTimerFunc(enemySpawnFrequency, SpawnMob, 0);
+	glutTimerFunc(enemySpawnFrequency, ActivateSpawnMob, 0);
 
 }
 

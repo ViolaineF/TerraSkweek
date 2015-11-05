@@ -36,6 +36,7 @@ private:
 	int m_lignes;
 	int map[20][20];
 	int m_spawnerIndex;
+	int m_maxMobs;
 	vector<GLuint> textures;
 	vector<SpecialCase*> vecCaseAnimated;
 	vector<SpecialCase*> vecSpawner;
