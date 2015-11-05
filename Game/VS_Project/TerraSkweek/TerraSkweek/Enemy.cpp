@@ -11,7 +11,20 @@ Enemy::Enemy() : Entity()
 	m_randomIt = 4;
 	run.resize(0);
 	death.resize(0);
-	
+}
+
+Enemy::Enemy(Position pos)
+{
+	afraid = false;
+	currentFrame = 0;
+	m_speed = 0.1;
+	m_damage = 1;
+	m_randomIt = 4;
+	run.resize(0);
+	death.resize(0);
+	m_pos = pos;
+	m_freeze = false;
+
 }
 
 int Enemy::LoadGLTextures(string type,string directory)
@@ -64,7 +77,7 @@ int Enemy::LoadGLTextures(string type,string directory)
 
 bool Enemy::Move(Position playerPos, float light)
 {
-	if (m_life <= 0) {
+	if (m_life <= 0) { // If its dead but not deleted yet, no need to move
 		return false;
 	}
 
@@ -253,9 +266,7 @@ void Enemy::Draw()
 		if (frame == (freeze.size() - 1)) { // If the death animation has entirely played itself, then dead is true;
 			m_freeze = false;
 		}
-
-
-
+		
 	}
 
 /*	if (afraid == false)

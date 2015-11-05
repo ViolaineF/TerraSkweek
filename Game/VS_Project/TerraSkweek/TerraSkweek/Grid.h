@@ -22,7 +22,7 @@
 #include "SimpleConversion.h"
 #include "SemiConverted.h"
 #include "CrackedFloor.h"
-
+#include "MobSpawner.h"
 
 class Grid
 {
@@ -35,8 +35,10 @@ private:
 	int m_rows;
 	int m_lignes;
 	int map[20][20];
+	int m_spawnerIndex;
 	vector<GLuint> textures;
 	vector<SpecialCase*> vecCaseAnimated;
+	vector<SpecialCase*> vecSpawner;
 	vector<Enemy*> vecEnemies;
 	vector<TNT*> vecTNT;
 	vector<Arrow*> vecArrow;
@@ -60,6 +62,8 @@ public:
 	void DrawSpecialCases();
 	void DrawEnemies();
 	void MoveAllEnemies();
+
+	void SpawnMob();
 
 	void NewFire(int, char, Position);
 	void MoveAllFires();

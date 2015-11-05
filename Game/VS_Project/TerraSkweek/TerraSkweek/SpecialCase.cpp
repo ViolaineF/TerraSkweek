@@ -107,12 +107,26 @@ SpecialCase::SpecialCase(int x, int y, string directory)
 	currentFrame = 0;
 	float posX = x + 0.0;
 	float posY = y + 0.0;
-	m_pos = {posX, posY};
+	m_pos = {posX, posY, 0};
 	animation.resize(0);
 	m_spriteSize = 0.25;
 
 }
 
+SpecialCase::SpecialCase(Position pos, string directory) // Powder Bag constructor
+{
+	currentFrame = 0;
+	m_pos = pos;
+	animation.resize(0);
+	m_spriteSize = 0.25;
+
+	animated = false;
+
+	string fullDirectory = "Art/" + directory;
+
+	LoadGLTexture(fullDirectory);
+
+}
 
 
 

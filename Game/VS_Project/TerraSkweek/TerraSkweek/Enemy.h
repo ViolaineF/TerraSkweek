@@ -18,6 +18,7 @@ protected :
 
 public:
 	Enemy();
+	Enemy(Position);
 	int LoadGLTextures(string, string);
 	bool Move(Position, float);
 	int GetDamage();

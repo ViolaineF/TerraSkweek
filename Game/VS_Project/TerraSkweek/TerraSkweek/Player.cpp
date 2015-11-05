@@ -727,17 +727,28 @@ bool Player::IsFiring()
 	return m_firing;
 }
 
+void Player::SetPowderBag(bool a)
+{
+	m_powderbag = a;
+}
+
+bool Player::HasPowderBag()
+{
+	return m_powderbag;
+}
+
 Player::Player() : Entity()
 {
 	//m_name = name;
 
-	m_pos = { 4,4,0 };
+	m_pos = { 10,10,0 };
 	m_life = 150;
 	m_def = 10;
 	m_dir = 'l';
 	m_speed = 0.1;
 	idle.resize(0);
 	m_moving = 0;
+	m_powderbag = false;
 	//LoadGLTextures( /*"idle",*/"Art/player.png");
 }
 

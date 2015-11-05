@@ -48,6 +48,7 @@ int currentFrame;
 
 int refreshRate = 30; // in miliseconds
 float light;
+int enemySpawnFrequency = 5000;
 
 //void PrintImg(float, float, float, float, int);
 //void PrintNbr(int, int, int);
@@ -56,6 +57,7 @@ void Redim(int x, int y);
 void KeyAction(int x, int y, int z);
 void invisibility(unsigned char key, int y, int z);
 void DrawLevel();
+void SpawnMob(int x);
 //void Idle();
 //void EnemiesTimer(int x);
 void PlayerMovt(int x);
@@ -72,7 +74,7 @@ void main() {
 
 	//Gestion de la fenetre
 	glutInitWindowPosition(10, 10);
-	glutInitWindowSize(500, 500);
+	glutInitWindowSize(1000, 1000);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE);		//A remplacer pour l'affichage sur d'autres PC par GLUT_DOUBLE
 	//glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 	glutCreateWindow("TerraSkweek");
@@ -92,6 +94,7 @@ void main() {
 	glutKeyboardFunc(invisibility);// Keyboard keys to control the HUD // and Fire
 	//glutTimerFunc(700, EnemiesTimer, 0); // Direction for the enemiesd
 	glutTimerFunc(refreshRate, PlayerMovt, 0); // Continuous movement of the player
+	glutTimerFunc(enemySpawnFrequency, SpawnMob, 0);
 	//glutIdleFunc(Idle);
 
 
@@ -178,6 +181,19 @@ void PrintImg(float i, float j, float width, float height, int textureIt) {
 //	}
 //
 //}
+
+//----------------------------- SPAWN NEW MOB
+void SpawnMob(int x) {
+
+	lvl01.SpawnMob();
+
+	//Update screen
+	glutPostRedisplay();
+
+	//Reset Timer
+	glutTimerFunc(enemySpawnFrequency, SpawnMob, 0);
+
+}
 
 
 
@@ -508,8 +524,41 @@ void invisibility(unsigned char key, int y, int z) {
 
 // -------------------------------- PLAYER FIRE
 	if (key == ' ' && (player.IsFiring() == false)) {
-		player.Attack();
-		lvl01.NewFire(player.GetWeapon(), player.GetDir(), player.GetPos());
+		if (!(player.HasPowderBag())) { // As long has player has no powder bag
+			player.Attack();
+			lvl01.NewFire(player.GetWeapon(), player.GetDir(), player.GetPos());
+		}
+		else { // consume powder bag and convert cases
+
+			int X = round(player.GetPos().x + 0.4);
+			int Y = round(player.GetPos().y + 0.4);
+
+			switch (player.GetDir())
+			{
+			case 'u':
+				for (int i = player.GetPos().y; i > player.GetPos().y - 5; i--) {
+					lvl01.SetMap(X, i, 4);
+				}
+				break;
+			case 'd':
+				for (int i = player.GetPos().y; i < player.GetPos().y + 5; i++) {
+					lvl01.SetMap(X, i, 4);
+				}
+				break;
+			case 'r':
+				for (int i = player.GetPos().x; i < player.GetPos().x + 5; i++) {
+					lvl01.SetMap(i, Y, 4);
+				}
+				break;
+			case 'l':
+				for (int i = player.GetPos().x; i > player.GetPos().x - 5; i--) {
+				lvl01.SetMap(i, Y, 4);
+				}
+				break;
+			}
+			player.SetPowderBag(false);
+
+		}
 	}
 }
 

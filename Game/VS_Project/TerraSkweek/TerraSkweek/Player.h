@@ -18,6 +18,7 @@ private :
 	vector<GLuint>	fire_down;
 	bool m_moving;
 	float opacity;
+	bool m_powderbag;
 
 public:
 	void setOpacity(float);
@@ -28,6 +29,8 @@ public:
 	void SetWeapon(int);
 	bool IsMoving();
 	bool IsFiring();
+	void SetPowderBag(bool);
+	bool HasPowderBag();
 
 	Player();
 	~Player();

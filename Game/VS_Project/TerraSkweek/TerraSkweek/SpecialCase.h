@@ -22,6 +22,7 @@ public:
 	Position GetPos();
 	int LoadGLTexture(string);
 	SpecialCase(int, int, string);
+	SpecialCase(Position, string);
 	~SpecialCase();
 };
 

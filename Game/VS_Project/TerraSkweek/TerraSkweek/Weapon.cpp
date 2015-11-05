@@ -47,6 +47,7 @@ Weapon::Weapon(Position pos, bool dropped, int type)
 	m_drop = 1;
 	m_type = type;
 	m_destroy = false;
+	m_middle = 0.15;
 	LoadAllTextures();
 }
 
@@ -143,10 +144,10 @@ void Weapon::DrawFire()
 		glBindTexture(GL_TEXTURE_2D, gun[0]);
 		glBegin(GL_QUADS);
 		glColor3d(1.0, 1.0, 1.0);
-		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - 2* m_middle, m_pos.y - 2*m_middle);
-		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 4 * m_middle, m_pos.y - 2*m_middle);
-		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 4 * m_middle, m_pos.y + 4 * m_middle);
-		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - 2*m_middle, m_pos.y + 4 * m_middle);
+		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - 2*m_middle, m_pos.y - 2*m_middle);
+		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 4*m_middle, m_pos.y - 2*m_middle);
+		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 4*m_middle, m_pos.y + 4*m_middle);
+		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - 2*m_middle, m_pos.y + 4*m_middle);
 
 		glEnd();
 		glDisable(GL_TEXTURE_2D);

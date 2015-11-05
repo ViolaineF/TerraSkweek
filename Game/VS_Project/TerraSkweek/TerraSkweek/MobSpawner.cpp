@@ -1,12 +1,12 @@
-#include "UpCase.h"
+#include "MobSpawner.h"
 
 
 
-bool UpCase::Draw()
+bool MobSpawner::Draw()
 {
 	const int speed = 400;
 
-	if (animated) { // The case is converting
+	if (animated) {
 
 		currentFrame = (currentFrame + 1) % speed;
 		unsigned int frame = currentFrame * (animation.size()) / speed;
@@ -30,17 +30,14 @@ bool UpCase::Draw()
 		glPopMatrix();
 		glutPostRedisplay();
 
-		// when the animation is complete, update and return infos
+		// when the animation is complete, convert entirely
 		if (frame >= (animation.size() - 1)) {
 			animated = false;
-			m_converted = true;
-			return 1;
-		}
-		else {
 			return 0;
 		}
+		return 1;
 	}
-	else if (!m_converted) { // The case is not converted
+	else {
 
 		glPushMatrix();
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -63,35 +60,12 @@ bool UpCase::Draw()
 		return 0;
 
 	}
-	else { // The case is converted
 
-		glPushMatrix();
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glEnable(GL_TEXTURE_2D);
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glBindTexture(GL_TEXTURE_2D, animation[(animation.size() - 1)]);
-		glBegin(GL_QUADS);
-		glColor3d(1.0, 1.0, 1.0);
-		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
-		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
-		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
-
-		glEnd();
-		glDisable(GL_TEXTURE_2D);
-		glPopMatrix();
-		glutPostRedisplay();
-		return 0;
-
-	}
 }
 
-UpCase::UpCase(int x, int y, string directory) : SpecialCase(x, y, directory)
+MobSpawner::MobSpawner(int x, int y, string directory) : SpecialCase(x, y, directory)
 {
-	m_converted = false;
-	animated = false;
+	animated = false; 
 
 	string fullDirectory = "Art/" + directory;
 
@@ -104,6 +78,6 @@ UpCase::UpCase(int x, int y, string directory) : SpecialCase(x, y, directory)
 }
 
 
-UpCase::~UpCase()
+MobSpawner::~MobSpawner()
 {
 }

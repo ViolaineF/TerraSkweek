@@ -13,21 +13,22 @@ Grid::Grid(string biome)
 	m_score = 0;
 	m_rows = 20;
 	m_lignes = 20;
+	m_spawnerIndex = 0;
 
 	int mapTemp[20][20] = {
 		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-		1,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,
-		1,1,0,0,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,
-		1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -74,9 +75,9 @@ Grid::Grid(string biome)
 	}
 	else if (biomeChar == '2') // Corrupted
 	{
-		vecEnemies.push_back(new Slime_Forest());
-		vecEnemies.push_back(new Slime_Forest());
-		vecEnemies.push_back(new Slime_Forest());
+		//vecEnemies.push_back(new Slime_Forest());
+		//vecEnemies.push_back(new Slime_Forest());
+		//vecEnemies.push_back(new Slime_Forest());
 		vecTNT.push_back(new TNT(3, 3, 1));
 		vecArrow.push_back(new Arrow(7, 7, 1, 'l'));
 		vecArrow.push_back(new Arrow(7, 6, 1, 'r'));
@@ -128,10 +129,10 @@ void Grid::LoadAllTextures()
 
 	//-------------------LOAD ENEMIES TEXTURES
 	
-	for (Enemy* c : vecEnemies)
-	{
-		c->LoadAllTextures();
-	}
+	//for (Enemy* c : vecEnemies)
+	//{
+	//	c->LoadAllTextures();
+	//}
 
 	for (TNT* d : vecTNT)
 	{
@@ -146,6 +147,7 @@ void Grid::LoadAllTextures()
 
 	//------------------------LOAD SEMI-CONVERTED CASE 
 	//------------------------LOAD CRACKED FLOOR
+	//------------------------LOAD MOB SPAWNER
 	for (int i = 0; i < m_rows; i++) {
 		for (int j = 0; j < m_lignes; j++) {
 			if (map[i][j] != 1) { // Avoid spwaning in a wall
@@ -160,9 +162,18 @@ void Grid::LoadAllTextures()
 					map[i][j] = 5;
 					vecCaseAnimated.push_back(new CrackedFloor(i, j, "cracking"));
 				}
+
+				if (chance > 10 && chance <= 15) { // 5% chance ---------------------------------MOB SPAWNER
+					vecSpawner.push_back(new MobSpawner(i, j, "mobSpawner"));
+				}
 			}
 		}
 	}
+
+	//-------------------------LOAD A TEST POWDER BAG 
+	Position testPos = { 11,11,0 };
+	vecCaseAnimated.push_back(new SpecialCase(testPos, "powderBag.png"));
+
 
 }
 
@@ -362,6 +373,7 @@ void Grid::DrawSpecialCases()
 
 			if (typeid(*vecCaseAnimated[i]) == typeid(SimpleConversion)) {
 				SetMap(vecCaseAnimated[i]->GetPos().x, vecCaseAnimated[i]->GetPos().y, 2); // ... Convert floor
+				m_score = m_score + 1;	// SCORE + converted tile
 			}
 
 			if (typeid(*vecCaseAnimated[i]) == typeid(CrackedFloor)) {
@@ -370,10 +382,7 @@ void Grid::DrawSpecialCases()
 
 			//if (typeid(*vecCaseAnimated[i]) == typeid(SemiConverted)) {
 			//	SetMap(vecCaseAnimated[i]->GetPos().x, vecCaseAnimated[i]->GetPos().y, 2); // ... Convert floor
-			//}
-			
-
-			m_score = m_score + 1;	// SCORE + converted tile
+			//}			
 
 			vecCaseAnimated.erase(vecCaseAnimated.begin() + i);// Destroy it
 			i--;
@@ -391,10 +400,22 @@ void Grid::DrawSpecialCases()
 				vecCaseAnimated[i]->SetAnimated(true);
 
 				//------------------PLAY SOUND
+			}
+
+			if (typeid(*vecCaseAnimated[i]) == typeid(SpecialCase)) { // Powder Bag
+				player.SetPowderBag(true); // Change player powder bag boolean
+				vecCaseAnimated.erase(vecCaseAnimated.begin() + i); // Destroy powder bag sprite
+				i--;
+
+				//------------------PLAY SOUND
 
 			}
 		}
 		
+	}
+
+	for (unsigned int i = 0; i < vecSpawner.size(); i++) {
+		vecSpawner[i]->Draw();
 	}
 
 	for (unsigned int i = 0; i < vecTNT.size(); i++) {
@@ -521,15 +542,6 @@ void Grid::DrawSpecialCases()
 	}
 	*/
 
-	//switch (map[player.GetPos().x][player.GetPos().y])
-	//{
-	//case 3 : // Semi-converted
-	//	break;
-	//case 5 : // Cracked Floor
-	//	vecCaseAnimated[i]->SetAnimated(true);
-	//	break;
-
-	//}
 
 }
 
@@ -551,14 +563,21 @@ void Grid::DrawEnemies()
 				
 				int dropType = rand() % 100 + 1; // Give an int between 1 and 100;
 
-				if (dropType >= 1 && dropType <= 10) { // 50% chance to drop weapon 1
+				if (dropType >= 1 && dropType <= 10) { // 10% chance to drop weapon 1
+					cout << "gun1" << endl;
 					vecWeapons.push_back(new Weapon(vecEnemies[i]->GetPos(), true, 1));// Create new weapon sprite
 				}
-				else if (dropType > 10 && dropType <= 50) {
+				else if (dropType > 10 && dropType <= 50) { // 40%
+					cout << "gun2" << endl;
 					vecWeapons.push_back(new Weapon(vecEnemies[i]->GetPos(), true, 2));
 				}
-				else if (dropType > 50 && dropType <= 100) {
+				else if (dropType > 50 && dropType <= 75) { // 25%
+					cout << "gun3" << endl;
 					vecWeapons.push_back(new Weapon(vecEnemies[i]->GetPos(), true, 3));
+				}
+				else if (dropType > 75 && dropType <= 100) { // 25%
+					cout << "powder" << endl;
+					vecCaseAnimated.push_back(new SpecialCase(vecEnemies[i]->GetPos(), "powderBag.png"));
 				}
 							
 			}
@@ -606,13 +625,18 @@ void Grid::MoveAllEnemies()
 			}
 
 			//----------- CHECK WALL COLLISION
-			int pXleft = round(vecEnemies[i]->GetPos().x - 0.4);
-			int pXright = round(vecEnemies[i]->GetPos().x + 0.4);
-			int pYup = round(vecEnemies[i]->GetPos().y - 0.4);
-			int pYdown = round(vecEnemies[i]->GetPos().y + 0.4);
+			//int pXleft = round(vecEnemies[i]->GetPos().x - 0.4);
+			//int pXright = round(vecEnemies[i]->GetPos().x + 0.4);
+			//int pYup = round(vecEnemies[i]->GetPos().y - 0.4);
+			//int pYdown = round(vecEnemies[i]->GetPos().y + 0.4);
 
-			switch (vecEnemies[i]->GetDir())
-			{
+			int pXleft = round(vecEnemies[i]->GetPos().x - 0.3);
+			int pXright = round(vecEnemies[i]->GetPos().x + 0.3);
+			int pYup = round(vecEnemies[i]->GetPos().y - 0.3);
+			int pYdown = round(vecEnemies[i]->GetPos().y + 0.3);
+
+			switch (vecEnemies[i]->GetDir()) // Check wall depends on direction
+			{ 
 			case 'u':
 				if ((map[pXleft][pYup] == 1) || (map[pXright][pYup] == 1)) { // Check upward
 					vecEnemies[i]->Teleport(prevPos);
@@ -641,6 +665,24 @@ void Grid::MoveAllEnemies()
 		}
 
 	}
+
+}
+
+void Grid::SpawnMob()
+{	
+	if (m_spawnerIndex >= vecSpawner.size()) {
+		m_spawnerIndex = 0;
+	}
+	else {
+		m_spawnerIndex++;
+	}
+
+	vecSpawner[m_spawnerIndex]->SetAnimated(true); // Animate the spawner
+			
+	vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos())); // Add an enemy
+
+	//------------------PLAY SOUND
+	//sfx_gap.PlayAudio();
 
 }
 
