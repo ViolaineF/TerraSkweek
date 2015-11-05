@@ -1,5 +1,4 @@
-
-#include "Grid.h"
+#include "Menu.h"
 
 
 //------------------LOADING MAP TEXTURES
@@ -30,9 +29,11 @@ int LoadGLTextures(string name) // Load Bitmaps And Convert To Textures
 
 
 //----------------------CREATE PLAYER AND LEVELS
-Grid lvl01("2corrupted");
 HUD hud{ 1 };
 Player player;
+Menu menu;
+Grid lvl("2corrupted");
+
 extern int m_score;
 int windowWidth = 200;
 int windowHeight = 200;
@@ -68,7 +69,7 @@ void main() {
 	srand(time(NULL)); // Create a seed to start the random from
 	
 	//------------------ LOAD PLAYER' SAVE
-	//lvl01.LoadGame("player1.txt");
+	//lvl.LoadGame("player1.txt");
 
 	//Gestion de la fenetre
 	glutInitWindowPosition(10, 10);
@@ -80,7 +81,8 @@ void main() {
 
 
 	//----------------------- LOAD EVERYBODY'S SPRITES
-	lvl01.LoadAllTextures();
+	menu.LoadAllTextures();
+	lvl.LoadAllTextures();
 	player.LoadAllTextures();
 	hud.LoadAllTextures();
 		
@@ -183,7 +185,7 @@ void PrintImg(float i, float j, float width, float height, int textureIt) {
 //----------------------------- SPAWN NEW MOB
 void ActivateSpawnMob(int x) {
 
-	lvl01.SpawnMob();
+	lvl.SpawnMob();
 
 	//Update screen
 	glutPostRedisplay();
@@ -240,44 +242,44 @@ void PlayerMovt(int x) {
 	switch (player.GetDir())
 	{
 	case 'u':
-		switch (lvl01.Map(pXleft, pYup))
+		switch (lvl.Map(pXleft, pYup))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			lvl01.SetMap(pXleftConv, pYupConv, 4);
+			lvl.SetMap(pXleftConv, pYupConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
-			lvl01.SetMap(pXleftConv, pYupConv, 4);
+			lvl.SetMap(pXleftConv, pYupConv, 4);
 
 			for (int i = -1; i < 2; i++) {
 				for (int j = -1; j < 2; j++) {
-					lvl01.SetMap(pXleftConv+i, pYupConv+j, 4);
+					lvl.SetMap(pXleftConv+i, pYupConv+j, 4);
 				}
 			}
 			break;
 
 		}
 
-		switch (lvl01.Map(pXright, pYup))
+		switch (lvl.Map(pXright, pYup))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			lvl01.SetMap(pXrightConv, pYupConv, 4);
+			lvl.SetMap(pXrightConv, pYupConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
-			lvl01.SetMap(pXrightConv, pYupConv, 4);
+			lvl.SetMap(pXrightConv, pYupConv, 4);
 
 			for (int i = -1; i < 2; i++) {
 				for (int j = -1; j < 2; j++) {
-					lvl01.SetMap(pXrightConv + i, pYupConv + j, 4);
+					lvl.SetMap(pXrightConv + i, pYupConv + j, 4);
 				}
 			}
 			break;
@@ -286,43 +288,43 @@ void PlayerMovt(int x) {
 		break;
 
 	case 'd':
-		switch (lvl01.Map(pXleft, pYdown))
+		switch (lvl.Map(pXleft, pYdown))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			lvl01.SetMap(pXleftConv, pYdownConv, 4);
+			lvl.SetMap(pXleftConv, pYdownConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
-			lvl01.SetMap(pXleftConv, pYdownConv, 4);
+			lvl.SetMap(pXleftConv, pYdownConv, 4);
 
 			for (int i = -1; i < 2; i++) {
 				for (int j = -1; j < 2; j++) {
-					lvl01.SetMap(pXleftConv + i, pYdownConv + j, 4);
+					lvl.SetMap(pXleftConv + i, pYdownConv + j, 4);
 				}
 			}
 			break;
 		}
 
-		switch (lvl01.Map(pXright, pYdown))
+		switch (lvl.Map(pXright, pYdown))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			lvl01.SetMap(pXrightConv, pYdownConv, 4);
+			lvl.SetMap(pXrightConv, pYdownConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
-			lvl01.SetMap(pXrightConv, pYdownConv, 4);
+			lvl.SetMap(pXrightConv, pYdownConv, 4);
 
 			for (int i = -1; i < 2; i++) {
 				for (int j = -1; j < 2; j++) {
-					lvl01.SetMap(pXrightConv + i, pYdownConv + j, 4);
+					lvl.SetMap(pXrightConv + i, pYdownConv + j, 4);
 				}
 			}
 			break;
@@ -331,43 +333,43 @@ void PlayerMovt(int x) {
 		break;
 
 	case 'r':
-		switch (lvl01.Map(pXright, pYdown))
+		switch (lvl.Map(pXright, pYdown))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			lvl01.SetMap(pXrightConv, pYdownConv, 4);
+			lvl.SetMap(pXrightConv, pYdownConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
-			lvl01.SetMap(pXrightConv, pYdownConv, 4);
+			lvl.SetMap(pXrightConv, pYdownConv, 4);
 
 			for (int i = -1; i < 2; i++) {
 				for (int j = -1; j < 2; j++) {
-					lvl01.SetMap(pXrightConv + i, pYdownConv + j, 4);
+					lvl.SetMap(pXrightConv + i, pYdownConv + j, 4);
 				}
 			}
 			break;
 		}
 
-		switch (lvl01.Map(pXright, pYup))
+		switch (lvl.Map(pXright, pYup))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			lvl01.SetMap(pXrightConv, pYupConv, 4);
+			lvl.SetMap(pXrightConv, pYupConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
-			lvl01.SetMap(pXrightConv, pYupConv, 4);
+			lvl.SetMap(pXrightConv, pYupConv, 4);
 
 			for (int i = -1; i < 2; i++) {
 				for (int j = -1; j < 2; j++) {
-					lvl01.SetMap(pXrightConv + i, pYupConv + j, 4);
+					lvl.SetMap(pXrightConv + i, pYupConv + j, 4);
 				}
 			}
 			break;
@@ -376,43 +378,43 @@ void PlayerMovt(int x) {
 
 
 	case 'l':
-		switch (lvl01.Map(pXleft, pYup))
+		switch (lvl.Map(pXleft, pYup))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			lvl01.SetMap(pXleftConv, pYupConv, 4);
+			lvl.SetMap(pXleftConv, pYupConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
-			lvl01.SetMap(pXleftConv, pYupConv, 4);
+			lvl.SetMap(pXleftConv, pYupConv, 4);
 
 			for (int i = -1; i < 2; i++) {
 				for (int j = -1; j < 2; j++) {
-					lvl01.SetMap(pXleftConv + i, pYupConv + j, 4);
+					lvl.SetMap(pXleftConv + i, pYupConv + j, 4);
 				}
 			}
 			break;
 		}
 
-		switch (lvl01.Map(pXleft, pYdown))
+		switch (lvl.Map(pXleft, pYdown))
 		{
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			lvl01.SetMap(pXleftConv, pYdownConv, 4);
+			lvl.SetMap(pXleftConv, pYdownConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
-			lvl01.SetMap(pXleftConv, pYdownConv, 4);
+			lvl.SetMap(pXleftConv, pYdownConv, 4);
 
 			for (int i = -1; i < 2; i++) {
 				for (int j = -1; j < 2; j++) {
-					lvl01.SetMap(pXleftConv + i, pYdownConv + j, 4);
+					lvl.SetMap(pXleftConv + i, pYdownConv + j, 4);
 				}
 			}
 			break;
@@ -422,10 +424,10 @@ void PlayerMovt(int x) {
 }
 
 	//------------------------ MOVE ALL ENEMIES 
-	lvl01.MoveAllEnemies();
+	lvl.MoveAllEnemies();
 
 	//------------------------ MOVE ALL FIRE
-	lvl01.MoveAllFires();
+	lvl.MoveAllFires();
 
 	//Update screen
 	glutPostRedisplay();
@@ -445,20 +447,43 @@ void DrawLevel() {
 	//glTranslatef(-player.GetPos().x + 12, -player.GetPos().y + 8, 0);
 	glTranslatef(-player.GetPos().x + res*(windowWidth/2) - 1, -player.GetPos().y + res*(windowHeight/2) - 1, 0);
 
+
+
+
+
+
+
+
+
+
+
+	menu.Display();
+
+
+
+
+
+
+
+
+
+
+
+
 	// Draw map
-	lvl01.DisplayMap();
+	lvl.DisplayMap();
 
 	//Draw Enemies
-	lvl01.DrawSpecialCases();
+	lvl.DrawSpecialCases();
 
 	// Add player
 	player.Draw();
 
 	//Draw Enemies
-	lvl01.DrawEnemies();
+	lvl.DrawEnemies();
 
 	//Draw Fires
-	lvl01.DrawAllFires();
+	lvl.DrawAllFires();
 
 
 	glLoadIdentity();
@@ -466,7 +491,7 @@ void DrawLevel() {
 	glPopMatrix();
 
 	//Draw HUD
-	hud.displayScore(lvl01.HUD_Score(), player.GetLife(), player.GetWeapon());
+	hud.displayScore(lvl.HUD_Score(), player.GetLife(), player.GetWeapon());
 
 }
 
@@ -524,7 +549,7 @@ void invisibility(unsigned char key, int y, int z) {
 	if (key == ' ' && (player.IsFiring() == false)) {
 		if (!(player.HasPowderBag())) { // As long has player has no powder bag
 			player.Attack();
-			lvl01.NewFire(player.GetWeapon(), player.GetDir(), player.GetPos());
+			lvl.NewFire(player.GetWeapon(), player.GetDir(), player.GetPos());
 		}
 		else { // consume powder bag and convert cases
 
@@ -535,22 +560,22 @@ void invisibility(unsigned char key, int y, int z) {
 			{
 			case 'u':
 				for (int i = player.GetPos().y; i > player.GetPos().y - 5; i--) {
-					lvl01.SetMap(X, i, 4);
+					lvl.SetMap(X, i, 4);
 				}
 				break;
 			case 'd':
 				for (int i = player.GetPos().y; i < player.GetPos().y + 5; i++) {
-					lvl01.SetMap(X, i, 4);
+					lvl.SetMap(X, i, 4);
 				}
 				break;
 			case 'r':
 				for (int i = player.GetPos().x; i < player.GetPos().x + 5; i++) {
-					lvl01.SetMap(i, Y, 4);
+					lvl.SetMap(i, Y, 4);
 				}
 				break;
 			case 'l':
 				for (int i = player.GetPos().x; i > player.GetPos().x - 5; i--) {
-				lvl01.SetMap(i, Y, 4);
+				lvl.SetMap(i, Y, 4);
 				}
 				break;
 			}
