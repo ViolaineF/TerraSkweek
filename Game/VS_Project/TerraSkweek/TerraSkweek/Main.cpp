@@ -32,7 +32,7 @@ int LoadGLTextures(string name) // Load Bitmaps And Convert To Textures
 HUD hud{ 1 };
 Player player;
 Menu menu;
-Grid lvl("2corrupted");
+Grid lvl("0menu");
 
 extern int m_score;
 int windowWidth = 200;
@@ -196,7 +196,6 @@ void ActivateSpawnMob(int x) {
 	}
 
 }
-
 
 
 //----------------------------CONTINUOUS PLAYER MOVEMENT + ENEMIES
@@ -473,6 +472,7 @@ void DrawLevel() {
 
 		//Draw HUD
 		hud.displayScore(lvl.HUD_Score(), player.GetLife(), player.GetWeapon());
+		
 	}
 
 	else
@@ -526,7 +526,7 @@ void Redim(int x, int y) {
 void KeyButtons(unsigned char key, int y, int z) {
 	
 
-//-------------------------- A ENLEVER POUR LAISSER PLACE AU DETECTEUR DE LUMIERE SUR ARDUINO
+	//-------------------------- A ENLEVER POUR LAISSER PLACE AU DETECTEUR DE LUMIERE SUR ARDUINO
 	if (key == '0') {
 		const int div = 4;
 		currentFrame = (currentFrame + 1) % div;
@@ -538,7 +538,9 @@ void KeyButtons(unsigned char key, int y, int z) {
 
 		player.setOpacity(light);// à placer dans une boucle infinie pour detecter toujours la valeur de "light"
 	}
+
 	//cout << light << endl;
+
 
 // -------------------------------- PLAYER FIRE
 	if (inGame)
@@ -587,6 +589,7 @@ void KeyButtons(unsigned char key, int y, int z) {
 	}
 	else
 	{
+
 		if (key == ' ') {
 			menu.Clicking();
 		}

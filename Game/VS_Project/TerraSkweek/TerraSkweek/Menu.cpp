@@ -7,13 +7,15 @@ extern const float res;
 bool inGame;
 extern Player player;
 extern float dim = res*windowWidth*0.035;
-;
+extern string m_biome;
+extern HUD hud;
+
 
 //Position b1_pos{ res * windowWidth / 5.93 * (dim / 2), res * windowHeight / 8,0 };
 
 //Position b1_pos{ dim * 5.9 , res * windowHeight / 8, 0 };
 Position b1_pos{ 5,5,0 };
-Position b2_pos{ 5,6,0 };
+Position b2_pos{ 5,6,0 }; 
 
 Position bJungle_pos{ 1,2,0 };
 Position bCorruption_pos{ 2,5,0 };
@@ -27,12 +29,13 @@ Menu::Menu()
 
 	b_newGame.SetPos(b1_pos);
 	b_loadGame.SetPos(b2_pos);	
-	
-	b_jungle.SetPos(b1_pos);
-	b_corruption.SetPos(b2_pos);
-	b_crimson.SetPos(b1_pos);
-	b_hallow.SetPos(b2_pos);
+	b_continue.SetPos(b1_pos);
+	b_quit.SetPos(b2_pos);
 
+	b_jungle.SetPos(bJungle_pos);
+	b_corruption.SetPos(bCorruption_pos);
+	b_crimson.SetPos(bCrimson_pos);
+	b_hallow.SetPos(bHallow_pos);
 }
 
 
@@ -41,6 +44,9 @@ void Menu::LoadAllTextures()
 	string directory = "Art/UI/";
 	b_newGame.LoadAllTextures("new_game");
 	b_loadGame.LoadAllTextures("load_game");
+	b_continue.LoadAllTextures("continue");
+	b_quit.LoadAllTextures("quit");
+
 	b_jungle.LoadAllTextures("jungle");
 	b_corruption.LoadAllTextures("corruption");
 	b_crimson.LoadAllTextures("crimson");
@@ -48,7 +54,6 @@ void Menu::LoadAllTextures()
 
 	LoadGLTextures("UI", directory + "title.png"); // 0
 	LoadGLTextures("UI", directory + "water.png"); // 1
-	LoadGLTextures("UI", directory + "Islands.png"); // 2
 }
 
 int Menu::LoadGLTextures(string type, string name)
@@ -85,7 +90,7 @@ void Menu::Display()
 		ratio = 3.97;
 		// PrintImg(res * windowWidth / 3.97 * (dim / 2), res * windowHeight / 3, dim, dim*3.97, UI, 0);
 //		PrintImg(res * windowWidth / ratio * (dim / 2), res * windowHeight / 3, dim, dim*ratio, UI, 0);
-		PrintImg(5, 1, dim, dim*ratio, UI, 0);
+		PrintImg(5, 1, dim*3, dim*ratio*3, UI, 0);
 
 		// dim*3.97/2
 
@@ -129,9 +134,9 @@ void Menu::Display()
 		// 	MAP
 		// Draw Water Sprite
 
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < 20; i++)
 		{
-			for (int j = 0; j < 10; j++)
+			for (int j = 0; j < 20; j++)
 			{
 				PrintImg(0, 0, dim, dim + j, UI, 1);
 			}
@@ -150,7 +155,8 @@ void Menu::Display()
 			{
 				lvl.ChangeMap(1);
 				player.Teleport({ 10, 10, 0 });
-				screenID = 0;
+				hud.ResetTimer(180);
+
 				inGame = true;
 			}
 		}
@@ -169,7 +175,8 @@ void Menu::Display()
 			{
 				lvl.ChangeMap(2);
 				player.Teleport({ 10, 10, 0 });
-				screenID = 0;	
+				hud.ResetTimer(180);
+
 				inGame = true;
 			}
 		}
@@ -188,7 +195,8 @@ void Menu::Display()
 			{
 				lvl.ChangeMap(3);
 				player.Teleport({ 10, 10, 0 });
-				screenID = 0;				
+				hud.ResetTimer(180);
+
 				inGame = true;
 			}
 		}
@@ -207,7 +215,8 @@ void Menu::Display()
 			{
 				lvl.ChangeMap(4);
 				player.Teleport({ 10, 10, 0 });
-				screenID = 0;				
+				hud.ResetTimer(180);
+
 				inGame = true;
 			}
 		}
@@ -222,12 +231,57 @@ void Menu::Display()
 
 	case 3:
 		// PAUSE
+
+		ratio = 3.97;
+		// PrintImg(res * windowWidth / 3.97 * (dim / 2), res * windowHeight / 3, dim, dim*3.97, UI, 0);
+		//		PrintImg(res * windowWidth / ratio * (dim / 2), res * windowHeight / 3, dim, dim*ratio, UI, 0);
+		PrintImg(5, 1, dim, dim*ratio, UI, 0);
+
+		// dim*3.97/2
+
+		// Draw new game button
+		// Update Ratio of button 1
+		ratio = 5.53;
+		if (b_continue.GetPos() == player.GetPos())
+		{
+			b_continue.OnOver();
+			b_continue.Draw(b1_pos.x, b1_pos.y, dim, dim*ratio);
+
+			if (click)
+			{
+				player.Teleport(p_prev_pos);
+				inGame = true;
+				screenID = 3;
+			}
+		}
+		else
+			//			b_newGame.Draw(res * windowWidth / ratio * (dim / 2), res * windowHeight / 8, dim, dim*ratio);
+			b_continue.Draw(b1_pos.x, b1_pos.y, dim, dim*ratio);
+
+
+		// Update Ratio of button 2
+		ratio = 2.32;
+		// Draw load game button
+		if (b_quit.GetPos() == player.GetPos())
+		{
+			b_quit.OnOver();
+			b_quit.Draw(b2_pos.x, b2_pos.y, dim, dim*ratio);
+
+			if (click)
+			{
+				lvl.ClearMap();
+				lvl.ChangeMap(0);
+				cout << "lvl = 0" << endl;
+				inGame = false;
+				screenID = 0;
+			}
+		}
+		else
+			b_quit.Draw(b2_pos.x, b2_pos.y, dim, dim*ratio);
+
 		break;
-
-
 	}
 	click = false;
-
 
 }
 
@@ -263,15 +317,13 @@ void Menu::Pause()
 
 		inGame = false;
 		screenID = 3;
-		//	clickPause = true;
 	}
 	else
 	{
 		player.Teleport(p_prev_pos);
 		inGame = true;
-//		screenID = 3;
+		screenID = 3;
 	}
-
 }
 
 Menu::~Menu()

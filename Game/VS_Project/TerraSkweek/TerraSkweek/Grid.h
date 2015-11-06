@@ -27,7 +27,6 @@
 class Grid
 {
 private:
-	string m_biome;
 	int m_screen;
 	int m_selected;
 	int m_score;
@@ -59,6 +58,7 @@ public:
 	int LoadGLTextures(string);
 	void PrintImg(float, float, float, float, int);
 	void DisplayMap();
+	void ClearMap();
 	void ChangeMap(int);
 	void DrawSpecialCases();
 	void DrawEnemies();

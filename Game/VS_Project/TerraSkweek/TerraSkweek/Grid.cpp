@@ -4,6 +4,7 @@
 
 extern Player player;
 extern float light;
+string m_biome;
 
 int mapMenu[20][20] = {
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -125,12 +126,10 @@ Grid::Grid(string biome)
 	m_biome = biome;
 
 	m_score = 0;
-	m_rows = 10;
-	m_lignes = 10;
+	m_rows = 20;
+	m_lignes = 20;
 	m_spawnerIndex = 0;
 	vecSpawner.resize(0);
-
-
 
 	for (int i = 0; i < m_rows; i++) {
 		for (int j = 0; j < m_lignes; j++) {
@@ -161,35 +160,9 @@ Grid::Grid(string biome)
 
 
 	//------------------------LOAD CORRESPONDING BIOME'S STATS 
-	char biomeChar = m_biome[0];
 
-	switch (biomeChar)
-	{
-	case '0': // Menu
-		m_maxMobs = 0;
 
-		break;
-	case '1': // Forest
-		m_maxMobs = 10;
-		break;
-	case '2': // Corrupted
-		cout << "biome corrupted" << endl;
-		m_maxMobs = 5;
-		vecTNT.push_back(new TNT(3, 3, 1));
-		vecArrow.push_back(new Arrow(7, 7, 1, 'l'));
-		vecArrow.push_back(new Arrow(7, 6, 1, 'r'));
-		vecArrow.push_back(new Arrow(8, 5, 1, 'd'));
-		vecArrow.push_back(new Arrow(8, 4, 1, 'd'));
-		break;
-	case '3': // Crimson
-		m_maxMobs = 30;
-		break;
-	case '4': // Hallow
-		m_maxMobs = 40;
-		break;
-	}
 
-	
 }
 
 void Grid::SetMap(int x, int y, int a)
@@ -203,15 +176,32 @@ void Grid::SetMap(int x, int y, int a)
 	}
 }
 
+void Grid::ClearMap()
+{
+	cout << "map cleared";
+	vecCaseAnimated.clear();
+	vecSpawner.clear();
+	vecEnemies.clear();
+	vecTNT.clear();
+	vecArrow.clear();
+	vecWeapons.clear();
+}
+
 void Grid::ChangeMap(int choice)
 {
+	cout << "lvl = " << choice << endl;
+	
 	switch (choice)
 	{
-	case 0:
+	case 0:// Menu
+		m_biome = "0menu";
+		m_maxMobs = 0;
+		LoadAllTextures();
+
 		player.Teleport({ 5,5,0 });
 
-		m_rows = 1;
-		m_lignes = 1;
+		m_rows = 20;
+		m_lignes = 20;
 
 		for (int i = 0; i < m_rows; i++) {
 			for (int j = 0; j < m_lignes; j++) {
@@ -220,7 +210,13 @@ void Grid::ChangeMap(int choice)
 		}
 		break;
 
-	case 1:
+	case 1:// Forest
+		m_biome = "1forest";
+
+		m_maxMobs = 10;
+
+		LoadAllTextures();
+
 		player.Teleport({ 5,5,0 });
 
 		m_rows = 20;
@@ -232,7 +228,19 @@ void Grid::ChangeMap(int choice)
 		}
 		break;
 
-	case 2:
+	case 2:// corruption
+		m_biome = "2corruption";
+
+		m_maxMobs = 5;
+
+		vecTNT.push_back(new TNT(3, 3, 1));
+		vecArrow.push_back(new Arrow(7, 7, 1, 'l'));
+		vecArrow.push_back(new Arrow(7, 6, 1, 'r'));
+		vecArrow.push_back(new Arrow(8, 5, 1, 'd'));
+		vecArrow.push_back(new Arrow(8, 4, 1, 'd'));
+
+		LoadAllTextures();
+
 		player.Teleport({ 5,5,0 });
 
 		m_rows = 20;
@@ -244,7 +252,13 @@ void Grid::ChangeMap(int choice)
 		}
 		break;
 
-	case 3:
+	case 3:// Crimson
+		m_biome = "3crimson";
+		
+		m_maxMobs = 30;
+
+		LoadAllTextures();
+
 		player.Teleport({ 5,5,0 });
 
 		m_rows = 20;
@@ -256,7 +270,12 @@ void Grid::ChangeMap(int choice)
 		}
 		break;
 
-	case 4:		
+	case 4:// Hallow
+		m_biome = "4hallow";
+		LoadAllTextures();
+
+		m_maxMobs = 40;
+
 		player.Teleport({ 5,5,0 });
 
 		m_rows = 20;
@@ -267,16 +286,17 @@ void Grid::ChangeMap(int choice)
 			}
 		}
 		break;
-
-
 	}
 
+	cout <<"avant load texture "<< m_biome << endl;
+
 }
+
 void Grid::LoadAllTextures()
 {
-
 	string directory = "Art/" + m_biome + "/";
-
+	
+	textures.resize(0);
 	//--------------BASE TEXTURES
 	LoadGLTextures( directory + "ground.png"); // 0
 	LoadGLTextures( directory + "walls.png"); // 1
@@ -486,7 +506,6 @@ void Grid::PrintImg(float i, float j, float width, float height, int textureIt)
 //------------------------------------- DRAW MAP
 void Grid::DisplayMap()
 {
-	if()
 	for (int i = 0; i < m_rows; i++) {
 		for (int j = 0; j < m_lignes; j++) {
 			switch (map[i][j])
@@ -520,7 +539,6 @@ void Grid::DisplayMap()
 			}
 		}
 	}// End drawing
-
 }
 
 void Grid::DrawSpecialCases()
@@ -897,7 +915,7 @@ void Grid::SpawnMob()
 		}
 		break;
 
-	case '2': // Corrupted
+	case '2': // Corruption
 		cout << "spawn corrupted mobs" << endl;
 		if (enemyGrade >= 1 && enemyGrade <= 50) { // 50%
 			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos())); // Add an enemy

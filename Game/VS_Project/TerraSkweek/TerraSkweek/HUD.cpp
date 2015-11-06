@@ -5,33 +5,28 @@ extern int windowWidth;
 extern int windowHeight;
 extern const float res;
 
-
-
-
-
 HUD::HUD(int Lv)
 {
-	
 	Level = Lv;
 	if (Level == 1)
 	{
 		LevelScore = 0;
-		timer = 210;
+		timer = 180;
 	}
 	else if (Level == 2)
 	{
 		LevelScore = 0;
-		timer = 210;
+		timer = 180;
 	}
 	else if (Level == 3)
 	{
 		LevelScore = 0;
-		timer = 210;
+		timer = 180;
 	}
 	else if (Level == 4)
 	{
 		LevelScore = 0;
-		timer = 210;
+		timer = 180;
 	}
 }
 
@@ -118,6 +113,17 @@ int HUD::LoadGLTextures(string type, string nameIncomplete)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		return true;       // Return Success
 	}
+}
+
+void HUD::ResetTimer(int a)
+{/*
+	ClockDuration = (clock() - Clock) / (double)CLOCKS_PER_SEC;
+	startTimer = Clock;
+	ClockDuration = 0;
+	timer = a;
+	cout << "reset time ";
+
+	*/
 }
 
 void HUD::PrintImg(float i, float j, float width, float height, vector<GLuint> vecTex ,int textureIt)
@@ -266,7 +272,7 @@ void HUD::displayScore(int score, float life, int weapon)
 	if (!timer <= 0)
 		timer = 180 - ClockDuration;
 
-	float startTimer = PaddingLife + 5 * offset;
+	startTimer = PaddingLife + 5 * offset;
 	
 	PrintImg(startTimer, 0, dim, 3*dim, infos, 1);
 
