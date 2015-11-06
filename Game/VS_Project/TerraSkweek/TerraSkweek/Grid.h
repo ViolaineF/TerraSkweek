@@ -35,6 +35,7 @@ private:
 	int m_rows;
 	int m_lignes;
 	int map[20][20];
+	Position p_prev_pos;
 	unsigned int m_spawnerIndex;
 	unsigned int m_maxMobs;
 	vector<GLuint> textures;
@@ -59,7 +60,7 @@ public:
 	int LoadGLTextures(string);
 	void PrintImg(float, float, float, float, int);
 	void DisplayMap();
-
+	void ChangeMap(int);
 	void DrawSpecialCases();
 	void DrawEnemies();
 	void MoveAllEnemies();

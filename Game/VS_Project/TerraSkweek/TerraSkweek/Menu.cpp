@@ -6,22 +6,32 @@ extern int windowHeight;
 extern const float res;
 bool inGame;
 extern Player player;
+extern float dim = res*windowWidth*0.035;
+;
+
+//Position b1_pos{ res * windowWidth / 5.93 * (dim / 2), res * windowHeight / 8,0 };
+
+//Position b1_pos{ dim * 5.9 , res * windowHeight / 8, 0 };
+Position b1_pos{ 5,5,0 };
+Position b2_pos{ 5,6,0 };
+
+Position bJungle_pos{ 1,2,0 };
+Position bCorruption_pos{ 2,5,0 };
+Position bCrimson_pos{ 5,6,0 };
+Position bHallow_pos{ 8,3,0 };
+
 Menu::Menu()
 {
 	screenID = 0;
 	inGame = false;
 
-	
-	Position b1_pos{ 3,3,0 };
-	Position b2_pos{ 5,3,0 };
-	Position bJungle_pos{ 3,3,0 };
-	Position bCorruption_pos{ 7,11,0 };
-	Position bCrimson_pos{ 11,10,0 };
-	Position bHallow_pos{ 15,5,0 };
-
 	b_newGame.SetPos(b1_pos);
-	b_loadGame.SetPos(b2_pos);
-
+	b_loadGame.SetPos(b2_pos);	
+	
+	b_jungle.SetPos(b1_pos);
+	b_corruption.SetPos(b2_pos);
+	b_crimson.SetPos(b1_pos);
+	b_hallow.SetPos(b2_pos);
 
 }
 
@@ -29,6 +39,12 @@ Menu::Menu()
 void Menu::LoadAllTextures()
 {
 	string directory = "Art/UI/";
+	b_newGame.LoadAllTextures("new_game");
+	b_loadGame.LoadAllTextures("load_game");
+	b_jungle.LoadAllTextures("jungle");
+	b_corruption.LoadAllTextures("corruption");
+	b_crimson.LoadAllTextures("crimson");
+	b_hallow.LoadAllTextures("hallow");
 
 	LoadGLTextures("UI", directory + "title.png"); // 0
 	LoadGLTextures("UI", directory + "water.png"); // 1
@@ -59,53 +75,159 @@ int Menu::LoadGLTextures(string type, string name)
 
 void Menu::Display()
 {
-	float dim = res*windowWidth*0.035;
+	dim = res*windowWidth*0.035;
+	float ratio;
 
-	switch (screenID) 
+	switch (screenID)
 	{
-
 	case 0:
+		// 	TITLE
+		ratio = 3.97;
+		// PrintImg(res * windowWidth / 3.97 * (dim / 2), res * windowHeight / 3, dim, dim*3.97, UI, 0);
+//		PrintImg(res * windowWidth / ratio * (dim / 2), res * windowHeight / 3, dim, dim*ratio, UI, 0);
+		PrintImg(5, 1, dim, dim*ratio, UI, 0);
 
-
-		// Draw title
-
-		PrintImg(dim*2, 0, dim, dim*3.97, UI, 0);
+		// dim*3.97/2
 
 		// Draw new game button
-
+		// Update Ratio of button 1
+		ratio = 5.93;
 		if (b_newGame.GetPos() == player.GetPos())
 		{
 			b_newGame.OnOver();
-			b_newGame.Draw();
-			if (click)
+			b_newGame.Draw(b1_pos.x, b1_pos.y, dim, dim*ratio);
+
+			if (click) 
+			{
 				screenID = 1;
+			}
 		}
 		else
-			b_newGame.Draw();
+//			b_newGame.Draw(res * windowWidth / ratio * (dim / 2), res * windowHeight / 8, dim, dim*ratio);
+			b_newGame.Draw(b1_pos.x, b1_pos.y, dim, dim*ratio);
 
+
+		// Update Ratio of button 2
+		ratio = 6.66;
 		// Draw load game button
 		if (b_loadGame.GetPos() == player.GetPos())
 		{
 			b_loadGame.OnOver();
-			b_loadGame.Draw();
+			b_loadGame.Draw(b2_pos.x, b2_pos.y, dim, dim*ratio);
+
 			if (click)
+			{
 				screenID = 1;
+			}
 		}
 		else
-			b_loadGame.Draw();
+			b_loadGame.Draw(b2_pos.x, b2_pos.y, dim, dim*ratio);
 		break;
 
 
 	case 1:
+		// 	MAP
+		// Draw Water Sprite
 
 		for (int i = 0; i < 10; i++)
 		{
-			PrintImg(0, 0, dim / 10 + i, dim / 10, UI, 1);
+			for (int j = 0; j < 10; j++)
+			{
+				PrintImg(0, 0, dim, dim + j, UI, 1);
+			}
 		}
-		PrintImg(0, 0, 0.831*dim /1.5, 0.507*dim /1.5, UI, 2);
+
+		// Draw load Jungle Island button
+		// Update Ratio 
+		ratio = 0.97;
+
+		if (b_jungle.GetPos() == player.GetPos())
+		{
+			b_jungle.OnOver();
+			b_jungle.Draw(bJungle_pos.x, bJungle_pos.y, 5 * dim, 5 * dim*ratio);
+
+			if (click) 
+			{
+				lvl.ChangeMap(1);
+				player.Teleport({ 10, 10, 0 });
+				screenID = 0;
+				inGame = true;
+			}
+		}
+		else
+			b_jungle.Draw(bJungle_pos.x, bJungle_pos.y, 5 * dim, 5 * dim*ratio);
+
+		// Draw load Corruption Island button
+		// Update Ratio 
+		ratio = 1;
+		if (b_corruption.GetPos() == player.GetPos())
+		{
+			b_corruption.OnOver();
+			b_corruption.Draw(bCorruption_pos.x, bCorruption_pos.y, 5 * dim, 5 * dim*ratio);
+
+			if (click)
+			{
+				lvl.ChangeMap(2);
+				player.Teleport({ 10, 10, 0 });
+				screenID = 0;	
+				inGame = true;
+			}
+		}
+		else
+			b_corruption.Draw(bCorruption_pos.x, bCorruption_pos.y, 5 * dim, 5 * dim*ratio);
+
+		// Draw load Crimson Island button
+		// Update Ratio 
+		ratio = 1;
+		if (b_crimson.GetPos() == player.GetPos())
+		{
+			b_crimson.OnOver();
+			b_crimson.Draw(bCrimson_pos.x, bCrimson_pos.y, 5 * dim, 5 * dim*ratio);
+
+			if (click)
+			{
+				lvl.ChangeMap(3);
+				player.Teleport({ 10, 10, 0 });
+				screenID = 0;				
+				inGame = true;
+			}
+		}
+		else
+			b_crimson.Draw(bCrimson_pos.x, bCrimson_pos.y, 5 * dim, 5 * dim*ratio);
+			
+		// Draw load Crimson Island button
+		// Update Ratio 
+		ratio = 0.99;
+		if (b_hallow.GetPos() == player.GetPos())
+		{
+			b_hallow.OnOver();
+			b_hallow.Draw(bHallow_pos.x, bHallow_pos.y, 5 * dim, 5 * dim*ratio);
+
+			if (click)
+			{
+				lvl.ChangeMap(4);
+				player.Teleport({ 10, 10, 0 });
+				screenID = 0;				
+				inGame = true;
+			}
+		}
+		else
+			b_hallow.Draw(bHallow_pos.x, bHallow_pos.y, 5 * dim, 5 * dim*ratio);
 		break;
 
+	case 2:
+		// LOAD GAME
+
+		break;
+
+	case 3:
+		// PAUSE
+		break;
+
+
 	}
+	click = false;
+
 
 }
 
@@ -134,6 +256,7 @@ void Menu::Clicking()
 
 void Menu::Pause()
 {
+	inGame = false;
 //	clickPause = true;
 }
 

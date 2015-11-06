@@ -15,8 +15,8 @@ public:
 	Position GetPos();
 	void SetPos(Position);
 	void OnOver();
-	void Draw();
-	Button(string, double);
+	void Draw(float, float, float, float);
+	Button(double);
 	~Button();
 };
 

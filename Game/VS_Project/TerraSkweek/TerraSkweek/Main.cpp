@@ -28,7 +28,6 @@ int LoadGLTextures(string name) // Load Bitmaps And Convert To Textures
 }
 
 
-
 //----------------------CREATE PLAYER AND LEVELS
 HUD hud{ 1 };
 Player player;
@@ -447,7 +446,7 @@ void DrawLevel() {
 
 	glPushMatrix();
 
-	
+	cout << inGame;
 	if (inGame)
 	{
 		// Translate Map
@@ -461,14 +460,13 @@ void DrawLevel() {
 		lvl.DrawSpecialCases();
 
 		// Add player
-		player.Draw();
+		player.Draw(inGame);
 
 		//Draw Enemies
 		lvl.DrawEnemies();
 
 		//Draw Fires
 		lvl.DrawAllFires();
-
 
 		glLoadIdentity();
 		glutSwapBuffers();
@@ -480,13 +478,19 @@ void DrawLevel() {
 
 	else
 	{
+
+		lvl.DisplayMap();
+
 		//Draw Menu
 		menu.Display();
 
 		// Add player
-		player.Draw();
-	}
+		player.Draw(inGame);
 
+		glLoadIdentity();
+		glutSwapBuffers();
+		glPopMatrix();
+	}
 
 }
 
@@ -530,11 +534,9 @@ void KeyButtons(unsigned char key, int y, int z) {
 		currentFrame = (currentFrame + 1) % div;
 		light = currentFrame * 4 / div;
 
-
 		//		const int div = 4;
 		//		fLight = (fLight) / div;
 		//		light = fLight * 4 / div;
-
 
 		player.setOpacity(light);// à placer dans une boucle infinie pour detecter toujours la valeur de "light"
 	}
@@ -591,22 +593,6 @@ void KeyButtons(unsigned char key, int y, int z) {
 			menu.Pause();
 		}
 	}
-
-	if (key == '0') {
-		const int div = 4;
-		currentFrame = (currentFrame + 1) % div;
-		light = currentFrame * 4 / div;
-
-
-		//		const int div = 4;
-		//		fLight = (fLight) / div;
-		//		light = fLight * 4 / div;
-
-
-		player.setOpacity(light);// à placer dans une boucle infinie pour detecter toujours la valeur de "light"
-	}
-
-
 }
 
 

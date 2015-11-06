@@ -10,12 +10,12 @@ private:
 	vector<GLuint> UI;
 	int screenID;
 	bool click;
-	Button b_newGame{ "new_game", 5.93 };
-	Button b_loadGame{ "load_game", 6.66 };
-	Button b_jungle{ "new_game", 1};
-	Button b_corruption{ "corruption", 1 };
-	Button b_crimson{ "crimson", 1 };
-	Button b_hallow{ "hallow", 1 };
+	Button b_newGame{ 5.93 };
+	Button b_loadGame{ 6.66 };
+	Button b_jungle{ 1};
+	Button b_corruption{ 1 };
+	Button b_crimson{ 1 };
+	Button b_hallow{ 1 };
 
 public:
 	void LoadAllTextures();

@@ -1,21 +1,20 @@
 #include "Button.h"
 
 
-Button::Button(string name, double d)
+Button::Button(double d)
 {
 	dim = d;
 	b_pos.x = 0;
 	b_pos.y = 0;
 	b_pos.z = 0;
-	LoadAllTextures(name);
 	over = false;
 }
 
 
 void Button::LoadAllTextures(string name)
 {
-	LoadGLTextures(name + "_idle.png"); // Idle sprite
-	LoadGLTextures(name + "_over.png"); // Over sprite
+	LoadGLTextures("Art/UI/" + name + "_idle.png"); // Idle sprite
+	LoadGLTextures("Art/UI/" + name + "_over.png"); // Over sprite
 }
 
 int Button::LoadGLTextures(string name)
@@ -52,35 +51,29 @@ void Button::OnOver()
 	over = true;
 }
 
-void Button::Draw()
+void Button::Draw(float i, float j, float width, float height)
 {
-//	(float i, float j, float width, float height, int textureIt)
+
+	glEnable(GL_TEXTURE_2D); // Start textures
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	if (over)
+		glBindTexture(GL_TEXTURE_2D, state[1]);
+	else
+		glBindTexture(GL_TEXTURE_2D, state[0]);		
+	glBegin(GL_QUADS);
+
+	glColor4d(1.0, 1.0, 1.0, 1.0);
+	glTexCoord2f(0.0f, 1.0f); glVertex2d(i, j);
+	glTexCoord2f(1.0f, 1.0f); glVertex2d(i + height, j);
+	glTexCoord2f(1.0f, 0.0f); glVertex2d(i + height, j + width);
+	glTexCoord2f(0.0f, 0.0f); glVertex2d(i, j + width);
+
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
 	
-		glEnable(GL_TEXTURE_2D); // Start textures
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		if (over)
-			glBindTexture(GL_TEXTURE_2D, state[1]);
-		else
-			glBindTexture(GL_TEXTURE_2D, state[0]);
-
-		glBegin(GL_QUADS);
-
-		glColor4d(1.0, 1.0, 1.0, 1.0);
-		glTexCoord2f(0.0f, 1.0f); glVertex2d(0, 0);
-		glTexCoord2f(1.0f, 1.0f); glVertex2d(0 + 1, 0);
-		glTexCoord2f(1.0f, 0.0f); glVertex2d(0 + 1, 0 + dim);
-		glTexCoord2f(0.0f, 0.0f); glVertex2d(0, 0 + dim);
-		/*
-		glTexCoord2f(0.0f, 1.0f); glVertex2d(b_pos.x, b_pos.y);
-		glTexCoord2f(1.0f, 1.0f); glVertex2d(b_pos.x + 1, b_pos.y);
-		glTexCoord2f(1.0f, 0.0f); glVertex2d(b_pos.x + 1, b_pos.y + dim);
-		glTexCoord2f(0.0f, 0.0f); glVertex2d(b_pos.x, b_pos.y + dim);
-		*/
-		glEnd();
-		glDisable(GL_TEXTURE_2D);
-
-		over = false;
+	over = false;
 
 }
 
