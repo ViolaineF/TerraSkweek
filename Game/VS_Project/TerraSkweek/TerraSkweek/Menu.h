@@ -16,6 +16,7 @@ private:
 	Button b_corruption{ 1 };
 	Button b_crimson{ 1 };
 	Button b_hallow{ 1 };
+	Position p_prev_pos;
 
 public:
 	void LoadAllTextures();

@@ -256,8 +256,22 @@ void Menu::Clicking()
 
 void Menu::Pause()
 {
-	inGame = false;
-//	clickPause = true;
+	if (inGame)
+	{
+		p_prev_pos = player.GetPos();
+		player.Teleport({ 5,5,0 });
+
+		inGame = false;
+		screenID = 3;
+		//	clickPause = true;
+	}
+	else
+	{
+		player.Teleport(p_prev_pos);
+		inGame = true;
+//		screenID = 3;
+	}
+
 }
 
 Menu::~Menu()

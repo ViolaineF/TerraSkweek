@@ -35,7 +35,6 @@ private:
 	int m_rows;
 	int m_lignes;
 	int map[20][20];
-	Position p_prev_pos;
 	unsigned int m_spawnerIndex;
 	unsigned int m_maxMobs;
 	vector<GLuint> textures;
@@ -64,7 +63,6 @@ public:
 	void DrawSpecialCases();
 	void DrawEnemies();
 	void MoveAllEnemies();
-
 	void SpawnMob();
 
 	void NewFire(int, char, Position);
@@ -77,7 +75,6 @@ public:
 
 	void Redim(int, int); //not used RN
 	int HUD_Score();
-	void Pause();
 	void EndGame();
 
 	Grid(string);

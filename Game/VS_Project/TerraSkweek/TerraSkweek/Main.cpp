@@ -446,7 +446,6 @@ void DrawLevel() {
 
 	glPushMatrix();
 
-	cout << inGame;
 	if (inGame)
 	{
 		// Translate Map
@@ -478,7 +477,6 @@ void DrawLevel() {
 
 	else
 	{
-
 		lvl.DisplayMap();
 
 		//Draw Menu
@@ -582,6 +580,10 @@ void KeyButtons(unsigned char key, int y, int z) {
 				player.SetPowderBag(false);
 			}
 		}
+		if (key == 'p') {
+			cout << key << endl;
+			menu.Pause();
+		}
 	}
 	else
 	{
@@ -590,6 +592,7 @@ void KeyButtons(unsigned char key, int y, int z) {
 		}
 
 		if (key == 'p') {
+			cout << key << endl;
 			menu.Pause();
 		}
 	}

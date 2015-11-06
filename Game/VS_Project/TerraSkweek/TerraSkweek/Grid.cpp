@@ -192,12 +192,6 @@ Grid::Grid(string biome)
 	
 }
 
-
-Grid::~Grid()
-{
-	
-}
-
 void Grid::SetMap(int x, int y, int a)
 {
 	map[x][y] = a;
@@ -214,7 +208,6 @@ void Grid::ChangeMap(int choice)
 	switch (choice)
 	{
 	case 0:
-		p_prev_pos = player.GetPos();
 		player.Teleport({ 5,5,0 });
 
 		m_rows = 1;
@@ -228,8 +221,7 @@ void Grid::ChangeMap(int choice)
 		break;
 
 	case 1:
-		player.Teleport(p_prev_pos);
-
+		player.Teleport({ 5,5,0 });
 
 		m_rows = 20;
 		m_lignes = 20;
@@ -241,6 +233,8 @@ void Grid::ChangeMap(int choice)
 		break;
 
 	case 2:
+		player.Teleport({ 5,5,0 });
+
 		m_rows = 20;
 		m_lignes = 20;
 		for (int i = 0; i < m_rows; i++) {
@@ -251,6 +245,8 @@ void Grid::ChangeMap(int choice)
 		break;
 
 	case 3:
+		player.Teleport({ 5,5,0 });
+
 		m_rows = 20;
 		m_lignes = 20;
 		for (int i = 0; i < m_rows; i++) {
@@ -260,7 +256,9 @@ void Grid::ChangeMap(int choice)
 		}
 		break;
 
-	case 4:
+	case 4:		
+		player.Teleport({ 5,5,0 });
+
 		m_rows = 20;
 		m_lignes = 20;
 		for (int i = 0; i < m_rows; i++) {
@@ -488,7 +486,7 @@ void Grid::PrintImg(float i, float j, float width, float height, int textureIt)
 //------------------------------------- DRAW MAP
 void Grid::DisplayMap()
 {
-
+	if()
 	for (int i = 0; i < m_rows; i++) {
 		for (int j = 0; j < m_lignes; j++) {
 			switch (map[i][j])
@@ -1063,10 +1061,12 @@ int Grid::HUD_Score()
 	return m_score;
 }
 
-void Grid::Pause()
+void Grid::EndGame()
 {
 }
 
-void Grid::EndGame()
+
+Grid::~Grid()
 {
+
 }
