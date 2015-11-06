@@ -30,12 +30,6 @@ void Menu::LoadAllTextures()
 {
 	string directory = "Art/UI/";
 
-	//--------------BASE TEXTURES
-	LoadGLTextures("button", directory + "new_game_idle.png"); // 0
-	LoadGLTextures("button", directory + "new_game_over.png"); // 1
-	LoadGLTextures("button", directory + "load_game_idle.png"); // 2
-	LoadGLTextures("button", directory + "load_game_over.png"); // 3
-
 	LoadGLTextures("UI", directory + "title.png"); // 0
 	LoadGLTextures("UI", directory + "water.png"); // 1
 	LoadGLTextures("UI", directory + "Islands.png"); // 2
