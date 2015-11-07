@@ -37,11 +37,28 @@ void Player::LoadAllTextures()
 	LoadGLTextures("fire_down", "Art/player/player_fire_02.png");
 	LoadGLTextures("fire_down", "Art/player/player_fire_03.png");
 	LoadGLTextures("fire_down", "Art/player/player_fire_04.png");
+	LoadGLTextures("p_UI", "Art/UI/cursor.png");
 
 }
 
 int Player::LoadGLTextures(string type,string name)
 {
+	if (type == "p_UI") {
+		GLuint essai = SOIL_load_OGL_texture
+			(
+				name.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
+
+		p_UI.push_back(essai); // Add to the texture vector
+		if (p_UI.at(p_UI.size() - 1) == 0)
+			return false;
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		return true;       // Return Success
+	}
 
 	if (type == "idle") {
 	GLuint essai = SOIL_load_OGL_texture
@@ -181,528 +198,558 @@ int Player::LoadGLTextures(string type,string name)
 
 }
 
-void Player::Draw()
+void Player::Draw(bool a)
 {
+	m_mouseMode = !a;
 	//cout << m_life << endl;
 
 	const int vitesse = 400;
 	currentFrame = (currentFrame + 1) % vitesse;
 	unsigned int frame = currentFrame * 4 / vitesse;
-	
-	if (!m_firing)
+
+	if (m_mouseMode)
 	{
-		if (m_life <= 150 && m_life >= 50)
-		{
-			switch (m_dir)
-			{
-			case 'i':
-				glPushMatrix();
-				// Left
-				glEnable(GL_TEXTURE_2D);
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, idle[frame]);
-				glBegin(GL_QUADS);
-				glColor4d(1.0, 1.0, 1.0, opacity);
-				glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glEnd();
-				glDisable(GL_TEXTURE_2D);
-				glPopMatrix();
-				break;
 
-			case 'l':
-				glPushMatrix();
-				// Left
-				glEnable(GL_TEXTURE_2D);
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, left[frame]);
-				glBegin(GL_QUADS);
-				glColor4d(1.0, 1.0, 1.0, opacity);
-				glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glEnd();
-				glDisable(GL_TEXTURE_2D);
-				glPopMatrix();
-				break;
-
-
-			case 'r':
-				glPushMatrix();
-				// right
-				glEnable(GL_TEXTURE_2D);
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, left[frame]);
-				glBegin(GL_QUADS);
-				glColor4d(1.0, 1.0, 1.0, opacity);
-				glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glEnd();
-				glDisable(GL_TEXTURE_2D);
-				glPopMatrix();
-				break;
-
-			case 'u':
-				glPushMatrix();
-				// up
-				glEnable(GL_TEXTURE_2D);
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, up[frame]);
-				glBegin(GL_QUADS);
-				glColor4d(1.0, 1.0, 1.0, opacity);
-				glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glEnd();
-				glDisable(GL_TEXTURE_2D);
-				glPopMatrix();
-				break;
-
-			case 'd':
-
-				glPushMatrix();
-				// down
-				glEnable(GL_TEXTURE_2D);
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, down[frame]);
-				glBegin(GL_QUADS);
-				glColor4d(1.0, 1.0, 1.0, opacity);
-				glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glEnd();
-				glDisable(GL_TEXTURE_2D);
-				glPopMatrix();
-				break;
-			}
-		}
-		if (m_life < 50)
-		{
-			switch (m_dir)
-				{
-
-			case 'i':
-				glPushMatrix();
-				// Left
-				glEnable(GL_TEXTURE_2D);
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, idle[frame]);
-				glBegin(GL_QUADS);
-				glColor4d(1.0, 1.0, 1.0, opacity);
-				glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glEnd();
-				glDisable(GL_TEXTURE_2D);
-				glPopMatrix();
-				break;
-
-			case 'l':
-				glPushMatrix();
-				// Left
-				glEnable(GL_TEXTURE_2D);
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, left[frame]);
-				glBegin(GL_QUADS);
-				glColor4d(1.0, 1.0, 1.0, opacity);
-				glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glEnd();
-				glDisable(GL_TEXTURE_2D);
-				glPopMatrix();
-				break;
-
-
-			case 'r':
-				glPushMatrix();
-				// right
-				glEnable(GL_TEXTURE_2D);
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, left[frame]);
-				glBegin(GL_QUADS);
-				glColor4d(1.0, 1.0, 1.0, opacity);
-				glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glEnd();
-				glDisable(GL_TEXTURE_2D);
-				glPopMatrix();
-				break;
-
-			case 'u':
-				glPushMatrix();
-				// up
-				glEnable(GL_TEXTURE_2D);
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, up[frame]);
-				glBegin(GL_QUADS);
-				glColor4d(1.0, 1.0, 1.0, opacity);
-				glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glEnd();
-				glDisable(GL_TEXTURE_2D);
-				glPopMatrix();
-				break;
-
-			case 'd':
-
-				glPushMatrix();
-				// down
-				glEnable(GL_TEXTURE_2D);
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, down[frame]);
-				glBegin(GL_QUADS);
-				glColor4d(1.0, 1.0, 1.0, opacity);
-				glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glEnd();
-				glDisable(GL_TEXTURE_2D);
-				glPopMatrix();
-				break;
-			}
-		}
+		glPushMatrix();
+		// Left
+		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glBindTexture(GL_TEXTURE_2D, p_UI[0]);
+		glBegin(GL_QUADS);
+		glColor4d(1.0, 1.0, 1.0, opacity);
+		glTexCoord2f(1.0f, 1.0f);
+		glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+		glTexCoord2f(0.0f, 1.0f);
+		glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+		glTexCoord2f(0.0f, 0.0f);
+		glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+		glTexCoord2f(1.0f, 0.0f);
+		glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+		glEnd();
+		glDisable(GL_TEXTURE_2D);
+		glPopMatrix();
+		
 	}
 
-	else if (m_firing)
+	else if (!m_mouseMode)
 	{
-		if ((m_life <= 150 && m_life >= 50))
+		if (!m_firing)
 		{
-			switch (m_dir)
+			if (m_life <= 150 && m_life >= 50)
 			{
-			case 'i':
-				glPushMatrix();
-				// Left
-				glEnable(GL_TEXTURE_2D);
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, fire_idle[frame]);
-				glBegin(GL_QUADS);
-				glColor4d(1.0, 1.0, 1.0, opacity);
-				glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glEnd();
-				glDisable(GL_TEXTURE_2D);
-				glPopMatrix();
+				switch (m_dir)
+				{
+				case 'i':
+					glPushMatrix();
+					// Left
+					glEnable(GL_TEXTURE_2D);
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glBindTexture(GL_TEXTURE_2D, idle[frame]);
+					glBegin(GL_QUADS);
+					glColor4d(1.0, 1.0, 1.0, opacity);
+					glTexCoord2f(1.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glEnd();
+					glDisable(GL_TEXTURE_2D);
+					glPopMatrix();
+					break;
 
-				if (frame >= fire_idle.size() - 1)
-					m_firing = false;
+				case 'l':
+					glPushMatrix();
+					// Left
+					glEnable(GL_TEXTURE_2D);
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glBindTexture(GL_TEXTURE_2D, left[frame]);
+					glBegin(GL_QUADS);
+					glColor4d(1.0, 1.0, 1.0, opacity);
+					glTexCoord2f(1.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glEnd();
+					glDisable(GL_TEXTURE_2D);
+					glPopMatrix();
+					break;
 
-				break;
 
-			case 'l':
-				glPushMatrix();
-				// Left
-				glEnable(GL_TEXTURE_2D);
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, fire_left[frame]);
-				glBegin(GL_QUADS);
-				glColor4d(1.0, 1.0, 1.0, opacity);
-				glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glEnd();
-				glDisable(GL_TEXTURE_2D);
-				glPopMatrix();
+				case 'r':
+					glPushMatrix();
+					// right
+					glEnable(GL_TEXTURE_2D);
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glBindTexture(GL_TEXTURE_2D, left[frame]);
+					glBegin(GL_QUADS);
+					glColor4d(1.0, 1.0, 1.0, opacity);
+					glTexCoord2f(1.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glEnd();
+					glDisable(GL_TEXTURE_2D);
+					glPopMatrix();
+					break;
 
-				if (frame >= fire_left.size() - 1)
-					m_firing = false;
+				case 'u':
+					glPushMatrix();
+					// up
+					glEnable(GL_TEXTURE_2D);
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glBindTexture(GL_TEXTURE_2D, up[frame]);
+					glBegin(GL_QUADS);
+					glColor4d(1.0, 1.0, 1.0, opacity);
+					glTexCoord2f(1.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glEnd();
+					glDisable(GL_TEXTURE_2D);
+					glPopMatrix();
+					break;
 
-				break;
+				case 'd':
 
-			case 'r':
-				glPushMatrix();
-				// right
-				glEnable(GL_TEXTURE_2D);
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, fire_left[frame]);
-				glBegin(GL_QUADS);
-				glColor4d(1.0, 1.0, 1.0, opacity);
-				glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glEnd();
-				glDisable(GL_TEXTURE_2D);
-				glPopMatrix();
-
-				if (frame >= fire_left.size() - 1)
-					m_firing = false;
-
-				break;
-
-			case 'u':
-				glPushMatrix();
-				// up
-				glEnable(GL_TEXTURE_2D);
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, fire_up[frame]);
-				glBegin(GL_QUADS);
-				glColor4d(1.0, 1.0, 1.0, opacity);
-				glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glEnd();
-				glDisable(GL_TEXTURE_2D);
-				glPopMatrix();
-
-				if (frame >= fire_up.size() - 1)
-					m_firing = false;
-
-				break;
-
-			case 'd':
-
-				glPushMatrix();
-				// down
-				glEnable(GL_TEXTURE_2D);
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, fire_down[frame]);
-				glBegin(GL_QUADS);
-				glColor4d(1.0, 1.0, 1.0, opacity);
-				glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glEnd();
-				glDisable(GL_TEXTURE_2D);
-				glPopMatrix();
-				
-				if (frame >= fire_down.size() - 1)
-					m_firing = false;
-
-				break;
-
+					glPushMatrix();
+					// down
+					glEnable(GL_TEXTURE_2D);
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glBindTexture(GL_TEXTURE_2D, down[frame]);
+					glBegin(GL_QUADS);
+					glColor4d(1.0, 1.0, 1.0, opacity);
+					glTexCoord2f(1.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glEnd();
+					glDisable(GL_TEXTURE_2D);
+					glPopMatrix();
+					break;
+				}
 			}
-		}
-		if (m_life < 50)
-		{
-			switch (m_dir)
+			if (m_life < 50)
+			{
+				switch (m_dir)
 				{
 
-			case 'i':
-				glPushMatrix();
-				// Left
-				glEnable(GL_TEXTURE_2D);
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, fire_idle[frame]);
-				glBegin(GL_QUADS);
-				glColor4d(1.0, 1.0, 1.0, opacity);
-				glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glEnd();
-				glDisable(GL_TEXTURE_2D);
-				glPopMatrix();
+				case 'i':
+					glPushMatrix();
+					// Left
+					glEnable(GL_TEXTURE_2D);
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glBindTexture(GL_TEXTURE_2D, idle[frame]);
+					glBegin(GL_QUADS);
+					glColor4d(1.0, 1.0, 1.0, opacity);
+					glTexCoord2f(1.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glEnd();
+					glDisable(GL_TEXTURE_2D);
+					glPopMatrix();
+					break;
 
-				if (frame >= fire_idle.size() - 1)
-					m_firing = false;
+				case 'l':
+					glPushMatrix();
+					// Left
+					glEnable(GL_TEXTURE_2D);
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glBindTexture(GL_TEXTURE_2D, left[frame]);
+					glBegin(GL_QUADS);
+					glColor4d(1.0, 1.0, 1.0, opacity);
+					glTexCoord2f(1.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glEnd();
+					glDisable(GL_TEXTURE_2D);
+					glPopMatrix();
+					break;
 
-				break;
 
-			case 'l':
-				glPushMatrix();
-				// Left
-				glEnable(GL_TEXTURE_2D);
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, fire_left[frame]);
-				glBegin(GL_QUADS);
-				glColor4d(1.0, 1.0, 1.0, opacity);
-				glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glEnd();
-				glDisable(GL_TEXTURE_2D);
-				glPopMatrix();
+				case 'r':
+					glPushMatrix();
+					// right
+					glEnable(GL_TEXTURE_2D);
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glBindTexture(GL_TEXTURE_2D, left[frame]);
+					glBegin(GL_QUADS);
+					glColor4d(1.0, 1.0, 1.0, opacity);
+					glTexCoord2f(1.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glEnd();
+					glDisable(GL_TEXTURE_2D);
+					glPopMatrix();
+					break;
 
-				if (frame >= fire_left.size() - 1)
-					m_firing = false;
+				case 'u':
+					glPushMatrix();
+					// up
+					glEnable(GL_TEXTURE_2D);
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glBindTexture(GL_TEXTURE_2D, up[frame]);
+					glBegin(GL_QUADS);
+					glColor4d(1.0, 1.0, 1.0, opacity);
+					glTexCoord2f(1.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glEnd();
+					glDisable(GL_TEXTURE_2D);
+					glPopMatrix();
+					break;
 
-				break;
+				case 'd':
 
-			case 'r':
-				glPushMatrix();
-				// right
-				glEnable(GL_TEXTURE_2D);
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, fire_left[frame]);
-				glBegin(GL_QUADS);
-				glColor4d(1.0, 1.0, 1.0, opacity);
-				glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glEnd();
-				glDisable(GL_TEXTURE_2D);
-				glPopMatrix();
-
-				if (frame >= fire_left.size() - 1)
-					m_firing = false;
-
-				break;
-
-			case 'u':
-				glPushMatrix();
-				// up
-				glEnable(GL_TEXTURE_2D);
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, fire_up[frame]);
-				glBegin(GL_QUADS);
-				glColor4d(1.0, 1.0, 1.0, opacity);
-				glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glEnd();
-				glDisable(GL_TEXTURE_2D);
-				glPopMatrix();
-				if (frame >= fire_up.size() - 1)
-					m_firing = false;
-
-				break;
-
-			case 'd':
-
-				glPushMatrix();
-				// down
-				glEnable(GL_TEXTURE_2D);
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glBindTexture(GL_TEXTURE_2D, fire_down[frame]);
-				glBegin(GL_QUADS);
-				glColor4d(1.0, 1.0, 1.0, opacity);
-				glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2*m_spriteSize);
-				glEnd();
-				glDisable(GL_TEXTURE_2D);
-				glPopMatrix();
-
-				if (frame >= fire_down.size() - 1)
-					m_firing = false;
-
-				break;
+					glPushMatrix();
+					// down
+					glEnable(GL_TEXTURE_2D);
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glBindTexture(GL_TEXTURE_2D, down[frame]);
+					glBegin(GL_QUADS);
+					glColor4d(1.0, 1.0, 1.0, opacity);
+					glTexCoord2f(1.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glEnd();
+					glDisable(GL_TEXTURE_2D);
+					glPopMatrix();
+					break;
+				}
 			}
 		}
+
+		else if (m_firing)
+		{
+			if ((m_life <= 150 && m_life >= 50))
+			{
+				switch (m_dir)
+				{
+				case 'i':
+					glPushMatrix();
+					// Left
+					glEnable(GL_TEXTURE_2D);
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glBindTexture(GL_TEXTURE_2D, fire_idle[frame]);
+					glBegin(GL_QUADS);
+					glColor4d(1.0, 1.0, 1.0, opacity);
+					glTexCoord2f(1.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glEnd();
+					glDisable(GL_TEXTURE_2D);
+					glPopMatrix();
+
+					if (frame >= fire_idle.size() - 1)
+						m_firing = false;
+
+					break;
+
+				case 'l':
+					glPushMatrix();
+					// Left
+					glEnable(GL_TEXTURE_2D);
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glBindTexture(GL_TEXTURE_2D, fire_left[frame]);
+					glBegin(GL_QUADS);
+					glColor4d(1.0, 1.0, 1.0, opacity);
+					glTexCoord2f(1.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glEnd();
+					glDisable(GL_TEXTURE_2D);
+					glPopMatrix();
+
+					if (frame >= fire_left.size() - 1)
+						m_firing = false;
+
+					break;
+
+				case 'r':
+					glPushMatrix();
+					// right
+					glEnable(GL_TEXTURE_2D);
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glBindTexture(GL_TEXTURE_2D, fire_left[frame]);
+					glBegin(GL_QUADS);
+					glColor4d(1.0, 1.0, 1.0, opacity);
+					glTexCoord2f(1.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glEnd();
+					glDisable(GL_TEXTURE_2D);
+					glPopMatrix();
+
+					if (frame >= fire_left.size() - 1)
+						m_firing = false;
+
+					break;
+
+				case 'u':
+					glPushMatrix();
+					// up
+					glEnable(GL_TEXTURE_2D);
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glBindTexture(GL_TEXTURE_2D, fire_up[frame]);
+					glBegin(GL_QUADS);
+					glColor4d(1.0, 1.0, 1.0, opacity);
+					glTexCoord2f(1.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glEnd();
+					glDisable(GL_TEXTURE_2D);
+					glPopMatrix();
+
+					if (frame >= fire_up.size() - 1)
+						m_firing = false;
+
+					break;
+
+				case 'd':
+
+					glPushMatrix();
+					// down
+					glEnable(GL_TEXTURE_2D);
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glBindTexture(GL_TEXTURE_2D, fire_down[frame]);
+					glBegin(GL_QUADS);
+					glColor4d(1.0, 1.0, 1.0, opacity);
+					glTexCoord2f(1.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glEnd();
+					glDisable(GL_TEXTURE_2D);
+					glPopMatrix();
+
+					if (frame >= fire_down.size() - 1)
+						m_firing = false;
+
+					break;
+
+				}
+			}
+			if (m_life < 50)
+			{
+				switch (m_dir)
+				{
+
+				case 'i':
+					glPushMatrix();
+					// Left
+					glEnable(GL_TEXTURE_2D);
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glBindTexture(GL_TEXTURE_2D, fire_idle[frame]);
+					glBegin(GL_QUADS);
+					glColor4d(1.0, 1.0, 1.0, opacity);
+					glTexCoord2f(1.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glEnd();
+					glDisable(GL_TEXTURE_2D);
+					glPopMatrix();
+
+					if (frame >= fire_idle.size() - 1)
+						m_firing = false;
+
+					break;
+
+				case 'l':
+					glPushMatrix();
+					// Left
+					glEnable(GL_TEXTURE_2D);
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glBindTexture(GL_TEXTURE_2D, fire_left[frame]);
+					glBegin(GL_QUADS);
+					glColor4d(1.0, 1.0, 1.0, opacity);
+					glTexCoord2f(1.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glEnd();
+					glDisable(GL_TEXTURE_2D);
+					glPopMatrix();
+
+					if (frame >= fire_left.size() - 1)
+						m_firing = false;
+
+					break;
+
+				case 'r':
+					glPushMatrix();
+					// right
+					glEnable(GL_TEXTURE_2D);
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glBindTexture(GL_TEXTURE_2D, fire_left[frame]);
+					glBegin(GL_QUADS);
+					glColor4d(1.0, 1.0, 1.0, opacity);
+					glTexCoord2f(1.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glEnd();
+					glDisable(GL_TEXTURE_2D);
+					glPopMatrix();
+
+					if (frame >= fire_left.size() - 1)
+						m_firing = false;
+
+					break;
+
+				case 'u':
+					glPushMatrix();
+					// up
+					glEnable(GL_TEXTURE_2D);
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glBindTexture(GL_TEXTURE_2D, fire_up[frame]);
+					glBegin(GL_QUADS);
+					glColor4d(1.0, 1.0, 1.0, opacity);
+					glTexCoord2f(1.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glEnd();
+					glDisable(GL_TEXTURE_2D);
+					glPopMatrix();
+					if (frame >= fire_up.size() - 1)
+						m_firing = false;
+
+					break;
+
+				case 'd':
+
+					glPushMatrix();
+					// down
+					glEnable(GL_TEXTURE_2D);
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					glBindTexture(GL_TEXTURE_2D, fire_down[frame]);
+					glBegin(GL_QUADS);
+					glColor4d(1.0, 1.0, 1.0, opacity);
+					glTexCoord2f(1.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
+					glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+					glEnd();
+					glDisable(GL_TEXTURE_2D);
+					glPopMatrix();
+
+					if (frame >= fire_down.size() - 1)
+						m_firing = false;
+
+					break;
+				}
+			}
+		}
+		
 	}
 	
 }
@@ -750,14 +797,14 @@ bool Player::IsInvincible()
 Player::Player() : Entity()
 {
 	//m_name = name;
-
-	m_pos = { 10,10,0 };
+	m_pos = { 5,5,0 };
 	m_life = 150;
 	m_def = 10;
 	m_dir = 'l';
 	m_speed = 0.1;
 	idle.resize(0);
 	m_moving = 0;
+	opacity = 1;
 	m_powderbag = false;
 	m_invincible = false; 
 	//LoadGLTextures( /*"idle",*/"Art/player.png");

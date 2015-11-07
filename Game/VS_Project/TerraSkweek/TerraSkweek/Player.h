@@ -16,17 +16,19 @@ private :
 	vector<GLuint>	fire_left;
 	vector<GLuint>	fire_up;
 	vector<GLuint>	fire_down;
+	vector<GLuint>	p_UI;
 	bool m_moving;
 	float opacity;
 	bool m_powderbag;
 	bool m_invincible;
+	bool m_mouseMode;
 
 public:
 	void setOpacity(float);
 	void LoadAllTextures();
 	int LoadGLTextures(string, string);
 
-	void Draw();
+	void Draw(bool);
 	void SetMoving(bool);
 
 	void SetWeapon(int);

@@ -29,6 +29,7 @@ private:
 	int t_dizaine = timer / 10 % 10;
 	int t_centaine = timer / 100 % 10;
 	float resolution = res;
+	float startTimer;
 	clock_t Clock;
 	double ClockDuration;
 
@@ -44,6 +45,7 @@ public:
 	void PrintImg(float, float, float, float, vector<GLuint>, int);
 	void PrintLife(float, float, float, float, int, float);
 	int LoadGLTextures(string, string);
+	void ResetTimer(int);
 	HUD(int);
 };
 

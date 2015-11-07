@@ -27,7 +27,6 @@
 class Grid
 {
 private:
-	string m_biome;
 	int m_screen;
 	int m_selected;
 	int m_score;
@@ -59,11 +58,11 @@ public:
 	int LoadGLTextures(string);
 	void PrintImg(float, float, float, float, int);
 	void DisplayMap();
-
+	void ClearMap();
+	void ChangeMap(int);
 	void DrawSpecialCases();
 	void DrawEnemies();
 	void MoveAllEnemies();
-
 	void SpawnMob();
 
 	void NewFire(int, char, Position);
@@ -76,7 +75,6 @@ public:
 
 	void Redim(int, int); //not used RN
 	int HUD_Score();
-	void Pause();
 	void EndGame();
 
 	Grid(string);

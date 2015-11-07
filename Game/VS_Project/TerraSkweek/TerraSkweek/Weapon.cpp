@@ -130,7 +130,6 @@ bool Weapon::MoveFire()
 
 }
 
-
 void Weapon::DrawFire()
 {
 	if (m_drop && !m_impact) { // Draw a weapon sprite
