@@ -53,7 +53,34 @@ void Menu::LoadAllTextures()
 	b_hallow.LoadAllTextures("hallow");
 
 	LoadGLTextures("UI", directory + "title.png"); // 0
-	LoadGLTextures("UI", directory + "water.png"); // 1
+	LoadGLTextures("UI", directory + "water.png"); // 1*
+	
+}
+
+void Menu::LoadStoryTextures(string name, int n_pictures)
+{
+	string id_pictures;
+	string directory = "Art/Story/"+ name +"/";
+	for (int i = 0; i < n_pictures; i++)
+	{
+		id_pictures = to_string(i);
+
+		if (i < 10)
+		{
+			LoadGLTextures("story", directory + "screen000" + id_pictures + ".png");
+			cout << directory + "screen000" + id_pictures + ".png";
+
+		}
+		else if (i >= 10)
+		{
+			LoadGLTextures("story", directory + "screen00" + id_pictures + ".png");
+			cout << directory + "screen00" + id_pictures + ".png";
+
+		}
+		cout << "tex loaded = " << i << endl;
+
+		continue;
+	}
 }
 
 int Menu::LoadGLTextures(string type, string name)
@@ -76,6 +103,25 @@ int Menu::LoadGLTextures(string type, string name)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		return true;       // Return Success
 	}
+
+	if (type == "story")
+	{
+		GLuint essai = SOIL_load_OGL_texture
+			(
+				name.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
+
+		story.push_back(essai); // Add to the texture vector
+
+		if (story.at(story.size() - 1) == 0)
+			return false;
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		return true;       // Return Success
+	}
 }
 
 void Menu::Display()
@@ -85,6 +131,8 @@ void Menu::Display()
 
 	switch (screenID)
 	{
+//_________________________________________________________
+
 	case 0:
 		// 	TITLE
 		ratio = 3.97;
@@ -122,22 +170,20 @@ void Menu::Display()
 
 			if (click)
 			{
-				screenID = 1;
+				screenID = 2;
 			}
 		}
 		else
 			b_loadGame.Draw(b2_pos.x, b2_pos.y, dim, dim*ratio);
 		break;
 
+//_________________________________________________________
 
 	case 1:
 		// 	MAP
 		// Draw Water Sprite
-
-		for (int i = 0; i < 20; i++)
-		{
-			for (int j = 0; j < 20; j++)
-			{
+		for (int i = 0; i < 20; i++){
+			for (int j = 0; j < 20; j++){
 				PrintImg(0, 0, dim, dim + j, UI, 1);
 			}
 		}
@@ -145,7 +191,6 @@ void Menu::Display()
 		// Draw load Jungle Island button
 		// Update Ratio 
 		ratio = 0.97;
-
 		if (b_jungle.GetPos() == player.GetPos())
 		{
 			b_jungle.OnOver();
@@ -153,11 +198,12 @@ void Menu::Display()
 
 			if (click) 
 			{
+				screenID = 4;
+
 				lvl.ChangeMap(1);
 				player.Teleport({ 10, 10, 0 });
-				hud.ResetTimer(180);
+				LoadStoryTextures("story1", 51);
 
-				inGame = true;
 			}
 		}
 		else
@@ -173,11 +219,12 @@ void Menu::Display()
 
 			if (click)
 			{
+				screenID = 4;
+
 				lvl.ChangeMap(2);
 				player.Teleport({ 10, 10, 0 });
-				hud.ResetTimer(180);
+				LoadStoryTextures("story2", 51);
 
-				inGame = true;
 			}
 		}
 		else
@@ -193,11 +240,11 @@ void Menu::Display()
 
 			if (click)
 			{
+				screenID = 4;
+
 				lvl.ChangeMap(3);
 				player.Teleport({ 10, 10, 0 });
-				hud.ResetTimer(180);
-
-				inGame = true;
+				LoadStoryTextures("story3", 51);
 			}
 		}
 		else
@@ -213,21 +260,26 @@ void Menu::Display()
 
 			if (click)
 			{
+				screenID = 4;
+
 				lvl.ChangeMap(4);
 				player.Teleport({ 10, 10, 0 });
-				hud.ResetTimer(180);
-
-				inGame = true;
+				LoadStoryTextures("story4", 51);
 			}
 		}
 		else
 			b_hallow.Draw(bHallow_pos.x, bHallow_pos.y, 5 * dim, 5 * dim*ratio);
 		break;
 
+//_________________________________________________________
+
 	case 2:
 		// LOAD GAME
+		screenID = 1;
 
 		break;
+
+//_________________________________________________________
 
 	case 3:
 		// PAUSE
@@ -278,11 +330,84 @@ void Menu::Display()
 		}
 		else
 			b_quit.Draw(b2_pos.x, b2_pos.y, dim, dim*ratio);
-
 		break;
+
+//_________________________________________________________
+
+	case 4:
+		// Story Screen
+		DisplayStory(story.size());
+
+
 	}
 	click = false;
 
+}
+
+
+void Menu::DisplayStory(int n_pictures)
+{
+	const int vitesse = 200;
+	currentFrame = (currentFrame + 1) % vitesse;
+	unsigned int frame = currentFrame * n_pictures / vitesse;
+
+
+	glPushMatrix();
+	// Story Screen
+	glEnable(GL_TEXTURE_2D); // Start textures
+	glBindTexture(GL_TEXTURE_2D, story[frame]);
+	glBegin(GL_QUADS);
+
+	glColor3d(1.0, 1.0, 1.0);
+	glTexCoord2f(0.0f, 1.0f); glVertex2d(0, 0);
+	glTexCoord2f(1.0f, 1.0f); glVertex2d(0 + 10, 0);
+	glTexCoord2f(1.0f, 0.0f); glVertex2d(0 + 10, 0 + 10);
+	glTexCoord2f(0.0f, 0.0f); glVertex2d(0, 0 + 10);
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
+	glPopMatrix();
+
+	if (frame == n_pictures - 1) {
+		cout << "frame = " << frame;
+		screenID = 3;
+		inGame = true;
+		hud.ResetTimer(180);
+		story.clear();
+		story.resize(0);
+	}
+
+
+	/*
+	for (int i = 0; i = n_pictures; i++)
+	{
+		glPushMatrix();
+		// Story Screen
+		glEnable(GL_TEXTURE_2D); // Start textures
+		glBindTexture(GL_TEXTURE_2D, story[frame]);
+		glBegin(GL_QUADS);
+
+		glColor3d(1.0, 1.0, 1.0);
+		glTexCoord2f(1.0f, 1.0f);
+		glVertex2d(0, 0);
+		glTexCoord2f(0.0f, 1.0f);
+		glVertex2d(20, 0);
+		glTexCoord2f(0.0f, 0.0f);
+		glVertex2d(20, 20);
+		glTexCoord2f(1.0f, 0.0f);
+		glVertex2d(0, 20);
+		glEnd();
+		glDisable(GL_TEXTURE_2D);
+		glPopMatrix();
+		/*
+		if (i = n_pictures) {
+			inGame = true;
+			hud.ResetTimer(180);
+			story.clear();
+			story.resize(0);
+		}
+		
+	}
+	*/
 }
 
 void Menu::PrintImg(float i, float j, float width, float height, vector<GLuint> vecTex, int textureIt)

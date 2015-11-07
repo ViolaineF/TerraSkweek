@@ -116,14 +116,12 @@ int HUD::LoadGLTextures(string type, string nameIncomplete)
 }
 
 void HUD::ResetTimer(int a)
-{/*
-	ClockDuration = (clock() - Clock) / (double)CLOCKS_PER_SEC;
-	startTimer = Clock;
-	ClockDuration = 0;
+{
+	Clock = clock();
 	timer = a;
 	cout << "reset time ";
 
-	*/
+	
 }
 
 void HUD::PrintImg(float i, float j, float width, float height, vector<GLuint> vecTex ,int textureIt)
