@@ -8,7 +8,9 @@ protected:
 
 private:
 	vector<GLuint> UI;
+	vector<GLuint> story;
 	int screenID;
+	int currentFrame;
 	bool click;
 	Button b_newGame{ 5.93 };
 	Button b_loadGame{ 6.66 };
@@ -25,6 +27,8 @@ public:
 	void LoadAllTextures();
 	int LoadGLTextures(string, string);
 	void Display();
+	void LoadStoryTextures(string, int);
+	void DisplayStory(int);
 	void PrintImg(float, float, float, float, vector<GLuint>, int);
 	void Clicking();
 	void Pause();
