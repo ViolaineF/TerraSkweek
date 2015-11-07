@@ -191,9 +191,10 @@ void ActivateSpawnMob(int x) {
 		//Update screen
 		glutPostRedisplay();
 
-		//Reset Timer
-		glutTimerFunc(enemySpawnFrequency, ActivateSpawnMob, 0);
 	}
+
+	//Reset Timer
+	glutTimerFunc(enemySpawnFrequency, ActivateSpawnMob, 0);
 
 }
 
@@ -202,7 +203,7 @@ void ActivateSpawnMob(int x) {
 
 void PlayerMovt(int x) {
 
-	if (player.IsMoving()) {
+	if (player.IsMoving() || player.IsStillMoving()) {
 
 	// Save previous position to revert changes if the new one is invalid
 	Position playerPrevPos = { player.GetPos().x, player.GetPos().y, player.GetPos().z };
@@ -436,7 +437,9 @@ void PlayerMovt(int x) {
 	//Reset Timer
 	glutTimerFunc(refreshRate, PlayerMovt, 0);
 
-	player.SetMoving(0);
+	//player.SetMoving(0);
+
+    player.SetStillMoving(0);
 }
 
 
@@ -610,21 +613,25 @@ void KeyAction(int key, int x, int y) {
 	case GLUT_KEY_LEFT:
 		player.SwitchDir('l');
 		player.SetMoving(1);
+		player.SetStillMoving(1);
 		break;
 	case GLUT_KEY_RIGHT:
 		player.SwitchDir('r');
 		player.SetMoving(1);
+		player.SetStillMoving(1);
 		break;
 	case GLUT_KEY_UP:
 		player.SwitchDir('u');
 		player.SetMoving(1);
+		player.SetStillMoving(1);
 		break;
 	case GLUT_KEY_DOWN:
 		player.SwitchDir('d');
 		player.SetMoving(1);
+		player.SetStillMoving(1);
 		break;
-
 	}
+
 }
 
 
