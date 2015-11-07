@@ -9,7 +9,10 @@ Enemy::Enemy() : Entity()
 	m_speed = 0.1;
 	m_damage = 1;
 	m_randomIt = 4;
-	run.resize(0);
+	left.resize(0);
+	right.resize(0);
+	up.resize(0);
+	down.resize(0);
 	death.resize(0);
 }
 
@@ -20,7 +23,10 @@ Enemy::Enemy(Position pos)
 	m_speed = 0.1;
 	m_damage = 1;
 	m_randomIt = 4;
-	run.resize(0);
+	left.resize(0);
+	right.resize(0);
+	up.resize(0);
+	down.resize(0);
 	death.resize(0);
 	m_pos = pos;
 	m_freeze = false;
@@ -31,24 +37,87 @@ int Enemy::LoadGLTextures(string type,string directory)
 {
 	string name = "Art/" + directory;
 
-	if (type == "run") {
-	GLuint essai = SOIL_load_OGL_texture
-		(
-			name.c_str(),
-			SOIL_LOAD_AUTO,
-			SOIL_CREATE_NEW_ID,
-			SOIL_FLAG_INVERT_Y
-			);
+	if (type == "left") {
+		GLuint essai = SOIL_load_OGL_texture
+			(
+				name.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
 
-	run.push_back(essai); // Add to the texture vector
+		left.push_back(essai); // Add to the texture vector
 
-	if (run.at(run.size() - 1) == 0)
-		return false;
+		if (left.at(left.size() - 1) == 0)
+			return false;
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	return true;       // Return Success
+		return true;       // Return Success
+
+	}
+
+	if (type == "right") {
+		GLuint essai = SOIL_load_OGL_texture
+			(
+				name.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
+
+		right.push_back(essai); // Add to the texture vector
+
+		if (right.at(right.size() - 1) == 0)
+			return false;
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		return true;       // Return Success
+
+	}
+
+	if (type == "up") {
+		GLuint essai = SOIL_load_OGL_texture
+			(
+				name.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
+
+		up.push_back(essai); // Add to the texture vector
+
+		if (up.at(up.size() - 1) == 0)
+			return false;
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		return true;       // Return Success
+
+	}
+
+	if (type == "down") {
+		GLuint essai = SOIL_load_OGL_texture
+			(
+				name.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
+
+		down.push_back(essai); // Add to the texture vector
+
+		if (down.at(down.size() - 1) == 0)
+			return false;
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		return true;       // Return Success
 
 	}
 
@@ -92,7 +161,6 @@ int Enemy::LoadGLTextures(string type,string directory)
 		return true;       // Return Success
 
 	}
-
 
 }
 
@@ -199,10 +267,6 @@ int Enemy::GetDamage()
 	return m_damage;
 }
 
-void Enemy::LoadAllTextures()
-{
-}
-
 
 void Enemy::Draw()
 {
@@ -240,27 +304,102 @@ void Enemy::Draw()
 	}
 	else if (afraid == false && !m_freeze)
 	{
-		int frame = currentFrame * (run.size()) / speed;
+		int frame = currentFrame * (left.size()) / speed;
 
-		glPushMatrix();
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glEnable(GL_TEXTURE_2D);
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glBindTexture(GL_TEXTURE_2D, run[frame]);
-		glBegin(GL_QUADS);
-		glColor3d(1.0, 1.0, 1.0);
-		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
-		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 2* m_spriteSize, m_pos.y + 2* m_spriteSize);
-		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2* m_spriteSize);
-		
-		glEnd();
-		glDisable(GL_TEXTURE_2D);
-		glPopMatrix();
-		glutPostRedisplay();
+		switch (m_dir)
+		{
+
+		case 'l':
+			frame = currentFrame * (left.size()) / speed;
+
+			glPushMatrix();
+			// left
+			glEnable(GL_TEXTURE_2D);
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glBindTexture(GL_TEXTURE_2D, left[frame]);
+			glBegin(GL_QUADS);
+			glColor3d(1.0, 1.0, 1.0);
+			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+
+			glEnd();
+			glDisable(GL_TEXTURE_2D);
+			glPopMatrix();
+			glutPostRedisplay();
+			break;
+
+
+		case 'r':
+			frame = currentFrame * (right.size()) / speed;
+
+			glPushMatrix();
+			// right
+			glEnable(GL_TEXTURE_2D);
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glBindTexture(GL_TEXTURE_2D, right[frame]);
+			glBegin(GL_QUADS);
+			glColor3d(1.0, 1.0, 1.0);
+			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+
+			glEnd();
+			glDisable(GL_TEXTURE_2D);
+			glPopMatrix();
+			glutPostRedisplay();
+			break;
+
+		case 'u':
+			frame = currentFrame * (up.size()) / speed;
+
+			glPushMatrix();
+			// up
+			glEnable(GL_TEXTURE_2D);
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glBindTexture(GL_TEXTURE_2D, up[frame]);
+			glBegin(GL_QUADS);
+			glColor3d(1.0, 1.0, 1.0);
+			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+
+			glEnd();
+			glDisable(GL_TEXTURE_2D);
+			glPopMatrix();
+			glutPostRedisplay();
+			break;
+
+		case 'd':
+			frame = currentFrame * (down.size()) / speed;
+
+			glPushMatrix();
+			// down
+			glEnable(GL_TEXTURE_2D);
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glBindTexture(GL_TEXTURE_2D, down[frame]);
+			glBegin(GL_QUADS);
+			glColor3d(1.0, 1.0, 1.0);
+			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 2 * m_spriteSize, m_pos.y + 2 * m_spriteSize);
+			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2 * m_spriteSize);
+
+			glEnd();
+			glDisable(GL_TEXTURE_2D);
+			glPopMatrix();
+			glutPostRedisplay();
+			break;
+		}
 	}
+
 	else if (m_freeze) {
 
 		int frame = currentFrame * (freeze.size()) / speed;

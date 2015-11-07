@@ -24,7 +24,6 @@ public:
 	Enemy(Position);
 
 	int LoadGLTextures(string, string);
-	virtual void LoadAllTextures();
 
 	bool Move(Position, float);
 	int GetDamage();

@@ -20,17 +20,34 @@ Slime_Forest::Slime_Forest(Position pos) : Enemy(pos)
 
 void Slime_Forest::LoadAllTextures()
 {
-	LoadGLTextures("run", "Slime_01.png");
-	LoadGLTextures("run", "Slime_02.png");
-	LoadGLTextures("run", "Slime_03.png");
-	LoadGLTextures("run", "Slime_04.png");
-	LoadGLTextures("run", "Slime_05.png");
+	LoadGLTextures("left", "Slime_left_01.png");
+	LoadGLTextures("left", "Slime_left_02.png");
+	LoadGLTextures("left", "Slime_left_03.png");
+	LoadGLTextures("left", "Slime_left_04.png");
+	LoadGLTextures("left", "Slime_left_05.png");
 
+	LoadGLTextures("right", "Slime_right_01.png");
+	LoadGLTextures("right", "Slime_right_02.png");
+	LoadGLTextures("right", "Slime_right_03.png");
+	LoadGLTextures("right", "Slime_right_04.png");
+	LoadGLTextures("right", "Slime_right_05.png");
 
-	LoadGLTextures("death", "2corrupted/slimer_death_1.png");
-	LoadGLTextures("death", "2corrupted/slimer_death_2.png");
-	LoadGLTextures("death", "2corrupted/slimer_death_3.png");
-	LoadGLTextures("death", "2corrupted/slimer_death_4.png");
+	LoadGLTextures("up", "Slime_up_01.png");
+	LoadGLTextures("up", "Slime_up_02.png");
+	LoadGLTextures("up", "Slime_up_03.png");
+	LoadGLTextures("up", "Slime_up_04.png");
+	LoadGLTextures("up", "Slime_up_05.png");
+
+	LoadGLTextures("down", "Slime_down_01.png");
+	LoadGLTextures("down", "Slime_down_02.png");
+	LoadGLTextures("down", "Slime_down_03.png");
+	LoadGLTextures("down", "Slime_down_04.png");
+	LoadGLTextures("down", "Slime_down_05.png");
+
+	LoadGLTextures("death", "Slime_death_01.png");
+	LoadGLTextures("death", "Slime_death_02.png");
+	LoadGLTextures("death", "Slime_death_03.png");
+	LoadGLTextures("death", "Slime_death_04.png");
 
 	LoadGLTextures("freeze", "2corrupted/slimer_freeze_01.png");
 	LoadGLTextures("freeze", "2corrupted/slimer_freeze_02.png");
