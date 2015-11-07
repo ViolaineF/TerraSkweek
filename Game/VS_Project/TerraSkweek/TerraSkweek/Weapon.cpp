@@ -156,7 +156,7 @@ void Weapon::DrawFire()
 	}
 	else { // Draw a fire sprite
 		
-		const int vitesse = 200;
+		int vitesse = 100*(fireAnimation.size());
 		currentFrame = (currentFrame + 1) % vitesse;
 		int frame = currentFrame * (fireAnimation.size()) / vitesse;
 

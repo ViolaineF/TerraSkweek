@@ -299,7 +299,7 @@ void Grid::LoadAllTextures()
 	textures.resize(0);
 	//--------------BASE TEXTURES
 	LoadGLTextures( directory + "ground.png"); // 0
-	LoadGLTextures( directory + "walls.png"); // 1
+	LoadGLTextures( "Art/wall01.png"); // 1
 	LoadGLTextures( "Art/converted.png"); // 2
 	LoadGLTextures( "Art/semi_converted.png"); // 3
 	LoadGLTextures( directory + "fall.png"); // 4
@@ -494,9 +494,9 @@ void Grid::PrintImg(float i, float j, float width, float height, int textureIt)
 	glBegin(GL_QUADS);
 
 	glColor3d(1.0, 1.0, 1.0);
-	glTexCoord2f(0.0f, 0.0f); glVertex2d(i - 0.5*height, j - 0.5*width);
+	glTexCoord2f(1.0f, 1.0f); glVertex2d(i - 0.5*height, j - 0.5*width);
 	glTexCoord2f(0.0f, 1.0f); glVertex2d(i + height, j - 0.5*width);
-	glTexCoord2f(1.0f, 1.0f); glVertex2d(i + height, j + width);
+	glTexCoord2f(0.0f, 0.0f); glVertex2d(i + height, j + width);
 	glTexCoord2f(1.0f, 0.0f); glVertex2d(i - 0.5*height, j + width);
 
 	glEnd();

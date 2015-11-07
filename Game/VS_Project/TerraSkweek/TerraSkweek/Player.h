@@ -22,6 +22,7 @@ private :
 	bool m_powderbag;
 	bool m_invincible;
 	bool m_mouseMode;
+	bool m_stillMoving;
 
 public:
 	void setOpacity(float);
@@ -30,9 +31,11 @@ public:
 
 	void Draw(bool);
 	void SetMoving(bool);
+	void SetStillMoving(bool);
+	bool IsStillMoving();
+	bool IsMoving();
 
 	void SetWeapon(int);
-	bool IsMoving();
 	bool IsFiring();
 
 	void SetPowderBag(bool);
