@@ -61,9 +61,11 @@ public:
 	void ClearMap();
 	void ChangeMap(int);
 	void DrawSpecialCases();
+
 	void DrawEnemies();
 	void MoveAllEnemies();
 	void SpawnMob();
+	void SetEnemiesSpeed(float);
 
 	void NewFire(int, char, Position);
 	void MoveAllFires();

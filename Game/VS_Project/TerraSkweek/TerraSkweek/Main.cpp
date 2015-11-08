@@ -545,6 +545,21 @@ void KeyButtons(unsigned char key, int y, int z) {
 	//cout << light << endl;
 
 
+	//--------------------------CHANGE ENEMY' SPEED
+	switch (key)
+	{
+	case '1':
+		lvl.SetEnemiesSpeed(0.01);
+		break;
+	case '2':
+		lvl.SetEnemiesSpeed(0.02);
+		break;
+	case '3':
+		lvl.SetEnemiesSpeed(0.03);
+		break;
+	}
+
+
 // -------------------------------- PLAYER FIRE
 	if (inGame)
 	{
