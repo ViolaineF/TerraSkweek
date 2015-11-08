@@ -550,7 +550,9 @@ void Redim(int x, int y) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	//gluOrtho2D(0.0, (double)(20), (double)(20), 0.0);
-	gluOrtho2D(0.0, (double)(res*windowWidth), (double)(res*windowHeight), 0.0);
+	gluOrtho2D(0.0, (double)(windowWidth), (double)(windowHeight), 0.0);
+	cout << windowWidth << endl;
+	//gluOrtho2D(0.0, (double)(res*windowWidth), (double)(res*windowHeight), 0.0);
 	//gluOrtho2D(0.0, (double)(res*glutGet(GLUT_SCREEN_WIDTH)), (double)(res*glutGet(GLUT_SCREEN_HEIGHT)), 0.0);
 	//gluOrtho2D(0.0, (double)(res*glutGet(GLUT_WINDOW_WIDTH)), (double)(res*glutGet(GLUT_WINDOW_HEIGHT)), 0.0);
 

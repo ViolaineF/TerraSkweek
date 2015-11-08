@@ -128,6 +128,10 @@ void Menu::Display()
 {
 	dim = res*windowWidth*0.035;
 	float ratio;
+	float width;
+	float height;
+	float heightPrev;
+	float paddingV;
 
 	switch (screenID)
 	{
@@ -136,19 +140,27 @@ void Menu::Display()
 	case 0:
 		// 	TITLE
 		ratio = 3.97;
+		width = (windowWidth*40)/100.0;
+		height = width/ratio;
+		paddingV = windowHeight / 12;
+		//height1 = (windowWidth*0.05) * (windowHeight*0.0015);
 		// PrintImg(res * windowWidth / 3.97 * (dim / 2), res * windowHeight / 3, dim, dim*3.97, UI, 0);
 //		PrintImg(res * windowWidth / ratio * (dim / 2), res * windowHeight / 3, dim, dim*ratio, UI, 0);
-		PrintImg(5, 1, dim*3, dim*ratio*3, UI, 0);
+		PrintImg((windowWidth/2) - (width/2), paddingV , height, width, UI, 0);
 
-		// dim*3.97/2
+		// Update Padding
+		paddingV = paddingV + 1.2*height;
 
 		// Draw new game button
 		// Update Ratio of button 1
 		ratio = 5.93;
+		width = (windowWidth * 20) / 100.0;
+		height = width / ratio;
+
 		if (b_newGame.GetPos() == player.GetPos())
 		{
 			b_newGame.OnOver();
-			b_newGame.Draw(b1_pos.x, b1_pos.y, dim, dim*ratio);
+			b_newGame.Draw((windowWidth / 2) - (width / 2), paddingV, height, width);
 
 			if (click) 
 			{
@@ -157,16 +169,20 @@ void Menu::Display()
 		}
 		else
 //			b_newGame.Draw(res * windowWidth / ratio * (dim / 2), res * windowHeight / 8, dim, dim*ratio);
-			b_newGame.Draw(b1_pos.x, b1_pos.y, dim, dim*ratio);
+			b_newGame.Draw((windowWidth / 2) - (width / 2), paddingV, height, width);
 
+		// Update Padding
+		paddingV = paddingV + 2*height;
 
 		// Update Ratio of button 2
 		ratio = 6.66;
+		width = (windowWidth * 20) / 100.0;
+		height = width / ratio;
 		// Draw load game button
 		if (b_loadGame.GetPos() == player.GetPos())
 		{
 			b_loadGame.OnOver();
-			b_loadGame.Draw(b2_pos.x, b2_pos.y, dim, dim*ratio);
+			b_loadGame.Draw((windowWidth / 2) - (width / 2), paddingV, height, width);
 
 			if (click)
 			{
@@ -174,7 +190,7 @@ void Menu::Display()
 			}
 		}
 		else
-			b_loadGame.Draw(b2_pos.x, b2_pos.y, dim, dim*ratio);
+			b_loadGame.Draw((windowWidth / 2) - (width / 2), paddingV, height, width);
 		break;
 
 //_________________________________________________________
@@ -191,10 +207,13 @@ void Menu::Display()
 		// Draw load Jungle Island button
 		// Update Ratio 
 		ratio = 0.97;
+		width = (windowWidth * 25) / 100.0;
+		height = width / ratio;
+
 		if (b_jungle.GetPos() == player.GetPos())
 		{
 			b_jungle.OnOver();
-			b_jungle.Draw(bJungle_pos.x, bJungle_pos.y, 5 * dim, 5 * dim*ratio);
+			b_jungle.Draw((windowWidth / 4) - (width / 2), windowHeight / 12, height, width);
 
 			if (click) 
 			{
@@ -207,7 +226,7 @@ void Menu::Display()
 			}
 		}
 		else
-			b_jungle.Draw(bJungle_pos.x, bJungle_pos.y, 5 * dim, 5 * dim*ratio);
+			b_jungle.Draw((windowWidth / 4) - (width / 2), windowHeight / 12, height, width);
 
 		// Draw load Corruption Island button
 		// Update Ratio 
