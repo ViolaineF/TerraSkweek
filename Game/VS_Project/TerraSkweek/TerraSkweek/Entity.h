@@ -22,18 +22,25 @@ protected :
 public:
 	Entity();
 	Entity(Position, int, int, char, Weapon, AudioFile, AudioFile);
+
 	void SwitchDir(char);
 	char GetDir();
-	int GetLife();
-	int GetWeapon();
-	bool IsDead();
-	void SetLife(int);
 	void MoveLeft();
 	void MoveRight();
 	void MoveUp();
 	void MoveDown();
 	void Teleport(Position);
+
+	void SetSpeed(float);
+
+	int GetLife();
+	int GetWeapon();
+
+	bool IsDead();
+	void SetLife(int);
+
 	Position GetPos();
+
 	void Attack();
 	//void Death();
 

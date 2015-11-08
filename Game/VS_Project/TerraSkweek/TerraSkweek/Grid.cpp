@@ -959,6 +959,13 @@ void Grid::SpawnMob()
 
 }
 
+void Grid::SetEnemiesSpeed(float a)
+{
+	for (unsigned int i = 0; i < vecEnemies.size(); i++) {		
+		vecEnemies[i]->SetSpeed(a);
+	}
+}
+
 void Grid::NewFire(int type, char dir, Position pos)
 {	
 	switch (type)

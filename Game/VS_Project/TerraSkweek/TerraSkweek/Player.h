@@ -26,6 +26,8 @@ private :
 
 public:
 	void setOpacity(float);
+	//bool IsVisible();
+
 	void LoadAllTextures();
 	int LoadGLTextures(string, string);
 

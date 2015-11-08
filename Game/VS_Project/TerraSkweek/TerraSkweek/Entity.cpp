@@ -66,6 +66,11 @@ void Entity::Teleport(Position a)
 	m_pos = a;
 }
 
+void Entity::SetSpeed(float speed)
+{
+	m_speed = speed;
+}
+
 Position Entity::GetPos()
 {
 	return m_pos;

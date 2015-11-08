@@ -1,8 +1,8 @@
-#include "Slime_Corruption.h"
+#include "Bunny_Forest.h"
 
 
 
-Slime_Corruption::Slime_Corruption()
+Bunny_Forest::Bunny_Forest()
 {
 	int random_spawn = rand() % 2;
 	if (random_spawn == 0)
@@ -17,6 +17,6 @@ Slime_Corruption::Slime_Corruption()
 }
 
 
-Slime_Corruption::~Slime_Corruption()
+Bunny_Forest::~Bunny_Forest()
 {
 }

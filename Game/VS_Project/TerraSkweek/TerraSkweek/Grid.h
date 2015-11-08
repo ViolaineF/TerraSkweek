@@ -6,18 +6,9 @@
 #include "Player.h"
 #include "TNT.h"
 #include "Arrow.h"
-#include "Corruptor_Corruption.h"
-#include "Crimera_Crimson.h"
 #include "DemonEye_Forest.h"
-#include "Devourer_Corruption.h"
-#include "FaceMonster_Crimson.h"
-#include "Gastopod_Hallow.h"
-#include "Pixie_Hallow.h"
-#include "Slime_Corruption.h"
-#include "Slime_Crimson.h"
 #include "Slime_Forest.h"
-#include "Unicorn_Hallow.h"
-#include "Zombie_Forest.h"
+#include "Bunny_Forest.h"
 #include "SpecialCase.h"
 #include "SimpleConversion.h"
 #include "SemiConverted.h"
@@ -61,9 +52,11 @@ public:
 	void ClearMap();
 	void ChangeMap(int);
 	void DrawSpecialCases();
+
 	void DrawEnemies();
 	void MoveAllEnemies();
 	void SpawnMob();
+	void SetEnemiesSpeed(float);
 
 	void NewFire(int, char, Position);
 	void MoveAllFires();
