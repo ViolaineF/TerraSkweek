@@ -6,7 +6,7 @@ bool UpCase::Draw()
 {
 	const int speed = 400;
 
-	if (animated) { // The case is converting
+	if (animated && !m_converted) { // The case is converting
 
 		currentFrame = (currentFrame + 1) % speed;
 		unsigned int frame = currentFrame * (animation.size()) / speed;
@@ -40,7 +40,7 @@ bool UpCase::Draw()
 			return 0;
 		}
 	}
-	else if (!m_converted) { // The case is not converted
+	else if (!animated && !m_converted) { // The case is not converted
 
 		glPushMatrix();
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -63,7 +63,9 @@ bool UpCase::Draw()
 		return 0;
 
 	}
-	else { // The case is converted
+	else if (m_converted) { // The case is converted
+
+		unsigned int frame = animation.size() - 1;
 
 		glPushMatrix();
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -71,7 +73,7 @@ bool UpCase::Draw()
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glBindTexture(GL_TEXTURE_2D, animation[(animation.size() - 1)]);
+		glBindTexture(GL_TEXTURE_2D, animation[frame]);
 		glBegin(GL_QUADS);
 		glColor3d(1.0, 1.0, 1.0);
 		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
@@ -83,15 +85,16 @@ bool UpCase::Draw()
 		glDisable(GL_TEXTURE_2D);
 		glPopMatrix();
 		glutPostRedisplay();
-		return 0;
+		return 1;
 
 	}
 }
 
-UpCase::UpCase(int x, int y, string directory) : SpecialCase(x, y, directory)
+UpCase::UpCase(float x, float y, string directory) : SpecialCase(x,y, directory)
 {
 	m_converted = false;
 	animated = false;
+	m_pos = { x, y, 1 };
 
 	string fullDirectory = "Art/" + directory;
 
@@ -101,6 +104,7 @@ UpCase::UpCase(int x, int y, string directory) : SpecialCase(x, y, directory)
 	LoadGLTexture(fullDirectory + "/3.png");
 	LoadGLTexture(fullDirectory + "/4.png");
 	LoadGLTexture(fullDirectory + "/5.png");
+	LoadGLTexture(fullDirectory + "/6.png");
 }
 
 

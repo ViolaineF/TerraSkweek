@@ -63,7 +63,7 @@ bool MobSpawner::Draw()
 
 }
 
-MobSpawner::MobSpawner(int x, int y, string directory) : SpecialCase(x, y, directory)
+MobSpawner::MobSpawner(float x, float y, string directory) : SpecialCase(x, y, directory)
 {
 	animated = false; 
 

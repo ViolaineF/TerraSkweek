@@ -2,7 +2,7 @@
 
 
 
-SimpleConversion::SimpleConversion(int x, int y, string directory) : SpecialCase(x, y, directory)
+SimpleConversion::SimpleConversion(float x, float y, string directory) : SpecialCase(x, y, directory)
 {
 	animated = true;
 

@@ -7,7 +7,7 @@
 class SimpleConversion : public SpecialCase
 {
 public:
-	SimpleConversion(int, int, string);
+	SimpleConversion(float, float, string);
 	~SimpleConversion();
 };
 

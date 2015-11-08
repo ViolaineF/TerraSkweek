@@ -27,7 +27,7 @@ public:
 
 	bool Move(Position, float);
 	int GetDamage();
-	void Draw();
+	virtual void Draw();
 
 	void SetFreeze(bool);
 	bool IsFreezed();

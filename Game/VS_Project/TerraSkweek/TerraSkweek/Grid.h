@@ -14,6 +14,7 @@
 #include "SemiConverted.h"
 #include "CrackedFloor.h"
 #include "MobSpawner.h"
+#include "UpCase.h"
 
 class Grid
 {
@@ -30,6 +31,7 @@ private:
 	vector<GLuint> textures;
 	vector<SpecialCase*> vecCaseAnimated;
 	vector<SpecialCase*> vecSpawner;
+	vector<SpecialCase*> vecUpCase;
 	vector<Enemy*> vecEnemies;
 	vector<TNT*> vecTNT;
 	vector<Arrow*> vecArrow;
@@ -51,7 +53,9 @@ public:
 	void DisplayMap();
 	void ClearMap();
 	void ChangeMap(int);
+
 	void DrawSpecialCases();
+	void DrawUpCase();
 
 	void DrawEnemies();
 	void MoveAllEnemies();

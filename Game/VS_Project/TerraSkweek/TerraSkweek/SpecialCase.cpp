@@ -107,12 +107,10 @@ int SpecialCase::LoadGLTexture(string name)
 	return true;       // Return Success
 }
 
-SpecialCase::SpecialCase(int x, int y, string directory)
+SpecialCase::SpecialCase(float x, float y, string directory)
 {
 	currentFrame = 0;
-	float posX = x + 0.0;
-	float posY = y + 0.0;
-	m_pos = {posX, posY, 0};
+	m_pos = {x, y, 0};
 	animation.resize(0);
 	m_spriteSize = 0.25;
 	m_type = '0';
@@ -129,6 +127,7 @@ SpecialCase::SpecialCase(Position pos, string directory) // Powder Bag construct
 	// p - powder bag 
 	// f - freeze enemy
 	// i - invincible
+	// e - elevator
 	m_type = type;
 
 	animated = false;

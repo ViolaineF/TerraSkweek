@@ -250,13 +250,13 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			if (light > 1)
+			if (light > 1 && !(player.GetPos().z))
 				lvl.SetMap(pXleftConv, pYupConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
-			if (light > 1)
+			if (light > 1 && !(player.GetPos().z))
 			lvl.SetMap(pXleftConv, pYupConv, 4);
 
 			for (int i = -1; i < 2; i++) {
@@ -274,13 +274,13 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert	
-			if (light > 1)
+			if (light > 1 && !(player.GetPos().z))
 			lvl.SetMap(pXrightConv, pYupConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
-			if (light > 1)
+			if (light > 1 && !(player.GetPos().z))
 			lvl.SetMap(pXrightConv, pYupConv, 4);
 
 			for (int i = -1; i < 2; i++) {
@@ -300,13 +300,13 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			if (light > 1)
+			if (light > 1 && !(player.GetPos().z))
 			lvl.SetMap(pXleftConv, pYdownConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
-			if (light > 1)
+			if (light > 1 && !(player.GetPos().z))
 			lvl.SetMap(pXleftConv, pYdownConv, 4);
 
 			for (int i = -1; i < 2; i++) {
@@ -323,13 +323,13 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			if (light > 1)
+			if (light > 1 && !(player.GetPos().z))
 			lvl.SetMap(pXrightConv, pYdownConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
-			if (light > 1)
+			if (light > 1 && !(player.GetPos().z))
 			lvl.SetMap(pXrightConv, pYdownConv, 4);
 
 			for (int i = -1; i < 2; i++) {
@@ -349,13 +349,13 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			if (light > 1)
+			if (light > 1 && !(player.GetPos().z))
 			lvl.SetMap(pXrightConv, pYdownConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
-			if (light > 1)
+			if (light > 1 && !(player.GetPos().z))
 			lvl.SetMap(pXrightConv, pYdownConv, 4);
 
 			for (int i = -1; i < 2; i++) {
@@ -372,13 +372,13 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			if (light > 1)
+			if (light > 1 && !(player.GetPos().z))
 			lvl.SetMap(pXrightConv, pYupConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
-			if (light > 1)
+			if (light > 1 && !(player.GetPos().z))
 			lvl.SetMap(pXrightConv, pYupConv, 4);
 
 			for (int i = -1; i < 2; i++) {
@@ -398,13 +398,13 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			if (light > 1)
+			if (light > 1 && !(player.GetPos().z))
 			lvl.SetMap(pXleftConv, pYupConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
-			if (light > 1)
+			if (light > 1 && !(player.GetPos().z))
 			lvl.SetMap(pXleftConv, pYupConv, 4);
 
 			for (int i = -1; i < 2; i++) {
@@ -421,13 +421,13 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			if (light > 1)
+			if (light > 1 && !(player.GetPos().z))
 			lvl.SetMap(pXleftConv, pYdownConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
-			if (light > 1)
+			if (light > 1 && !(player.GetPos().z))
 			lvl.SetMap(pXleftConv, pYdownConv, 4);
 
 			for (int i = -1; i < 2; i++) {
@@ -476,14 +476,30 @@ void DrawLevel() {
 		//Draw Enemies
 		lvl.DrawSpecialCases();
 
-		// Add player
-		player.Draw(inGame);
-
 		//Draw Enemies
 		lvl.DrawEnemies();
 
+		if (player.GetPos().z == 1) { // If the player is UP
+			// Draw UpCase under the player and his fire
+			lvl.DrawUpCase();
+		}
+
 		//Draw Fires
 		lvl.DrawAllFires();
+
+		// Add player
+		player.Draw(inGame);
+
+		if (player.GetPos().z == 0) { // If the player is DOWN
+			// Draw UpCase over the player and his fire
+			lvl.DrawUpCase();
+		}
+
+
+
+
+
+
 
 		glLoadIdentity();
 		glutSwapBuffers();

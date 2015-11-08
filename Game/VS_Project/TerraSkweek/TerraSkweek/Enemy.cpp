@@ -171,9 +171,10 @@ bool Enemy::Move(Position playerPos, float light)
 		return false;
 	}
 
+
 	int maxMoves = 20;
 
-	if (light < 1) { // If the player is invisible, move randomly
+	if (light < 1 || playerPos.z) { // If the player is invisible, move randomly
 		m_random = 1;
 	}
 	else { // Chase the player

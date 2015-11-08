@@ -352,6 +352,13 @@ void Grid::LoadAllTextures()
 	Position testPos = { 11,11,0 };
 	vecCaseAnimated.push_back(new SpecialCase(testPos, "powderBag.png"));
 
+	//------------------------ LOAD UP CASE 
+	vecUpCase.push_back(new UpCase(13.5,13.5, "upcase"));
+	vecUpCase.push_back(new UpCase(13.5, 14.5, "upcase"));
+
+	//---------- LOAD JUMP CASE ACCORDINGLY 
+	vecCaseAnimated.push_back(new SpecialCase({13,14,0}, "elevator.png"));
+
 
 }
 
@@ -565,18 +572,18 @@ void Grid::DrawSpecialCases()
 		}
 		else if (vecCaseAnimated[i]->GetPos() == player.GetPos()) {
 
-			if (typeid(*vecCaseAnimated[i]) == typeid(CrackedFloor)) {
+			if (typeid(*vecCaseAnimated[i]) == typeid(CrackedFloor)) { //------------- PLAYER IS ON CRACKED FLOOR
 				vecCaseAnimated[i]->SetAnimated(true);
 				//------------------PLAY SOUND
 				sfx_gap.PlayAudio();
 			}
 
-			else if (typeid(*vecCaseAnimated[i]) == typeid(SemiConverted)) {
+			else if (typeid(*vecCaseAnimated[i]) == typeid(SemiConverted)) { //--------------- PLAYER IS ON SEMI CONVERTED CASE
 				vecCaseAnimated[i]->SetAnimated(true);
-				//------------------PLAY SOUND
 			}
 
-			else if (vecCaseAnimated[i]->GetType() == 'p') { // Powder Bag
+
+			else if (vecCaseAnimated[i]->GetType() == 'p') {  //---------------- PLAYER IS ON POWDER BAG
 				player.SetPowderBag(true); // Change player powder bag boolean
 				vecCaseAnimated.erase(vecCaseAnimated.begin() + i); // Destroy powder bag sprite
 				i--;
@@ -584,7 +591,7 @@ void Grid::DrawSpecialCases()
 
 			}
 
-			else if (vecCaseAnimated[i]->GetType() == 'f') { // freeze power
+			else if (vecCaseAnimated[i]->GetType() == 'f') { //---------------- PLAYER IS ON FREEZE POWER
 				for (unsigned int i = 0; i < vecEnemies.size(); i++){
 					vecEnemies[i]->SetFreeze(true);
 				}
@@ -594,10 +601,16 @@ void Grid::DrawSpecialCases()
 
 			}
 
-			else if (vecCaseAnimated[i]->GetType() == 'i') { // incinvible power
+			else if (vecCaseAnimated[i]->GetType() == 'i') { //---------------- PLAYER IS ON INVINCIBLE POWER
 				player.SetInvincible(true); 
 				vecCaseAnimated.erase(vecCaseAnimated.begin() + i);
 				i--;
+				//------------------PLAY SOUND
+
+			}
+
+			else if (vecCaseAnimated[i]->GetType() == 'e') { //---------------- PLAYER IS ON ELEVATOR CASE
+				player.Teleport({player.GetPos().x + 0.1f, player.GetPos().y, 1});
 				//------------------PLAY SOUND
 
 			}
@@ -608,6 +621,14 @@ void Grid::DrawSpecialCases()
 
 	for (unsigned int i = 0; i < vecSpawner.size(); i++) {
 		vecSpawner[i]->Draw();
+	}
+
+	for (unsigned int i = 0; i < vecUpCase.size(); i++) {
+		vecUpCase[i]->Draw();
+		if (vecUpCase[i]->GetPos() == player.GetPos()) { //--------------- PLAYER IS ON UP CASE NON CONVERTED
+			vecUpCase[i]->SetAnimated(true);
+			//------------------PLAY SOUND
+		}
 	}
 
 	for (unsigned int i = 0; i < vecTNT.size(); i++) {
@@ -734,6 +755,27 @@ void Grid::DrawSpecialCases()
 	}
 	*/
 
+
+}
+
+void Grid::DrawUpCase()
+{
+	bool playerOnUpCase = false; 
+
+	for (unsigned int i = 0; i < vecUpCase.size(); i++) {
+		if (typeid(*vecUpCase[i]) == typeid(UpCase)) {
+			vecUpCase[i]->Draw();
+
+			if (player.GetPos() == vecUpCase[i]->GetPos()) { // If the player is on a case, then bool is true;
+				playerOnUpCase = true;
+			}
+		}
+	}
+
+	//--------------CHECK IF PLAYER IS STILL ON AT LEAST 1 UPCASE
+	if (!playerOnUpCase) {
+			player.Teleport({player.GetPos().x,player.GetPos().y, 0 }); // Put the player down
+	}
 
 }
 

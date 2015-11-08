@@ -9,7 +9,7 @@ private :
 	bool m_converted;
 public:
 	bool Draw();
-	UpCase(int, int, string);
+	UpCase(float, float, string);
 	~UpCase();
 };
 
