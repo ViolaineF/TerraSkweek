@@ -250,11 +250,13 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			lvl.SetMap(pXleftConv, pYupConv, 4);
+			if (light > 1)
+				lvl.SetMap(pXleftConv, pYupConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
+			if (light > 1)
 			lvl.SetMap(pXleftConv, pYupConv, 4);
 
 			for (int i = -1; i < 2; i++) {
@@ -271,12 +273,14 @@ void PlayerMovt(int x) {
 		case 1:// Walls
 			player.Teleport(playerPrevPos);
 			break;
-		case 0: //Ground to convert
+		case 0: //Ground to convert	
+			if (light > 1)
 			lvl.SetMap(pXrightConv, pYupConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
+			if (light > 1)
 			lvl.SetMap(pXrightConv, pYupConv, 4);
 
 			for (int i = -1; i < 2; i++) {
@@ -296,11 +300,13 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
+			if (light > 1)
 			lvl.SetMap(pXleftConv, pYdownConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
+			if (light > 1)
 			lvl.SetMap(pXleftConv, pYdownConv, 4);
 
 			for (int i = -1; i < 2; i++) {
@@ -317,11 +323,13 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
+			if (light > 1)
 			lvl.SetMap(pXrightConv, pYdownConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
+			if (light > 1)
 			lvl.SetMap(pXrightConv, pYdownConv, 4);
 
 			for (int i = -1; i < 2; i++) {
@@ -341,11 +349,13 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
+			if (light > 1)
 			lvl.SetMap(pXrightConv, pYdownConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
+			if (light > 1)
 			lvl.SetMap(pXrightConv, pYdownConv, 4);
 
 			for (int i = -1; i < 2; i++) {
@@ -362,11 +372,13 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
+			if (light > 1)
 			lvl.SetMap(pXrightConv, pYupConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
+			if (light > 1)
 			lvl.SetMap(pXrightConv, pYupConv, 4);
 
 			for (int i = -1; i < 2; i++) {
@@ -386,11 +398,13 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
+			if (light > 1)
 			lvl.SetMap(pXleftConv, pYupConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
+			if (light > 1)
 			lvl.SetMap(pXleftConv, pYupConv, 4);
 
 			for (int i = -1; i < 2; i++) {
@@ -407,11 +421,13 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
+			if (light > 1)
 			lvl.SetMap(pXleftConv, pYdownConv, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
+			if (light > 1)
 			lvl.SetMap(pXleftConv, pYdownConv, 4);
 
 			for (int i = -1; i < 2; i++) {

@@ -1155,6 +1155,16 @@ void Player::setOpacity(float light)
 	opacity = light/4;
 }
 
+//bool Player::IsVisible()
+//{
+//	if (opacity <= 1) {
+//		return false;
+//	}
+//	else {
+//		return true;
+//	}
+//}
+
 Player::~Player()
 {
 
