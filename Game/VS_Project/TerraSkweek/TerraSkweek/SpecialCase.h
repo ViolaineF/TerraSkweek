@@ -23,7 +23,7 @@ public:
 	Position GetPos();
 	char GetType();
 	int LoadGLTexture(string);
-	SpecialCase(int, int, string);
+	SpecialCase(float, float, string);
 	SpecialCase(Position, string);
 	~SpecialCase();
 };

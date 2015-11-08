@@ -7,7 +7,7 @@ class MobSpawner : public SpecialCase
 {
 public:
 	bool Draw();
-	MobSpawner(int, int, string);
+	MobSpawner(float, float, string);
 	~MobSpawner();
 };
 

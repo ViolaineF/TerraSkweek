@@ -64,7 +64,7 @@ bool SemiConverted::Draw()
 	}
 }
 
-SemiConverted::SemiConverted(int x, int y, string directory) : SpecialCase(x, y, directory)
+SemiConverted::SemiConverted(float x, float y, string directory) : SpecialCase(x, y, directory)
 {
 	animated = false;
 
