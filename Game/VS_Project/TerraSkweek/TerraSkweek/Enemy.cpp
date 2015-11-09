@@ -6,7 +6,7 @@ Enemy::Enemy() : Entity()
 {
 	afraid = false;
 	currentFrame = 0;
-	m_speed = 0.1;
+	m_speed = 5;
 	m_damage = 1;
 	m_randomIt = 4;
 	left.resize(0);
@@ -20,7 +20,7 @@ Enemy::Enemy(Position pos)
 {
 	afraid = false;
 	currentFrame = 0;
-	m_speed = 0.1;
+	m_speed = 5;
 	m_damage = 1;
 	m_randomIt = 4;
 	left.resize(0);
@@ -35,7 +35,7 @@ Enemy::Enemy(Position pos)
 
 int Enemy::LoadGLTextures(string type,string directory)
 {
-	string name = "Art/" + directory;
+	string name = "Art/enemies/" + directory;
 
 	if (type == "left") {
 		GLuint essai = SOIL_load_OGL_texture

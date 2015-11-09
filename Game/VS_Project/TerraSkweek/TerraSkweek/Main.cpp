@@ -186,7 +186,7 @@ void PrintImg(float i, float j, float width, float height, int textureIt) {
 void ActivateSpawnMob(int x) {
 	if (inGame)
 	{
-		lvl.SpawnMob();
+		//lvl.SpawnMob();
 
 		//Update screen
 		glutPostRedisplay();
@@ -194,7 +194,7 @@ void ActivateSpawnMob(int x) {
 	}
 
 	//Reset Timer
-	glutTimerFunc(enemySpawnFrequency, ActivateSpawnMob, 0);
+	//glutTimerFunc(enemySpawnFrequency, ActivateSpawnMob, 0);
 
 }
 
@@ -230,15 +230,27 @@ void PlayerMovt(int x) {
 
 	float off = 0.1;
 
-	int pXleft = round(player.GetPos().x - off);
-	int pXright = round(player.GetPos().x + off);
-	int pYup = round(player.GetPos().y - off);
-	int pYdown = round(player.GetPos().y + off);
+	//int pXleft = round(player.GetPos().x - off);
+	//int pXright = round(player.GetPos().x + off);
+	//int pYup = round(player.GetPos().y - off);
+	//int pYdown = round(player.GetPos().y + off);
 
-	int pXleftConv = round(player.GetPos().x - off);
-	int pXrightConv = round(player.GetPos().x + off);
-	int pYupConv = round(player.GetPos().y - off);
-	int pYdownConv = round(player.GetPos().y + off);
+	//int pXleftConv = round(player.GetPos().x - off);
+	//int pXrightConv = round(player.GetPos().x + off);
+	//int pYupConv = round(player.GetPos().y - off);
+	//int pYdownConv = round(player.GetPos().y + off);
+
+	int margin = 20;
+
+	int pXleft = round((player.GetPos().x - margin )/75);
+	int pXright = round((player.GetPos().x + margin) / 75);
+	int pYup = round((player.GetPos().y - margin) / 75);
+	int pYdown = round((player.GetPos().y + margin) / 75);
+
+	int pXleftConv = round(player.GetPos().x / 75);
+	int pXrightConv = round(player.GetPos().x / 75);
+	int pYupConv = round(player.GetPos().y / 75);
+	int pYdownConv = round(player.GetPos().y / 75);
 
 	// ----------------- CHECK WALLS AND CONVERT v2
 	switch (player.GetDir())
@@ -468,7 +480,7 @@ void DrawLevel() {
 	{
 		// Translate Map
 		//glTranslatef(-player.GetPos().x + 12, -player.GetPos().y + 8, 0);
-		glTranslatef(-player.GetPos().x + res*(windowWidth / 2) - 0.5, -player.GetPos().y + res*(windowHeight / 2) - 0.5, 0);
+		glTranslatef(-player.GetPos().x + (windowWidth / 2), -player.GetPos().y + (windowHeight / 2), 0);
 
 		// Draw map
 		lvl.DisplayMap();

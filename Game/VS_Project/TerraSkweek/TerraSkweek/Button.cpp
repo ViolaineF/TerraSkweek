@@ -51,7 +51,7 @@ void Button::OnOver()
 	over = true;
 }
 
-void Button::Draw(float i, float j, float width, float height)
+void Button::Draw(float width, float height)
 {
 
 	glEnable(GL_TEXTURE_2D); // Start textures
@@ -65,10 +65,10 @@ void Button::Draw(float i, float j, float width, float height)
 	glBegin(GL_QUADS);
 
 	glColor4d(1.0, 1.0, 1.0, 1.0);
-	glTexCoord2f(0.0f, 1.0f); glVertex2d(i, j);
-	glTexCoord2f(1.0f, 1.0f); glVertex2d(i + height, j);
-	glTexCoord2f(1.0f, 0.0f); glVertex2d(i + height, j + width);
-	glTexCoord2f(0.0f, 0.0f); glVertex2d(i, j + width);
+	glTexCoord2f(0.0f, 1.0f); glVertex2d(b_pos.x, b_pos.y);
+	glTexCoord2f(1.0f, 1.0f); glVertex2d(b_pos.x + height, b_pos.y);
+	glTexCoord2f(1.0f, 0.0f); glVertex2d(b_pos.x + height, b_pos.y + width);
+	glTexCoord2f(0.0f, 0.0f); glVertex2d(b_pos.x, b_pos.y + width);
 
 	glEnd();
 	glDisable(GL_TEXTURE_2D);

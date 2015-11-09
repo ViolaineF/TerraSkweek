@@ -14,28 +14,24 @@ extern HUD hud;
 //Position b1_pos{ res * windowWidth / 5.93 * (dim / 2), res * windowHeight / 8,0 };
 
 //Position b1_pos{ dim * 5.9 , res * windowHeight / 8, 0 };
-Position b1_pos{ 5,5,0 };
-Position b2_pos{ 5,6,0 }; 
 
-Position bJungle_pos{ 1,2,0 };
-Position bCorruption_pos{ 2,5,0 };
-Position bCrimson_pos{ 5,6,0 };
-Position bHallow_pos{ 8,3,0 };
+Position b1_pos{ 0,0, 0 };
+Position b2_pos{ 0,0, 0 };
 
 Menu::Menu()
 {
 	screenID = 0;
 	inGame = false;
 
-	b_newGame.SetPos(b1_pos);
-	b_loadGame.SetPos(b2_pos);	
-	b_continue.SetPos(b1_pos);
-	b_quit.SetPos(b2_pos);
+	b_newGame.SetPos({0,0,0});
+	b_loadGame.SetPos({ 0,0,0 });
+	b_continue.SetPos({ 0,0,0 });
+	b_quit.SetPos({ 0,0,0 });
 
-	b_jungle.SetPos(bJungle_pos);
-	b_corruption.SetPos(bCorruption_pos);
-	b_crimson.SetPos(bCrimson_pos);
-	b_hallow.SetPos(bHallow_pos);
+	b_jungle.SetPos({0,0,0});
+	b_corruption.SetPos({ 0,0,0 });
+	b_crimson.SetPos({ 0,0,0 });
+	b_hallow.SetPos({ 0,0,0 });
 }
 
 
@@ -126,12 +122,23 @@ int Menu::LoadGLTextures(string type, string name)
 
 void Menu::Display()
 {
-	dim = res*windowWidth*0.035;
 	float ratio;
 	float width;
 	float height;
 	float heightPrev;
 	float paddingV;
+	float paddingH;
+
+	float bjunglPosX = windowWidth / 5.5f;
+	float bPosYHaut = windowHeight / 7.0f;
+	float bPosYBas = windowHeight / 2.0f;
+
+	b_jungle.SetPos({ bjunglPosX,bPosYHaut,0 });
+	b_corruption.SetPos({ 2*bjunglPosX,bPosYBas,0 });
+	b_crimson.SetPos({ 3* bjunglPosX,bPosYBas,0 });
+	b_hallow.SetPos({ 4* bjunglPosX,bPosYHaut,0 });
+
+
 
 	switch (screenID)
 	{
@@ -143,13 +150,9 @@ void Menu::Display()
 		width = (windowWidth*40)/100.0;
 		height = width/ratio;
 		paddingV = windowHeight / 12;
-		//height1 = (windowWidth*0.05) * (windowHeight*0.0015);
-		// PrintImg(res * windowWidth / 3.97 * (dim / 2), res * windowHeight / 3, dim, dim*3.97, UI, 0);
-//		PrintImg(res * windowWidth / ratio * (dim / 2), res * windowHeight / 3, dim, dim*ratio, UI, 0);
+
 		PrintImg((windowWidth/2) - (width/2), paddingV , height, width, UI, 0);
 
-		// Update Padding
-		paddingV = paddingV + 1.2*height;
 
 		// Draw new game button
 		// Update Ratio of button 1
@@ -157,10 +160,15 @@ void Menu::Display()
 		width = (windowWidth * 20) / 100.0;
 		height = width / ratio;
 
-		if (b_newGame.GetPos() == player.GetPos())
+		b_newGame.SetPos({ (windowWidth / 2) - (width / 2), paddingV + 5.0f*height,0 });
+		
+
+		if ((b_newGame.GetPos().x) < player.GetPos().x && player.GetPos().x < (b_newGame.GetPos().x + width) // Horizontal zone
+			&& 
+			(b_newGame.GetPos().y) < player.GetPos().y && player.GetPos().y < (b_newGame.GetPos().y+ height)) // vertical zone
 		{
 			b_newGame.OnOver();
-			b_newGame.Draw((windowWidth / 2) - (width / 2), paddingV, height, width);
+			b_newGame.Draw(height, width);
 
 			if (click) 
 			{
@@ -168,21 +176,24 @@ void Menu::Display()
 			}
 		}
 		else
-//			b_newGame.Draw(res * windowWidth / ratio * (dim / 2), res * windowHeight / 8, dim, dim*ratio);
-			b_newGame.Draw((windowWidth / 2) - (width / 2), paddingV, height, width);
 
-		// Update Padding
-		paddingV = paddingV + 2*height;
+			b_newGame.Draw(height, width);
+
 
 		// Update Ratio of button 2
 		ratio = 6.66;
 		width = (windowWidth * 20) / 100.0;
 		height = width / ratio;
+
+		b_loadGame.SetPos({ (windowWidth / 2) - (width / 2), paddingV + 8.0f*height,0 });
+
 		// Draw load game button
-		if (b_loadGame.GetPos() == player.GetPos())
+		if ((b_loadGame.GetPos().x) < player.GetPos().x && player.GetPos().x < (b_loadGame.GetPos().x + width)
+			&&
+			(b_loadGame.GetPos().y) < player.GetPos().y && player.GetPos().y < (b_loadGame.GetPos().y + height))
 		{
 			b_loadGame.OnOver();
-			b_loadGame.Draw((windowWidth / 2) - (width / 2), paddingV, height, width);
+			b_loadGame.Draw(height, width);
 
 			if (click)
 			{
@@ -190,7 +201,7 @@ void Menu::Display()
 			}
 		}
 		else
-			b_loadGame.Draw((windowWidth / 2) - (width / 2), paddingV, height, width);
+			b_loadGame.Draw( height, width);
 		break;
 
 //_________________________________________________________
@@ -207,87 +218,98 @@ void Menu::Display()
 		// Draw load Jungle Island button
 		// Update Ratio 
 		ratio = 0.97;
-		width = (windowWidth * 25) / 100.0;
+		width = (windowWidth * 18) / 100.0;
 		height = width / ratio;
 
-		if (b_jungle.GetPos() == player.GetPos())
+		if ((b_jungle.GetPos().x) < player.GetPos().x && player.GetPos().x < (b_jungle.GetPos().x + width) // Horizontal zone
+			&&
+			(b_jungle.GetPos().y) < player.GetPos().y && player.GetPos().y < (b_jungle.GetPos().y + height)) // vertical zone
 		{
 			b_jungle.OnOver();
-			b_jungle.Draw((windowWidth / 4) - (width / 2), windowHeight / 12, height, width);
+			b_jungle.Draw(height, width);
 
 			if (click) 
 			{
 				screenID = 4;
 
 				lvl.ChangeMap(1);
-				player.Teleport({ 10, 10, 0 });
 				LoadStoryTextures("story1", 51);
 
 			}
 		}
 		else
-			b_jungle.Draw((windowWidth / 4) - (width / 2), windowHeight / 12, height, width);
+			b_jungle.Draw (height, width);
 
 		// Draw load Corruption Island button
 		// Update Ratio 
 		ratio = 1;
-		if (b_corruption.GetPos() == player.GetPos())
+		height = width / ratio;
+
+		if ((b_corruption.GetPos().x) < player.GetPos().x && player.GetPos().x < (b_corruption.GetPos().x + width) // Horizontal zone
+			&&
+			(b_corruption.GetPos().y) < player.GetPos().y && player.GetPos().y < (b_corruption.GetPos().y + height)) // vertical zone
 		{
 			b_corruption.OnOver();
-			b_corruption.Draw(bCorruption_pos.x, bCorruption_pos.y, 5 * dim, 5 * dim*ratio);
+			b_corruption.Draw(height, width);
 
 			if (click)
 			{
 				screenID = 4;
 
 				lvl.ChangeMap(2);
-				player.Teleport({ 10, 10, 0 });
 				LoadStoryTextures("story2", 51);
 
 			}
 		}
 		else
-			b_corruption.Draw(bCorruption_pos.x, bCorruption_pos.y, 5 * dim, 5 * dim*ratio);
+			b_corruption.Draw(height, width);
 
 		// Draw load Crimson Island button
 		// Update Ratio 
 		ratio = 1;
-		if (b_crimson.GetPos() == player.GetPos())
+		height = width / ratio;
+
+		if ((b_crimson.GetPos().x) < player.GetPos().x && player.GetPos().x < (b_crimson.GetPos().x + width) // Horizontal zone
+			&&
+			(b_crimson.GetPos().y) < player.GetPos().y && player.GetPos().y < (b_crimson.GetPos().y + height)) // vertical zone
 		{
 			b_crimson.OnOver();
-			b_crimson.Draw(bCrimson_pos.x, bCrimson_pos.y, 5 * dim, 5 * dim*ratio);
+			b_crimson.Draw(height, width);
 
 			if (click)
 			{
 				screenID = 4;
 
 				lvl.ChangeMap(3);
-				player.Teleport({ 10, 10, 0 });
 				LoadStoryTextures("story3", 51);
 			}
 		}
 		else
-			b_crimson.Draw(bCrimson_pos.x, bCrimson_pos.y, 5 * dim, 5 * dim*ratio);
+			b_crimson.Draw(height, width);
 			
 		// Draw load Crimson Island button
 		// Update Ratio 
 		ratio = 0.99;
-		if (b_hallow.GetPos() == player.GetPos())
+		height = width / ratio;
+
+
+		if ((b_hallow.GetPos().x) < player.GetPos().x && player.GetPos().x < (b_hallow.GetPos().x + width) // Horizontal zone
+			&&
+			(b_hallow.GetPos().y) < player.GetPos().y && player.GetPos().y < (b_hallow.GetPos().y + height)) // vertical zone
 		{
 			b_hallow.OnOver();
-			b_hallow.Draw(bHallow_pos.x, bHallow_pos.y, 5 * dim, 5 * dim*ratio);
+			b_hallow.Draw(height, width);
 
 			if (click)
 			{
 				screenID = 4;
 
 				lvl.ChangeMap(4);
-				player.Teleport({ 10, 10, 0 });
 				LoadStoryTextures("story4", 51);
 			}
 		}
 		else
-			b_hallow.Draw(bHallow_pos.x, bHallow_pos.y, 5 * dim, 5 * dim*ratio);
+			b_hallow.Draw(height, width);
 		break;
 
 //_________________________________________________________
@@ -304,19 +326,25 @@ void Menu::Display()
 		// PAUSE
 
 		ratio = 3.97;
-		// PrintImg(res * windowWidth / 3.97 * (dim / 2), res * windowHeight / 3, dim, dim*3.97, UI, 0);
-		//		PrintImg(res * windowWidth / ratio * (dim / 2), res * windowHeight / 3, dim, dim*ratio, UI, 0);
-		PrintImg(5, 1, dim, dim*ratio, UI, 0);
+		width = (windowWidth * 40) / 100.0;
+		height = width / ratio;
+		paddingV = windowHeight / 12;
 
-		// dim*3.97/2
+		PrintImg((windowWidth / 2) - (width / 2), paddingV, height, width, UI, 0); // Titre jeu
+
+
 
 		// Draw new game button
 		// Update Ratio of button 1
 		ratio = 5.53;
+		height = width / ratio;
+
+		b_continue.SetPos({ (windowWidth / 2) - (width / 2) , 2.0f*paddingV + height,0 });
+
 		if (b_continue.GetPos() == player.GetPos())
 		{
 			b_continue.OnOver();
-			b_continue.Draw(b1_pos.x, b1_pos.y, dim, dim*ratio);
+			b_continue.Draw(dim, dim*ratio);
 
 			if (click)
 			{
@@ -326,17 +354,20 @@ void Menu::Display()
 			}
 		}
 		else
-			//			b_newGame.Draw(res * windowWidth / ratio * (dim / 2), res * windowHeight / 8, dim, dim*ratio);
-			b_continue.Draw(b1_pos.x, b1_pos.y, dim, dim*ratio);
+			b_continue.Draw(dim, dim*ratio);
 
 
 		// Update Ratio of button 2
 		ratio = 2.32;
+
+
+		b_quit.SetPos({ 0,0,0 });
+
 		// Draw load game button
 		if (b_quit.GetPos() == player.GetPos())
 		{
 			b_quit.OnOver();
-			b_quit.Draw(b2_pos.x, b2_pos.y, dim, dim*ratio);
+			b_quit.Draw(dim, dim*ratio);
 
 			if (click)
 			{
@@ -348,7 +379,7 @@ void Menu::Display()
 			}
 		}
 		else
-			b_quit.Draw(b2_pos.x, b2_pos.y, dim, dim*ratio);
+			b_quit.Draw(dim, dim*ratio);
 		break;
 
 //_________________________________________________________
@@ -457,7 +488,7 @@ void Menu::Pause()
 	if (inGame)
 	{
 		p_prev_pos = player.GetPos();
-		player.Teleport({ 5,5,0 });
+		player.Teleport({ 300,300,0 });
 
 		inGame = false;
 		screenID = 3;

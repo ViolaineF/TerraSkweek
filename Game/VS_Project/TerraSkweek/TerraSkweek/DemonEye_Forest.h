@@ -6,7 +6,8 @@
 class DemonEye_Forest : public Enemy
 {
 public:
-	DemonEye_Forest();
+	void LoadAllTextures();
+	DemonEye_Forest(Position);
 	~DemonEye_Forest();
 };
 

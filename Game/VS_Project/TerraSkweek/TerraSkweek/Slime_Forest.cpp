@@ -3,17 +3,10 @@
 
 Slime_Forest::Slime_Forest(Position pos) : Enemy(pos)
 {
-	//int random_spawn = rand() % 2;
-	//if (random_spawn == 0)
-	//	m_pos = { 5,5,0 };
-	//if (random_spawn == 1)
-	//	m_pos = { 13,13,0 };
-
 	m_pos = pos;
 	m_life = 1;
 	m_def = 1;
 	m_dir = 'd';
-	m_speed = 0.05;
 	LoadAllTextures();
 }
 

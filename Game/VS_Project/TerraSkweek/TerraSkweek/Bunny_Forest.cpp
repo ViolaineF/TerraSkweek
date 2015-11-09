@@ -13,7 +13,6 @@ Bunny_Forest::Bunny_Forest()
 	m_life = 1;
 	m_def = 1;
 	m_dir = 0.0;
-	m_speed = 0.1;
 }
 
 

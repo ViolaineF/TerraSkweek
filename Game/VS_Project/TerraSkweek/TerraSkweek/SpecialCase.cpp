@@ -112,7 +112,7 @@ SpecialCase::SpecialCase(float x, float y, string directory)
 	currentFrame = 0;
 	m_pos = {x, y, 0};
 	animation.resize(0);
-	m_spriteSize = 0.25;
+	m_spriteSize = 75;
 	m_type = '0';
 
 }
@@ -122,7 +122,7 @@ SpecialCase::SpecialCase(Position pos, string directory) // Powder Bag construct
 	currentFrame = 0;
 	m_pos = pos;
 	animation.resize(0);
-	m_spriteSize = 0.25;
+	m_spriteSize = 75;
 	char type = directory[0];// Get the first char of the directory 
 	// p - powder bag 
 	// f - freeze enemy

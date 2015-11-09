@@ -1135,19 +1135,17 @@ bool Player::IsInvincible()
 }
 
 Player::Player() : Entity()
-{
-	//m_name = name;
-	m_pos = { 5,5,0 };
+{	//m_name = name;
+	m_pos = { 300,300,0 };
 	m_life = 150;
 	m_def = 10;
 	m_dir = 'l';
-	m_speed = 0.1;
+	m_speed = 10;
 	idle.resize(0);
 	m_moving = 0;
 	opacity = 1;
 	m_powderbag = false;
 	m_invincible = false; 
-	//LoadGLTextures( /*"idle",*/"Art/player.png");
 }
 
 void Player::setOpacity(float light)

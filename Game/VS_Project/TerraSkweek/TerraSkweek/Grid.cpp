@@ -37,7 +37,7 @@ int mapLv1[20][20] = {
 	1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-	1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,
+	1,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,
@@ -198,7 +198,7 @@ void Grid::ChangeMap(int choice)
 		m_maxMobs = 0;
 		LoadAllTextures();
 
-		player.Teleport({ 5,5,0 });
+		player.Teleport({ 300,300,0 });
 
 		m_rows = 20;
 		m_lignes = 20;
@@ -217,9 +217,9 @@ void Grid::ChangeMap(int choice)
 
 		LoadAllTextures();
 
-		player.Teleport({ 5,5,0 });
+		player.Teleport({ 300,300,0 });
 
-		m_rows = 20;
+		m_rows = 20 ;
 		m_lignes = 20;
 		for (int i = 0; i < m_rows; i++) {
 			for (int j = 0; j < m_lignes; j++) {
@@ -231,7 +231,7 @@ void Grid::ChangeMap(int choice)
 	case 2:// corruption
 		m_biome = "2corruption";
 
-		m_maxMobs = 5;
+		m_maxMobs = 15;
 
 		vecTNT.push_back(new TNT(3, 3, 1));
 		vecArrow.push_back(new Arrow(7, 7, 1, 'l'));
@@ -241,7 +241,7 @@ void Grid::ChangeMap(int choice)
 
 		LoadAllTextures();
 
-		player.Teleport({ 5,5,0 });
+		player.Teleport({ 300,300,0 });
 
 		m_rows = 20;
 		m_lignes = 20;
@@ -255,11 +255,11 @@ void Grid::ChangeMap(int choice)
 	case 3:// Crimson
 		m_biome = "3crimson";
 		
-		m_maxMobs = 30;
+		m_maxMobs = 20;
 
 		LoadAllTextures();
 
-		player.Teleport({ 5,5,0 });
+		player.Teleport({ 300,300,0 });
 
 		m_rows = 20;
 		m_lignes = 20;
@@ -274,9 +274,9 @@ void Grid::ChangeMap(int choice)
 		m_biome = "4hallow";
 		LoadAllTextures();
 
-		m_maxMobs = 40;
+		m_maxMobs = 25;
 
-		player.Teleport({ 5,5,0 });
+		player.Teleport({ 300,300,0 });
 
 		m_rows = 20;
 		m_lignes = 20;
@@ -333,31 +333,28 @@ void Grid::LoadAllTextures()
 
 				if (chance == 1 && chance <= 5) { // 5% chance ---------------------------------SEMI CONVERTED FLOOR
 					map[i][j] = 3;
-					vecCaseAnimated.push_back(new SemiConverted(i, j, "semiConverted"));
+					vecCaseAnimated.push_back(new SemiConverted(i*75, j*75, "semiConverted"));
 				}
 
 				if (chance > 5 && chance <= 10) { // 5% chance ---------------------------------CRACKED FLOOR
 					map[i][j] = 5;
-					vecCaseAnimated.push_back(new CrackedFloor(i, j, "cracking"));
+					vecCaseAnimated.push_back(new CrackedFloor(i*75, j*75, "cracking"));
 				}
 
 				if (chance > 10 && chance <= 15) { // 5% chance ---------------------------------MOB SPAWNER
-					vecSpawner.push_back(new MobSpawner(i, j, "mobSpawner"));
+					vecSpawner.push_back(new MobSpawner(i*75, j*75, "mobSpawner"));
 				}
 			}
 		}
 	}
 
-	//-------------------------LOAD A TEST POWDER BAG 
-	Position testPos = { 11,11,0 };
-	vecCaseAnimated.push_back(new SpecialCase(testPos, "powderBag.png"));
 
 	//------------------------ LOAD UP CASE 
-	vecUpCase.push_back(new UpCase(13.5,13.5, "upcase"));
-	vecUpCase.push_back(new UpCase(13.5, 14.5, "upcase"));
+	vecUpCase.push_back(new UpCase(200,200, "upcase"));
+	vecUpCase.push_back(new UpCase(150, 200, "upcase"));
 
 	//---------- LOAD JUMP CASE ACCORDINGLY 
-	vecCaseAnimated.push_back(new SpecialCase({13,14,0}, "elevator.png"));
+	vecCaseAnimated.push_back(new SpecialCase({300,300,0}, "elevator.png"));
 
 
 }
@@ -513,35 +510,41 @@ void Grid::PrintImg(float i, float j, float width, float height, int textureIt)
 //------------------------------------- DRAW MAP
 void Grid::DisplayMap()
 {
+	cout << player.GetPos().x << " , " << player.GetPos().y << " , " << player.GetPos().z << endl;
+
+
+	int m_rowsText = 20 * 75;
+	int m_lignesText = 20 * 75;
+
 	for (int i = 0; i < m_rows; i++) {
 		for (int j = 0; j < m_lignes; j++) {
 			switch (map[i][j])
 			{
 			case 0:// Floor
-				PrintImg(i, j, 0.75, 0.75, 0);
+				PrintImg(i*75, j*75, 75, 75, 0);
 				break;
 			case 1:// Wall
-				PrintImg(i, j, 0.75, 0.75, 1);
+				PrintImg(i * 75, j * 75, 75, 75, 1);
 				break;
 
 			case 2:// Converted Floor
-				PrintImg(i, j, 0.75, 0.75, 2);
+				PrintImg(i * 75, j * 75, 75, 75, 2);
 				break;	
 
 			case 3: // Semi-Converted animation
-				PrintImg(i, j, 0.75, 0.75, 0); // Corrupted floor
+				PrintImg(i * 75, j * 75, 75, 75, 0); // Corrupted floor
 				break;
 
 			case 4 : // Conversion animation
-				PrintImg(i, j, 0.75, 0.75, 0); // Corrupted floor
+				PrintImg(i * 75, j * 75, 75, 75, 0); // Corrupted floor
 				break;
 
 			case 5: // Cracked floor
-				PrintImg(i, j, 0.75, 0.75, 0); // Corrupted floor
+				PrintImg(i * 75, j * 75, 75, 75, 0); // Corrupted floor
 				break;
 
 			case 6: // Fall
-				PrintImg(i, j, 0.75, 0.75, 4); // Corrupted floor
+				PrintImg(i * 75, j * 75, 75, 75, 4); // Corrupted floor
 				break;
 			}
 		}
@@ -555,12 +558,12 @@ void Grid::DrawSpecialCases()
 		if (vecCaseAnimated[i]->Draw()) {// If the animation is complete ...
 
 			if (typeid(*vecCaseAnimated[i]) == typeid(SimpleConversion)) {
-				SetMap(vecCaseAnimated[i]->GetPos().x, vecCaseAnimated[i]->GetPos().y, 2); // ... Convert floor
+				SetMap(vecCaseAnimated[i]->GetPos().x/75, vecCaseAnimated[i]->GetPos().y/75, 2); // ... Convert floor
 				m_score = m_score + 1;	// SCORE + converted tile
 			}
 
 			if (typeid(*vecCaseAnimated[i]) == typeid(CrackedFloor)) {
-				SetMap(vecCaseAnimated[i]->GetPos().x, vecCaseAnimated[i]->GetPos().y, 6); // ... Convert floor
+				SetMap(vecCaseAnimated[i]->GetPos().x/75, vecCaseAnimated[i]->GetPos().y/75, 6); // ... Convert floor
 			}
 
 			//if (typeid(*vecCaseAnimated[i]) == typeid(SemiConverted)) {
@@ -884,10 +887,12 @@ void Grid::MoveAllEnemies()
 			//int pYup = round(vecEnemies[i]->GetPos().y - 0.4);
 			//int pYdown = round(vecEnemies[i]->GetPos().y + 0.4);
 
-			int pXleft = round(vecEnemies[i]->GetPos().x - 0.3);
-			int pXright = round(vecEnemies[i]->GetPos().x + 0.3);
-			int pYup = round(vecEnemies[i]->GetPos().y - 0.3);
-			int pYdown = round(vecEnemies[i]->GetPos().y + 0.3);
+			int margin = 20;
+
+			int pXleft = round((vecEnemies[i]->GetPos().x - margin) / 75);
+			int pXright = round((vecEnemies[i]->GetPos().x + margin) / 75);
+			int pYup = round((vecEnemies[i]->GetPos().y - margin) / 75);
+			int pYdown = round((vecEnemies[i]->GetPos().y + margin) / 75);
 
 			switch (vecEnemies[i]->GetDir()) // Check wall depends on direction
 			{ 
@@ -950,7 +955,7 @@ void Grid::SpawnMob()
 			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos())); // Add an enemy
 		}
 		else if (enemyGrade > 50 && enemyGrade <= 85) { // 35%
-			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
+			vecEnemies.push_back(new DemonEye_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
 		}
 		else if (enemyGrade > 85 && enemyGrade <= 100) { // 15%
 			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
@@ -963,7 +968,7 @@ void Grid::SpawnMob()
 			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos())); // Add an enemy
 		}
 		else if (enemyGrade > 50 && enemyGrade <= 85) { // 35%
-			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
+			vecEnemies.push_back(new DemonEye_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
 		}
 		else if (enemyGrade > 85 && enemyGrade <= 100) { // 15%
 			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
@@ -975,7 +980,7 @@ void Grid::SpawnMob()
 			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos())); // Add an enemy
 		}
 		else if (enemyGrade > 50 && enemyGrade <= 85) { // 35%
-			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
+			vecEnemies.push_back(new DemonEye_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
 		}
 		else if (enemyGrade > 85 && enemyGrade <= 100) { // 15%
 			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
@@ -987,7 +992,7 @@ void Grid::SpawnMob()
 			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos())); // Add an enemy
 		}
 		else if (enemyGrade > 50 && enemyGrade <= 85) { // 35%
-			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
+			vecEnemies.push_back(new DemonEye_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
 		}
 		else if (enemyGrade > 85 && enemyGrade <= 100) { // 15%
 			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
@@ -1049,7 +1054,6 @@ void Grid::MoveAllFires()
 				if (vecWeapons[i]->GetPos() == vecEnemies[j]->GetPos()) {
 					vecEnemies[j]->SetLife(vecEnemies[j]->GetLife() - vecWeapons[i]->GetDamage()); // Minus Enemy's life by the fire's damage
 					vecWeapons[i]->SetImpact(1); // Stop the sprite ...
-					//vecWeapons[i]->SetCurrentFrame(1); // ... And start the impact animation
 					return; // No need to check walls
 				}
 			}
