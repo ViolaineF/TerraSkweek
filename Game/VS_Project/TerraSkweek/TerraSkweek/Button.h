@@ -1,3 +1,6 @@
+#ifndef BUTTON_H
+#define BUTTON_H
+
 #include "weapon.h"
 
 class Button
@@ -20,3 +23,4 @@ public:
 	~Button();
 };
 
+#endif

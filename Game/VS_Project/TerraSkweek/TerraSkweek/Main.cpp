@@ -1,9 +1,15 @@
 #include "Menu.h"
 
 
-//------------------LOADING MAP TEXTURES
+//----------------------- COMMON VARIABLES
 extern bool inGame;
+extern int m_score;
+int windowWidth = 200;
+int windowHeight = 200;
+extern const int TextWidth = 75;
 
+
+//------------------LOADING MAP TEXTURES
 vector<GLuint>	UI;
 
 int LoadGLTextures(string name) // Load Bitmaps And Convert To Textures
@@ -28,16 +34,14 @@ int LoadGLTextures(string name) // Load Bitmaps And Convert To Textures
 }
 
 
+
 //----------------------CREATE PLAYER AND LEVELS
 HUD hud{ 1 };
 Player player;
 Menu menu;
 Grid lvl("0menu");
 
-extern int m_score;
-int windowWidth = 200;
-int windowHeight = 200;
-const float res = 0.01471;
+
 
 //----------------------A SUPPRIMER POUR UTILISER LE DETECTEUR DE LUMIERE
 
@@ -242,15 +246,15 @@ void PlayerMovt(int x) {
 
 	int margin = 20;
 
-	int pXleft = round((player.GetPos().x - margin )/75);
-	int pXright = round((player.GetPos().x + margin) / 75);
-	int pYup = round((player.GetPos().y - margin) / 75);
-	int pYdown = round((player.GetPos().y + margin) / 75);
+	int pXleft = round((player.GetPos().x - margin )/TextWidth);
+	int pXright = round((player.GetPos().x + margin) / TextWidth);
+	int pYup = round((player.GetPos().y - margin) / TextWidth);
+	int pYdown = round((player.GetPos().y + margin) / TextWidth);
 
-	int pXleftConv = round(player.GetPos().x / 75);
-	int pXrightConv = round(player.GetPos().x / 75);
-	int pYupConv = round(player.GetPos().y / 75);
-	int pYdownConv = round(player.GetPos().y / 75);
+	int pXleftConv = round(player.GetPos().x / TextWidth);
+	int pXrightConv = round(player.GetPos().x / TextWidth);
+	int pYupConv = round(player.GetPos().y / TextWidth);
+	int pYdownConv = round(player.GetPos().y / TextWidth);
 
 	// ----------------- CHECK WALLS AND CONVERT v2
 	switch (player.GetDir())

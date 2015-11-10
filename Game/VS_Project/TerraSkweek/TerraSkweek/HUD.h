@@ -1,3 +1,6 @@
+#ifndef HUD_H
+#define HUD_H
+
 #include <fstream>
 #include <iostream>
 #include <iomanip>
@@ -14,10 +17,7 @@
 #include "GL\glut.h"
 #include "SOIL\SOIL.h"
 
-
 using namespace std;
-
-extern const float res;
 
 class HUD
 {
@@ -28,7 +28,7 @@ private:
 	int t_unite = timer % 10;
 	int t_dizaine = timer / 10 % 10;
 	int t_centaine = timer / 100 % 10;
-	float resolution = res;
+	float resolution = 0.01;
 	float startTimer;
 	clock_t Clock;
 	double ClockDuration;
@@ -49,3 +49,5 @@ public:
 	HUD(int);
 };
 
+
+#endif

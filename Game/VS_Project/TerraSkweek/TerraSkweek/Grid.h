@@ -16,6 +16,8 @@
 #include "MobSpawner.h"
 #include "UpCase.h"
 
+using namespace std;
+
 class Grid
 {
 private:
