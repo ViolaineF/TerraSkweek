@@ -563,8 +563,6 @@ void Grid::DrawSpecialCases()
 
 			if (typeid(*vecCaseAnimated[i]) == typeid(SimpleConversion)) {
 				SetMap(vecCaseAnimated[i]->GetPos().x/TextWidth, vecCaseAnimated[i]->GetPos().y/TextWidth, 2); // ... Convert floor
-				//cout << vecCaseAnimated[i]->GetPos().x / TextWidth  << " , "<< vecCaseAnimated[i]->GetPos().y / TextWidth<< endl;
-
 				m_score = m_score + 1;	// SCORE + converted tile
 			}
 

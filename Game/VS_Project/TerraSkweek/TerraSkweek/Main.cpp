@@ -150,9 +150,8 @@ void ActivateSpawnMob(int x) {
 
 void PlayerMovt(int x) {
 
-	//if (player.IsMoving() || player.IsStillMoving()) {
-	
 	if (player.IsStillMoving()) {
+	
 	// Save previous position to revert changes if the new one is invalid
 	Position playerPrevPos = { player.GetPos().x, player.GetPos().y, player.GetPos().z };
 
@@ -205,18 +204,18 @@ void PlayerMovt(int x) {
 			break;
 		case 0: //Ground to convert
 			if (light > 1 && !(player.GetPos().z))
-				lvl.SetMap(pXleftConv, pYupConv, 4);
-				cout << lvl.Map(pXleftConv, pYupConv) << endl;
+				lvl.SetMap(pXleft, pYup, 4);
+				//cout << "Map convertie avec la valeur : "<< lvl.Map(pXleftConv, pYupConv) << endl;
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
 			if (light > 1 && !(player.GetPos().z)) {
-				lvl.SetMap(pXleftConv, pYupConv, 4);
+				lvl.SetMap(pXleft, pYup, 4);
 
 				for (int i = -1; i < 2; i++) {
 					for (int j = -1; j < 2; j++) {
-						lvl.SetMap(pXleftConv + i, pYupConv + j, 4);
+						lvl.SetMap(pXleft + i, pYup + j, 4);
 					}
 				}
 			}
@@ -231,13 +230,13 @@ void PlayerMovt(int x) {
 			break;
 		case 0: //Ground to convert	
 			if (light > 1 && !(player.GetPos().z))
-			lvl.SetMap(pXrightConv, pYupConv, 4);
+			lvl.SetMap(pXright, pYup, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
 			if (light > 1 && !(player.GetPos().z)) {
-				lvl.SetMap(pXrightConv, pYupConv, 4);
+				lvl.SetMap(pXright, pYup, 4);
 
 				for (int i = -1; i < 2; i++) {
 					for (int j = -1; j < 2; j++) {
@@ -258,17 +257,17 @@ void PlayerMovt(int x) {
 			break;
 		case 0: //Ground to convert
 			if (light > 1 && !(player.GetPos().z))
-			lvl.SetMap(pXleftConv, pYdownConv, 4);
+			lvl.SetMap(pXleft, pYdown, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
 			if (light > 1 && !(player.GetPos().z)) {
-				lvl.SetMap(pXleftConv, pYdownConv, 4);
+				lvl.SetMap(pXleft, pYdown, 4);
 
 				for (int i = -1; i < 2; i++) {
 					for (int j = -1; j < 2; j++) {
-						lvl.SetMap(pXleftConv + i, pYdownConv + j, 4);
+						lvl.SetMap(pXleft + i, pYdown + j, 4);
 					}
 				}
 			}
@@ -282,17 +281,17 @@ void PlayerMovt(int x) {
 			break;
 		case 0: //Ground to convert
 			if (light > 1 && !(player.GetPos().z))
-			lvl.SetMap(pXrightConv, pYdownConv, 4);
+			lvl.SetMap(pXright, pYdown, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
 			if (light > 1 && !(player.GetPos().z)) {
-				lvl.SetMap(pXrightConv, pYdownConv, 4);
+				lvl.SetMap(pXright, pYdown, 4);
 
 				for (int i = -1; i < 2; i++) {
 					for (int j = -1; j < 2; j++) {
-						lvl.SetMap(pXrightConv + i, pYdownConv + j, 4);
+						lvl.SetMap(pXright + i, pYdown + j, 4);
 					}
 				}
 			}
@@ -309,17 +308,17 @@ void PlayerMovt(int x) {
 			break;
 		case 0: //Ground to convert
 			if (light > 1 && !(player.GetPos().z))
-			lvl.SetMap(pXrightConv, pYdownConv, 4);
+			lvl.SetMap(pXright, pYdown, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
 			if (light > 1 && !(player.GetPos().z)) {
-				lvl.SetMap(pXrightConv, pYdownConv, 4);
+				lvl.SetMap(pXright, pYdown, 4);
 
 				for (int i = -1; i < 2; i++) {
 					for (int j = -1; j < 2; j++) {
-						lvl.SetMap(pXrightConv + i, pYdownConv + j, 4);
+						lvl.SetMap(pXright + i, pYdown + j, 4);
 					}
 				}
 			}
@@ -333,17 +332,17 @@ void PlayerMovt(int x) {
 			break;
 		case 0: //Ground to convert
 			if (light > 1 && !(player.GetPos().z))
-				lvl.SetMap(pXrightConv, pYupConv, 4);
+				lvl.SetMap(pXright, pYup, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
 			if (light > 1 && !(player.GetPos().z)){
-				lvl.SetMap(pXrightConv, pYupConv, 4);
+				lvl.SetMap(pXright, pYup, 4);
 
 				for (int i = -1; i < 2; i++) {
 					for (int j = -1; j < 2; j++) {
-						lvl.SetMap(pXrightConv + i, pYupConv + j, 4);
+						lvl.SetMap(pXright + i, pYup + j, 4);
 					}
 				}
 			}
@@ -360,17 +359,17 @@ void PlayerMovt(int x) {
 			break;
 		case 0: //Ground to convert
 			if (light > 1 && !(player.GetPos().z))
-			lvl.SetMap(pXleftConv, pYupConv, 4);
+			lvl.SetMap(pXleft, pYup, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
 			if (light > 1 && !(player.GetPos().z)) {
-				lvl.SetMap(pXleftConv, pYupConv, 4);
+				lvl.SetMap(pXleft, pYup, 4);
 
 				for (int i = -1; i < 2; i++) {
 					for (int j = -1; j < 2; j++) {
-						lvl.SetMap(pXleftConv + i, pYupConv + j, 4);
+						lvl.SetMap(pXleft + i, pYup + j, 4);
 					}
 				}
 			}
@@ -384,17 +383,17 @@ void PlayerMovt(int x) {
 			break;
 		case 0: //Ground to convert
 			if (light > 1 && !(player.GetPos().z))
-			lvl.SetMap(pXleftConv, pYdownConv, 4);
+			lvl.SetMap(pXleft, pYdown, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
 			if (light > 1 && !(player.GetPos().z)) {
-				lvl.SetMap(pXleftConv, pYdownConv, 4);
+				lvl.SetMap(pXleft, pYdown, 4);
 
 				for (int i = -1; i < 2; i++) {
 					for (int j = -1; j < 2; j++) {
-						lvl.SetMap(pXleftConv + i, pYdownConv + j, 4);
+						lvl.SetMap(pXleft+ i, pYdown + j, 4);
 					}
 				}
 			}
@@ -546,13 +545,13 @@ void KeyButtons(unsigned char key, int y, int z) {
 	switch (key)
 	{
 	case '1':
-		lvl.SetEnemiesSpeed(0.01);
+		lvl.SetEnemiesSpeed(15);
 		break;
 	case '2':
-		lvl.SetEnemiesSpeed(0.02);
+		lvl.SetEnemiesSpeed(20);
 		break;
 	case '3':
-		lvl.SetEnemiesSpeed(0.03);
+		lvl.SetEnemiesSpeed(30);
 		break;
 	}
 
