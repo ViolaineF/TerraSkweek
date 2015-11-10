@@ -411,7 +411,7 @@ void Menu::DisplayStory(int n_pictures)
 	unsigned int frame = currentFrame * n_pictures / vitesse;
 
 	const float center = (windowWidth / 2);
-	const float sizeStory = (windowWidth * 90) / 100;
+	const float sizeStory = (windowHeight * 90) / 100;
 	const float Xmin = center - sizeStory/2 ;
 	const float Xmax = center + sizeStory/2;
 	const float Ymin = center - sizeStory / 2;
