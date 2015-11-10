@@ -131,10 +131,10 @@ void HUD::PrintImg(float i, float j, float width, float height, vector<GLuint> v
 	glBegin(GL_QUADS);
 
 	glColor4d(1.0, 1.0, 1.0, 1.0);
-	glTexCoord2f(0.0f, 1.0f); glVertex2d(i, j);
-	glTexCoord2f(1.0f, 1.0f); glVertex2d(i + height, j);
-	glTexCoord2f(1.0f, 0.0f); glVertex2d(i + height, j + width);
-	glTexCoord2f(0.0f, 0.0f); glVertex2d(i, j + width);
+	glTexCoord2f(0.0f, 1.0f); glVertex2d(i - width/2.0f, j - height / 2.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex2d(i + width / 2.0f, j - height / 2.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex2d(i + width / 2.0f, j + height / 2.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex2d(i - width / 2.0f, j + height / 2.0f);
 
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
@@ -147,10 +147,10 @@ void HUD::PrintLife(float i, float j, float width, float height, int textureIt, 
 	glBegin(GL_QUADS);
 
 	glColor4d(saturation, saturation, saturation, saturation);
-	glTexCoord2f(0.0f, 1.0f); glVertex2d(i, j);
-	glTexCoord2f(1.0f, 1.0f); glVertex2d(i + height, j);
-	glTexCoord2f(1.0f, 0.0f); glVertex2d(i + height, j + width);
-	glTexCoord2f(0.0f, 0.0f); glVertex2d(i, j + width);
+	glTexCoord2f(0.0f, 1.0f); glVertex2d(i - width /2, j - height /2);
+	glTexCoord2f(1.0f, 1.0f); glVertex2d(i + width /2, j - height /2);
+	glTexCoord2f(1.0f, 0.0f); glVertex2d(i + width /2, j + height /2);
+	glTexCoord2f(0.0f, 0.0f); glVertex2d(i - width /2, j + height /2);
 
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
@@ -189,9 +189,12 @@ void HUD::displayScore(int score, float life, int weapon)
 
 //Draw SCORE : 0000000
 
-	float dim = resolution*windowWidth*0.035;
+	float vMargin = (windowHeight * 5) / 100.0;
+	float ratio = 4.0;
+	float height = (windowWidth * 4) / 100.0;
+	float width = height*ratio;
 
-	PrintImg(0.5*dim, 0, dim, 5*dim, infos, 0);
+	PrintImg((windowWidth * 10) / 100.0, vMargin, width, height, infos, 0); // Score
 	int i = 0;
 	int j = 0;
 	int s_I = score % 10;
@@ -203,66 +206,67 @@ void HUD::displayScore(int score, float life, int weapon)
 	int s_XXXM = score / 1000000 % 10;
 
 
-	//cout << "s_I " << s_I << endl;
-	//cout << "s_X " << s_X << endl;
-	//cout << "s_C " << s_I << endl;
-	//cout << "s_M " << s_I << endl;
-	//cout << "s_XM " << s_I << endl;
-	//cout << "s_XXM " << s_I << endl;
+	float offset = (windowWidth * 2) / 100.0;
+	float start = (windowWidth * 32) / 100.0;
+	ratio = 1.0;
+	width = height*ratio;
 
-	float offset = 0.75*dim;
-	float start = 9.5*dim;
-
-	PrintImg(start, 0, dim, dim, nbrs, s_I);
-	PrintImg(start - offset, 0, dim, dim, nbrs, s_X);
-	PrintImg(start - 2*offset, 0, dim, dim, nbrs, s_C);
-	PrintImg(start - 3*offset, 0, dim, dim, nbrs, s_M);
-	PrintImg(start - 4*offset, 0, dim, dim, nbrs, s_XM);
-	PrintImg(start - 5*offset, 0, dim, dim, nbrs, s_XXM);
-	PrintImg(start - 6*offset, 0, dim, dim, nbrs, s_XXXM);
+	PrintImg(start, vMargin, width, height, nbrs, s_I); // Numbers of the score 
+	PrintImg(start - offset, vMargin, width, height, nbrs, s_X);
+	PrintImg(start - 2*offset, vMargin, width, height, nbrs, s_C);
+	PrintImg(start - 3*offset, vMargin, width, height, nbrs, s_M);
+	PrintImg(start - 4*offset, vMargin, width, height, nbrs, s_XM);
+	PrintImg(start - 5*offset, vMargin, width, height, nbrs, s_XXM);
+	PrintImg(start - 6*offset, vMargin, width, height, nbrs, s_XXXM);
 
 
-	// Draw Life icon
-	float startLife = start + 2.5*offset;
+	// Draw Life text
+	float startLife = start + (windowWidth * 13) / 100.0;
+	ratio = 3.0;
+	width = height*ratio;
 
-	PrintImg(startLife, 0, dim, 3*dim, infos, 1);
-	float PaddingLife = startLife+5*offset;
+	PrintImg(startLife, vMargin, width, height, infos, 1);
+
+	// Draw Life icons
+	float PaddingLife = startLife + (windowWidth * 8) / 100.0;
 	float val_life = life / 50;
+	ratio = 1.0;
+	width = height*ratio;
 
 
 		if (life == 150)
 	{
-		PrintLife(PaddingLife, 0, dim, dim, 0, 1.0);
-		PrintLife(PaddingLife + offset, 0, dim, dim, 0, 1.0);
-		PrintLife(PaddingLife + 2*offset, 0, dim, dim, 0, 1.0);
+		PrintLife(PaddingLife, vMargin, width, height, 0, 1.0);
+		PrintLife(PaddingLife + offset, vMargin, width, height, 0, 1.0);
+		PrintLife(PaddingLife + 2*offset, vMargin, width, height, 0, 1.0);
 	}
 
 	else if (life < 150 && life > 100)
 	{
-		PrintLife(PaddingLife , 0, dim, dim, 0, 1.0);
-		PrintLife(PaddingLife + offset, 0, dim, dim, 0, 1.0);
-		PrintLife(PaddingLife + 2*offset, 0, dim, dim, 0, val_life/3);
+		PrintLife(PaddingLife , vMargin, width, height, 0, 1.0);
+		PrintLife(PaddingLife + offset, vMargin, width, height, 0, 1.0);
+		PrintLife(PaddingLife + 2*offset, vMargin, width, height, 0, val_life/3);
 	}
 
 	else if (life < 100 && life > 50)
 	{
-		PrintLife(PaddingLife , 0, dim, dim, 0, 1.0);
-		PrintLife(PaddingLife + offset, 0, dim, dim, 0, val_life / 2);
-		PrintLife(PaddingLife + 2*offset, 0, dim, dim, 0, 0.0);
+		PrintLife(PaddingLife , vMargin, width, height, 0, 1.0);
+		PrintLife(PaddingLife + offset, vMargin, width, height, 0, val_life / 2);
+		PrintLife(PaddingLife + 2*offset, vMargin, width, height, 0, 0.0);
 	}
 
 	else if (life < 50 && life > 0)
 	{
-		PrintLife(PaddingLife , 0, dim, dim, 0, val_life);
-		PrintLife(PaddingLife + offset, 0, dim, dim, 0, 0.0);
-		PrintLife(PaddingLife + 2*offset, 0, dim, dim, 0, 0.0);
+		PrintLife(PaddingLife , vMargin, width, height, 0, val_life);
+		PrintLife(PaddingLife + offset, vMargin, width, height, 0, 0.0);
+		PrintLife(PaddingLife + 2*offset, vMargin, width, height, 0, 0.0);
 	}
 
 	else
 	{
-		PrintLife(18, 0, dim, dim, 0, 0.0);
-		PrintLife(19, 0, dim, dim, 0, 0.0);
-		PrintLife(20, 0, dim, dim, 0, 0.0);
+		PrintLife(18, vMargin, width, height, 0, 0.0);
+		PrintLife(19, vMargin, width, height, 0, 0.0);
+		PrintLife(20, vMargin, width, height, 0, 0.0);
 	}
 
 	// Draw Timer
@@ -270,37 +274,50 @@ void HUD::displayScore(int score, float life, int weapon)
 	if (!timer <= 0)
 		timer = 180 - ClockDuration;
 
-	startTimer = PaddingLife + 5 * offset;
+	startTimer = PaddingLife + 2*offset + (windowWidth * 13) / 100.0;
+	ratio = 3.0;
+	width = height*ratio;
 	
-	PrintImg(startTimer, 0, dim, 3*dim, infos, 1);
+	PrintImg(startTimer, vMargin, width, height, infos, 1);
+
+	// Draw Timer numbers
+	ratio = 1.0;
+	width = height*ratio;
 
 	t_unite = timer % 10;
 	t_dizaine = timer / 10 % 10;
 	t_centaine = timer / 100 % 10;
 
-	PrintImg(startTimer + 5*offset, 0, dim, dim, nbrs, t_centaine);
-	PrintImg(startTimer + 6*offset, 0, dim, dim, nbrs, t_dizaine);
-	PrintImg(startTimer + 7*offset, 0, dim, dim, nbrs, t_unite);
+	PrintImg(startTimer + 4*offset, vMargin, width, height, nbrs, t_centaine);
+	PrintImg(startTimer + 5*offset, vMargin, width, height, nbrs, t_dizaine);
+	PrintImg(startTimer + 6*offset, vMargin, width, height, nbrs, t_unite);
 
+
+	// Draw YOU LOOSE image
+	ratio = 1.0;
+	width = height*ratio;
 
 	if(timer <= 0)
-		PrintImg(12, 4, 6* dim, 6* dim, infos, 2);
+		PrintImg(12, 2*vMargin, width, height, infos, 2);
+
 
 	// Draw Weapon icon
+	ratio = 1.0;
+	width = height*ratio;
 
-	float startWeaponIcon = startTimer + 10 * offset;
+	float startWeaponIcon = startTimer + 12*offset;
 
 	switch (weapon)
 	{
-	case 0: PrintImg(startWeaponIcon, 0, dim, dim, icons, 0);
+	case 0: PrintImg(startWeaponIcon, vMargin, width, height, icons, 0);
 		break;
-	case 1: PrintImg(startWeaponIcon, 0, dim, dim, icons, 1);
+	case 1: PrintImg(startWeaponIcon, vMargin, width, height, icons, 1);
 		break;
-	case 2: PrintImg(startWeaponIcon, 0, dim, dim, icons, 2);
+	case 2: PrintImg(startWeaponIcon, vMargin, width, height, icons, 2);
 		break;
-	case 3: PrintImg(startWeaponIcon, 0, dim, dim, icons, 3);
+	case 3: PrintImg(startWeaponIcon, vMargin, width, height, icons, 3);
 		break;
-	case 4: PrintImg(startWeaponIcon, 0, dim, dim, icons, 4);
+	case 4: PrintImg(startWeaponIcon, vMargin, width, height, icons, 4);
 		break;
 	}
 
