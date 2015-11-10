@@ -502,10 +502,10 @@ void Grid::PrintImg(float i, float j, float width, float height, int textureIt)
 	glBegin(GL_QUADS);
 
 	glColor3d(1.0, 1.0, 1.0);
-	glTexCoord2f(1.0f, 1.0f); glVertex2d(i - 0.5*height, j - 0.5*width);
-	glTexCoord2f(0.0f, 1.0f); glVertex2d(i + 0.5*height, j - 0.5*width);
-	glTexCoord2f(0.0f, 0.0f); glVertex2d(i + 0.5*height, j + 0.5*width);
-	glTexCoord2f(1.0f, 0.0f); glVertex2d(i - 0.5*height, j + 0.5*width);
+	glTexCoord2f(1.0f, 1.0f); glVertex2d(i - height / 2, j - width / 2);
+	glTexCoord2f(0.0f, 1.0f); glVertex2d(i + height / 2, j - width / 2);
+	glTexCoord2f(0.0f, 0.0f); glVertex2d(i + height / 2, j + width / 2);
+	glTexCoord2f(1.0f, 0.0f); glVertex2d(i - height/2, j + width/2);
 
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
@@ -525,30 +525,30 @@ void Grid::DisplayMap()
 			switch (map[i][j])
 			{
 			case 0:// Floor
-				PrintImg(i*TextWidth, j*TextWidth, TextWidth, TextWidth, 0);
+				PrintImg(i*TextWidth, j*TextWidth, TextWidth+1, TextWidth+1, 0);
 				break;
 			case 1:// Wall
-				PrintImg(i * TextWidth, j * TextWidth, TextWidth, TextWidth, 1);
+				PrintImg(i * TextWidth, j * TextWidth, TextWidth+1, TextWidth+1, 1);
 				break;
 
 			case 2:// Converted Floor
-				PrintImg(i * TextWidth, j * TextWidth, TextWidth, TextWidth, 2);
+				PrintImg(i * TextWidth, j * TextWidth, TextWidth + 1, TextWidth + 1, 2);
 				break;	
 
 			case 3: // Semi-Converted animation
-				PrintImg(i * TextWidth, j * TextWidth, TextWidth, TextWidth, 0); // Corrupted floor
+				PrintImg(i * TextWidth, j * TextWidth, TextWidth + 1, TextWidth + 1, 0); // Corrupted floor
 				break;
 
 			case 4 : // Conversion animation
-				PrintImg(i * TextWidth, j * TextWidth, TextWidth, TextWidth, 0); // Corrupted floor
+				PrintImg(i * TextWidth, j * TextWidth, TextWidth + 1, TextWidth + 1, 0); // Corrupted floor
 				break;
 
 			case 5: // Cracked floor
-				PrintImg(i * TextWidth, j * TextWidth, TextWidth, TextWidth, 0); // Corrupted floor
+				PrintImg(i * TextWidth, j * TextWidth, TextWidth + 1, TextWidth + 1, 0); // Corrupted floor
 				break;
 
 			case 6: // Fall
-				PrintImg(i * TextWidth, j * TextWidth, TextWidth, TextWidth, 4); // Corrupted floor
+				PrintImg(i * TextWidth, j * TextWidth, TextWidth + 1, TextWidth + 1, 4); // Corrupted floor
 				break;
 			}
 		}
@@ -579,13 +579,13 @@ void Grid::DrawSpecialCases()
 		}
 		else if (vecCaseAnimated[i]->GetPos() == player.GetPos()) {
 
-			if (typeid(*vecCaseAnimated[i]) == typeid(CrackedFloor)) { //------------- PLAYER IS ON CRACKED FLOOR
+			if (typeid(*vecCaseAnimated[i]) == typeid(CrackedFloor) && light>1) { //------------- PLAYER IS ON CRACKED FLOOR
 				vecCaseAnimated[i]->SetAnimated(true);
 				//------------------PLAY SOUND
 				sfx_gap.PlayAudio();
 			}
 
-			else if (typeid(*vecCaseAnimated[i]) == typeid(SemiConverted)) { //--------------- PLAYER IS ON SEMI CONVERTED CASE
+			else if (typeid(*vecCaseAnimated[i]) == typeid(SemiConverted) && light >1) { //--------------- PLAYER IS ON SEMI CONVERTED CASE
 				vecCaseAnimated[i]->SetAnimated(true);
 			}
 
