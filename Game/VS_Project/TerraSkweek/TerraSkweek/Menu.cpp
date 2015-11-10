@@ -42,8 +42,11 @@ void Menu::LoadAllTextures()
 	b_hallow.LoadAllTextures("hallow");
 
 	LoadGLTextures("UI", directory + "title.png"); // 0
-	LoadGLTextures("UI", directory + "water.png"); // 1*
-	
+	LoadGLTextures("UI", directory + "water.png"); // 1
+	LoadGLTextures("UI", directory + "loading.png"); // 2
+
+	LoadStoryTextures("story1", 161);
+
 }
 
 void Menu::LoadStoryTextures(string name, int n_pictures)
@@ -60,14 +63,19 @@ void Menu::LoadStoryTextures(string name, int n_pictures)
 			cout << directory + "screen000" + id_pictures + ".png";
 
 		}
-		else if (i >= 10)
+		else if (i >= 10 && i < 100)
 		{
 			LoadGLTextures("story", directory + "screen00" + id_pictures + ".png");
 			cout << directory + "screen00" + id_pictures + ".png";
 
 		}
-		cout << "tex loaded = " << i << endl;
+		else if (i >= 100)
+		{
+			LoadGLTextures("story", directory + "screen0" + id_pictures + ".png");
+			cout << directory + "screen00" + id_pictures + ".png";
 
+		}
+		cout << "tex loaded = " << i << endl;
 		continue;
 	}
 }
@@ -144,8 +152,7 @@ void Menu::Display()
 		height = width/ratio;
 		paddingV = windowHeight / 12;
 
-		PrintImg((windowWidth/2) - (width/2), paddingV , height, width, UI, 0);
-
+		PrintImg((windowWidth/2) - (width/2), paddingV , height, width, UI, 0);		
 
 		// Draw new game button
 		// Update Ratio of button 1
@@ -163,9 +170,17 @@ void Menu::Display()
 			b_newGame.OnOver();
 			b_newGame.Draw(height, width);
 
+
 			if (click) 
 			{
-				screenID = 1;
+				ratio = 2;
+				height = width / ratio;
+				paddingV = windowHeight / 3;
+				// Loading message
+//				PrintImg((windowWidth / 2) - (width / 2), paddingV, height, width, UI, 2);
+
+				screenID = 4;
+
 			}
 		}
 		else
@@ -226,8 +241,8 @@ void Menu::Display()
 				screenID = 4;
 
 				lvl.ChangeMap(1);
-				LoadStoryTextures("story1", 51);
-
+				inGame = true;
+				hud.ResetTimer(180);
 			}
 		}
 		else
@@ -248,9 +263,9 @@ void Menu::Display()
 			if (click)
 			{
 				screenID = 4;
-
 				lvl.ChangeMap(2);
-				LoadStoryTextures("story2", 51);
+				inGame = true;
+				hud.ResetTimer(180);
 
 			}
 		}
@@ -272,9 +287,9 @@ void Menu::Display()
 			if (click)
 			{
 				screenID = 4;
-
 				lvl.ChangeMap(3);
-				LoadStoryTextures("story3", 51);
+				inGame = true;
+				hud.ResetTimer(180);
 			}
 		}
 		else
@@ -296,9 +311,9 @@ void Menu::Display()
 			if (click)
 			{
 				screenID = 4;
-
 				lvl.ChangeMap(4);
-				LoadStoryTextures("story4", 51);
+				inGame = true;
+				hud.ResetTimer(180);
 			}
 		}
 		else
@@ -391,7 +406,7 @@ void Menu::Display()
 
 void Menu::DisplayStory(int n_pictures)
 {
-	const int vitesse = 200;
+	const int vitesse = 800;
 	currentFrame = (currentFrame + 1) % vitesse;
 	unsigned int frame = currentFrame * n_pictures / vitesse;
 
@@ -419,9 +434,7 @@ void Menu::DisplayStory(int n_pictures)
 
 	if (frame == n_pictures - 1) {
 		cout << "frame = " << frame;
-		screenID = 3;
-		inGame = true;
-		hud.ResetTimer(180);
+		screenID = 1;
 		story.clear();
 		story.resize(0);
 	}
