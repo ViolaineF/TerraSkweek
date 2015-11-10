@@ -303,7 +303,7 @@ void Grid::LoadAllTextures()
 	LoadGLTextures( "Art/wall01.png"); // 1
 	LoadGLTextures( "Art/converted.png"); // 2
 	LoadGLTextures( "Art/semi_converted.png"); // 3
-	LoadGLTextures( directory + "fall.png"); // 4
+	LoadGLTextures( "Art/fall.png"); // 4
 
 
 	//-------------------LOAD ENEMIES TEXTURES

@@ -395,6 +395,12 @@ void Menu::DisplayStory(int n_pictures)
 	currentFrame = (currentFrame + 1) % vitesse;
 	unsigned int frame = currentFrame * n_pictures / vitesse;
 
+	const float center = (windowWidth / 2);
+	const float sizeStory = (windowWidth * 90) / 100;
+	const float Xmin = center - sizeStory/2 ;
+	const float Xmax = center + sizeStory/2;
+	const float Ymin = center - sizeStory / 2;
+	const float Ymax = center + sizeStory / 2;
 
 	glPushMatrix();
 	// Story Screen
@@ -403,10 +409,10 @@ void Menu::DisplayStory(int n_pictures)
 	glBegin(GL_QUADS);
 
 	glColor3d(1.0, 1.0, 1.0);
-	glTexCoord2f(0.0f, 1.0f); glVertex2d(0, 0);
-	glTexCoord2f(1.0f, 1.0f); glVertex2d(0 + 10, 0);
-	glTexCoord2f(1.0f, 0.0f); glVertex2d(0 + 10, 0 + 10);
-	glTexCoord2f(0.0f, 0.0f); glVertex2d(0, 0 + 10);
+	glTexCoord2f(0.0f, 1.0f); glVertex2d(Xmin, Ymin);
+	glTexCoord2f(1.0f, 1.0f); glVertex2d(Xmax, Ymin);
+	glTexCoord2f(1.0f, 0.0f); glVertex2d(Xmax, Ymax);
+	glTexCoord2f(0.0f, 0.0f); glVertex2d(Xmin, Ymax);
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();

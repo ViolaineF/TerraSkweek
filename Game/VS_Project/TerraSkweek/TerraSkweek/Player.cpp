@@ -39,7 +39,10 @@ void Player::LoadAllTextures()
 	LoadGLTextures("fire_down", "Art/player/player_fire_02.png");
 	LoadGLTextures("fire_down", "Art/player/player_fire_03.png");
 	LoadGLTextures("fire_down", "Art/player/player_fire_04.png");
-	LoadGLTextures("p_UI", "Art/UI/cursor.png");
+	LoadGLTextures("p_UI", "Art/player/Hornet&Hero_01.png");
+	LoadGLTextures("p_UI", "Art/player/Hornet&Hero_02.png");
+	LoadGLTextures("p_UI", "Art/player/Hornet&Hero_03.png");
+	LoadGLTextures("p_UI", "Art/player/Hornet&Hero_04.png");
 
 }
 
@@ -205,20 +208,26 @@ void Player::Draw(bool a)
 	m_mouseMode = !a;
 	//cout << m_life << endl;
 
-	int vitesse = 100 * (left.size());
-	currentFrame = (currentFrame + 1) % vitesse;
-	unsigned int frame = currentFrame * (left.size()) / vitesse;
+	//int vitesse = 100 * (left.size());
+	//currentFrame = (currentFrame + 1) % vitesse;
+	//unsigned int frame = currentFrame * (left.size()) / vitesse;
 
 
 	if (m_mouseMode)
 	{
+
+		int vitesse = 8;
+		currentFrame = (currentFrame + 1) % vitesse;
+		unsigned int frame = currentFrame * (p_UI.size()) / vitesse;
+
+		frame = currentFrame * (p_UI.size()) / vitesse;
 
 		glPushMatrix();
 		// Left
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glBindTexture(GL_TEXTURE_2D, p_UI[0]);
+		glBindTexture(GL_TEXTURE_2D, p_UI[frame]);
 		glBegin(GL_QUADS);
 		glColor4d(1.0, 1.0, 1.0, opacity);
 		glTexCoord2f(1.0f, 1.0f);
@@ -239,6 +248,10 @@ void Player::Draw(bool a)
 
 	else if (!m_mouseMode)
 	{
+		int vitesse = 100 * (left.size());
+		currentFrame = (currentFrame + 1) % vitesse;
+		unsigned int frame = currentFrame * (left.size()) / vitesse;
+		
 		if (!m_firing && m_moving)
 		{
 			if (m_life <= 150 && m_life >= 50)
