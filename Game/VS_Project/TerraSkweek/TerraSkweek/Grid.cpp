@@ -357,6 +357,9 @@ void Grid::LoadAllTextures()
 	//---------- LOAD JUMP CASE ACCORDINGLY 
 	vecCaseAnimated.push_back(new SpecialCase({300,300,0}, "elevator.png"));
 
+	//-----------------LOAD ARROWS
+	vecArrow.push_back(new Arrow(400,400,0,'l'));
+
 
 }
 
