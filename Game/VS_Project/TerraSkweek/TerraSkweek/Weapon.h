@@ -38,7 +38,7 @@ protected:
 	bool m_destroy;
 	int currentFrame;
 	bool m_drop; 
-	float m_middle;
+	float m_spriteSize;
 
 
 	vector<GLuint>	fireAnimation;

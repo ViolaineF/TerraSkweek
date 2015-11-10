@@ -1,5 +1,6 @@
 #include "Weapon.h"
 
+extern const int TextWidth;
 
 
 bool operator==(const Position &a, const Position &b)
@@ -47,7 +48,7 @@ Weapon::Weapon(Position pos, bool dropped, int type)
 	m_drop = 1;
 	m_type = type;
 	m_destroy = false;
-	m_middle = 0.15;
+	m_spriteSize = TextWidth/2;
 	LoadAllTextures();
 }
 
@@ -56,7 +57,7 @@ Weapon::Weapon(int type, char dir, Position pos)
 	m_dir = dir;
 	m_pos = pos;
 
-	m_middle = 0.15;
+	m_spriteSize = TextWidth/4;
 
 	currentFrame = 0;
 	m_impact = 0;
@@ -68,17 +69,17 @@ Weapon::Weapon(int type, char dir, Position pos)
 	{
 	case 1 : // Simple Fire
 		m_damage = 1;
-		m_speed = 0.1;
+		m_speed = 15;
 		break;
 
 	case 2: // Cross fire
 		m_damage = 2;
-		m_speed = 0.2;
+		m_speed = 20;
 		break;
 
 	case 3: // Diag fire
 		m_damage = 2;
-		m_speed = 0.2;
+		m_speed = 20;
 		break;
 
 	}
@@ -143,10 +144,10 @@ void Weapon::DrawFire()
 		glBindTexture(GL_TEXTURE_2D, gun[0]);
 		glBegin(GL_QUADS);
 		glColor3d(1.0, 1.0, 1.0);
-		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - 2*m_middle, m_pos.y - 2*m_middle);
-		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 4*m_middle, m_pos.y - 2*m_middle);
-		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 4*m_middle, m_pos.y + 4*m_middle);
-		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - 2*m_middle, m_pos.y + 4*m_middle);
+		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x -  m_spriteSize, m_pos.y -  m_spriteSize);
+		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x +  m_spriteSize, m_pos.y -  m_spriteSize);
+		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
+		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x -  m_spriteSize, m_pos.y +  m_spriteSize);
 
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
@@ -174,52 +175,52 @@ void Weapon::DrawFire()
 			switch (m_dir)// Move accordingly
 			{
 			case 'u':// UP
-				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_middle, m_pos.y - m_middle);
-				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 2*m_middle, m_pos.y - m_middle);
-				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 2*m_middle, m_pos.y+ 2*m_middle);
-				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_middle, m_pos.y+ 2*m_middle);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x +  m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x +  m_spriteSize, m_pos.y+  m_spriteSize);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y+  m_spriteSize);
 				break;
 			case 'd':// DOWN
-				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_middle, m_pos.y - m_middle);
-				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y - m_middle);
-				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y+ 2*m_middle);
-				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_middle, m_pos.y+ 2*m_middle);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y+  m_spriteSize);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y+  m_spriteSize);
 				break;
 			case 'r':// RIGHT
-				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_middle, m_pos.y - m_middle);
-				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y - m_middle);
-				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y+ 2*m_middle);
-				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_middle, m_pos.y+ 2*m_middle);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y+  m_spriteSize);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y+  m_spriteSize);
 				break;
 			case 'l':// LEFT
-				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_middle, m_pos.y - m_middle);
-				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y - m_middle);
-				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y+ 2*m_middle);
-				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_middle, m_pos.y+ 2*m_middle);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y+  m_spriteSize);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y+  m_spriteSize);
 				break;
 			case '1':// UP & RIGHT
-				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_middle, m_pos.y - m_middle);
-				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y - m_middle);
-				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y+ 2*m_middle);
-				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_middle, m_pos.y+ 2*m_middle);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y+  m_spriteSize);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y+  m_spriteSize);
 				break;
 			case '2':// DOWN & RIGHT
-				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_middle, m_pos.y - m_middle);
-				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y - m_middle);
-				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y+ 2*m_middle);
-				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_middle, m_pos.y+ 2*m_middle);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y+  m_spriteSize);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y+  m_spriteSize);
 				break;
 			case '3':// DOWN & LEFT
-				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_middle, m_pos.y - m_middle);
-				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y - m_middle);
-				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y+ 2*m_middle);
-				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_middle, m_pos.y+ 2*m_middle);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y+  m_spriteSize);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y+  m_spriteSize);
 				break;
 			case '4':// UP & LEFT
-				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_middle, m_pos.y - m_middle);
-				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y - m_middle);
-				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y+ 2*m_middle);
-				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_middle, m_pos.y+ 2*m_middle);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y+  m_spriteSize);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y+  m_spriteSize);
 				break;
 			}
 
@@ -250,52 +251,52 @@ void Weapon::DrawFire()
 			switch (m_dir)// Move accordingly
 			{
 			case 'u':// UP
-				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_middle, m_pos.y - m_middle);
-				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y - m_middle);
-				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y+ 2*m_middle);
-				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_middle, m_pos.y+ 2*m_middle);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y+  m_spriteSize);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y+  m_spriteSize);
 				break;
 			case 'd':// DOWN
-				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_middle, m_pos.y - m_middle);
-				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y - m_middle);
-				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y+ 2*m_middle);
-				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_middle, m_pos.y+ 2*m_middle);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y+  m_spriteSize);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y+  m_spriteSize);
 				break;
 			case 'r':// RIGHT
-				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_middle, m_pos.y - m_middle);
-				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y - m_middle);
-				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y+ 2*m_middle);
-				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_middle, m_pos.y+ 2*m_middle);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y+  m_spriteSize);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y+  m_spriteSize);
 				break;
 			case 'l':// LEFT
-				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_middle, m_pos.y - m_middle);
-				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y - m_middle);
-				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y+ 2*m_middle);
-				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_middle, m_pos.y+ 2*m_middle);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y+  m_spriteSize);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y+  m_spriteSize);
 				break;
 			case '1':// UP & RIGHT				
-				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_middle, m_pos.y - m_middle);
-				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y - m_middle);
-				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y+ 2*m_middle);
-				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_middle, m_pos.y+ 2*m_middle);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y+  m_spriteSize);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y+  m_spriteSize);
 				break;
 			case '2':// DOWN & RIGHT
-				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_middle, m_pos.y - m_middle);
-				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y - m_middle);
-				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y+ 2*m_middle);
-				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_middle, m_pos.y+ 2*m_middle);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y+  m_spriteSize);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y+  m_spriteSize);
 				break;
 			case '3':// DOWN & LEFT
-				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_middle, m_pos.y - m_middle);
-				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y - m_middle);
-				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y+ 2*m_middle);
-				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_middle, m_pos.y+ 2*m_middle);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y+  m_spriteSize);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y+  m_spriteSize);
 				break;
 			case '4':// UP & LEFT
-				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_middle, m_pos.y - m_middle);
-				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y - m_middle);
-				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x+ 2*m_middle, m_pos.y+ 2*m_middle);
-				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_middle, m_pos.y+ 2*m_middle);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x+  m_spriteSize, m_pos.y+  m_spriteSize);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y+  m_spriteSize);
 				break;
 			}
 

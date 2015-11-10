@@ -1,5 +1,8 @@
 #include "Arrow.h"
 
+extern const int TextWidth;
+
+
 Arrow::Arrow()
 {
 	activated = false;
@@ -11,7 +14,7 @@ Arrow::Arrow(float a, float b, bool c, char d)
 	m_drop = true; // Because it's not moving nor animated
 	direction = d;
 	activated = false;
-	m_middle = 0.34;
+	m_spriteSize = TextWidth/2;
 	LoadAllTextures();
 }
 
@@ -38,10 +41,10 @@ void Arrow::Draw()
 			glBindTexture(GL_TEXTURE_2D, arrow[1]);
 			glBegin(GL_QUADS);
 			glColor3d(1.0, 1.0, 1.0);
-			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_middle, m_pos.y - m_middle);
-			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x + 2*m_middle, m_pos.y - m_middle);
-			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x + 2 * m_middle, m_pos.y + 2 * m_middle);
-			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_middle, m_pos.y + 2 * m_middle);
+			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x +  m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x +   m_spriteSize, m_pos.y +   m_spriteSize);
+			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y +   m_spriteSize);
 			glEnd();
 			glDisable(GL_TEXTURE_2D);
 			glPopMatrix();
@@ -59,10 +62,10 @@ void Arrow::Draw()
 			glBindTexture(GL_TEXTURE_2D, arrow[0]);
 			glBegin(GL_QUADS);
 			glColor3d(1.0, 1.0, 1.0);
-			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_middle, m_pos.y - m_middle);
-			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x + 2 * m_middle, m_pos.y - m_middle);
-			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x + 2 * m_middle, m_pos.y + 2 * m_middle);
-			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_middle, m_pos.y + 2 * m_middle);
+			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x +   m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x +   m_spriteSize, m_pos.y +   m_spriteSize);
+			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y +   m_spriteSize);
 			glEnd();
 			glDisable(GL_TEXTURE_2D);
 			glPopMatrix();
@@ -83,12 +86,12 @@ void Arrow::Draw()
 			glBindTexture(GL_TEXTURE_2D, arrow[1]);
 			glBegin(GL_QUADS);
 			glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
-			glVertex2d(m_pos.x - m_middle, m_pos.y - m_middle); glTexCoord2f(1.0f, 1.0f);
-			glVertex2d(m_pos.x + 2 * m_middle, m_pos.y - m_middle);
+			glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize); glTexCoord2f(1.0f, 1.0f);
+			glVertex2d(m_pos.x +   m_spriteSize, m_pos.y - m_spriteSize);
 			glTexCoord2f(1.0f, 0.0f);
-			glVertex2d(m_pos.x + 2 * m_middle, m_pos.y + 2 * m_middle);
+			glVertex2d(m_pos.x +   m_spriteSize, m_pos.y +   m_spriteSize);
 			glTexCoord2f(0.0f, 0.0f);
-			glVertex2d(m_pos.x - m_middle, m_pos.y + 2 * m_middle);
+			glVertex2d(m_pos.x - m_spriteSize, m_pos.y +   m_spriteSize);
 			glEnd();
 			glDisable(GL_TEXTURE_2D);
 			glPopMatrix();
@@ -105,11 +108,11 @@ void Arrow::Draw()
 			glBindTexture(GL_TEXTURE_2D, arrow[0]);
 			glBegin(GL_QUADS);
 			glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
-			glVertex2d(m_pos.x - m_middle, m_pos.y - m_middle); glTexCoord2f(1.0f, 1.0f);
-			glVertex2d(m_pos.x + 2 * m_middle, m_pos.y - m_middle); glTexCoord2f(1.0f, 0.0f);
-			glVertex2d(m_pos.x + 2 * m_middle, m_pos.y + 2 * m_middle);
+			glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize); glTexCoord2f(1.0f, 1.0f);
+			glVertex2d(m_pos.x +   m_spriteSize, m_pos.y - m_spriteSize); glTexCoord2f(1.0f, 0.0f);
+			glVertex2d(m_pos.x +   m_spriteSize, m_pos.y +   m_spriteSize);
 			glTexCoord2f(0.0f, 0.0f);
-			glVertex2d(m_pos.x - m_middle, m_pos.y + 2 * m_middle);	glEnd();
+			glVertex2d(m_pos.x - m_spriteSize, m_pos.y +   m_spriteSize);	glEnd();
 			glDisable(GL_TEXTURE_2D);
 			glPopMatrix();
 			glutPostRedisplay();
@@ -130,11 +133,11 @@ void Arrow::Draw()
 			glBindTexture(GL_TEXTURE_2D, arrow[1]);
 			glBegin(GL_QUADS);
 			glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
-			glVertex2d(m_pos.x - m_middle, m_pos.y - m_middle); glTexCoord2f(1.0f, 1.0f);
-			glVertex2d(m_pos.x + 2 * m_middle, m_pos.y - m_middle); glTexCoord2f(1.0f, 0.0f);
-			glVertex2d(m_pos.x + 2 * m_middle, m_pos.y + 2 * m_middle);
+			glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize); glTexCoord2f(1.0f, 1.0f);
+			glVertex2d(m_pos.x +   m_spriteSize, m_pos.y - m_spriteSize); glTexCoord2f(1.0f, 0.0f);
+			glVertex2d(m_pos.x +   m_spriteSize, m_pos.y +   m_spriteSize);
 			glTexCoord2f(0.0f, 0.0f);
-			glVertex2d(m_pos.x - m_middle, m_pos.y + 2 * m_middle);	glEnd();
+			glVertex2d(m_pos.x - m_spriteSize, m_pos.y +   m_spriteSize);	glEnd();
 			glDisable(GL_TEXTURE_2D);
 			glPopMatrix();
 			glutPostRedisplay();
@@ -151,11 +154,11 @@ void Arrow::Draw()
 			glBindTexture(GL_TEXTURE_2D, arrow[0]);
 			glBegin(GL_QUADS);
 			glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
-			glVertex2d(m_pos.x - m_middle, m_pos.y - m_middle); glTexCoord2f(1.0f, 1.0f);
-			glVertex2d(m_pos.x + 2 * m_middle, m_pos.y - m_middle); glTexCoord2f(1.0f, 0.0f);
-			glVertex2d(m_pos.x + 2 * m_middle, m_pos.y + 2 * m_middle);
+			glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize); glTexCoord2f(1.0f, 1.0f);
+			glVertex2d(m_pos.x +   m_spriteSize, m_pos.y - m_spriteSize); glTexCoord2f(1.0f, 0.0f);
+			glVertex2d(m_pos.x +   m_spriteSize, m_pos.y +   m_spriteSize);
 			glTexCoord2f(0.0f, 0.0f);
-			glVertex2d(m_pos.x - m_middle, m_pos.y + 2 * m_middle);	glEnd();
+			glVertex2d(m_pos.x - m_spriteSize, m_pos.y +   m_spriteSize);	glEnd();
 			glDisable(GL_TEXTURE_2D);
 			glPopMatrix();
 			glutPostRedisplay();
@@ -175,11 +178,11 @@ void Arrow::Draw()
 				glBindTexture(GL_TEXTURE_2D, arrow[1]);
 				glBegin(GL_QUADS);
 				glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_pos.x - m_middle, m_pos.y - m_middle); glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_pos.x + 2 * m_middle, m_pos.y - m_middle); glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_pos.x + 2 * m_middle, m_pos.y + 2 * m_middle);
+				glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize); glTexCoord2f(1.0f, 1.0f);
+				glVertex2d(m_pos.x +   m_spriteSize, m_pos.y - m_spriteSize); glTexCoord2f(1.0f, 0.0f);
+				glVertex2d(m_pos.x +   m_spriteSize, m_pos.y +   m_spriteSize);
 				glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_pos.x - m_middle, m_pos.y + 2 * m_middle);	glEnd();
+				glVertex2d(m_pos.x - m_spriteSize, m_pos.y +   m_spriteSize);	glEnd();
 				glDisable(GL_TEXTURE_2D);
 				glPopMatrix();
 				glutPostRedisplay();
@@ -196,11 +199,11 @@ void Arrow::Draw()
 				glBindTexture(GL_TEXTURE_2D, arrow[0]);
 				glBegin(GL_QUADS);
 				glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_pos.x - m_middle, m_pos.y - m_middle); glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_pos.x + 2 * m_middle, m_pos.y - m_middle); glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_pos.x + 2 * m_middle, m_pos.y + 2 * m_middle);
+				glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize); glTexCoord2f(1.0f, 1.0f);
+				glVertex2d(m_pos.x +   m_spriteSize, m_pos.y - m_spriteSize); glTexCoord2f(1.0f, 0.0f);
+				glVertex2d(m_pos.x +   m_spriteSize, m_pos.y +   m_spriteSize);
 				glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_pos.x - m_middle, m_pos.y + 2 * m_middle);	glEnd();
+				glVertex2d(m_pos.x - m_spriteSize, m_pos.y +   m_spriteSize);	glEnd();
 				glDisable(GL_TEXTURE_2D);
 				glPopMatrix();
 				glutPostRedisplay();
