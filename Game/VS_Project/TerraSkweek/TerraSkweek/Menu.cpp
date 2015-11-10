@@ -127,7 +127,7 @@ void Menu::Display()
 	float bPosYBas = windowHeight / 2.0f;
 
 	b_jungle.SetPos({ bjunglPosX,bPosYHaut,0 });
-	b_corruption.SetPos({ 2*bjunglPosX,bPosYBas,0 });
+	b_corruption.SetPos({  bjunglPosX,bPosYBas,0 });
 	b_crimson.SetPos({ 3* bjunglPosX,bPosYBas,0 });
 	b_hallow.SetPos({ 4* bjunglPosX,bPosYHaut,0 });
 

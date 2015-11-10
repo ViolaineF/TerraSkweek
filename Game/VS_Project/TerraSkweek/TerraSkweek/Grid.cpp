@@ -503,9 +503,9 @@ void Grid::PrintImg(float i, float j, float width, float height, int textureIt)
 
 	glColor3d(1.0, 1.0, 1.0);
 	glTexCoord2f(1.0f, 1.0f); glVertex2d(i - 0.5*height, j - 0.5*width);
-	glTexCoord2f(0.0f, 1.0f); glVertex2d(i + height, j - 0.5*width);
-	glTexCoord2f(0.0f, 0.0f); glVertex2d(i + height, j + width);
-	glTexCoord2f(1.0f, 0.0f); glVertex2d(i - 0.5*height, j + width);
+	glTexCoord2f(0.0f, 1.0f); glVertex2d(i + 0.5*height, j - 0.5*width);
+	glTexCoord2f(0.0f, 0.0f); glVertex2d(i + 0.5*height, j + 0.5*width);
+	glTexCoord2f(1.0f, 0.0f); glVertex2d(i - 0.5*height, j + 0.5*width);
 
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
@@ -1063,10 +1063,10 @@ void Grid::MoveAllFires()
 			}
 
 			//----------- CHECK WALL COLLISION
-			int pXleft = round(vecWeapons[i]->GetPos().x - 0.4);
-			int pXright = round(vecWeapons[i]->GetPos().x + 0.4);
-			int pYup = round(vecWeapons[i]->GetPos().y - 0.4);
-			int pYdown = round(vecWeapons[i]->GetPos().y + 0.4);
+			int pXleft = round(vecWeapons[i]->GetPos().x / TextWidth - 0.5);
+			int pXright = round(vecWeapons[i]->GetPos().x / TextWidth + 0.5);
+			int pYup = round(vecWeapons[i]->GetPos().y / TextWidth - 0.5);
+			int pYdown = round(vecWeapons[i]->GetPos().y / TextWidth + 0.5);
 
 			switch (vecWeapons[i]->GetDir())
 			{

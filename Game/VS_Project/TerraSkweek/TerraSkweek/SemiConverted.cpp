@@ -51,9 +51,9 @@ bool SemiConverted::Draw()
 		glBegin(GL_QUADS);
 		glColor3d(1.0, 1.0, 1.0);
 		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 2* m_spriteSize, m_pos.y - m_spriteSize);
-		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 2* m_spriteSize, m_pos.y + 2* m_spriteSize);
-		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2* m_spriteSize);
+		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + m_spriteSize, m_pos.y - m_spriteSize);
+		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + m_spriteSize, m_pos.y + m_spriteSize);
+		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y + m_spriteSize);
 
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
