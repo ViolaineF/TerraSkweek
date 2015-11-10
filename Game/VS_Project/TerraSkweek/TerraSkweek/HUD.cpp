@@ -3,7 +3,7 @@
 //----------------------- REF TO EXTERN VARIABLES
 extern int windowWidth;
 extern int windowHeight;
-extern const float res;
+extern const int TextWidth;
 
 HUD::HUD(int Lv)
 {

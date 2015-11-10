@@ -22,9 +22,9 @@ bool SpecialCase::Draw()
 		glBegin(GL_QUADS);
 		glColor3d(1.0, 1.0, 1.0);
 		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
-		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y + 2*m_spriteSize);
-		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2*m_spriteSize);
+		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + m_spriteSize, m_pos.y - m_spriteSize);
+		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + m_spriteSize, m_pos.y + m_spriteSize);
+		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y + m_spriteSize);
 
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
@@ -53,9 +53,9 @@ bool SpecialCase::Draw()
 		glBegin(GL_QUADS);
 		glColor3d(1.0, 1.0, 1.0);
 		glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
-		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y + 2*m_spriteSize);
-		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2*m_spriteSize);
+		glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x + m_spriteSize, m_pos.y - m_spriteSize);
+		glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + m_spriteSize, m_pos.y + m_spriteSize);
+		glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y + m_spriteSize);
 
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
@@ -112,7 +112,7 @@ SpecialCase::SpecialCase(float x, float y, string directory)
 	currentFrame = 0;
 	m_pos = {x, y, 0};
 	animation.resize(0);
-	m_spriteSize = 75;
+	m_spriteSize = 37.5;
 	m_type = '0';
 
 }
@@ -122,7 +122,7 @@ SpecialCase::SpecialCase(Position pos, string directory) // Powder Bag construct
 	currentFrame = 0;
 	m_pos = pos;
 	animation.resize(0);
-	m_spriteSize = 75;
+	m_spriteSize = 37.5;
 	char type = directory[0];// Get the first char of the directory 
 	// p - powder bag 
 	// f - freeze enemy

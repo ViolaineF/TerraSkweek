@@ -1,22 +1,15 @@
 #include "Menu.h"
 
+extern const int TextWidth;
 extern Grid lvl;
 extern int windowWidth;
 extern int windowHeight;
-extern const float res;
 bool inGame;
 extern Player player;
-extern float dim = res*windowWidth*0.035;
 extern string m_biome;
 extern HUD hud;
 
 
-//Position b1_pos{ res * windowWidth / 5.93 * (dim / 2), res * windowHeight / 8,0 };
-
-//Position b1_pos{ dim * 5.9 , res * windowHeight / 8, 0 };
-
-Position b1_pos{ 0,0, 0 };
-Position b2_pos{ 0,0, 0 };
 
 Menu::Menu()
 {
@@ -125,9 +118,9 @@ void Menu::Display()
 	float ratio;
 	float width;
 	float height;
-	float heightPrev;
+	//float heightPrev;
 	float paddingV;
-	float paddingH;
+	//float paddingH;
 
 	float bjunglPosX = windowWidth / 5.5f;
 	float bPosYHaut = windowHeight / 7.0f;
@@ -209,11 +202,11 @@ void Menu::Display()
 	case 1:
 		// 	MAP
 		// Draw Water Sprite
-		for (int i = 0; i < 20; i++){
-			for (int j = 0; j < 20; j++){
-				PrintImg(0, 0, dim, dim + j, UI, 1);
-			}
-		}
+		//for (int i = 0; i < 20; i++){
+		//	for (int j = 0; j < 20; j++){
+		//		PrintImg(0, 0, dim, dim + j, UI, 1);
+		//	}
+		//}
 
 		// Draw load Jungle Island button
 		// Update Ratio 
@@ -337,6 +330,7 @@ void Menu::Display()
 		// Draw new game button
 		// Update Ratio of button 1
 		ratio = 5.53;
+		width = (windowWidth * 20) / 100.0;
 		height = width / ratio;
 
 		b_continue.SetPos({ (windowWidth / 2) - (width / 2) , 2.0f*paddingV + height,0 });
@@ -344,7 +338,7 @@ void Menu::Display()
 		if (b_continue.GetPos() == player.GetPos())
 		{
 			b_continue.OnOver();
-			b_continue.Draw(dim, dim*ratio);
+			b_continue.Draw(width, height);
 
 			if (click)
 			{
@@ -354,7 +348,7 @@ void Menu::Display()
 			}
 		}
 		else
-			b_continue.Draw(dim, dim*ratio);
+			b_continue.Draw(width, height);
 
 
 		// Update Ratio of button 2
@@ -367,7 +361,7 @@ void Menu::Display()
 		if (b_quit.GetPos() == player.GetPos())
 		{
 			b_quit.OnOver();
-			b_quit.Draw(dim, dim*ratio);
+			b_quit.Draw(width, height);
 
 			if (click)
 			{
@@ -379,7 +373,7 @@ void Menu::Display()
 			}
 		}
 		else
-			b_quit.Draw(dim, dim*ratio);
+			b_quit.Draw(width, height);
 		break;
 
 //_________________________________________________________

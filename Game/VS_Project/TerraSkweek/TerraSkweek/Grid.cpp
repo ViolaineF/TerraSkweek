@@ -2,6 +2,7 @@
 
 //-------------- CALL EXTERN VALUES
 
+extern const int TextWidth;
 extern Player player;
 extern float light;
 string m_biome;
@@ -170,7 +171,7 @@ void Grid::SetMap(int x, int y, int a)
 	map[x][y] = a;
 
 	if (a == 4) {
-		vecCaseAnimated.push_back(new SimpleConversion(x, y, "conversion"));
+		vecCaseAnimated.push_back(new SimpleConversion(x*TextWidth, y*TextWidth, "conversion"));
 	}
 	else {
 	}
@@ -333,16 +334,16 @@ void Grid::LoadAllTextures()
 
 				if (chance == 1 && chance <= 5) { // 5% chance ---------------------------------SEMI CONVERTED FLOOR
 					map[i][j] = 3;
-					vecCaseAnimated.push_back(new SemiConverted(i*75, j*75, "semiConverted"));
+					vecCaseAnimated.push_back(new SemiConverted(i*TextWidth, j*TextWidth, "semiConverted"));
 				}
 
 				if (chance > 5 && chance <= 10) { // 5% chance ---------------------------------CRACKED FLOOR
 					map[i][j] = 5;
-					vecCaseAnimated.push_back(new CrackedFloor(i*75, j*75, "cracking"));
+					vecCaseAnimated.push_back(new CrackedFloor(i*TextWidth, j*TextWidth, "cracking"));
 				}
 
 				if (chance > 10 && chance <= 15) { // 5% chance ---------------------------------MOB SPAWNER
-					vecSpawner.push_back(new MobSpawner(i*75, j*75, "mobSpawner"));
+					vecSpawner.push_back(new MobSpawner(i*TextWidth, j*TextWidth, "mobSpawner"));
 				}
 			}
 		}
@@ -513,38 +514,38 @@ void Grid::DisplayMap()
 	cout << player.GetPos().x << " , " << player.GetPos().y << " , " << player.GetPos().z << endl;
 
 
-	int m_rowsText = 20 * 75;
-	int m_lignesText = 20 * 75;
+	int m_rowsText = 20 * TextWidth;
+	int m_lignesText = 20 * TextWidth;
 
 	for (int i = 0; i < m_rows; i++) {
 		for (int j = 0; j < m_lignes; j++) {
 			switch (map[i][j])
 			{
 			case 0:// Floor
-				PrintImg(i*75, j*75, 75, 75, 0);
+				PrintImg(i*TextWidth, j*TextWidth, TextWidth, TextWidth, 0);
 				break;
 			case 1:// Wall
-				PrintImg(i * 75, j * 75, 75, 75, 1);
+				PrintImg(i * TextWidth, j * TextWidth, TextWidth, TextWidth, 1);
 				break;
 
 			case 2:// Converted Floor
-				PrintImg(i * 75, j * 75, 75, 75, 2);
+				PrintImg(i * TextWidth, j * TextWidth, TextWidth, TextWidth, 2);
 				break;	
 
 			case 3: // Semi-Converted animation
-				PrintImg(i * 75, j * 75, 75, 75, 0); // Corrupted floor
+				PrintImg(i * TextWidth, j * TextWidth, TextWidth, TextWidth, 0); // Corrupted floor
 				break;
 
 			case 4 : // Conversion animation
-				PrintImg(i * 75, j * 75, 75, 75, 0); // Corrupted floor
+				PrintImg(i * TextWidth, j * TextWidth, TextWidth, TextWidth, 0); // Corrupted floor
 				break;
 
 			case 5: // Cracked floor
-				PrintImg(i * 75, j * 75, 75, 75, 0); // Corrupted floor
+				PrintImg(i * TextWidth, j * TextWidth, TextWidth, TextWidth, 0); // Corrupted floor
 				break;
 
 			case 6: // Fall
-				PrintImg(i * 75, j * 75, 75, 75, 4); // Corrupted floor
+				PrintImg(i * TextWidth, j * TextWidth, TextWidth, TextWidth, 4); // Corrupted floor
 				break;
 			}
 		}
@@ -558,12 +559,12 @@ void Grid::DrawSpecialCases()
 		if (vecCaseAnimated[i]->Draw()) {// If the animation is complete ...
 
 			if (typeid(*vecCaseAnimated[i]) == typeid(SimpleConversion)) {
-				SetMap(vecCaseAnimated[i]->GetPos().x/75, vecCaseAnimated[i]->GetPos().y/75, 2); // ... Convert floor
+				SetMap(vecCaseAnimated[i]->GetPos().x/TextWidth, vecCaseAnimated[i]->GetPos().y/TextWidth, 2); // ... Convert floor
 				m_score = m_score + 1;	// SCORE + converted tile
 			}
 
 			if (typeid(*vecCaseAnimated[i]) == typeid(CrackedFloor)) {
-				SetMap(vecCaseAnimated[i]->GetPos().x/75, vecCaseAnimated[i]->GetPos().y/75, 6); // ... Convert floor
+				SetMap(vecCaseAnimated[i]->GetPos().x/TextWidth, vecCaseAnimated[i]->GetPos().y/TextWidth, 6); // ... Convert floor
 			}
 
 			//if (typeid(*vecCaseAnimated[i]) == typeid(SemiConverted)) {
@@ -889,10 +890,10 @@ void Grid::MoveAllEnemies()
 
 			int margin = 20;
 
-			int pXleft = round((vecEnemies[i]->GetPos().x - margin) / 75);
-			int pXright = round((vecEnemies[i]->GetPos().x + margin) / 75);
-			int pYup = round((vecEnemies[i]->GetPos().y - margin) / 75);
-			int pYdown = round((vecEnemies[i]->GetPos().y + margin) / 75);
+			int pXleft = round((vecEnemies[i]->GetPos().x - margin) / TextWidth);
+			int pXright = round((vecEnemies[i]->GetPos().x + margin) / TextWidth);
+			int pYup = round((vecEnemies[i]->GetPos().y - margin) / TextWidth);
+			int pYdown = round((vecEnemies[i]->GetPos().y + margin) / TextWidth);
 
 			switch (vecEnemies[i]->GetDir()) // Check wall depends on direction
 			{ 
