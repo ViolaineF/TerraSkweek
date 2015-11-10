@@ -22,7 +22,7 @@ Weapon::Weapon()
 	m_pos = { 0.0,0.0,0 };
 	m_dir = 'l';
 	m_damage = 1;
-	m_speed = 0.1;
+	m_speed = 1;
 	m_type = 1;
 	currentFrame = 0;
 	m_impact = false;
@@ -69,17 +69,17 @@ Weapon::Weapon(int type, char dir, Position pos)
 	{
 	case 1 : // Simple Fire
 		m_damage = 1;
-		m_speed = 15;
+		m_speed = 10;
 		break;
 
 	case 2: // Cross fire
 		m_damage = 2;
-		m_speed = 20;
+		m_speed = 15;
 		break;
 
 	case 3: // Diag fire
 		m_damage = 2;
-		m_speed = 20;
+		m_speed = 15;
 		break;
 
 	}

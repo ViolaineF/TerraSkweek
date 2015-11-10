@@ -174,7 +174,6 @@
     <ClCompile Include="TNT.cpp" />
     <ClCompile Include="UpCase.cpp" />
     <ClCompile Include="Weapon.cpp" />
-    <ClCompile Include="Bunny_Forest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioFile.h" />
@@ -196,7 +195,6 @@
     <ClInclude Include="TNT.h" />
     <ClInclude Include="UpCase.h" />
     <ClInclude Include="Weapon.h" />
-    <ClInclude Include="Bunny_Forest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

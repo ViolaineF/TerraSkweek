@@ -125,7 +125,6 @@ int mapLv4[20][20] = {
 Grid::Grid(string biome)
 {
 	m_biome = biome;
-
 	m_score = 0;
 	m_rows = 20;
 	m_lignes = 20;
@@ -138,39 +137,12 @@ Grid::Grid(string biome)
 		}
 	}
 
-	//------------------------LOAD SEMI CONVERTED CASE V1
-
-	//for (int i = 0; i < m_rows; i++) {
-	//	for (int j = 0; j < m_lignes; j++) {
-	//		if (map[i][j] != 1) {
-	//			int chance = rand() % 100 + 1; // Give an int between 1 and 100;
-
-	//			if (chance == 1 && chance <= 5) {
-	//				map[i][j] = 3; // Semi-converted case index
-	//			}
-	//		}
-	//	}
-	//}
-
-
-
-
-	//------------------------LOAD ENEMY SPAWNER
-
-//	vecCaseAnimated.push_back(new SpecialCase(10,10,"1forest/spawner"));
-
-
-	//------------------------LOAD CORRESPONDING BIOME'S STATS 
-
-
 
 }
 
 void Grid::SetMap(int x, int y, int a)
 {
 	map[x][y] = a;
-
-	//cout << Map(x,y);
 
 	if (a == 4)
 		vecCaseAnimated.push_back(new SimpleConversion(x*TextWidth, y*TextWidth, "conversion"));
@@ -209,6 +181,8 @@ void Grid::ChangeMap(int choice)
 				map[i][j] = mapMenu[i][j];
 			}
 		}
+
+
 		break;
 
 	case 1:// Forest
@@ -227,6 +201,9 @@ void Grid::ChangeMap(int choice)
 				map[i][j] = mapLv1[i][j];
 			}
 		}
+
+		LoadObjectsOnMap();
+
 		break;
 
 	case 2:// corruption
@@ -251,6 +228,9 @@ void Grid::ChangeMap(int choice)
 				map[i][j] = mapLv2[i][j];
 			}
 		}
+
+		LoadObjectsOnMap();
+
 		break;
 
 	case 3:// Crimson
@@ -269,6 +249,9 @@ void Grid::ChangeMap(int choice)
 				map[i][j] = mapLv3[i][j];
 			}
 		}
+
+		LoadObjectsOnMap();
+
 		break;
 
 	case 4:// Hallow
@@ -286,6 +269,9 @@ void Grid::ChangeMap(int choice)
 				map[i][j] = mapLv4[i][j];
 			}
 		}
+
+		LoadObjectsOnMap();
+
 		break;
 	}
 
@@ -293,36 +279,8 @@ void Grid::ChangeMap(int choice)
 
 }
 
-void Grid::LoadAllTextures()
+void Grid::LoadObjectsOnMap()
 {
-	string directory = "Art/" + m_biome + "/";
-	
-	textures.resize(0);
-	//--------------BASE TEXTURES
-	LoadGLTextures( directory + "ground.png"); // 0
-	LoadGLTextures( "Art/wall01.png"); // 1
-	LoadGLTextures( "Art/converted.png"); // 2
-	LoadGLTextures( "Art/semi_converted.png"); // 3
-	LoadGLTextures( "Art/fall.png"); // 4
-
-
-	//-------------------LOAD ENEMIES TEXTURES
-	
-	//for (Enemy* c : vecEnemies)
-	//{
-	//	c->LoadAllTextures();
-	//}
-
-	for (TNT* d : vecTNT)
-	{
-		d->LoadAllTextures();
-	}
-
-	for (Arrow* e : vecArrow)
-	{
-		e->LoadAllTextures();
-	}
-
 
 	//------------------------LOAD SEMI-CONVERTED CASE 
 	//------------------------LOAD CRACKED FLOOR
@@ -351,15 +309,42 @@ void Grid::LoadAllTextures()
 
 
 	//------------------------ LOAD UP CASE 
-	vecUpCase.push_back(new UpCase(200,200, "upcase"));
+	vecUpCase.push_back(new UpCase(200, 200, "upcase"));
 	vecUpCase.push_back(new UpCase(150, 200, "upcase"));
 
 	//---------- LOAD JUMP CASE ACCORDINGLY 
-	vecCaseAnimated.push_back(new SpecialCase({300,300,0}, "elevator.png"));
+	vecCaseAnimated.push_back(new SpecialCase({ 300,300,0 }, "elevator.png"));
 
 	//-----------------LOAD ARROWS
-	vecArrow.push_back(new Arrow(400,400,0,'l'));
+	vecArrow.push_back(new Arrow(400, 400, 0, 'l'));
 
+}
+
+void Grid::LoadAllTextures()
+{
+	string directory = "Art/" + m_biome + "/";
+	
+	textures.resize(0);
+
+	//--------------BASE TEXTURES
+	LoadGLTextures( directory + "ground.png"); // 0
+	LoadGLTextures( "Art/wall01.png"); // 1
+	LoadGLTextures( "Art/converted.png"); // 2
+	LoadGLTextures( "Art/semi_converted.png"); // 3
+	LoadGLTextures( "Art/fall.png"); // 4
+
+
+	//-------------------LOAD TEXTURES
+
+	for (TNT* d : vecTNT)
+	{
+		d->LoadAllTextures();
+	}
+
+	for (Arrow* e : vecArrow)
+	{
+		e->LoadAllTextures();
+	}
 
 }
 
@@ -956,51 +941,39 @@ void Grid::SpawnMob()
 	switch (biomeChar)
 	{
 	case '1': // Forest
-		if (enemyGrade >= 1 && enemyGrade <= 50) { // 50%
+		if (enemyGrade >= 1 && enemyGrade <= 60) { // 60%
 			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos())); // Add an enemy
 		}
-		else if (enemyGrade > 50 && enemyGrade <= 85) { // 35%
+		else  { // 40%
 			vecEnemies.push_back(new DemonEye_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
-		}
-		else if (enemyGrade > 85 && enemyGrade <= 100) { // 15%
-			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
 		}
 		break;
 
 	case '2': // Corruption
 		cout << "spawn corrupted mobs" << endl;
-		if (enemyGrade >= 1 && enemyGrade <= 50) { // 50%
+		if (enemyGrade >= 1 && enemyGrade <= 60) { // 60%
 			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos())); // Add an enemy
 		}
-		else if (enemyGrade > 50 && enemyGrade <= 85) { // 35%
+		else { // 40%
 			vecEnemies.push_back(new DemonEye_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
-		}
-		else if (enemyGrade > 85 && enemyGrade <= 100) { // 15%
-			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
 		}
 		break;
 
 	case '3': // Crimson
-		if (enemyGrade >= 1 && enemyGrade <= 50) { // 50%
+		if (enemyGrade >= 1 && enemyGrade <= 60) { // 60%
 			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos())); // Add an enemy
 		}
-		else if (enemyGrade > 50 && enemyGrade <= 85) { // 35%
+		else  { // 40%
 			vecEnemies.push_back(new DemonEye_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
-		}
-		else if (enemyGrade > 85 && enemyGrade <= 100) { // 15%
-			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
 		}
 		break;
 
 	case '4': // Hallow
-		if (enemyGrade >= 1 && enemyGrade <= 50) { // 50%
+		if (enemyGrade >= 1 && enemyGrade <= 60) { // 60%
 			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos())); // Add an enemy
 		}
-		else if (enemyGrade > 50 && enemyGrade <= 85) { // 35%
+		else{ // 40%
 			vecEnemies.push_back(new DemonEye_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
-		}
-		else if (enemyGrade > 85 && enemyGrade <= 100) { // 15%
-			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos()));
 		}
 		break;
 	}

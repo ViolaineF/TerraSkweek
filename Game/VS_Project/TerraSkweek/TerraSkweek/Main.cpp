@@ -133,7 +133,7 @@ void PrintImg(float i, float j, float width, float height, int textureIt) {
 void ActivateSpawnMob(int x) {
 	if (inGame)
 	{
-		//lvl.SpawnMob();
+		lvl.SpawnMob();
 
 		//Update screen
 		glutPostRedisplay();

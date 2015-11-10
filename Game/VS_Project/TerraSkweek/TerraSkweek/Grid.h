@@ -56,6 +56,8 @@ public:
 	void ClearMap();
 	void ChangeMap(int);
 
+	void LoadObjectsOnMap();
+
 	void DrawSpecialCases();
 	void DrawUpCase();
 
