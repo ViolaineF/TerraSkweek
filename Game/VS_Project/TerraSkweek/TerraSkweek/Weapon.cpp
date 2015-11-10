@@ -6,7 +6,7 @@ extern const int TextWidth;
 bool operator==(const Position &a, const Position &b)
 {
 	//return (a.x == b.x && a.y==b.y && a.z==b.z);
-	float margin = 10;
+	float margin = 30;
 	return (a.x <= (b.x+margin) && a.x >= (b.x-margin) && a.y <= (b.y + margin) && a.y >= (b.y - margin) && a.z == b.z);
 
 }

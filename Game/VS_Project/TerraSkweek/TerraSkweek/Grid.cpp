@@ -170,11 +170,11 @@ void Grid::SetMap(int x, int y, int a)
 {
 	map[x][y] = a;
 
-	if (a == 4) {
+	//cout << Map(x,y);
+
+	if (a == 4)
 		vecCaseAnimated.push_back(new SimpleConversion(x*TextWidth, y*TextWidth, "conversion"));
-	}
-	else {
-	}
+
 }
 
 void Grid::ClearMap()
@@ -514,7 +514,7 @@ void Grid::PrintImg(float i, float j, float width, float height, int textureIt)
 //------------------------------------- DRAW MAP
 void Grid::DisplayMap()
 {
-	cout << player.GetPos().x << " , " << player.GetPos().y << " , " << player.GetPos().z << endl;
+	//cout << player.GetPos().x << " , " << player.GetPos().y << " , " << player.GetPos().z << endl;
 
 
 	int m_rowsText = 20 * TextWidth;
@@ -563,11 +563,14 @@ void Grid::DrawSpecialCases()
 
 			if (typeid(*vecCaseAnimated[i]) == typeid(SimpleConversion)) {
 				SetMap(vecCaseAnimated[i]->GetPos().x/TextWidth, vecCaseAnimated[i]->GetPos().y/TextWidth, 2); // ... Convert floor
+				//cout << vecCaseAnimated[i]->GetPos().x / TextWidth  << " , "<< vecCaseAnimated[i]->GetPos().y / TextWidth<< endl;
+
 				m_score = m_score + 1;	// SCORE + converted tile
 			}
 
 			if (typeid(*vecCaseAnimated[i]) == typeid(CrackedFloor)) {
 				SetMap(vecCaseAnimated[i]->GetPos().x/TextWidth, vecCaseAnimated[i]->GetPos().y/TextWidth, 6); // ... Convert floor
+				m_score = m_score + 1;	// SCORE + converted tile
 			}
 
 			//if (typeid(*vecCaseAnimated[i]) == typeid(SemiConverted)) {

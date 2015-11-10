@@ -862,6 +862,7 @@ void Player::Draw(bool a)
 					glEnd();
 					glDisable(GL_TEXTURE_2D);
 					glPopMatrix();
+
 					if (frame >= fire_up.size() - 1)
 						m_firing = false;
 
