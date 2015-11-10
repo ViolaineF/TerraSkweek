@@ -5,8 +5,8 @@ class Arrow : public Weapon
 
 protected:
 	bool activated;
-	int frameActuelle;
 	char direction;
+	//vector<GLuint>	arrow;
 	
 public:
 	void Draw();
