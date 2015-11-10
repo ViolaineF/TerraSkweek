@@ -45,6 +45,8 @@ void Menu::LoadAllTextures()
 	LoadGLTextures("UI", directory + "water.png"); // 1
 	LoadGLTextures("UI", directory + "loading.png"); // 2
 
+	LoadStoryTextures("story1", 161);
+
 }
 
 void Menu::LoadStoryTextures(string name, int n_pictures)
@@ -174,9 +176,9 @@ void Menu::Display()
 				ratio = 2;
 				height = width / ratio;
 				paddingV = windowHeight / 3;
-				PrintImg((windowWidth / 2) - (width / 2), paddingV, height, width, UI, 2);
+				// Loading message
+//				PrintImg((windowWidth / 2) - (width / 2), paddingV, height, width, UI, 2);
 
-				LoadStoryTextures("story1", 483);
 				screenID = 4;
 
 			}
