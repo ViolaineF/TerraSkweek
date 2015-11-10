@@ -1,3 +1,5 @@
+#include <tchar.h>
+#include "SerialClass.h"	// Library described above
 #include "Menu.h"
 
 
@@ -41,6 +43,12 @@ Player player;
 Menu menu;
 Grid lvl("0menu");
 
+//-------------------- CREATE VARs FOR ARDUINO'S COMM
+Serial* SP;
+char incomingData[256] = "";	// don't forget to pre-allocate memory
+
+int dataLength;
+int readResult;
 
 
 //----------------------A SUPPRIMER POUR UTILISER LE DETECTEUR DE LUMIERE
@@ -65,9 +73,29 @@ void ActivateSpawnMob(int x);
 //void EnemiesTimer(int x);
 void PlayerMovt(int x);
 void NoKeyAction();
+void InterfaceArduino();
+
+
+
+
+
 
 void main() {
 	cout << "ok";
+
+	//--------------------- LOAD ARDUINO'S COMMUNICATION
+	Serial* SP = new Serial("COM5");    // adjust as needed
+
+	if (SP->IsConnected())
+		printf("We're connected");
+
+	//char incomingData[256] = "";	// don't forget to pre-allocate memory
+
+	dataLength = 256;
+	readResult = 0;
+	Sleep(500);
+
+
 
 	//------------------LOAD RANDOM
 	srand(time(NULL)); // Create a seed to start the random from
@@ -101,9 +129,118 @@ void main() {
 	glutTimerFunc(enemySpawnFrequency, ActivateSpawnMob, 0);
 	//glutIdleFunc(Idle);
 
+	InterfaceArduino();
 
 	glutMainLoop();
 }
+
+
+
+void InterfaceArduino()
+{
+	while (SP->IsConnected())
+	{
+		readResult = SP->ReadData(incomingData, dataLength);
+
+		if (readResult != -1) {
+			if (incomingData[0] == 'B') {
+				cout << "bouclier" << endl;
+				//SP->WriteData("b", 1);
+				//Sleep(150); ------ si on envoie des données
+			}
+			else if (incomingData[0] == 'P') { // Game is Paused
+				menu.Pause();
+			}
+			else if (incomingData[0] == 'I') { // Player is invisible
+				player.setOpacity(0);
+			}
+			else if (incomingData[0] == 'V') { // Player is visible
+				player.setOpacity(1);
+			}
+			else if (incomingData[0] == 'F') { // Player is firing
+				if (inGame) {
+
+					if (player.IsFiring() == false)
+					{
+						if (!(player.HasPowderBag())) { // As long has player has no powder bag
+							player.Attack();
+							lvl.NewFire(player.GetWeapon(), player.GetDir(), player.GetPos());
+						}
+						else { // consume powder bag and convert cases
+
+							int X = round(player.GetPos().x / TextWidth + 0.4);
+							int Y = round(player.GetPos().y / TextWidth + 0.4);
+
+							switch (player.GetDir())
+							{
+							case 'u':
+								for (int i = player.GetPos().y / TextWidth; i > player.GetPos().y / TextWidth - 5; i--) {
+									lvl.SetMap(X, i, 4);
+								}
+								break;
+							case 'd':
+								for (int i = player.GetPos().y / TextWidth; i < player.GetPos().y / TextWidth + 5; i++) {
+									lvl.SetMap(X, i, 4);
+								}
+								break;
+							case 'r':
+								for (int i = player.GetPos().x / TextWidth; i < player.GetPos().x / TextWidth + 5; i++) {
+									lvl.SetMap(i, Y, 4);
+								}
+								break;
+							case 'l':
+								for (int i = player.GetPos().x / TextWidth; i > player.GetPos().x / TextWidth - 5; i--) {
+									lvl.SetMap(i, Y, 4);
+								}
+								break;
+							}
+							player.SetPowderBag(false);
+						}
+					}
+
+				}
+
+
+			}
+			else if (incomingData[0] == 'u') { // Player's Direction
+				player.SwitchDir('u');
+				player.SetMoving(true);
+				player.SetStillMoving(true);
+			}
+			else if (incomingData[0] == 'd') {
+				player.SwitchDir('d');
+				player.SetMoving(true);
+				player.SetStillMoving(true);
+			}
+			else if (incomingData[0] == 'r') {
+				player.SwitchDir('r');
+				player.SetMoving(true);
+				player.SetStillMoving(true);
+			}
+			else if (incomingData[0] == 'l') {
+				player.SwitchDir('l');
+				player.SetMoving(true);
+				player.SetStillMoving(true);
+			}
+			else if (incomingData[0] == '9') { // Enemies' speed
+				lvl.SetEnemiesSpeed(25);
+			}
+			else if (incomingData[0] == '8') {
+				lvl.SetEnemiesSpeed(18);
+			}
+			else if (incomingData[0] == '7') {
+				lvl.SetEnemiesSpeed(10);
+			}
+		}
+	}
+
+	//Serial.read() ---- pour éteindre / allumer les leds
+}
+
+
+
+
+
 
 
 /*
@@ -415,7 +552,6 @@ void PlayerMovt(int x) {
 	//Reset Timer
 	glutTimerFunc(refreshRate, PlayerMovt, 0);
 
-	//player.SetMoving(0);
 
     player.SetStillMoving(0);
 }
@@ -526,17 +662,13 @@ void KeyButtons(unsigned char key, int y, int z) {
 	
 
 	//-------------------------- A ENLEVER POUR LAISSER PLACE AU DETECTEUR DE LUMIERE SUR ARDUINO
-	if (key == '0') {
-		const int div = 4;
-		currentFrame = (currentFrame + 1) % div;
-		light = currentFrame * 4 / div;
+	//if (key == '0') {
+	//	const int div = 4;
+	//	currentFrame = (currentFrame + 1) % div;
+	//	light = currentFrame * 4 / div;
 
-		//		const int div = 4;
-		//		fLight = (fLight) / div;
-		//		light = fLight * 4 / div;
-
-		player.setOpacity(light);// à placer dans une boucle infinie pour detecter toujours la valeur de "light"
-	}
+	//	player.setOpacity(light);// à placer dans une boucle infinie pour detecter toujours la valeur de "light"
+	//}
 
 	//cout << light << endl;
 
@@ -596,6 +728,7 @@ void KeyButtons(unsigned char key, int y, int z) {
 				player.SetPowderBag(false);
 			}
 		}
+	
 		if (key == 'p') {
 			cout << key << endl;
 			menu.Pause();
@@ -644,65 +777,6 @@ void KeyAction(int key, int x, int y) {
 	}
 
 }
-
-
-//---------------------------- TIMER ENEMIES MOVEMENTS
-
-// Slow and Random
-//void LabyTimer1(int x) {
-//
-//	if (screenIt != 3) {
-//		// Reset Timer to move again
-//		glutTimerFunc(700, LabyTimer1, 0);
-//		return;
-//	}// If it's not in game (Title screen, controls screen, or paused), then do nothing
-//
-//	Position prevPos = ghost1.GetPos();	//Previous Position (before moving)
-//
-//	do {
-//
-//		ghost1.Teleport(prevPos); // If invalid reset to the previous Position
-//
-//		int dir = rand() % 4; // Create a value between 0 and 3 (inclusive)
-//
-//							  //Move accordingly
-//		switch (dir)
-//		{
-//		case 0:
-//			ghost1.MoveUp();
-//			break;
-//		case 1:
-//			ghost1.MoveDown();
-//			break;
-//		case 2:
-//			ghost1.MoveRight();
-//			break;
-//		case 3:
-//			ghost1.MoveLeft();
-//			break;
-//		}
-//
-//		//Check if Teleportation
-//		if ((ghost1.GetPos().x == m_teleportLeft.x - 1) && (ghost1.GetPos().y == m_teleportLeft.y)) {// If Player is on the Teleport platform on the Left of the screen
-//			ghost1.Teleport(m_teleportRight);//Teleport to the Right of the screen
-//		}
-//		else if ((ghost1.GetPos().x == m_teleportRight.x + 1) && (ghost1.GetPos().y == m_teleportRight.y)) {
-//			ghost1.Teleport(m_teleportLeft);
-//		}
-//		else {}
-//
-//		// Check if the new Position is valid (avoid walls, UI surface, and Exit)
-//	} while ((labyrinthe[ghost1.GetPos().x][ghost1.GetPos().y] == 1) || (labyrinthe[ghost1.GetPos().x][ghost1.GetPos().y] == -1) || (labyrinthe[ghost1.GetPos().x][ghost1.GetPos().y] == 2) || (labyrinthe[ghost1.GetPos().x][ghost1.GetPos().y] == 3) || (labyrinthe[ghost1.GetPos().x][ghost1.GetPos().y] == 4));
-//
-//	// Update screen
-//	glutPostRedisplay();
-//
-//
-//	// Reset Timer
-//	glutTimerFunc(700, LabyTimer1, 0);
-//
-//
-//}
 
 
 //-----------------------------WHAT HAPPENS WHEN NOTHING HAPPENS :)

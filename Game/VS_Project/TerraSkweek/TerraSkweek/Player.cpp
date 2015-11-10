@@ -1164,7 +1164,7 @@ Player::Player() : Entity()
 
 void Player::setOpacity(float light)
 {
-	opacity = light/4;
+	opacity = light;
 }
 
 //bool Player::IsVisible()
