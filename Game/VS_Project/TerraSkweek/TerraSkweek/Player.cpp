@@ -1,14 +1,13 @@
 #include "Player.h"
 
 extern std::vector<GLuint> texture;
-
+extern const Position playerInitPos;
 
 void Player::LoadAllTextures()
 {
 	LoadGLTextures("idle", "Art/player/player_idle_01.png");
 	LoadGLTextures("idle", "Art/player/player_idle_02.png");
 	LoadGLTextures("idle", "Art/player/player_idle_03.png");
-	LoadGLTextures("idle", "Art/player/player_idle_04.png");
 	LoadGLTextures("left", "Art/player/player_left_01.png");
 	LoadGLTextures("left", "Art/player/player_left_02.png");
 	LoadGLTextures("left", "Art/player/player_left_03.png");
@@ -16,34 +15,41 @@ void Player::LoadAllTextures()
 	LoadGLTextures("left", "Art/player/player_left_05.png");
 	LoadGLTextures("left", "Art/player/player_left_06.png");
 	LoadGLTextures("left", "Art/player/player_left_07.png");
-	LoadGLTextures("up", "Art/player/player_left_01.png");
-	LoadGLTextures("up", "Art/player/player_left_02.png");
-	LoadGLTextures("up", "Art/player/player_left_03.png");
-	LoadGLTextures("up", "Art/player/player_left_04.png");
-	LoadGLTextures("down", "Art/player/player_left_01.png");
-	LoadGLTextures("down", "Art/player/player_left_02.png");
-	LoadGLTextures("down", "Art/player/player_left_03.png");
-	LoadGLTextures("down", "Art/player/player_left_04.png");
-	LoadGLTextures("down", "Art/player/player_left_05.png");
+	LoadGLTextures("left", "Art/player/player_left_07.png");
+	LoadGLTextures("up", "Art/player/player_up_01.png");
+	LoadGLTextures("up", "Art/player/player_up_02.png");
+	LoadGLTextures("up", "Art/player/player_up_03.png");
+	LoadGLTextures("up", "Art/player/player_up_04.png");
+	LoadGLTextures("up", "Art/player/player_up_05.png");
+	LoadGLTextures("up", "Art/player/player_up_06.png");
+	LoadGLTextures("up", "Art/player/player_up_07.png");
+	LoadGLTextures("up", "Art/player/player_up_08.png");
+	LoadGLTextures("up", "Art/player/player_up_08.png");
+	LoadGLTextures("down", "Art/player/player_down_01.png");
+	LoadGLTextures("down", "Art/player/player_down_02.png");
+	LoadGLTextures("down", "Art/player/player_down_03.png");
+	LoadGLTextures("down", "Art/player/player_down_04.png");
+	LoadGLTextures("down", "Art/player/player_down_05.png");
+	LoadGLTextures("down", "Art/player/player_down_06.png");
+	LoadGLTextures("down", "Art/player/player_down_07.png");
+	LoadGLTextures("down", "Art/player/player_down_08.png");
+	LoadGLTextures("down", "Art/player/player_down_08.png");
 	LoadGLTextures("fire_idle", "Art/player/player_fire_01.png");
 	LoadGLTextures("fire_idle", "Art/player/player_fire_02.png");
-	LoadGLTextures("fire_idle", "Art/player/player_fire_03.png");
-	LoadGLTextures("fire_idle", "Art/player/player_fire_04.png");
+	LoadGLTextures("fire_idle", "Art/player/player_fire_02.png");
 	LoadGLTextures("fire_left", "Art/player/player_fire_01.png");
 	LoadGLTextures("fire_left", "Art/player/player_fire_02.png");
-	LoadGLTextures("fire_left", "Art/player/player_fire_03.png");
-	LoadGLTextures("fire_left", "Art/player/player_fire_04.png");
+	LoadGLTextures("fire_left", "Art/player/player_fire_02.png");
 	LoadGLTextures("fire_up", "Art/player/player_fire_01.png");
 	LoadGLTextures("fire_up", "Art/player/player_fire_02.png");
-	LoadGLTextures("fire_up", "Art/player/player_fire_03.png");
-	LoadGLTextures("fire_up", "Art/player/player_fire_04.png");
+	LoadGLTextures("fire_up", "Art/player/player_fire_02.png");
 	LoadGLTextures("fire_down", "Art/player/player_fire_01.png");
 	LoadGLTextures("fire_down", "Art/player/player_fire_02.png");
-	LoadGLTextures("fire_down", "Art/player/player_fire_03.png");
-	LoadGLTextures("fire_down", "Art/player/player_fire_04.png");
+	LoadGLTextures("fire_down", "Art/player/player_fire_02.png");
 	LoadGLTextures("p_UI", "Art/player/Hornet&Hero_01.png");
 	LoadGLTextures("p_UI", "Art/player/Hornet&Hero_02.png");
 	LoadGLTextures("p_UI", "Art/player/Hornet&Hero_03.png");
+	LoadGLTextures("p_UI", "Art/player/Hornet&Hero_04.png");
 	LoadGLTextures("p_UI", "Art/player/Hornet&Hero_04.png");
 
 }
@@ -208,17 +214,27 @@ int Player::LoadGLTextures(string type,string name)
 void Player::Draw(bool a)
 {
 	m_mouseMode = !a;
-	//cout << m_life << endl;
 
-	//int vitesse = 100 * (left.size());
-	//currentFrame = (currentFrame + 1) % vitesse;
+	if (m_invincible) {
+		m_timerInvincible += 1;
+		if (m_timerInvincible >= 10000) { // Invincible during 10000 frame of glut
+			m_timerInvincible = 0;
+			m_invincible = false;
+		}
+	}
+
+	cout << m_invincible << endl; 
+
+
+	int vitesse = 50 * (left.size());
+	currentFrame = (currentFrame + 1) % vitesse;
 	//unsigned int frame = currentFrame * (left.size()) / vitesse;
 
 
 	if (m_mouseMode)
 	{
 
-		int vitesse = 8;
+		vitesse = 30;
 		currentFrame = (currentFrame + 1) % vitesse;
 		unsigned int frame = currentFrame * (p_UI.size()) / vitesse;
 
@@ -250,9 +266,7 @@ void Player::Draw(bool a)
 
 	else if (!m_mouseMode)
 	{
-		int vitesse = 100 * (left.size());
-		currentFrame = (currentFrame + 1) % vitesse;
-		unsigned int frame = currentFrame * (left.size()) / vitesse;
+		unsigned int frame;
 		
 		if (!m_firing && m_moving)
 		{
@@ -260,30 +274,30 @@ void Player::Draw(bool a)
 			{
 				switch (m_dir)
 				{
-				case 'i':
+				//case 'i':
 
-					frame = currentFrame * (left.size()) / vitesse;
+				//	frame = currentFrame * (left.size()) / vitesse;
 
-					glPushMatrix();
-					// Left
-					glEnable(GL_TEXTURE_2D);
-					glEnable(GL_BLEND);
-					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-					glBindTexture(GL_TEXTURE_2D, idle[frame]);
-					glBegin(GL_QUADS);
-					glColor4d(1.0, 1.0, 1.0, opacity);
-					glTexCoord2f(1.0f, 1.0f);
-					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-					glTexCoord2f(0.0f, 1.0f);
-					glVertex2d(m_pos.x + m_spriteSize, m_pos.y - m_spriteSize);
-					glTexCoord2f(0.0f, 0.0f);
-					glVertex2d(m_pos.x + m_spriteSize, m_pos.y + m_spriteSize);
-					glTexCoord2f(1.0f, 0.0f);
-					glVertex2d(m_pos.x - m_spriteSize, m_pos.y + m_spriteSize);
-					glEnd();
-					glDisable(GL_TEXTURE_2D);
-					glPopMatrix();
-					break;
+				//	glPushMatrix();
+				//	// Left
+				//	glEnable(GL_TEXTURE_2D);
+				//	glEnable(GL_BLEND);
+				//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+				//	glBindTexture(GL_TEXTURE_2D, idle[frame]);
+				//	glBegin(GL_QUADS);
+				//	glColor4d(1.0, 1.0, 1.0, opacity);
+				//	glTexCoord2f(1.0f, 1.0f);
+				//	glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+				//	glTexCoord2f(0.0f, 1.0f);
+				//	glVertex2d(m_pos.x + m_spriteSize, m_pos.y - m_spriteSize);
+				//	glTexCoord2f(0.0f, 0.0f);
+				//	glVertex2d(m_pos.x + m_spriteSize, m_pos.y + m_spriteSize);
+				//	glTexCoord2f(1.0f, 0.0f);
+				//	glVertex2d(m_pos.x - m_spriteSize, m_pos.y + m_spriteSize);
+				//	glEnd();
+				//	glDisable(GL_TEXTURE_2D);
+				//	glPopMatrix();
+				//	break;
 
 				case 'l':
 
@@ -402,13 +416,13 @@ void Player::Draw(bool a)
 					glBindTexture(GL_TEXTURE_2D, down[frame]);
 					glBegin(GL_QUADS);
 					glColor4d(1.0, 1.0, 1.0, opacity);
-					glTexCoord2f(1.0f, 1.0f);
-					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
 					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(1.0f, 1.0f);
 					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y - m_spriteSize);
-					glTexCoord2f(0.0f, 0.0f);
-					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y + m_spriteSize);
 					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y + m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
 					glVertex2d(m_pos.x - m_spriteSize, m_pos.y + m_spriteSize);
 					glEnd();
 					glDisable(GL_TEXTURE_2D);
@@ -430,31 +444,31 @@ void Player::Draw(bool a)
 				switch (m_dir)
 				{
 
-				case 'i':
+				//case 'i':
 
-					frame = currentFrame * (left.size()) / vitesse;
+				//	frame = currentFrame * (left.size()) / vitesse;
 
-					glPushMatrix();
-					// Left
-					glEnable(GL_TEXTURE_2D);
-					glEnable(GL_BLEND);
-					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-					glBindTexture(GL_TEXTURE_2D, idle[frame]);
-					glBegin(GL_QUADS);
-					glColor4d(1.0, 1.0, 1.0, opacity);
-					glTexCoord2f(1.0f, 1.0f);
-					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-					glTexCoord2f(0.0f, 1.0f);
-					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y - m_spriteSize);
-					glTexCoord2f(0.0f, 0.0f);
-					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
-					glTexCoord2f(1.0f, 0.0f);
-					glVertex2d(m_pos.x - m_spriteSize, m_pos.y +  m_spriteSize);
-					glEnd();
-					glDisable(GL_TEXTURE_2D);
-					glPopMatrix();
+				//	glPushMatrix();
+				//	// Left
+				//	glEnable(GL_TEXTURE_2D);
+				//	glEnable(GL_BLEND);
+				//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+				//	glBindTexture(GL_TEXTURE_2D, idle[frame]);
+				//	glBegin(GL_QUADS);
+				//	glColor4d(1.0, 1.0, 1.0, opacity);
+				//	glTexCoord2f(1.0f, 1.0f);
+				//	glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+				//	glTexCoord2f(0.0f, 1.0f);
+				//	glVertex2d(m_pos.x +  m_spriteSize, m_pos.y - m_spriteSize);
+				//	glTexCoord2f(0.0f, 0.0f);
+				//	glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
+				//	glTexCoord2f(1.0f, 0.0f);
+				//	glVertex2d(m_pos.x - m_spriteSize, m_pos.y +  m_spriteSize);
+				//	glEnd();
+				//	glDisable(GL_TEXTURE_2D);
+				//	glPopMatrix();
 
-					break;
+				//	break;
 
 				case 'l':
 
@@ -503,13 +517,13 @@ void Player::Draw(bool a)
 					glBindTexture(GL_TEXTURE_2D, left[frame]);
 					glBegin(GL_QUADS);
 					glColor4d(1.0, 1.0, 1.0, opacity);
-					glTexCoord2f(1.0f, 1.0f);
-					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
 					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(1.0f, 1.0f);
 					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y - m_spriteSize);
-					glTexCoord2f(0.0f, 0.0f);
-					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
 					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
 					glVertex2d(m_pos.x - m_spriteSize, m_pos.y +  m_spriteSize);
 					glEnd();
 					glDisable(GL_TEXTURE_2D);
@@ -571,13 +585,13 @@ void Player::Draw(bool a)
 					glBindTexture(GL_TEXTURE_2D, down[frame]);
 					glBegin(GL_QUADS);
 					glColor4d(1.0, 1.0, 1.0, opacity);
-					glTexCoord2f(1.0f, 1.0f);
-					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
 					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(1.0f, 1.0f);
 					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y - m_spriteSize);
-					glTexCoord2f(0.0f, 0.0f);
-					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
 					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
 					glVertex2d(m_pos.x - m_spriteSize, m_pos.y +  m_spriteSize);
 					glEnd();
 					glDisable(GL_TEXTURE_2D);
@@ -598,38 +612,40 @@ void Player::Draw(bool a)
 
 		else if (m_firing)
 		{
+			vitesse = 150;
+
 			if ((m_life <= 150 && m_life >= 50))
 			{
 				switch (m_dir)
 				{
-				case 'i':
+				//case 'i':
 
-					frame = currentFrame * (fire_idle.size()) / vitesse;
+				//	frame = currentFrame * (fire_idle.size()) / vitesse;
 
-					glPushMatrix();
-					// Left
-					glEnable(GL_TEXTURE_2D);
-					glEnable(GL_BLEND);
-					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-					glBindTexture(GL_TEXTURE_2D, fire_idle[frame]);
-					glBegin(GL_QUADS);
-					glColor4d(1.0, 1.0, 1.0, opacity);
-					glTexCoord2f(1.0f, 1.0f);
-					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-					glTexCoord2f(0.0f, 1.0f);
-					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y - m_spriteSize);
-					glTexCoord2f(0.0f, 0.0f);
-					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
-					glTexCoord2f(1.0f, 0.0f);
-					glVertex2d(m_pos.x - m_spriteSize, m_pos.y +  m_spriteSize);
-					glEnd();
-					glDisable(GL_TEXTURE_2D);
-					glPopMatrix();
+				//	glPushMatrix();
+				//	// Left
+				//	glEnable(GL_TEXTURE_2D);
+				//	glEnable(GL_BLEND);
+				//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+				//	glBindTexture(GL_TEXTURE_2D, fire_idle[frame]);
+				//	glBegin(GL_QUADS);
+				//	glColor4d(1.0, 1.0, 1.0, opacity);
+				//	glTexCoord2f(1.0f, 1.0f);
+				//	glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+				//	glTexCoord2f(0.0f, 1.0f);
+				//	glVertex2d(m_pos.x +  m_spriteSize, m_pos.y - m_spriteSize);
+				//	glTexCoord2f(0.0f, 0.0f);
+				//	glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
+				//	glTexCoord2f(1.0f, 0.0f);
+				//	glVertex2d(m_pos.x - m_spriteSize, m_pos.y +  m_spriteSize);
+				//	glEnd();
+				//	glDisable(GL_TEXTURE_2D);
+				//	glPopMatrix();
 
-					if (frame >= fire_idle.size() - 1)
-						m_firing = false;
+				//	if (frame >= fire_idle.size()-1)
+				//		m_firing = false;
 
-					break;
+				//	break;
 
 				case 'l':
 
@@ -655,7 +671,7 @@ void Player::Draw(bool a)
 					glDisable(GL_TEXTURE_2D);
 					glPopMatrix();
 
-					if (frame >= fire_left.size() - 1)
+					if (frame >= (fire_left.size()-1))
 						m_firing = false;
 
 					break;
@@ -672,13 +688,13 @@ void Player::Draw(bool a)
 					glBindTexture(GL_TEXTURE_2D, fire_left[frame]);
 					glBegin(GL_QUADS);
 					glColor4d(1.0, 1.0, 1.0, opacity);
-					glTexCoord2f(1.0f, 1.0f);
-					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
 					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(1.0f, 1.0f);
 					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y - m_spriteSize);
-					glTexCoord2f(0.0f, 0.0f);
-					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
 					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
 					glVertex2d(m_pos.x - m_spriteSize, m_pos.y +  m_spriteSize);
 					glEnd();
 					glDisable(GL_TEXTURE_2D);
@@ -730,13 +746,13 @@ void Player::Draw(bool a)
 					glBindTexture(GL_TEXTURE_2D, fire_down[frame]);
 					glBegin(GL_QUADS);
 					glColor4d(1.0, 1.0, 1.0, opacity);
-					glTexCoord2f(1.0f, 1.0f);
-					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
 					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(1.0f, 1.0f);
 					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y - m_spriteSize);
-					glTexCoord2f(0.0f, 0.0f);
-					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
 					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
 					glVertex2d(m_pos.x - m_spriteSize, m_pos.y +  m_spriteSize);
 					glEnd();
 					glDisable(GL_TEXTURE_2D);
@@ -754,34 +770,34 @@ void Player::Draw(bool a)
 				switch (m_dir)
 				{
 
-				case 'i':
+				//case 'i':
 
-					frame = currentFrame * (fire_idle.size()) / vitesse;
+				//	frame = currentFrame * (fire_idle.size()) / vitesse;
 
-					glPushMatrix();
-					// Left
-					glEnable(GL_TEXTURE_2D);
-					glEnable(GL_BLEND);
-					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-					glBindTexture(GL_TEXTURE_2D, fire_idle[frame]);
-					glBegin(GL_QUADS);
-					glColor4d(1.0, 1.0, 1.0, opacity);
-					glTexCoord2f(1.0f, 1.0f);
-					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-					glTexCoord2f(0.0f, 1.0f);
-					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y - m_spriteSize);
-					glTexCoord2f(0.0f, 0.0f);
-					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
-					glTexCoord2f(1.0f, 0.0f);
-					glVertex2d(m_pos.x - m_spriteSize, m_pos.y +  m_spriteSize);
-					glEnd();
-					glDisable(GL_TEXTURE_2D);
-					glPopMatrix();
+				//	glPushMatrix();
+				//	// Left
+				//	glEnable(GL_TEXTURE_2D);
+				//	glEnable(GL_BLEND);
+				//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+				//	glBindTexture(GL_TEXTURE_2D, fire_idle[frame]);
+				//	glBegin(GL_QUADS);
+				//	glColor4d(1.0, 1.0, 1.0, opacity);
+				//	glTexCoord2f(1.0f, 1.0f);
+				//	glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+				//	glTexCoord2f(0.0f, 1.0f);
+				//	glVertex2d(m_pos.x +  m_spriteSize, m_pos.y - m_spriteSize);
+				//	glTexCoord2f(0.0f, 0.0f);
+				//	glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
+				//	glTexCoord2f(1.0f, 0.0f);
+				//	glVertex2d(m_pos.x - m_spriteSize, m_pos.y +  m_spriteSize);
+				//	glEnd();
+				//	glDisable(GL_TEXTURE_2D);
+				//	glPopMatrix();
 
-					if (frame >= fire_idle.size() - 1)
-						m_firing = false;
+				//	if (frame >= fire_idle.size() - 1)
+				//		m_firing = false;
 
-					break;
+				//	break;
 
 				case 'l':
 
@@ -824,13 +840,13 @@ void Player::Draw(bool a)
 					glBindTexture(GL_TEXTURE_2D, fire_left[frame]);
 					glBegin(GL_QUADS);
 					glColor4d(1.0, 1.0, 1.0, opacity);
-					glTexCoord2f(1.0f, 1.0f);
-					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
 					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(1.0f, 1.0f);
 					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y - m_spriteSize);
-					glTexCoord2f(0.0f, 0.0f);
-					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
 					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
 					glVertex2d(m_pos.x - m_spriteSize, m_pos.y +  m_spriteSize);
 					glEnd();
 					glDisable(GL_TEXTURE_2D);
@@ -882,13 +898,13 @@ void Player::Draw(bool a)
 					glBindTexture(GL_TEXTURE_2D, fire_down[frame]);
 					glBegin(GL_QUADS);
 					glColor4d(1.0, 1.0, 1.0, opacity);
-					glTexCoord2f(1.0f, 1.0f);
-					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
 					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(1.0f, 1.0f);
 					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y - m_spriteSize);
-					glTexCoord2f(0.0f, 0.0f);
-					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
 					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
 					glVertex2d(m_pos.x - m_spriteSize, m_pos.y +  m_spriteSize);
 					glEnd();
 					glDisable(GL_TEXTURE_2D);
@@ -902,6 +918,7 @@ void Player::Draw(bool a)
 			}
 		}
 		else if (!m_moving) { // not moving, idle
+
 			if (m_life <= 150 && m_life >= 50) {
 				switch (m_dir)
 				{
@@ -982,13 +999,13 @@ void Player::Draw(bool a)
 					glBindTexture(GL_TEXTURE_2D, down[0]);
 					glBegin(GL_QUADS);
 					glColor4d(1.0, 1.0, 1.0, opacity);
-					glTexCoord2f(1.0f, 1.0f);
-					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
 					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(1.0f, 1.0f);
 					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y - m_spriteSize);
-					glTexCoord2f(0.0f, 0.0f);
-					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
 					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
 					glVertex2d(m_pos.x - m_spriteSize, m_pos.y +  m_spriteSize);
 					glEnd();
 					glDisable(GL_TEXTURE_2D);
@@ -1078,13 +1095,13 @@ void Player::Draw(bool a)
 					glBindTexture(GL_TEXTURE_2D, down[0]);
 					glBegin(GL_QUADS);
 					glColor4d(1.0, 1.0, 1.0, opacity);
-					glTexCoord2f(1.0f, 1.0f);
-					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
 					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(1.0f, 1.0f);
 					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y - m_spriteSize);
-					glTexCoord2f(0.0f, 0.0f);
-					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
 					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
 					glVertex2d(m_pos.x - m_spriteSize, m_pos.y +  m_spriteSize);
 					glEnd();
 					glDisable(GL_TEXTURE_2D);
@@ -1095,7 +1112,6 @@ void Player::Draw(bool a)
 			}
 
 		}
-		
 	}
 	
 }
@@ -1152,7 +1168,7 @@ bool Player::IsInvincible()
 
 Player::Player() : Entity()
 {	//m_name = name;
-	m_pos = { 300,300,0 };
+	m_pos = playerInitPos;
 	m_life = 150;
 	m_def = 10;
 	m_dir = 'l';
@@ -1162,6 +1178,7 @@ Player::Player() : Entity()
 	opacity = 1;
 	m_powderbag = false;
 	m_invincible = false; 
+	m_timerInvincible = 0;
 }
 
 void Player::setOpacity(float light)

@@ -21,6 +21,7 @@ private :
 	float opacity;
 	bool m_powderbag;
 	bool m_invincible;
+	int m_timerInvincible;
 	bool m_mouseMode;
 	bool m_stillMoving;
 

@@ -5,12 +5,12 @@ class Arrow : public Weapon
 
 protected:
 	bool activated;
-	char direction;
+	int timer;
 	//vector<GLuint>	arrow;
 	
 public:
 	void Draw();
-	void activation();
+	void activation(bool);
 	Arrow();
 	Arrow(float, float, bool, char);
 	void LoadAllTextures();

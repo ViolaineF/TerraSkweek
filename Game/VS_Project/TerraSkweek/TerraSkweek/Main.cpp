@@ -9,6 +9,7 @@ extern int m_score;
 int windowWidth = 200;
 int windowHeight = 200;
 extern const int TextWidth = 75;
+extern const Position playerInitPos = { 750, 750, 0 };
 
 
 //------------------LOADING MAP TEXTURES
@@ -363,6 +364,10 @@ void PlayerMovt(int x) {
 				}
 			}
 			break;
+		case 6 : // Fall
+			player.SetLife(player.GetLife()-40); 
+			player.Teleport(playerInitPos);
+			break;
 
 		}
 
@@ -388,6 +393,10 @@ void PlayerMovt(int x) {
 				}
 			}
 			break;
+		case 6: // Fall
+				player.SetLife(player.GetLife() - 40);
+				player.Teleport(playerInitPos);
+				break;
 		}
 
 		break;
@@ -415,6 +424,10 @@ void PlayerMovt(int x) {
 				}
 			}
 			break;
+		case 6: // Fall
+			player.SetLife(player.GetLife() - 40);
+			player.Teleport(playerInitPos);
+			break;
 		}
 
 		switch (lvl.Map(pXright, pYdown))
@@ -438,6 +451,10 @@ void PlayerMovt(int x) {
 					}
 				}
 			}
+			break;
+		case 6: // Fall
+			player.SetLife(player.GetLife() - 40);
+			player.Teleport(playerInitPos);
 			break;
 		}
 
@@ -466,6 +483,10 @@ void PlayerMovt(int x) {
 				}
 			}
 			break;
+		case 6: // Fall
+			player.SetLife(player.GetLife() - 40);
+			player.Teleport(playerInitPos);
+			break;
 		}
 
 		switch (lvl.Map(pXright, pYup))
@@ -489,6 +510,10 @@ void PlayerMovt(int x) {
 					}
 				}
 			}
+			break;
+		case 6: // Fall
+			player.SetLife(player.GetLife() - 40);
+			player.Teleport(playerInitPos);
 			break;
 		}
 		break;
@@ -517,6 +542,10 @@ void PlayerMovt(int x) {
 				}
 			}
 			break;
+		case 6: // Fall
+			player.SetLife(player.GetLife() - 40);
+			player.Teleport(playerInitPos);
+			break;
 		}
 
 		switch (lvl.Map(pXleft, pYdown))
@@ -540,6 +569,10 @@ void PlayerMovt(int x) {
 					}
 				}
 			}
+			break;
+		case 6: // Fall
+			player.SetLife(player.GetLife() - 40);
+			player.Teleport(playerInitPos);
 			break;
 		}
 		break;
@@ -571,7 +604,6 @@ void DrawLevel() {
 	if (inGame)
 	{
 		// Translate Map
-		//glTranslatef(-player.GetPos().x + 12, -player.GetPos().y + 8, 0);
 		glTranslatef(-player.GetPos().x + (windowWidth / 2), -player.GetPos().y + (windowHeight / 2), 0);
 
 		// Draw map
@@ -599,12 +631,7 @@ void DrawLevel() {
 			lvl.DrawUpCase();
 		}
 
-
-
-
-
-
-
+		
 		glLoadIdentity();
 		glutSwapBuffers();
 		glPopMatrix();
@@ -637,6 +664,7 @@ void Display() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	InterfaceArduino();
+	cout << "le joueur tire : " << player.IsFiring() << endl;
 	DrawLevel(); // Affiche le niveau
 	glFlush();		//A remplacer par glutSwapBuffers.
 //	glutSwapBuffers();
