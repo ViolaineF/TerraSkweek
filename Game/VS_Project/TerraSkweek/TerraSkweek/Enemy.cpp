@@ -435,6 +435,7 @@ void Enemy::Draw()
 void Enemy::SetFreeze(bool a)
 {
 	m_freeze = a;
+	currentFrame = 0;
 }
 
 bool Enemy::IsFreezed()
