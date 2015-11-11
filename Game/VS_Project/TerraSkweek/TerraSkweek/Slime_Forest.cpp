@@ -42,17 +42,20 @@ void Slime_Forest::LoadAllTextures()
 	LoadGLTextures("death", "Slime_death_03.png");
 	LoadGLTextures("death", "Slime_death_04.png");
 
-	LoadGLTextures("freeze", "2corrupted/slimer_freeze_01.png");
-	LoadGLTextures("freeze", "2corrupted/slimer_freeze_02.png");
-	LoadGLTextures("freeze", "2corrupted/slimer_freeze_03.png");
-	LoadGLTextures("freeze", "2corrupted/slimer_freeze_03.png");
-	LoadGLTextures("freeze", "2corrupted/slimer_freeze_03.png");
-	LoadGLTextures("freeze", "2corrupted/slimer_freeze_03.png");
-	LoadGLTextures("freeze", "2corrupted/slimer_freeze_03.png");
-	LoadGLTextures("freeze", "2corrupted/slimer_freeze_03.png");
-	LoadGLTextures("freeze", "2corrupted/slimer_freeze_03.png");
-	LoadGLTextures("freeze", "2corrupted/slimer_freeze_03.png");
-	LoadGLTextures("freeze", "2corrupted/slimer_freeze_03.png");
+	LoadGLTextures("freeze", "Slime_freeze_01.png");
+	LoadGLTextures("freeze", "Slime_freeze_02.png");
+	LoadGLTextures("freeze", "Slime_freeze_03.png");
+	LoadGLTextures("freeze", "Slime_freeze_04.png");
+	LoadGLTextures("freeze", "Slime_freeze_05.png");
+	LoadGLTextures("freeze", "Slime_freeze_06.png");
+	LoadGLTextures("freeze", "Slime_freeze_07.png");
+	LoadGLTextures("freeze", "Slime_freeze_06.png");
+	LoadGLTextures("freeze", "Slime_freeze_05.png");
+	LoadGLTextures("freeze", "Slime_freeze_04.png");
+	LoadGLTextures("freeze", "Slime_freeze_03.png");
+	LoadGLTextures("freeze", "Slime_freeze_02.png");
+	LoadGLTextures("freeze", "Slime_freeze_01.png");
+	LoadGLTextures("freeze", "Slime_freeze_01.png");
 
 }
 
