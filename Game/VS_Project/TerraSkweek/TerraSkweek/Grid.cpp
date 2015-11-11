@@ -6,6 +6,7 @@ extern const int TextWidth;
 extern Player player;
 extern float light;
 string m_biome;
+extern const Position playerInitPos;
 
 int mapMenu[20][20] = {
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -171,7 +172,7 @@ void Grid::ChangeMap(int choice)
 		m_maxMobs = 0;
 		LoadAllTextures();
 
-		player.Teleport({ 300,300,0 });
+		player.Teleport(playerInitPos);
 
 		m_rows = 20;
 		m_lignes = 20;
@@ -192,7 +193,7 @@ void Grid::ChangeMap(int choice)
 
 		LoadAllTextures();
 
-		player.Teleport({ 300,300,0 });
+		player.Teleport(playerInitPos);
 
 		m_rows = 20 ;
 		m_lignes = 20;
@@ -219,7 +220,7 @@ void Grid::ChangeMap(int choice)
 
 		LoadAllTextures();
 
-		player.Teleport({ 300,300,0 });
+		player.Teleport(playerInitPos);
 
 		m_rows = 20;
 		m_lignes = 20;
@@ -240,7 +241,7 @@ void Grid::ChangeMap(int choice)
 
 		LoadAllTextures();
 
-		player.Teleport({ 300,300,0 });
+		player.Teleport(playerInitPos);
 
 		m_rows = 20;
 		m_lignes = 20;
@@ -260,7 +261,7 @@ void Grid::ChangeMap(int choice)
 
 		m_maxMobs = 25;
 
-		player.Teleport({ 300,300,0 });
+		player.Teleport(playerInitPos);
 
 		m_rows = 20;
 		m_lignes = 20;
@@ -290,7 +291,7 @@ void Grid::LoadObjectsOnMap()
 			if (map[i][j] != 1) { // Avoid spwaning in a wall
 				int chance = rand() % 100 + 1; // Give an int between 1 and 100;
 
-				if (chance == 1 && chance <= 5) { // 5% chance ---------------------------------SEMI CONVERTED FLOOR
+				if (chance >= 1 && chance <= 5) { //5% chance ---------------------------------SEMI CONVERTED FLOOR
 					map[i][j] = 3;
 					vecCaseAnimated.push_back(new SemiConverted(i*TextWidth, j*TextWidth, "semiConverted"));
 				}
@@ -300,7 +301,7 @@ void Grid::LoadObjectsOnMap()
 					vecCaseAnimated.push_back(new CrackedFloor(i*TextWidth, j*TextWidth, "cracking"));
 				}
 
-				if (chance > 10 && chance <= 15) { // 5% chance ---------------------------------MOB SPAWNER
+				if (chance > 10 && chance <= 11) { // 1% chance ---------------------------------MOB SPAWNER
 					vecSpawner.push_back(new MobSpawner(i*TextWidth, j*TextWidth, "mobSpawner"));
 				}
 			}
@@ -309,14 +310,20 @@ void Grid::LoadObjectsOnMap()
 
 
 	//------------------------ LOAD UP CASE 
-	vecUpCase.push_back(new UpCase(200, 200, "upcase"));
-	vecUpCase.push_back(new UpCase(150, 200, "upcase"));
+	vecUpCase.push_back(new UpCase(5 * TextWidth, 5 * TextWidth, "upcase"));
+	vecUpCase.push_back(new UpCase(5 * TextWidth, 6 * TextWidth, "upcase"));
+	vecUpCase.push_back(new UpCase(6 * TextWidth, 5 * TextWidth, "upcase"));
+	vecUpCase.push_back(new UpCase(6 * TextWidth, 6 * TextWidth, "upcase"));
 
 	//---------- LOAD JUMP CASE ACCORDINGLY 
-	vecCaseAnimated.push_back(new SpecialCase({ 300,300,0 }, "elevator.png"));
+	vecCaseAnimated.push_back(new SpecialCase({ 4.5f * TextWidth, 5.0f * TextWidth , 0 }, "elevator.png"));
+	vecCaseAnimated.push_back(new SpecialCase({ 4.5f * TextWidth, 6.0f * TextWidth , 0 }, "elevator.png"));
 
 	//-----------------LOAD ARROWS
 	vecArrow.push_back(new Arrow(400, 400, 0, 'l'));
+	vecArrow.push_back(new Arrow(400, 475, 0, 'r'));
+	vecArrow.push_back(new Arrow(550, 400, 0, 'u'));
+	vecArrow.push_back(new Arrow(625, 400, 0, 'd'));
 
 }
 
@@ -624,11 +631,6 @@ void Grid::DrawSpecialCases()
 		}
 	}
 
-	for (unsigned int i = 0; i < vecTNT.size(); i++) {
-		vecTNT[i]->Draw();
-
-	}
-
 		///////////////////////////////////////////////////////////////////////////
 	
 	for (unsigned int i = 0; i < vecArrow.size(); i++) 
@@ -637,116 +639,34 @@ void Grid::DrawSpecialCases()
 
 		if (vecArrow[i]->GetPos() == player.GetPos())
 		{
-			vecArrow[i]->activation(); // Player's movement forced in the direction of the Arrow
-			cout << "moving" << endl;
+			vecArrow[i]->activation(true); // Player's movement forced in the direction of the Arrow
 
 			Position Player_pos = player.GetPos();
 
 			if (vecArrow[i]->GetDir() == 'r')
 			{
-				Player_pos.x = Player_pos.x + 10;
+				Player_pos.x = Player_pos.x + 100;
 				player.Teleport(Player_pos);
 			}
 
 			if (vecArrow[i]->GetDir() == 'l')
 			{
-				Player_pos.x = Player_pos.x - 10;
+				Player_pos.x = Player_pos.x - 100;
 				player.Teleport(Player_pos);
 			}
 			if (vecArrow[i]->GetDir() == 'u')
 			{
-				Player_pos.x = Player_pos.y + 10;
+				Player_pos.y = Player_pos.y - 100;
 				player.Teleport(Player_pos);
 			}
 			if (vecArrow[i]->GetDir() == 'd')
 			{
-				Player_pos.x = Player_pos.y - 10;
+				Player_pos.y = Player_pos.y + 100;
 				player.Teleport(Player_pos);
 			}
 
 		}
 	}
-	
-
-	
-
-	///////////////////////////////////////////////////////////////////////////
-
-
-
-
-	//---------- CHECK COLLISION WITH PLAYER - 1 player
-
-	for (unsigned int i = 0; i < vecTNT.size(); i++) {
-		if (vecTNT[i]->GetPos() == player.GetPos()) {
-			vecTNT[i]->activation(); // Activation of TNT timer
-		}
-	}
-
-
-	/*
-	for (unsigned int i = 0; i < vecArrow.size(); i++) {
-
-		if (vecArrow[i]->GetPos() == player.GetPos()) {
-			vecArrow[i]->activation(); // Player's movement forced in the direction of the Arrow
-			cout << "moving" << endl;
-
-			
-			Position Player_pos = player.GetPos();
-
-			if (vecArrow[i]->GetDir() == 'r')
-			{
-				Player_pos.x = Player_pos.x + 1;
-				player.Teleport(Player_pos);
-			}
-			if (vecArrow[i]->GetDir() == 'l')
-			{
-				Player_pos.x = Player_pos.x - 1;
-				player.Teleport(Player_pos);
-			}
-			if (vecArrow[i]->GetDir() == 'u')
-			{
-				Player_pos.x = Player_pos.y + 1;
-				player.Teleport(Player_pos);
-			}			
-			if (vecArrow[i]->GetDir() == 'd')
-			{
-				Player_pos.x = Player_pos.y - 1;
-				player.Teleport(Player_pos);
-			}
-			//player.MoveDown();
-
-			
-
-
-			if (vecArrow[i]->GetDir() == 'r')
-			{
-				player.MoveRight();
-				cout << "moving" << endl;
-			}
-			if (vecArrow[i]->GetDir() == 'l')
-			{
-				player.MoveLeft();
-				cout << "moving" << endl;
-
-			}
-			if (vecArrow[i]->GetDir() == 'u')
-			{
-				player.MoveUp();
-				cout << "moving" << endl;
-
-			}
-			if (vecArrow[i]->GetDir() == 'd')
-			{
-				player.MoveDown();
-				cout << "moving" << endl;
-
-			}
-
-
-		}
-	}
-	*/
 
 
 }
@@ -759,7 +679,13 @@ void Grid::DrawUpCase()
 		if (typeid(*vecUpCase[i]) == typeid(UpCase)) {
 			vecUpCase[i]->Draw();
 
-			if (player.GetPos() == vecUpCase[i]->GetPos()) { // If the player is on a case, then bool is true;
+			//if (player.GetPos() == vecUpCase[i]->GetPos()) { // If the player is on a case, then bool is true;
+			//	playerOnUpCase = true;
+			//}
+
+			if (player.GetPos().x >= vecUpCase[i]->GetPos().x - (TextWidth / 2) - 2 && player.GetPos().x <= vecUpCase[i]->GetPos().x+(TextWidth/2)+2
+				&& player.GetPos().y >= vecUpCase[i]->GetPos().y - (TextWidth / 2) - 2 && player.GetPos().y <= vecUpCase[i]->GetPos().y + (TextWidth / 2) + 2
+				&& player.GetPos().z == vecUpCase[i]->GetPos().z) { // If the player is on a case, then bool is true;
 				playerOnUpCase = true;
 			}
 		}
@@ -839,19 +765,19 @@ void Grid::DrawEnemies()
 
 void Grid::MoveAllEnemies()
 {
-	for (unsigned int i = 0; i < vecTNT.size(); i++)
-	{
-		if (vecTNT[i]->GetPos() == player.GetPos()) {
-			vecTNT[i]->activation(); // TNT is activated
-		}
-	}
+	//for (unsigned int i = 0; i < vecTNT.size(); i++)
+	//{
+	//	if (vecTNT[i]->GetPos() == player.GetPos()) {
+	//		vecTNT[i]->activation(); // TNT is activated
+	//	}
+	//}
 
-	for (unsigned int i = 0; i < vecArrow.size(); i++)
-	{
-		if (vecArrow[i]->GetPos() == player.GetPos()) {
-			vecArrow[i]->activation(); // arrow force is activated
-		}
-	}
+	//for (unsigned int i = 0; i < vecArrow.size(); i++)
+	//{
+	//	if (vecArrow[i]->GetPos() == player.GetPos()) {
+	//		vecArrow[i]->activation(); // arrow force is activated
+	//	}
+	//}
 
 	for (unsigned int i = 0; i < vecEnemies.size(); i++) {
 
@@ -868,6 +794,7 @@ void Grid::MoveAllEnemies()
 		    //---------- CHECK COLLISION WITH PLAYER - 1 player
 			if (vecEnemies[i]->GetPos() == player.GetPos()) {
 				player.SetLife(player.GetLife() - vecEnemies[i]->GetDamage()); // Player's life is minus by the enemy's contact damage
+				player.Teleport(playerInitPos); // Teleport the player at his starting point
 				sfx_hit.PlayAudio();
 			}
 

@@ -12,9 +12,10 @@ Arrow::Arrow(float a, float b, bool c, char d)
 {
 	m_pos = { a, b, c };
 	m_drop = true; // Because it's not moving nor animated
-	direction = d;
+	m_dir = d;
 	activated = false;
 	m_spriteSize = TextWidth/2;
+	timer = 0;
 	LoadAllTextures();
 }
 
@@ -28,10 +29,12 @@ void Arrow::LoadAllTextures()
 
 void Arrow::Draw()
 {
-	if (direction == 'l')
+	if (m_dir == 'l')
 	{
 		if (activated)
 		{
+			timer += 1;
+
 			glPushMatrix();
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -42,13 +45,18 @@ void Arrow::Draw()
 			glBegin(GL_QUADS);
 			glColor3d(1.0, 1.0, 1.0);
 			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x +  m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x +  m_spriteSize, m_pos.y - m_spriteSize);
 			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x +   m_spriteSize, m_pos.y +   m_spriteSize);
-			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y +   m_spriteSize);
+			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y +   m_spriteSize);
 			glEnd();
 			glDisable(GL_TEXTURE_2D);
 			glPopMatrix();
 			glutPostRedisplay();
+
+			if (timer >= 400) {
+				timer = 0;
+				activated = false;
+			}
 
 		}
 		else
@@ -63,6 +71,85 @@ void Arrow::Draw()
 			glBegin(GL_QUADS);
 			glColor3d(1.0, 1.0, 1.0);
 			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x +   m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x +   m_spriteSize, m_pos.y +   m_spriteSize);
+			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y +   m_spriteSize);
+			glEnd();
+			glDisable(GL_TEXTURE_2D);
+			glPopMatrix();
+			glutPostRedisplay();
+		}
+	}
+
+	if (m_dir == 'r')
+	{
+		if (activated)
+		{
+			timer += 1;
+
+			glPushMatrix();
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glEnable(GL_TEXTURE_2D);
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glBindTexture(GL_TEXTURE_2D, arrow[1]);
+			glBegin(GL_QUADS);
+			glColor3d(1.0, 1.0, 1.0);
+			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x +  m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x +   m_spriteSize, m_pos.y +   m_spriteSize);
+			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y +   m_spriteSize);
+			glEnd();
+			glDisable(GL_TEXTURE_2D);
+			glPopMatrix();
+			glutPostRedisplay();
+
+
+			if (timer >= 400) {
+				timer = 0;
+				activated = false;
+			}
+		}
+		else
+		{
+			glPushMatrix();
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glEnable(GL_TEXTURE_2D);
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glBindTexture(GL_TEXTURE_2D, arrow[0]);
+			glBegin(GL_QUADS);
+			glColor3d(1.0, 1.0, 1.0);
+			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x + m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x + m_spriteSize, m_pos.y + m_spriteSize);
+			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y + m_spriteSize); 
+			glEnd();
+			glDisable(GL_TEXTURE_2D);
+			glPopMatrix();
+			glutPostRedisplay();
+
+		}
+	}
+
+	if (m_dir == 'u')
+	{
+		if (activated)
+		{
+			timer += 1;
+
+			glPushMatrix();
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glEnable(GL_TEXTURE_2D);
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glBindTexture(GL_TEXTURE_2D, arrow[1]);
+			glBegin(GL_QUADS);
+			glColor3d(1.0, 1.0, 1.0);
+			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
 			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x +   m_spriteSize, m_pos.y - m_spriteSize);
 			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x +   m_spriteSize, m_pos.y +   m_spriteSize);
 			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y +   m_spriteSize);
@@ -70,12 +157,15 @@ void Arrow::Draw()
 			glDisable(GL_TEXTURE_2D);
 			glPopMatrix();
 			glutPostRedisplay();
-		}
-	}
 
-	if (direction == 'r')
-	{
-		if (activated)
+
+			if (timer >= 400) {
+				timer = 0;
+				activated = false;
+			}
+
+		}
+		else
 		{
 			glPushMatrix();
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -83,92 +173,26 @@ void Arrow::Draw()
 			glEnable(GL_TEXTURE_2D);
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			glBindTexture(GL_TEXTURE_2D, arrow[1]);
+			glBindTexture(GL_TEXTURE_2D, arrow[0]);
 			glBegin(GL_QUADS);
-			glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
-			glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize); glTexCoord2f(1.0f, 1.0f);
-			glVertex2d(m_pos.x +   m_spriteSize, m_pos.y - m_spriteSize);
-			glTexCoord2f(1.0f, 0.0f);
-			glVertex2d(m_pos.x +   m_spriteSize, m_pos.y +   m_spriteSize);
-			glTexCoord2f(0.0f, 0.0f);
-			glVertex2d(m_pos.x - m_spriteSize, m_pos.y +   m_spriteSize);
+			glColor3d(1.0, 1.0, 1.0);
+			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x + m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x + m_spriteSize, m_pos.y + m_spriteSize);
+			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y + m_spriteSize);
 			glEnd();
 			glDisable(GL_TEXTURE_2D);
 			glPopMatrix();
 			glutPostRedisplay();
 		}
-		else
-		{
-			glPushMatrix();
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glEnable(GL_TEXTURE_2D);
-			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			glBindTexture(GL_TEXTURE_2D, arrow[0]);
-			glBegin(GL_QUADS);
-			glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
-			glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize); glTexCoord2f(1.0f, 1.0f);
-			glVertex2d(m_pos.x +   m_spriteSize, m_pos.y - m_spriteSize); glTexCoord2f(1.0f, 0.0f);
-			glVertex2d(m_pos.x +   m_spriteSize, m_pos.y +   m_spriteSize);
-			glTexCoord2f(0.0f, 0.0f);
-			glVertex2d(m_pos.x - m_spriteSize, m_pos.y +   m_spriteSize);	glEnd();
-			glDisable(GL_TEXTURE_2D);
-			glPopMatrix();
-			glutPostRedisplay();
-
-		}
 	}
 
-	if (direction == 'u')
+	if (m_dir == 'd')
 	{
 		if (activated)
 		{
-			glPushMatrix();
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glEnable(GL_TEXTURE_2D);
-			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			glBindTexture(GL_TEXTURE_2D, arrow[1]);
-			glBegin(GL_QUADS);
-			glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
-			glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize); glTexCoord2f(1.0f, 1.0f);
-			glVertex2d(m_pos.x +   m_spriteSize, m_pos.y - m_spriteSize); glTexCoord2f(1.0f, 0.0f);
-			glVertex2d(m_pos.x +   m_spriteSize, m_pos.y +   m_spriteSize);
-			glTexCoord2f(0.0f, 0.0f);
-			glVertex2d(m_pos.x - m_spriteSize, m_pos.y +   m_spriteSize);	glEnd();
-			glDisable(GL_TEXTURE_2D);
-			glPopMatrix();
-			glutPostRedisplay();
+			timer += 1;
 
-		}
-		else
-		{
-			glPushMatrix();
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glEnable(GL_TEXTURE_2D);
-			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			glBindTexture(GL_TEXTURE_2D, arrow[0]);
-			glBegin(GL_QUADS);
-			glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
-			glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize); glTexCoord2f(1.0f, 1.0f);
-			glVertex2d(m_pos.x +   m_spriteSize, m_pos.y - m_spriteSize); glTexCoord2f(1.0f, 0.0f);
-			glVertex2d(m_pos.x +   m_spriteSize, m_pos.y +   m_spriteSize);
-			glTexCoord2f(0.0f, 0.0f);
-			glVertex2d(m_pos.x - m_spriteSize, m_pos.y +   m_spriteSize);	glEnd();
-			glDisable(GL_TEXTURE_2D);
-			glPopMatrix();
-			glutPostRedisplay();
-		}
-	}
-
-	if (direction == 'd')
-	{
-		if (activated)
-		{
 				glPushMatrix();
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -177,15 +201,21 @@ void Arrow::Draw()
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				glBindTexture(GL_TEXTURE_2D, arrow[1]);
 				glBegin(GL_QUADS);
-				glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize); glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_pos.x +   m_spriteSize, m_pos.y - m_spriteSize); glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_pos.x +   m_spriteSize, m_pos.y +   m_spriteSize);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y +   m_spriteSize);	glEnd();
+				glColor3d(1.0, 1.0, 1.0);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x + m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x + m_spriteSize, m_pos.y + m_spriteSize);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y + m_spriteSize);
+				glEnd();
 				glDisable(GL_TEXTURE_2D);
 				glPopMatrix();
 				glutPostRedisplay();
+
+
+				if (timer >= 400) {
+					timer = 0;
+					activated = false;
+				}
 
 		}
 		else
@@ -198,12 +228,12 @@ void Arrow::Draw()
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				glBindTexture(GL_TEXTURE_2D, arrow[0]);
 				glBegin(GL_QUADS);
-				glColor3d(1.0, 1.0, 1.0); glTexCoord2f(0.0f, 1.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize); glTexCoord2f(1.0f, 1.0f);
-				glVertex2d(m_pos.x +   m_spriteSize, m_pos.y - m_spriteSize); glTexCoord2f(1.0f, 0.0f);
-				glVertex2d(m_pos.x +   m_spriteSize, m_pos.y +   m_spriteSize);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2d(m_pos.x - m_spriteSize, m_pos.y +   m_spriteSize);	glEnd();
+				glColor3d(1.0, 1.0, 1.0);
+				glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x + m_spriteSize, m_pos.y - m_spriteSize);
+				glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x + m_spriteSize, m_pos.y + m_spriteSize);
+				glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y + m_spriteSize);
+				glEnd();
 				glDisable(GL_TEXTURE_2D);
 				glPopMatrix();
 				glutPostRedisplay();
@@ -213,9 +243,9 @@ void Arrow::Draw()
 
 }
 
-void Arrow::activation()
+void Arrow::activation(bool a)
 {
-	activated = true;
+	activated = a;
 }
 
 Arrow::~Arrow()

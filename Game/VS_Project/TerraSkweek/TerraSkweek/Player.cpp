@@ -1,7 +1,7 @@
 #include "Player.h"
 
 extern std::vector<GLuint> texture;
-
+extern const Position playerInitPos;
 
 void Player::LoadAllTextures()
 {
@@ -1158,7 +1158,7 @@ bool Player::IsInvincible()
 
 Player::Player() : Entity()
 {	//m_name = name;
-	m_pos = { 300,300,0 };
+	m_pos = playerInitPos;
 	m_life = 150;
 	m_def = 10;
 	m_dir = 'l';
