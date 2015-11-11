@@ -15,14 +15,15 @@ int yPin = A0;
 
 int x_position = 0;
 int y_position = 0;
-
 int x_direction = 0;
 int y_direction = 0;
 
 int buttonState = 0;
 
-
 //------------------LEDs
+int brightness = 0;    // how bright the LED is
+int fadeAmount = 2;    // how many points to fade the LED by
+
 int led1Pin = 9;
 int led2Pin = 10;
 int led3Pin = 11;
@@ -97,8 +98,8 @@ void loop()
     Serial.println('r');
   }
 
+
   //----------- TIR
-  
  if (digitalRead(12) == HIGH) {
     Serial.println('F');
     // + PLAY TIR SOUND
@@ -117,20 +118,24 @@ void loop()
     statePause = 0;
   }
 
+
   //------------ INVISIBILITE
   analogRead(lux);
-  if (analogRead(lux) > 800) {
+
+  if (analogRead(lux) > 700) {
     Serial.println('V');
   }
-  else if (analogRead(lux) > 600 && analogRead(lux) <= 800){
+  else if (analogRead(lux) > 600 && analogRead(lux) <= 700){
     Serial.println('W');
   }
-  else if (analogRead(lux) > 400 && analogRead(lux) <= 600){
+  else if (analogRead(lux) > 500 && analogRead(lux) <= 600){
     Serial.println('J');
   }
-  else if (analogRead(lux) <= 400) {
+  else if (analogRead(lux) <= 500) {
     Serial.println('I');
   }
+
+  
   //------------- SON
   if (envoi == 'H') {
     // PLAY HURT SOUND
@@ -143,74 +148,68 @@ void loop()
 
 
   //------------ LEDs VIE
+
+  else if (envoi == '7') {
+    analogWrite(led1Pin, 100);
+    analogWrite(led2Pin, 100);
+    analogWrite(led3Pin, 100);
+  }
+  else if (envoi == '6') {
+    analogWrite(led1Pin, 25);
+    analogWrite(led2Pin, 100);
+    analogWrite(led3Pin, 100);
+  }
+  else if (envoi == '5') {
+    analogWrite(led1Pin, 0);
+    analogWrite(led2Pin, 100);
+    analogWrite(led3Pin, 10000);
+  }
+  else if (envoi == '4') {
+    analogWrite(led1Pin, 0);
+    analogWrite(led2Pin, 25);
+    analogWrite(led3Pin, 100);
+  }
   else if (envoi == '3') {
-    analogWrite(led1Pin, HIGH);
-    analogWrite(led2Pin, HIGH);
-    analogWrite(led3Pin, HIGH);
+    analogWrite(led1Pin, 0);
+    analogWrite(led2Pin, 0);
+    analogWrite(led3Pin, 100);
   }
   else if (envoi == '2') {
-    analogWrite(led1Pin, LOW);
-    analogWrite(led2Pin, HIGH);
-    analogWrite(led3Pin, HIGH);
+    analogWrite(led1Pin, 0);
+    analogWrite(led2Pin, 0);
+    analogWrite(led3Pin, 25);
   }
   else if (envoi == '1') {
-    analogWrite(led1Pin, LOW);
-    analogWrite(led2Pin, LOW);
-    analogWrite(led3Pin, HIGH);
+    analogWrite(led1Pin, 0);
+    analogWrite(led2Pin, 0);
+    analogWrite(led3Pin, 0);
   }
   else if (envoi == '0') {
-    analogWrite(led1Pin, LOW);
-    analogWrite(led2Pin, LOW);
-    analogWrite(led3Pin, LOW);
+  analogWrite(led1Pin, brightness);
+  analogWrite(led2Pin, brightness);
+  analogWrite(led3Pin, brightness);
+  brightness = brightness + fadeAmount;
+  if (brightness == 0 || brightness == 150) {
+    fadeAmount = -fadeAmount ;
   }
-
-
-  //------------- VITESSE ENNEMIS
-
-  if (digitalRead(5) > 250) {
-    Serial.println('9');
-  }
-  else if (digitalRead(5) > 150) {
-    Serial.println('8');
-  }
-  else if (digitalRead(5) > 50) {
-    Serial.println('7');
-  }
-
 }
 
 
 
 
 
+  //------------- VITESSE ENNEMIS
 
+  if (digitalRead(5) > 250) {
+    Serial.println('A');
+  }
+  else if (digitalRead(5) > 150) {
+    Serial.println('B');
+  }
+  else if (digitalRead(5) > 50) {
+    Serial.println('C');
+  }
 
-//
-//  // fade in from min to max in increments of 5 points:
-//  for (int fadeValue = 0 ; fadeValue <= 255; fadeValue += 5) {
-//    // sets the value (range from 0 to 255):
-//    analogWrite(led1Pin, fadeValue);
-//    // wait for 30 milliseconds to see the dimming effect
-//    delay(30);
-//  }
-//
-//  // fade out from max to min in increments of 5 points:
-//  for (int fadeValue = 255 ; fadeValue >= 0; fadeValue -= 5) {
-//    // sets the value (range from 0 to 255):
-//    analogWrite(led1Pin, fadeValue);
-//    // wait for 30 milliseconds to see the dimming effect
-//    delay(30);
-//  }
-//
-//
-//
-//
-//  char instruction;
-//  //COLLIDING BORDERS
-//  if(Serial.read() > 0){
-//    analogWrite(led1Pin, Led1_Value);
-//  }
-//  else{
-//    digitalWrite(led1Pin,LOW);
-//  }
+}
+
 
