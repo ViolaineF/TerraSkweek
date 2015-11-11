@@ -9,6 +9,7 @@ const int X_THRESHOLD_HIGH = 515;
 const int Y_THRESHOLD_LOW = 35;
 const int Y_THRESHOLD_HIGH = 515;
 
+int lux = A2;
 int xPin = A1;
 int yPin = A0;
 
@@ -39,9 +40,9 @@ void setup()
   pinMode(xPin, INPUT);
   pinMode(yPin, INPUT);
 
-  pinMode(2, INPUT); // Potentio
+  pinMode(5, INPUT); // Potentio
 
-  pinMode(4, INPUT); // Light sensor
+  pinMode(lux, INPUT); // Light sensor
 
   pinMode(hautParleurPin, OUTPUT); // Haut parleur
 
@@ -67,9 +68,9 @@ void loop()
 
 
   if (x_position > X_THRESHOLD_HIGH) {
-    x_direction = 1;
-  } else if (x_position < X_THRESHOLD_LOW) {
     x_direction = -1;
+  } else if (x_position < X_THRESHOLD_LOW) {
+    x_direction = 1;
   }
 
   if (y_position > Y_THRESHOLD_HIGH) {
@@ -117,13 +118,19 @@ void loop()
   }
 
   //------------ INVISIBILITE
-  if (digitalRead(4) > 150) {
-    Serial.println('I');
-  }
-  else {
+  analogRead(lux);
+  if (analogRead(lux) > 950) {
     Serial.println('V');
   }
-
+  else if (analogRead(lux) > 700 && analogRead(lux) <= 950){
+    Serial.println('W');
+  }
+  else if (analogRead(lux) > 550 && analogRead(lux) <= 700){
+    Serial.println('J');
+  }
+  else if (analogRead(lux) <= 550) {
+    Serial.println('I');
+  }
   //------------- SON
   if (envoi == 'H') {
     // PLAY HURT SOUND
@@ -160,13 +167,13 @@ void loop()
 
   //------------- VITESSE ENNEMIS
 
-  if (digitalRead(2) > 250) {
+  if (digitalRead(5) > 250) {
     Serial.println('9');
   }
-  else if (digitalRead(2) > 150) {
+  else if (digitalRead(5) > 150) {
     Serial.println('8');
   }
-  else if (digitalRead(2) > 50) {
+  else if (digitalRead(5) > 50) {
     Serial.println('7');
   }
 
