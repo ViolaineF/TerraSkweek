@@ -715,12 +715,12 @@ void Grid::DrawEnemies()
 			if (typeid(*vecEnemies[i]) == typeid(Slime_Forest)) { // Slime forest Enemy - drops stats
 				
 				// --------------- CHANCES OF DROP
-				int tier1 = 6; // 10% for the first weapon
-				int tier2 = 6; // second weapon
-				int tier3 = 3; // third weapon
-				int tier4 = 4; // Powder Bag
-				int tier5 = 3; // Freeze power
-				int tier6 = 2; // Invincible power
+				int tier1 = 5; // 10% for the first weapon
+				int tier2 = 15; // second weapon
+				int tier3 = 20; // third weapon
+				int tier4 = 20; // Powder Bag
+				int tier5 = 20; // Freeze power
+				int tier6 = 20; // Invincible power
 
 				int dropType = rand() % 100 + 1; // Give an int between 1 and 100;
 

@@ -44,6 +44,22 @@ void DemonEye_Forest::LoadAllTextures()
 	LoadGLTextures("death", "eye_death_08.png");
 	LoadGLTextures("death", "eye_death_09.png");
 
+
+	LoadGLTextures("freeze", "eye_freeze_01.png");
+	LoadGLTextures("freeze", "eye_freeze_02.png");
+	LoadGLTextures("freeze", "eye_freeze_03.png");
+	LoadGLTextures("freeze", "eye_freeze_04.png");
+	LoadGLTextures("freeze", "eye_freeze_05.png");
+	LoadGLTextures("freeze", "eye_freeze_06.png");
+	LoadGLTextures("freeze", "eye_freeze_07.png");
+	LoadGLTextures("freeze", "eye_freeze_06.png");
+	LoadGLTextures("freeze", "eye_freeze_05.png");
+	LoadGLTextures("freeze", "eye_freeze_04.png");
+	LoadGLTextures("freeze", "eye_freeze_03.png");
+	LoadGLTextures("freeze", "eye_freeze_02.png");
+	LoadGLTextures("freeze", "eye_freeze_01.png");
+	LoadGLTextures("freeze", "eye_freeze_01.png");
+
 }
 
 DemonEye_Forest::DemonEye_Forest(Position pos) : Enemy(pos)
