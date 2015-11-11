@@ -150,9 +150,22 @@ void InterfaceArduino()
 			}
 			else if (incomingData[0] == 'I') { // Player is invisible
 				player.setOpacity(0);
+				cout << "I" << endl;
+			}
+			else if (incomingData[0] == 'J') { // Player is visible
+				player.setOpacity(0.5);
+				cout << "J" << endl;
+
+			}
+			else if (incomingData[0] == 'W') { // Player is visible
+				player.setOpacity(0.25);
+				cout << "W" << endl;
+
 			}
 			else if (incomingData[0] == 'V') { // Player is visible
 				player.setOpacity(1);
+				cout << "V" << endl;
+
 			}
 			else if (incomingData[0] == 'F') { // Player is firing
 				if (inGame) {
@@ -196,8 +209,10 @@ void InterfaceArduino()
 					}
 
 				}
-
-
+				else
+				{
+						menu.Clicking();
+				}
 			}
 			else if (incomingData[0] == 'u') { // Player's Direction
 				player.SwitchDir('u');
