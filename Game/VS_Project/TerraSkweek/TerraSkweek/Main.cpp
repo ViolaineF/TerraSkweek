@@ -168,16 +168,20 @@ void InterfaceArduino()
 				SP->WriteData("2", 1);
 			else if (L <= 0)
 				SP->WriteData("1", 1);
+
+
+			if (incomingData[0] == 'P') { // Game is Paused
+				menu.Pause();
+			}
+
 		}
 		else
 			SP->WriteData("0", 1);
 
 
 
-		if (incomingData[0] == 'P') { // Game is Paused
-			menu.Pause();
-		}
-		else if (incomingData[0] == 'I') { // Player is invisible
+
+		if (incomingData[0] == 'I') { // Player is invisible
 			player.setOpacity(0.1);
 		}
 		else if (incomingData[0] == 'J') { // Player is visible
@@ -258,13 +262,18 @@ void InterfaceArduino()
 			player.SetStillMoving(true);
 		}
 		else if (incomingData[0] == 'A') { // Enemies' speed
-			lvl.SetEnemiesSpeed(25);
+			lvl.SetEnemiesSpeed(18);
+			cout << "A" << endl;
 		}
 		else if (incomingData[0] == 'B') {
-			lvl.SetEnemiesSpeed(18);
+			lvl.SetEnemiesSpeed(12);
+			cout << "B" << endl;
+
 		}
 		else if (incomingData[0] == 'C') {
-			lvl.SetEnemiesSpeed(10);
+			lvl.SetEnemiesSpeed(6);
+			cout << "C" << endl;
+
 		}
 	}
 
@@ -686,7 +695,6 @@ void Display() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	InterfaceArduino();
-	cout << "le joueur tire : " << player.IsFiring() << endl;
 	DrawLevel(); // Affiche le niveau
 	glFlush();		//A remplacer par glutSwapBuffers.
 //	glutSwapBuffers();

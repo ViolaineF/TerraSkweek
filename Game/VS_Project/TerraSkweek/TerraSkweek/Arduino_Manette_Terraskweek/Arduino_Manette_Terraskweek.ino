@@ -8,7 +8,7 @@ const int X_THRESHOLD_HIGH = 515;
 
 const int Y_THRESHOLD_LOW = 35;
 const int Y_THRESHOLD_HIGH = 515;
-
+int pot = A3;
 int lux = A2;
 int xPin = A1;
 int yPin = A0;
@@ -31,7 +31,7 @@ int led3Pin = 11;
 //-----
 
 int statePause = 0;
-
+int stateFire = 0;
 int hautParleurPin = 3;
 
 void setup()
@@ -41,7 +41,7 @@ void setup()
   pinMode(xPin, INPUT);
   pinMode(yPin, INPUT);
 
-  pinMode(5, INPUT); // Potentio
+  pinMode(pot, INPUT); // Potentio
 
   pinMode(lux, INPUT); // Light sensor
 
@@ -100,24 +100,27 @@ void loop()
 
 
   //----------- TIR
- if (digitalRead(12) == HIGH) {
+ if (digitalRead(12) == HIGH && stateFire <= 20) {
     Serial.println('F');
     // + PLAY TIR SOUND
     tone(hautParleurPin, 932, 20);
+    stateFire++;
+  }
+  if (digitalRead(12) == LOW && stateFire > 20) {
+    stateFire = 0;
   }
 
 
   //----------- PAUSE
-  if (digitalRead(13) == HIGH && statePause == 0) {
+  if (digitalRead(13) == HIGH && statePause <= 20) {
     Serial.println('P');
     // + PLAY Pause SOUND
     tone(hautParleurPin, 700, 20);
-    statePause = 1;
+    statePause++;
   }
-  if (digitalRead(13) == LOW && statePause == 1) {
+  if (digitalRead(13) == LOW && statePause > 20) {
     statePause = 0;
   }
-
 
   //------------ INVISIBILITE
   analogRead(lux);
@@ -200,13 +203,13 @@ void loop()
 
   //------------- VITESSE ENNEMIS
 
-  if (digitalRead(5) > 250) {
+  if (analogRead(pot) > 700) {
     Serial.println('A');
   }
-  else if (digitalRead(5) > 150) {
+  else if (analogRead(pot) > 350 && analogRead(pot) <= 700) {
     Serial.println('B');
   }
-  else if (digitalRead(5) > 50) {
+  else if (analogRead(pot) <= 350) {
     Serial.println('C');
   }
 
