@@ -8,7 +8,7 @@ const int X_THRESHOLD_HIGH = 515;
 
 const int Y_THRESHOLD_LOW = 35;
 const int Y_THRESHOLD_HIGH = 515;
-
+int pot = A3;
 int lux = A2;
 int xPin = A1;
 int yPin = A0;
@@ -41,7 +41,7 @@ void setup()
   pinMode(xPin, INPUT);
   pinMode(yPin, INPUT);
 
-  pinMode(5, INPUT); // Potentio
+  pinMode(pot, INPUT); // Potentio
 
   pinMode(lux, INPUT); // Light sensor
 
@@ -200,13 +200,13 @@ void loop()
 
   //------------- VITESSE ENNEMIS
 
-  if (digitalRead(5) > 250) {
+  if (analogRead(pot) > 700) {
     Serial.println('A');
   }
-  else if (digitalRead(5) > 150) {
+  else if (analogRead(pot) > 350 && analogRead(pot) <= 700) {
     Serial.println('B');
   }
-  else if (digitalRead(5) > 50) {
+  else if (analogRead(pot) <= 350) {
     Serial.println('C');
   }
 

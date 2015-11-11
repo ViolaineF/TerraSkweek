@@ -258,13 +258,18 @@ void InterfaceArduino()
 			player.SetStillMoving(true);
 		}
 		else if (incomingData[0] == 'A') { // Enemies' speed
-			lvl.SetEnemiesSpeed(25);
+			lvl.SetEnemiesSpeed(18);
+			cout << "A" << endl;
 		}
 		else if (incomingData[0] == 'B') {
-			lvl.SetEnemiesSpeed(18);
+			lvl.SetEnemiesSpeed(12);
+			cout << "B" << endl;
+
 		}
 		else if (incomingData[0] == 'C') {
-			lvl.SetEnemiesSpeed(10);
+			lvl.SetEnemiesSpeed(6);
+			cout << "C" << endl;
+
 		}
 	}
 
@@ -686,7 +691,6 @@ void Display() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	InterfaceArduino();
-	cout << "le joueur tire : " << player.IsFiring() << endl;
 	DrawLevel(); // Affiche le niveau
 	glFlush();		//A remplacer par glutSwapBuffers.
 //	glutSwapBuffers();

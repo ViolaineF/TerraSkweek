@@ -223,8 +223,6 @@ void Player::Draw(bool a)
 		}
 	}
 
-	cout << m_invincible << endl; 
-
 
 	int vitesse = 50 * (left.size());
 	currentFrame = (currentFrame + 1) % vitesse;
