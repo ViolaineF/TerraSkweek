@@ -790,11 +790,11 @@ void Grid::DrawEnemies()
 				
 				// --------------- CHANCES OF DROP
 				int tier1 = 10; // 10% for the first weapon
-				int tier2 = 10; 
-				int tier3 = 10;
-				int tier4 = 10;
-				int tier5 = 30;
-				int tier6 = 30;
+				int tier2 = 10; // second weapon
+				int tier3 = 10; // third weapon
+				int tier4 = 10; // Powder Bag
+				int tier5 = 30; // Freeze power
+				int tier6 = 30; // Invincible power
 
 				int dropType = rand() % 100 + 1; // Give an int between 1 and 100;
 

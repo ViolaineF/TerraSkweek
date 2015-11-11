@@ -238,11 +238,6 @@ void InterfaceArduino()
 }
 
 
-
-
-
-
-
 /*
 
 //------------------ PRINT IMAGES TO SCREEN
