@@ -196,8 +196,10 @@ void InterfaceArduino()
 					}
 
 				}
-
-
+				else
+				{
+						menu.Clicking();
+				}
 			}
 			else if (incomingData[0] == 'u') { // Player's Direction
 				player.SwitchDir('u');
