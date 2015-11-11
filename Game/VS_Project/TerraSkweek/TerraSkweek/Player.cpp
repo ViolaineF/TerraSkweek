@@ -14,6 +14,8 @@ void Player::LoadAllTextures()
 	LoadGLTextures("left", "Art/player/player_left_03.png");
 	LoadGLTextures("left", "Art/player/player_left_04.png");
 	LoadGLTextures("left", "Art/player/player_left_05.png");
+	LoadGLTextures("left", "Art/player/player_left_06.png");
+	LoadGLTextures("left", "Art/player/player_left_07.png");
 	LoadGLTextures("up", "Art/player/player_left_01.png");
 	LoadGLTextures("up", "Art/player/player_left_02.png");
 	LoadGLTextures("up", "Art/player/player_left_03.png");
