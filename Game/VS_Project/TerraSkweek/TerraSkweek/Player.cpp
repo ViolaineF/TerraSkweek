@@ -8,7 +8,6 @@ void Player::LoadAllTextures()
 	LoadGLTextures("idle", "Art/player/player_idle_01.png");
 	LoadGLTextures("idle", "Art/player/player_idle_02.png");
 	LoadGLTextures("idle", "Art/player/player_idle_03.png");
-	LoadGLTextures("idle", "Art/player/player_idle_04.png");
 	LoadGLTextures("left", "Art/player/player_left_01.png");
 	LoadGLTextures("left", "Art/player/player_left_02.png");
 	LoadGLTextures("left", "Art/player/player_left_03.png");
@@ -16,34 +15,38 @@ void Player::LoadAllTextures()
 	LoadGLTextures("left", "Art/player/player_left_05.png");
 	LoadGLTextures("left", "Art/player/player_left_06.png");
 	LoadGLTextures("left", "Art/player/player_left_07.png");
-	LoadGLTextures("up", "Art/player/player_left_01.png");
-	LoadGLTextures("up", "Art/player/player_left_02.png");
-	LoadGLTextures("up", "Art/player/player_left_03.png");
-	LoadGLTextures("up", "Art/player/player_left_04.png");
+	LoadGLTextures("left", "Art/player/player_left_07.png");
+	LoadGLTextures("up", "Art/player/player_up_01.png");
+	LoadGLTextures("up", "Art/player/player_up_02.png");
+	LoadGLTextures("up", "Art/player/player_up_03.png");
+	LoadGLTextures("up", "Art/player/player_up_04.png");
+	LoadGLTextures("up", "Art/player/player_up_05.png");
+	LoadGLTextures("up", "Art/player/player_up_06.png");
+	LoadGLTextures("up", "Art/player/player_up_07.png");
+	LoadGLTextures("up", "Art/player/player_up_08.png");
+	LoadGLTextures("up", "Art/player/player_up_08.png");
 	LoadGLTextures("down", "Art/player/player_left_01.png");
 	LoadGLTextures("down", "Art/player/player_left_02.png");
 	LoadGLTextures("down", "Art/player/player_left_03.png");
 	LoadGLTextures("down", "Art/player/player_left_04.png");
 	LoadGLTextures("down", "Art/player/player_left_05.png");
+	LoadGLTextures("down", "Art/player/player_left_05.png");
 	LoadGLTextures("fire_idle", "Art/player/player_fire_01.png");
 	LoadGLTextures("fire_idle", "Art/player/player_fire_02.png");
-	LoadGLTextures("fire_idle", "Art/player/player_fire_03.png");
-	LoadGLTextures("fire_idle", "Art/player/player_fire_04.png");
+	LoadGLTextures("fire_idle", "Art/player/player_fire_02.png");
 	LoadGLTextures("fire_left", "Art/player/player_fire_01.png");
 	LoadGLTextures("fire_left", "Art/player/player_fire_02.png");
-	LoadGLTextures("fire_left", "Art/player/player_fire_03.png");
-	LoadGLTextures("fire_left", "Art/player/player_fire_04.png");
+	LoadGLTextures("fire_left", "Art/player/player_fire_02.png");
 	LoadGLTextures("fire_up", "Art/player/player_fire_01.png");
 	LoadGLTextures("fire_up", "Art/player/player_fire_02.png");
-	LoadGLTextures("fire_up", "Art/player/player_fire_03.png");
-	LoadGLTextures("fire_up", "Art/player/player_fire_04.png");
+	LoadGLTextures("fire_up", "Art/player/player_fire_02.png");
 	LoadGLTextures("fire_down", "Art/player/player_fire_01.png");
 	LoadGLTextures("fire_down", "Art/player/player_fire_02.png");
-	LoadGLTextures("fire_down", "Art/player/player_fire_03.png");
-	LoadGLTextures("fire_down", "Art/player/player_fire_04.png");
+	LoadGLTextures("fire_down", "Art/player/player_fire_02.png");
 	LoadGLTextures("p_UI", "Art/player/Hornet&Hero_01.png");
 	LoadGLTextures("p_UI", "Art/player/Hornet&Hero_02.png");
 	LoadGLTextures("p_UI", "Art/player/Hornet&Hero_03.png");
+	LoadGLTextures("p_UI", "Art/player/Hornet&Hero_04.png");
 	LoadGLTextures("p_UI", "Art/player/Hornet&Hero_04.png");
 
 }
@@ -210,15 +213,15 @@ void Player::Draw(bool a)
 	m_mouseMode = !a;
 	//cout << m_life << endl;
 
-	//int vitesse = 100 * (left.size());
-	//currentFrame = (currentFrame + 1) % vitesse;
+	int vitesse = 50 * (left.size());
+	currentFrame = (currentFrame + 1) % vitesse;
 	//unsigned int frame = currentFrame * (left.size()) / vitesse;
 
 
 	if (m_mouseMode)
 	{
 
-		int vitesse = 8;
+		vitesse = 30;
 		currentFrame = (currentFrame + 1) % vitesse;
 		unsigned int frame = currentFrame * (p_UI.size()) / vitesse;
 
@@ -250,9 +253,7 @@ void Player::Draw(bool a)
 
 	else if (!m_mouseMode)
 	{
-		int vitesse = 100 * (left.size());
-		currentFrame = (currentFrame + 1) % vitesse;
-		unsigned int frame = currentFrame * (left.size()) / vitesse;
+		unsigned int frame;
 		
 		if (!m_firing && m_moving)
 		{
@@ -598,6 +599,8 @@ void Player::Draw(bool a)
 
 		else if (m_firing)
 		{
+			vitesse = 150;
+
 			if ((m_life <= 150 && m_life >= 50))
 			{
 				switch (m_dir)
@@ -626,7 +629,7 @@ void Player::Draw(bool a)
 					glDisable(GL_TEXTURE_2D);
 					glPopMatrix();
 
-					if (frame >= fire_idle.size() - 1)
+					if (frame >= fire_idle.size()-1)
 						m_firing = false;
 
 					break;
@@ -655,7 +658,7 @@ void Player::Draw(bool a)
 					glDisable(GL_TEXTURE_2D);
 					glPopMatrix();
 
-					if (frame >= fire_left.size() - 1)
+					if (frame >= (fire_left.size()-1))
 						m_firing = false;
 
 					break;
@@ -672,13 +675,13 @@ void Player::Draw(bool a)
 					glBindTexture(GL_TEXTURE_2D, fire_left[frame]);
 					glBegin(GL_QUADS);
 					glColor4d(1.0, 1.0, 1.0, opacity);
-					glTexCoord2f(1.0f, 1.0f);
-					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
 					glTexCoord2f(0.0f, 1.0f);
+					glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
+					glTexCoord2f(1.0f, 1.0f);
 					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y - m_spriteSize);
-					glTexCoord2f(0.0f, 0.0f);
-					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
 					glTexCoord2f(1.0f, 0.0f);
+					glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
+					glTexCoord2f(0.0f, 0.0f);
 					glVertex2d(m_pos.x - m_spriteSize, m_pos.y +  m_spriteSize);
 					glEnd();
 					glDisable(GL_TEXTURE_2D);
@@ -902,6 +905,7 @@ void Player::Draw(bool a)
 			}
 		}
 		else if (!m_moving) { // not moving, idle
+
 			if (m_life <= 150 && m_life >= 50) {
 				switch (m_dir)
 				{
@@ -1095,7 +1099,6 @@ void Player::Draw(bool a)
 			}
 
 		}
-		
 	}
 	
 }

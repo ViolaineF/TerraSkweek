@@ -556,7 +556,6 @@ void DrawLevel() {
 	if (inGame)
 	{
 		// Translate Map
-		//glTranslatef(-player.GetPos().x + 12, -player.GetPos().y + 8, 0);
 		glTranslatef(-player.GetPos().x + (windowWidth / 2), -player.GetPos().y + (windowHeight / 2), 0);
 
 		// Draw map
@@ -584,12 +583,7 @@ void DrawLevel() {
 			lvl.DrawUpCase();
 		}
 
-
-
-
-
-
-
+		
 		glLoadIdentity();
 		glutSwapBuffers();
 		glPopMatrix();
@@ -622,6 +616,7 @@ void Display() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	InterfaceArduino();
+	cout << "le joueur tire : " << player.IsFiring() << endl;
 	DrawLevel(); // Affiche le niveau
 	glFlush();		//A remplacer par glutSwapBuffers.
 //	glutSwapBuffers();

@@ -322,9 +322,9 @@ void Enemy::Draw()
 			glBegin(GL_QUADS);
 			glColor3d(1.0, 1.0, 1.0);
 			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x +  m_spriteSize, m_pos.y - m_spriteSize);
-			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
-			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y +  m_spriteSize);
+			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x + m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x + m_spriteSize, m_pos.y + m_spriteSize);
+			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y + m_spriteSize);
 
 			glEnd();
 			glDisable(GL_TEXTURE_2D);
@@ -346,9 +346,9 @@ void Enemy::Draw()
 			glColor3d(1.0, 1.0, 1.0);
 
 			glTexCoord2f(0.0f, 1.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x +  m_spriteSize, m_pos.y - m_spriteSize);
-			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x +  m_spriteSize, m_pos.y +  m_spriteSize);
-			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y +  m_spriteSize);
+			glTexCoord2f(1.0f, 1.0f); glVertex2d(m_pos.x + m_spriteSize, m_pos.y - m_spriteSize);
+			glTexCoord2f(1.0f, 0.0f); glVertex2d(m_pos.x + m_spriteSize, m_pos.y + m_spriteSize);
+			glTexCoord2f(0.0f, 0.0f); glVertex2d(m_pos.x - m_spriteSize, m_pos.y + m_spriteSize);
 
 			glEnd();
 			glDisable(GL_TEXTURE_2D);
@@ -430,21 +430,6 @@ void Enemy::Draw()
 		}
 		
 	}
-
-/*	if (afraid == false)
-	{
-		glPushMatrix();
-		glBegin(GL_QUADS);
-
-		glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x - m_spriteSize, m_pos.y - m_spriteSize);
-		glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x + 2*m_spriteSize, m_pos.y - m_spriteSize);
-		glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x + 2* m_spriteSize, m_pos.y + 2* m_spriteSize);
-		glColor3d(0.0, 0.0, 0.0); glVertex2d(m_pos.x - m_spriteSize, m_pos.y + 2* m_spriteSize);
-
-		glEnd();
-		glPopMatrix();
-		glutPostRedisplay();
-	}*/
 }
 
 void Enemy::SetFreeze(bool a)
