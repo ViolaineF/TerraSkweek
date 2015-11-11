@@ -715,37 +715,31 @@ void Grid::DrawEnemies()
 			if (typeid(*vecEnemies[i]) == typeid(Slime_Forest)) { // Slime forest Enemy - drops stats
 				
 				// --------------- CHANCES OF DROP
-				int tier1 = 10; // 10% for the first weapon
-				int tier2 = 10; // second weapon
-				int tier3 = 10; // third weapon
-				int tier4 = 10; // Powder Bag
-				int tier5 = 30; // Freeze power
-				int tier6 = 30; // Invincible power
+				int tier1 = 6; // 10% for the first weapon
+				int tier2 = 6; // second weapon
+				int tier3 = 3; // third weapon
+				int tier4 = 4; // Powder Bag
+				int tier5 = 3; // Freeze power
+				int tier6 = 2; // Invincible power
 
 				int dropType = rand() % 100 + 1; // Give an int between 1 and 100;
 
 				if (dropType >= 1 && dropType <= tier1) { // 10% chance to drop weapon 1
-					cout << "gun1" << endl;
 					vecWeapons.push_back(new Weapon(vecEnemies[i]->GetPos(), true, 1));// Create new weapon sprite
 				}
-				else if (dropType > tier1 && dropType <= tier1+tier2) { // 10%
-					cout << "gun2" << endl;
+				else if (dropType > tier1 && dropType <= tier1+tier2) { 
 					vecWeapons.push_back(new Weapon(vecEnemies[i]->GetPos(), true, 2));
 				}
-				else if (dropType > tier1+tier2 && dropType <= (tier1 + tier2+tier3)) { // 10%
-					cout << "gun3" << endl;
+				else if (dropType > tier1+tier2 && dropType <= (tier1 + tier2+tier3)) { 
 					vecWeapons.push_back(new Weapon(vecEnemies[i]->GetPos(), true, 3));
 				}
-				else if (dropType > (tier1 + tier2 + tier3) && dropType <= (tier1 + tier2 + tier3 +tier4)) { // 10%
-					cout << "powder" << endl;
+				else if (dropType > (tier1 + tier2 + tier3) && dropType <= (tier1 + tier2 + tier3 +tier4)) { 
 					vecCaseAnimated.push_back(new SpecialCase(vecEnemies[i]->GetPos(), "powderBag.png"));
 				}
-				else if (dropType >  (tier1 + tier2 + tier3 + tier4) && dropType <= (tier1 + tier2 + tier3 + tier4+tier5)) { // 25%
-					cout << "powder" << endl;
+				else if (dropType >  (tier1 + tier2 + tier3 + tier4) && dropType <= (tier1 + tier2 + tier3 + tier4+tier5)) {
 					vecCaseAnimated.push_back(new SpecialCase(vecEnemies[i]->GetPos(), "freezePower.png"));
 				}
-				else if (dropType > (tier1 + tier2 + tier3 + tier4 + tier5) && dropType <= (tier1 + tier2 + tier3 + tier4 + tier5+tier6)) { // 25%
-					cout << "powder" << endl;
+				else if (dropType > (tier1 + tier2 + tier3 + tier4 + tier5) && dropType <= (tier1 + tier2 + tier3 + tier4 + tier5+tier6)) { 
 					vecCaseAnimated.push_back(new SpecialCase(vecEnemies[i]->GetPos(), "invinciblePower.png"));
 				}
 							
@@ -792,7 +786,7 @@ void Grid::MoveAllEnemies()
 		if (vecEnemies[i]->Move(player.GetPos(), light)) { // If the enemy is moving, then move it and check, else check nothing
 														  
 		    //---------- CHECK COLLISION WITH PLAYER - 1 player
-			if (vecEnemies[i]->GetPos() == player.GetPos()) {
+			if (vecEnemies[i]->GetPos() == player.GetPos() && player.IsInvincible() == false) {
 				player.SetLife(player.GetLife() - vecEnemies[i]->GetDamage()); // Player's life is minus by the enemy's contact damage
 				player.Teleport(playerInitPos); // Teleport the player at his starting point
 				sfx_hit.PlayAudio();
@@ -863,7 +857,6 @@ void Grid::SpawnMob()
 	int enemyGrade = rand() % 100 + 1; // Give an int between 1 and 100;;
 
 	char biomeChar = m_biome[0];
-	cout << "spawning " << biomeChar << endl;
 
 	switch (biomeChar)
 	{
@@ -877,7 +870,6 @@ void Grid::SpawnMob()
 		break;
 
 	case '2': // Corruption
-		cout << "spawn corrupted mobs" << endl;
 		if (enemyGrade >= 1 && enemyGrade <= 60) { // 60%
 			vecEnemies.push_back(new Slime_Forest(vecSpawner[m_spawnerIndex]->GetPos())); // Add an enemy
 		}

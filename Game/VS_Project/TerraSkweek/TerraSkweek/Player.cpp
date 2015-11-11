@@ -214,7 +214,17 @@ int Player::LoadGLTextures(string type,string name)
 void Player::Draw(bool a)
 {
 	m_mouseMode = !a;
-	//cout << m_life << endl;
+
+	if (m_invincible) {
+		m_timerInvincible += 1;
+		if (m_timerInvincible >= 10000) { // Invincible during 10000 frame of glut
+			m_timerInvincible = 0;
+			m_invincible = false;
+		}
+	}
+
+	cout << m_invincible << endl; 
+
 
 	int vitesse = 50 * (left.size());
 	currentFrame = (currentFrame + 1) % vitesse;
@@ -1168,6 +1178,7 @@ Player::Player() : Entity()
 	opacity = 1;
 	m_powderbag = false;
 	m_invincible = false; 
+	m_timerInvincible = 0;
 }
 
 void Player::setOpacity(float light)
