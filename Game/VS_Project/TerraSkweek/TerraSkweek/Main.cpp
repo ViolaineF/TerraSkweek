@@ -44,11 +44,12 @@ Menu menu;
 Grid lvl("0menu");
 
 //-------------------- CREATE VARs FOR ARDUINO'S COMM
-Serial* SP;
+Serial* SP = new Serial("COM4");    // adjust as needed
+
 char incomingData[256] = "";	// don't forget to pre-allocate memory
 
-int dataLength;
-int readResult;
+int dataLength = 256;
+int readResult = 0;
 
 
 //----------------------A SUPPRIMER POUR UTILISER LE DETECTEUR DE LUMIERE
@@ -84,16 +85,11 @@ void main() {
 	cout << "ok";
 
 	//--------------------- LOAD ARDUINO'S COMMUNICATION
-	Serial* SP = new Serial("COM5");    // adjust as needed
 
 	if (SP->IsConnected())
 		printf("We're connected");
 
 	//char incomingData[256] = "";	// don't forget to pre-allocate memory
-
-	dataLength = 256;
-	readResult = 0;
-	Sleep(500);
 
 
 
@@ -129,7 +125,7 @@ void main() {
 	glutTimerFunc(enemySpawnFrequency, ActivateSpawnMob, 0);
 	//glutIdleFunc(Idle);
 
-	InterfaceArduino();
+
 
 	glutMainLoop();
 }
@@ -138,17 +134,18 @@ void main() {
 
 void InterfaceArduino()
 {
-	while (SP->IsConnected())
-	{
 		readResult = SP->ReadData(incomingData, dataLength);
 
 		if (readResult != -1) {
+			/*
 			if (incomingData[0] == 'B') {
 				cout << "bouclier" << endl;
 				//SP->WriteData("b", 1);
 				//Sleep(150); ------ si on envoie des données
 			}
-			else if (incomingData[0] == 'P') { // Game is Paused
+			else 
+			*/
+			if (incomingData[0] == 'P') { // Game is Paused
 				menu.Pause();
 			}
 			else if (incomingData[0] == 'I') { // Player is invisible
@@ -232,7 +229,6 @@ void InterfaceArduino()
 				lvl.SetEnemiesSpeed(10);
 			}
 		}
-	}
 
 	//Serial.read() ---- pour éteindre / allumer les leds
 }
@@ -625,6 +621,7 @@ void Display() {
 	glClearColor(1.0, 1.0, 1.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
+	InterfaceArduino();
 	DrawLevel(); // Affiche le niveau
 	glFlush();		//A remplacer par glutSwapBuffers.
 //	glutSwapBuffers();
