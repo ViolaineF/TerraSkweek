@@ -168,16 +168,20 @@ void InterfaceArduino()
 				SP->WriteData("2", 1);
 			else if (L <= 0)
 				SP->WriteData("1", 1);
+
+
+			if (incomingData[0] == 'P') { // Game is Paused
+				menu.Pause();
+			}
+
 		}
 		else
 			SP->WriteData("0", 1);
 
 
 
-		if (incomingData[0] == 'P') { // Game is Paused
-			menu.Pause();
-		}
-		else if (incomingData[0] == 'I') { // Player is invisible
+
+		if (incomingData[0] == 'I') { // Player is invisible
 			player.setOpacity(0.1);
 		}
 		else if (incomingData[0] == 'J') { // Player is visible

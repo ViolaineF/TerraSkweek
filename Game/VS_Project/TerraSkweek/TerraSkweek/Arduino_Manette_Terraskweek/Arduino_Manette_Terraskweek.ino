@@ -31,7 +31,7 @@ int led3Pin = 11;
 //-----
 
 int statePause = 0;
-
+int stateFire = 0;
 int hautParleurPin = 3;
 
 void setup()
@@ -100,24 +100,27 @@ void loop()
 
 
   //----------- TIR
- if (digitalRead(12) == HIGH) {
+ if (digitalRead(12) == HIGH && stateFire <= 20) {
     Serial.println('F');
     // + PLAY TIR SOUND
     tone(hautParleurPin, 932, 20);
+    stateFire++;
+  }
+  if (digitalRead(12) == LOW && stateFire > 20) {
+    stateFire = 0;
   }
 
 
   //----------- PAUSE
-  if (digitalRead(13) == HIGH && statePause == 0) {
+  if (digitalRead(13) == HIGH && statePause <= 20) {
     Serial.println('P');
     // + PLAY Pause SOUND
     tone(hautParleurPin, 700, 20);
-    statePause = 1;
+    statePause++;
   }
-  if (digitalRead(13) == LOW && statePause == 1) {
+  if (digitalRead(13) == LOW && statePause > 20) {
     statePause = 0;
   }
-
 
   //------------ INVISIBILITE
   analogRead(lux);
