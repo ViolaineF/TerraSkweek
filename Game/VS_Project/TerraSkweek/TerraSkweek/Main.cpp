@@ -133,118 +133,140 @@ void main() {
 
 
 
+
+
 void InterfaceArduino()
 {
-		readResult = SP->ReadData(incomingData, dataLength);
 
-		if (readResult != -1) {
-			/*
-			if (incomingData[0] == 'B') {
-				cout << "bouclier" << endl;
-				//SP->WriteData("b", 1);
-				//Sleep(150); ------ si on envoie des données
-			}
-			else 
-			*/
-			if (incomingData[0] == 'P') { // Game is Paused
-				menu.Pause();
-			}
-			else if (incomingData[0] == 'I') { // Player is invisible
-				player.setOpacity(0);
-				cout << "I" << endl;
-			}
-			else if (incomingData[0] == 'J') { // Player is visible
-				player.setOpacity(0.5);
-				cout << "J" << endl;
 
-			}
-			else if (incomingData[0] == 'W') { // Player is visible
-				player.setOpacity(0.25);
-				cout << "W" << endl;
+	readResult = SP->ReadData(incomingData, dataLength);
 
-			}
-			else if (incomingData[0] == 'V') { // Player is visible
-				player.setOpacity(1);
-				cout << "V" << endl;
+	if (readResult != -1) {
+		/*
+		if (incomingData[0] == 'B') {
+		cout << "bouclier" << endl;
+		//SP->WriteData("b", 1);
+		//Sleep(150); ------ si on envoie des données
+		}
+		else
+		*/
 
-			}
-			else if (incomingData[0] == 'F') { // Player is firing
-				if (inGame) {
 
-					if (player.IsFiring() == false)
-					{
-						if (!(player.HasPowderBag())) { // As long has player has no powder bag
-							player.Attack();
-							lvl.NewFire(player.GetWeapon(), player.GetDir(), player.GetPos());
-						}
-						else { // consume powder bag and convert cases
+		int L = player.GetLife();
+		if (inGame) {
+			if (L <= 150 && L > 125)
+				SP->WriteData("7", 1);
+			else if (L <= 125 && L > 100)
+				SP->WriteData("6", 1);
+			else if (L <= 100 && L > 75)
+				SP->WriteData("5", 1);
+			else if (L <= 75 && L > 50)
+				SP->WriteData("4", 1);
+			else if (L <= 50 && L > 25)
+				SP->WriteData("3", 1);
+			else if (L <= 25 && L > 0)
+				SP->WriteData("2", 1);
+			else if (L <= 0)
+				SP->WriteData("1", 1);
+		}
+		else
+			SP->WriteData("0", 1);
 
-							int X = round(player.GetPos().x / TextWidth + 0.4);
-							int Y = round(player.GetPos().y / TextWidth + 0.4);
 
-							switch (player.GetDir())
-							{
-							case 'u':
-								for (int i = player.GetPos().y / TextWidth; i > player.GetPos().y / TextWidth - 5; i--) {
-									lvl.SetMap(X, i, 4);
-								}
-								break;
-							case 'd':
-								for (int i = player.GetPos().y / TextWidth; i < player.GetPos().y / TextWidth + 5; i++) {
-									lvl.SetMap(X, i, 4);
-								}
-								break;
-							case 'r':
-								for (int i = player.GetPos().x / TextWidth; i < player.GetPos().x / TextWidth + 5; i++) {
-									lvl.SetMap(i, Y, 4);
-								}
-								break;
-							case 'l':
-								for (int i = player.GetPos().x / TextWidth; i > player.GetPos().x / TextWidth - 5; i--) {
-									lvl.SetMap(i, Y, 4);
-								}
-								break;
-							}
-							player.SetPowderBag(false);
-						}
-					}
 
-				}
-				else
+		if (incomingData[0] == 'P') { // Game is Paused
+			menu.Pause();
+		}
+		else if (incomingData[0] == 'I') { // Player is invisible
+			player.setOpacity(0.1);
+		}
+		else if (incomingData[0] == 'J') { // Player is visible
+			player.setOpacity(0.4);
+		}
+		else if (incomingData[0] == 'W') { // Player is visible
+			player.setOpacity(0.70);
+
+		}
+		else if (incomingData[0] == 'V') { // Player is visible
+			player.setOpacity(1.0);
+		}
+		else if (incomingData[0] == 'F') { // Player is firing
+			if (inGame) {
+
+				if (player.IsFiring() == false)
 				{
-						menu.Clicking();
+					if (!(player.HasPowderBag())) { // As long has player has no powder bag
+						player.Attack();
+						lvl.NewFire(player.GetWeapon(), player.GetDir(), player.GetPos());
+					}
+					else { // consume powder bag and convert cases
+
+						int X = round(player.GetPos().x / TextWidth + 0.4);
+						int Y = round(player.GetPos().y / TextWidth + 0.4);
+
+						switch (player.GetDir())
+						{
+						case 'u':
+							for (int i = player.GetPos().y / TextWidth; i > player.GetPos().y / TextWidth - 5; i--) {
+								lvl.SetMap(X, i, 4);
+							}
+							break;
+						case 'd':
+							for (int i = player.GetPos().y / TextWidth; i < player.GetPos().y / TextWidth + 5; i++) {
+								lvl.SetMap(X, i, 4);
+							}
+							break;
+						case 'r':
+							for (int i = player.GetPos().x / TextWidth; i < player.GetPos().x / TextWidth + 5; i++) {
+								lvl.SetMap(i, Y, 4);
+							}
+							break;
+						case 'l':
+							for (int i = player.GetPos().x / TextWidth; i > player.GetPos().x / TextWidth - 5; i--) {
+								lvl.SetMap(i, Y, 4);
+							}
+							break;
+						}
+						player.SetPowderBag(false);
+					}
 				}
+
 			}
-			else if (incomingData[0] == 'u') { // Player's Direction
-				player.SwitchDir('u');
-				player.SetMoving(true);
-				player.SetStillMoving(true);
-			}
-			else if (incomingData[0] == 'd') {
-				player.SwitchDir('d');
-				player.SetMoving(true);
-				player.SetStillMoving(true);
-			}
-			else if (incomingData[0] == 'r') {
-				player.SwitchDir('r');
-				player.SetMoving(true);
-				player.SetStillMoving(true);
-			}
-			else if (incomingData[0] == 'l') {
-				player.SwitchDir('l');
-				player.SetMoving(true);
-				player.SetStillMoving(true);
-			}
-			else if (incomingData[0] == '9') { // Enemies' speed
-				lvl.SetEnemiesSpeed(25);
-			}
-			else if (incomingData[0] == '8') {
-				lvl.SetEnemiesSpeed(18);
-			}
-			else if (incomingData[0] == '7') {
-				lvl.SetEnemiesSpeed(10);
+			else
+			{
+				menu.Clicking();
 			}
 		}
+		else if (incomingData[0] == 'u') { // Player's Direction
+			player.SwitchDir('u');
+			player.SetMoving(true);
+			player.SetStillMoving(true);
+		}
+		else if (incomingData[0] == 'd') {
+			player.SwitchDir('d');
+			player.SetMoving(true);
+			player.SetStillMoving(true);
+		}
+		else if (incomingData[0] == 'r') {
+			player.SwitchDir('r');
+			player.SetMoving(true);
+			player.SetStillMoving(true);
+		}
+		else if (incomingData[0] == 'l') {
+			player.SwitchDir('l');
+			player.SetMoving(true);
+			player.SetStillMoving(true);
+		}
+		else if (incomingData[0] == 'A') { // Enemies' speed
+			lvl.SetEnemiesSpeed(25);
+		}
+		else if (incomingData[0] == 'B') {
+			lvl.SetEnemiesSpeed(18);
+		}
+		else if (incomingData[0] == 'C') {
+			lvl.SetEnemiesSpeed(10);
+		}
+	}
 
 	//Serial.read() ---- pour éteindre / allumer les leds
 }
