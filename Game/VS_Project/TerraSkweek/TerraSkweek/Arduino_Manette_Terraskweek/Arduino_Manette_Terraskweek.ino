@@ -119,16 +119,16 @@ void loop()
 
   //------------ INVISIBILITE
   analogRead(lux);
-  if (analogRead(lux) > 950) {
+  if (analogRead(lux) > 800) {
     Serial.println('V');
   }
-  else if (analogRead(lux) > 700 && analogRead(lux) <= 950){
+  else if (analogRead(lux) > 600 && analogRead(lux) <= 800){
     Serial.println('W');
   }
-  else if (analogRead(lux) > 550 && analogRead(lux) <= 700){
+  else if (analogRead(lux) > 400 && analogRead(lux) <= 600){
     Serial.println('J');
   }
-  else if (analogRead(lux) <= 550) {
+  else if (analogRead(lux) <= 400) {
     Serial.println('I');
   }
   //------------- SON
