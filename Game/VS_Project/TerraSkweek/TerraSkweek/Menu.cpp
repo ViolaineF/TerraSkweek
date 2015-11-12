@@ -358,9 +358,7 @@ void Menu::Display()
 		height = width / ratio;
 		paddingV = windowHeight / 8;
 
-
 		b_continue.SetPos({ (windowWidth / 2) - (width / 2), paddingV + 1.0f*height,0 });
-
 
 		if ((b_continue.GetPos().x) < player.GetPos().x && player.GetPos().x < (b_continue.GetPos().x + width) // Horizontal zone
 			&&
@@ -388,7 +386,7 @@ void Menu::Display()
 
 		b_quit.SetPos({ (windowWidth / 2) - (width / 2), paddingV + 1.2f*height,0 });
 
-		// Draw load game button
+		// Draw quit game button
 		if ((b_quit.GetPos().x) < player.GetPos().x && player.GetPos().x < (b_quit.GetPos().x + width) // Horizontal zone
 			&&
 			(b_quit.GetPos().y) < player.GetPos().y && player.GetPos().y < (b_quit.GetPos().y + height)) // vertical zone
@@ -418,43 +416,82 @@ void Menu::Display()
 
 	case 5:
 		// Victory Screen
-		sp = 100;
-		curtF = (curtF + 1) % sp;
-		fr = curtF / sp;
+		lvl.ClearMap();
+		lvl.ChangeMap(0);
 
 
 		ratio = 3.00;
 		width = (windowWidth * 40) / 100.0;
 		height = width / ratio;
 		paddingV = windowHeight / 10;
+		PrintImg((windowWidth / 2) - (width / 2), paddingV, height, width, UI, 4);
 
-		PrintImg((windowWidth / 2) - (width / 2), paddingV, height, width, UI, 3);
+		// Update Ratio of button 2
+		ratio = 0.43;
+		width = (windowWidth * 10) / 100.0;
+		height = width / ratio;
+		paddingV = windowHeight / 8;
 
-		if (fr == 100) {
-			screenID = 1;
-			fr = 0;
+		b_quit.SetPos({ (windowWidth / 2) - (width / 2), paddingV + 1.2f*height,0 });
+
+		// Draw quit game button
+		if ((b_quit.GetPos().x) < player.GetPos().x && player.GetPos().x < (b_quit.GetPos().x + width) // Horizontal zone
+			&&
+			(b_quit.GetPos().y) < player.GetPos().y && player.GetPos().y < (b_quit.GetPos().y + height)) // vertical zone
+		{
+			b_quit.OnOver();
+			b_quit.Draw(width, height);
+
+			if (click)
+			{
+
+				cout << "lvl = 0" << endl;
+				inGame = false;
+				screenID = 0;
+			}
 		}
+		else
+			b_quit.Draw(width, height);
+
 		break;
 
 	case 6:
 		// Defeat Screen
-
-		sp = 100;
-		curtF = (curtF + 1) % sp;
-		fr = curtF / sp;
+		lvl.ClearMap();
+		lvl.ChangeMap(0);
 
 		ratio = 3.00;
 		width = (windowWidth * 40) / 100.0;
 		height = width / ratio;
 		paddingV = windowHeight / 10;
+		PrintImg((windowWidth / 2) - (width / 2), paddingV, height, width, UI, 5);
 
-		PrintImg((windowWidth / 2) - (width / 2), paddingV, height, width, UI, 3);
+		// Update Ratio of button 2
+		ratio = 0.43;
+		width = (windowWidth * 10) / 100.0;
+		height = width / ratio;
+		paddingV = windowHeight / 8;
 
+		b_quit.SetPos({ (windowWidth / 2) - (width / 2), paddingV + 1.2f*height,0 });
 
-		if (fr == 100) {
-			screenID = 1;
-			fr = 0;
+		// Draw quit game button
+		if ((b_quit.GetPos().x) < player.GetPos().x && player.GetPos().x < (b_quit.GetPos().x + width) // Horizontal zone
+			&&
+			(b_quit.GetPos().y) < player.GetPos().y && player.GetPos().y < (b_quit.GetPos().y + height)) // vertical zone
+		{
+			b_quit.OnOver();
+			b_quit.Draw(width, height);
+
+			if (click)
+			{
+
+				cout << "lvl = 0" << endl;
+				inGame = false;
+				screenID = 0;
+			}
 		}
+		else
+			b_quit.Draw(width, height);
 		break;
 	}
 	click = false;

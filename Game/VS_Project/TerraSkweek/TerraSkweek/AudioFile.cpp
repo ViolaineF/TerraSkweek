@@ -32,7 +32,7 @@ void AudioFile::PlayAudio()
 {
 	if (m_sound) { // if it's a sound
 
-		sound.setVolume(8);
+		sound.setVolume(22);
 		sound.setBuffer(buffer);
 
 		if (!sound.Stopped)
@@ -41,6 +41,8 @@ void AudioFile::PlayAudio()
 		}
 	}
 	else { // if it's a background music
+		sound.setVolume(6);
+
 		music.play();
 		music.setLoop(true);
 	}

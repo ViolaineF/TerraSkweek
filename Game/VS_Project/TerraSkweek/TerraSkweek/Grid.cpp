@@ -222,7 +222,6 @@ void Grid::ChangeMap(int choice)
 
 		m_maxMobs = 15;
 
-		vecTNT.push_back(new TNT(3, 3, 1));
 		vecArrow.push_back(new Arrow(7, 7, 1, 'l'));
 		vecArrow.push_back(new Arrow(7, 6, 1, 'r'));
 		vecArrow.push_back(new Arrow(8, 5, 1, 'd'));

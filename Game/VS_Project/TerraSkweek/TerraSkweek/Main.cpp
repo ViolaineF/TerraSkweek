@@ -179,16 +179,22 @@ void InterfaceArduino()
 
 		if (incomingData[0] == 'I') { // Player is invisible
 			player.setOpacity(0.1);
+			light = 0.1;
+
 		}
 		else if (incomingData[0] == 'J') { // Player is visible
 			player.setOpacity(0.4);
+			light = 0.4;
+
 		}
 		else if (incomingData[0] == 'W') { // Player is visible
 			player.setOpacity(0.70);
+			light = 0.70;
 
 		}
 		else if (incomingData[0] == 'V') { // Player is visible
 			player.setOpacity(1.0);
+			light = 1.0;
 		}
 		else if (incomingData[0] == 'F') { // Player is firing
 			if (inGame) {
@@ -242,17 +248,17 @@ void InterfaceArduino()
 			player.SetMoving(true);
 			player.SetStillMoving(true);
 		}
-		else if (incomingData[0] == 'd') {
+		else if (incomingData[0] == 'd') { // Player's Direction
 			player.SwitchDir('d');
 			player.SetMoving(true);
 			player.SetStillMoving(true);
 		}
-		else if (incomingData[0] == 'r') {
+		else if (incomingData[0] == 'r') { // Player's Direction
 			player.SwitchDir('r');
 			player.SetMoving(true);
 			player.SetStillMoving(true);
 		}
-		else if (incomingData[0] == 'l') {
+		else if (incomingData[0] == 'l') { // Player's Direction
 			player.SwitchDir('l');
 			player.SetMoving(true);
 			player.SetStillMoving(true);
@@ -261,12 +267,12 @@ void InterfaceArduino()
 			lvl.SetEnemiesSpeed(18);
 			cout << "A" << endl;
 		}
-		else if (incomingData[0] == 'B') {
+		else if (incomingData[0] == 'B') { // Enemies' speed
 			lvl.SetEnemiesSpeed(12);
 			cout << "B" << endl;
 
 		}
-		else if (incomingData[0] == 'C') {
+		else if (incomingData[0] == 'C') { // Enemies' speed
 			lvl.SetEnemiesSpeed(6);
 			cout << "C" << endl;
 
@@ -347,14 +353,14 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			if (light > 1 && !(player.GetPos().z))
+			if (light > 0.4 && !(player.GetPos().z))
 				lvl.SetMap(pXleft, pYup, 4);
 				//cout << "Map convertie avec la valeur : "<< lvl.Map(pXleftConv, pYupConv) << endl;
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
-			if (light > 1 && !(player.GetPos().z)) {
+			if (light > 0.4 && !(player.GetPos().z)) {
 				lvl.SetMap(pXleft, pYup, 4);
 
 				for (int i = -1; i < 2; i++) {
@@ -377,13 +383,13 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert	
-			if (light > 1 && !(player.GetPos().z))
+			if (light > 0.4 && !(player.GetPos().z))
 			lvl.SetMap(pXright, pYup, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
-			if (light > 1 && !(player.GetPos().z)) {
+			if (light > 0.4 && !(player.GetPos().z)) {
 				lvl.SetMap(pXright, pYup, 4);
 
 				for (int i = -1; i < 2; i++) {
@@ -408,13 +414,13 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			if (light > 1 && !(player.GetPos().z))
+			if (light > 0.4 && !(player.GetPos().z))
 			lvl.SetMap(pXleft, pYdown, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
-			if (light > 1 && !(player.GetPos().z)) {
+			if (light > 0.4 && !(player.GetPos().z)) {
 				lvl.SetMap(pXleft, pYdown, 4);
 
 				for (int i = -1; i < 2; i++) {
@@ -436,13 +442,13 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			if (light > 1 && !(player.GetPos().z))
+			if (light > 0.4 && !(player.GetPos().z))
 			lvl.SetMap(pXright, pYdown, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
-			if (light > 1 && !(player.GetPos().z)) {
+			if (light > 0.4 && !(player.GetPos().z)) {
 				lvl.SetMap(pXright, pYdown, 4);
 
 				for (int i = -1; i < 2; i++) {
@@ -467,13 +473,13 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			if (light > 1 && !(player.GetPos().z))
+			if (light > 0.4 && !(player.GetPos().z))
 			lvl.SetMap(pXright, pYdown, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
-			if (light > 1 && !(player.GetPos().z)) {
+			if (light > 0.4 && !(player.GetPos().z)) {
 				lvl.SetMap(pXright, pYdown, 4);
 
 				for (int i = -1; i < 2; i++) {
@@ -495,13 +501,13 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			if (light > 1 && !(player.GetPos().z))
+			if (light > 0.4 && !(player.GetPos().z))
 				lvl.SetMap(pXright, pYup, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
-			if (light > 1 && !(player.GetPos().z)){
+			if (light > 0.4 && !(player.GetPos().z)){
 				lvl.SetMap(pXright, pYup, 4);
 
 				for (int i = -1; i < 2; i++) {
@@ -526,13 +532,13 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			if (light > 1 && !(player.GetPos().z))
+			if (light > 0.4 && !(player.GetPos().z))
 			lvl.SetMap(pXleft, pYup, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
-			if (light > 1 && !(player.GetPos().z)) {
+			if (light > 0.4 && !(player.GetPos().z)) {
 				lvl.SetMap(pXleft, pYup, 4);
 
 				for (int i = -1; i < 2; i++) {
@@ -554,13 +560,13 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			if (light > 1 && !(player.GetPos().z))
+			if (light > 0.4 && !(player.GetPos().z))
 			lvl.SetMap(pXleft, pYdown, 4);
 			break;
 		case 2: //Ground converted
 			break;
 		case 3: //Semi-converted case
-			if (light > 1 && !(player.GetPos().z)) {
+			if (light > 0.4 && !(player.GetPos().z)) {
 				lvl.SetMap(pXleft, pYdown, 4);
 
 				for (int i = -1; i < 2; i++) {
