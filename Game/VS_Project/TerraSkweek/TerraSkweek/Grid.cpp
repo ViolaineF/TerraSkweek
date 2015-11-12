@@ -172,7 +172,7 @@ void Grid::ChangeMap(int choice)
 	{
 	case 0:// Menu
 		bgm_menu.PlayAudio();
-
+		bgm_lvl.StopAudio();
 		m_biome = "0menu";
 		m_maxMobs = 0;
 		LoadAllTextures();
@@ -193,7 +193,7 @@ void Grid::ChangeMap(int choice)
 
 	case 1:// Forest
 		bgm_menu.StopAudio();
-
+		bgm_lvl.PlayAudio();
 		m_biome = "1forest";
 
 		m_maxMobs = 10;
@@ -216,6 +216,7 @@ void Grid::ChangeMap(int choice)
 
 	case 2:// corruption		
 		bgm_menu.StopAudio();
+		bgm_lvl.PlayAudio();
 
 		m_biome = "2corruption";
 
@@ -245,6 +246,7 @@ void Grid::ChangeMap(int choice)
 
 	case 3:// Crimson
 		bgm_menu.StopAudio();
+		bgm_lvl.PlayAudio();
 
 		m_biome = "3crimson";
 		
@@ -268,6 +270,7 @@ void Grid::ChangeMap(int choice)
 
 	case 4:// Hallow
 		bgm_menu.StopAudio();
+		bgm_lvl.PlayAudio();
 
 		m_biome = "4hallow";
 		LoadAllTextures();
