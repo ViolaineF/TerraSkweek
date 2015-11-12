@@ -65,7 +65,8 @@ void DemonEye_Forest::LoadAllTextures()
 DemonEye_Forest::DemonEye_Forest(Position pos) : Enemy(pos)
 {
 	m_pos = pos;
-	m_life = 1;
+	m_life = 20;
+	m_damage = 30;
 	m_def = 1;
 	m_dir = 'd';
 	LoadAllTextures();

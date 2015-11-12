@@ -68,17 +68,17 @@ Weapon::Weapon(int type, char dir, Position pos)
 	switch (type)
 	{
 	case 1 : // Simple Fire
-		m_damage = 1;
+		m_damage = 5;
 		m_speed = 10;
 		break;
 
 	case 2: // Cross fire
-		m_damage = 2;
+		m_damage = 10;
 		m_speed = 15;
 		break;
 
 	case 3: // Diag fire
-		m_damage = 2;
+		m_damage = 20;
 		m_speed = 15;
 		break;
 

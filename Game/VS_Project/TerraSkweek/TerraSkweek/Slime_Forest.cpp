@@ -4,7 +4,8 @@
 Slime_Forest::Slime_Forest(Position pos) : Enemy(pos)
 {
 	m_pos = pos;
-	m_life = 1;
+	m_life = 10;
+	m_damage = 20;
 	m_def = 1;
 	m_dir = 'd';
 	LoadAllTextures();

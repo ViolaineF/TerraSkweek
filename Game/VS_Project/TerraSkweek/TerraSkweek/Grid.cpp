@@ -583,12 +583,12 @@ void Grid::DrawSpecialCases()
 		if (vecCaseAnimated[i]->Draw()) {// If the animation is complete ...
 
 			if (typeid(*vecCaseAnimated[i]) == typeid(SimpleConversion)) {
-				SetMap(vecCaseAnimated[i]->GetPos().x/TextWidth, vecCaseAnimated[i]->GetPos().y/TextWidth, 2); // ... Convert floor
+				SetMap((vecCaseAnimated[i]->GetPos().x)/TextWidth, (vecCaseAnimated[i]->GetPos().y)/TextWidth, 2); // ... Convert floor
 				m_score = m_score + 1;	// SCORE + converted tile
 			}
 
 			if (typeid(*vecCaseAnimated[i]) == typeid(CrackedFloor)) {
-				SetMap(vecCaseAnimated[i]->GetPos().x/TextWidth, vecCaseAnimated[i]->GetPos().y/TextWidth, 6); // ... Convert floor
+				SetMap((vecCaseAnimated[i]->GetPos().x)/TextWidth, (vecCaseAnimated[i]->GetPos().y)/TextWidth, 6); // ... Convert floor
 				m_score = m_score + 1;	// SCORE + converted tile
 			}
 
@@ -601,13 +601,21 @@ void Grid::DrawSpecialCases()
 		}
 		else if (vecCaseAnimated[i]->GetPos() == player.GetPos()) {
 
-			if (typeid(*vecCaseAnimated[i]) == typeid(CrackedFloor) && light>1) { //------------- PLAYER IS ON CRACKED FLOOR
+			if (typeid(*vecCaseAnimated[i]) == typeid(CrackedFloor) && light>0.4) { //------------- PLAYER IS ON CRACKED FLOOR
 				vecCaseAnimated[i]->SetAnimated(true);
 				//------------------PLAY SOUND
 				sfx_gap.PlayAudio();
 			}
 
 			else if (typeid(*vecCaseAnimated[i]) == typeid(SemiConverted) && light >1) { //--------------- PLAYER IS ON SEMI CONVERTED CASE
+				if (light > 0.4) {
+					SetMap((vecCaseAnimated[i]->GetPos().x)/TextWidth, (vecCaseAnimated[i]->GetPos().y)/TextWidth, 4);
+					for (int i = -1; i < 2; i++) {
+						for (int j = -1; j < 2; j++) {
+							SetMap((vecCaseAnimated[i]->GetPos().x) / TextWidth + i, (vecCaseAnimated[i]->GetPos().y) / TextWidth + j, 4);
+						}
+					}
+				}
 				vecCaseAnimated[i]->SetAnimated(true);
 			}
 
