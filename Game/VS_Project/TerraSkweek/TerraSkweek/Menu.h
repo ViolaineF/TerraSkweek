@@ -11,6 +11,7 @@ private:
 	vector<GLuint> story;
 	int screenID;
 	int currentFrame;
+	int curtF;
 	bool click;
 	Button b_newGame{ 5.93 };
 	Button b_loadGame{ 6.66 };

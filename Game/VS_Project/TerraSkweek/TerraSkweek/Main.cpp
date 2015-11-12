@@ -10,6 +10,7 @@ int windowWidth = 200;
 int windowHeight = 200;
 extern const int TextWidth = 75;
 extern const Position playerInitPos = { 750, 750, 0 };
+extern const Position playerMenuPos = { 300, 300, 0 };
 
 
 //------------------LOADING MAP TEXTURES

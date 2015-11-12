@@ -7,6 +7,7 @@ extern Player player;
 extern float light;
 string m_biome;
 extern const Position playerInitPos;
+extern const Position playerMenuPos;
 
 int mapMenu[20][20] = {
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -172,7 +173,7 @@ void Grid::ChangeMap(int choice)
 		m_maxMobs = 0;
 		LoadAllTextures();
 
-		player.Teleport(playerInitPos);
+		player.Teleport(playerMenuPos);
 
 		m_rows = 20;
 		m_lignes = 20;

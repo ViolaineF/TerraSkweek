@@ -44,6 +44,9 @@ void Menu::LoadAllTextures()
 	LoadGLTextures("UI", directory + "title.png"); // 0
 	LoadGLTextures("UI", directory + "water.png"); // 1
 	LoadGLTextures("UI", directory + "loading.png"); // 2
+	LoadGLTextures("UI", directory + "instructions.png"); // 3	
+	LoadGLTextures("UI", directory + "victory.png"); // 4
+	LoadGLTextures("UI", directory + "defeat.png"); // 5
 
 	LoadStoryTextures("story1", 161);
 
@@ -129,6 +132,11 @@ void Menu::Display()
 	//float heightPrev;
 	float paddingV;
 	//float paddingH;
+
+	int sp = 100;
+	curtF = (curtF + 1) % sp;
+	int fr = curtF / sp;
+
 
 	float bjunglPosX = windowWidth / 5.5f;
 	float bPosYHaut = windowHeight / 7.0f;
@@ -333,24 +341,30 @@ void Menu::Display()
 	case 3:
 		// PAUSE
 
-		ratio = 3.97;
+		// 	HELP
+		ratio = 1.97;
 		width = (windowWidth * 40) / 100.0;
 		height = width / ratio;
-		paddingV = windowHeight / 12;
+		paddingV = windowHeight / 9;
 
-		PrintImg((windowWidth / 2) - (width / 2), paddingV, height, width, UI, 0); // Titre jeu
+		PrintImg((windowWidth / 2) - (width / 2), paddingV, height, width, UI, 3);
 
 
 
 		// Draw new game button
 		// Update Ratio of button 1
-		ratio = 5.53;
-		width = (windowWidth * 20) / 100.0;
+		ratio = 0.15;
+		width = (windowWidth * 10) / 100.0;
 		height = width / ratio;
+		paddingV = windowHeight / 8;
 
-		b_continue.SetPos({ (windowWidth / 2) - (width / 2) , 2.0f*paddingV + height,0 });
 
-		if (b_continue.GetPos() == player.GetPos())
+		b_continue.SetPos({ (windowWidth / 2) - (width / 2), paddingV + 1.0f*height,0 });
+
+
+		if ((b_continue.GetPos().x) < player.GetPos().x && player.GetPos().x < (b_continue.GetPos().x + width) // Horizontal zone
+			&&
+			(b_continue.GetPos().y) < player.GetPos().y && player.GetPos().y < (b_continue.GetPos().y + height)) // vertical zone
 		{
 			b_continue.OnOver();
 			b_continue.Draw(width, height);
@@ -367,13 +381,17 @@ void Menu::Display()
 
 
 		// Update Ratio of button 2
-		ratio = 2.32;
+		ratio = 0.43;
+		width = (windowWidth * 10) / 100.0;
+		height = width / ratio;
+		paddingV = windowHeight / 8;
 
-
-		b_quit.SetPos({ 0,0,0 });
+		b_quit.SetPos({ (windowWidth / 2) - (width / 2), paddingV + 1.2f*height,0 });
 
 		// Draw load game button
-		if (b_quit.GetPos() == player.GetPos())
+		if ((b_quit.GetPos().x) < player.GetPos().x && player.GetPos().x < (b_quit.GetPos().x + width) // Horizontal zone
+			&&
+			(b_quit.GetPos().y) < player.GetPos().y && player.GetPos().y < (b_quit.GetPos().y + height)) // vertical zone
 		{
 			b_quit.OnOver();
 			b_quit.Draw(width, height);
@@ -396,8 +414,48 @@ void Menu::Display()
 	case 4:
 		// Story Screen
 		DisplayStory(story.size());
+		break;
+
+	case 5:
+		// Victory Screen
+		sp = 100;
+		curtF = (curtF + 1) % sp;
+		fr = curtF / sp;
 
 
+		ratio = 3.00;
+		width = (windowWidth * 40) / 100.0;
+		height = width / ratio;
+		paddingV = windowHeight / 10;
+
+		PrintImg((windowWidth / 2) - (width / 2), paddingV, height, width, UI, 3);
+
+		if (fr == 100) {
+			screenID = 1;
+			fr = 0;
+		}
+		break;
+
+	case 6:
+		// Defeat Screen
+
+		sp = 100;
+		curtF = (curtF + 1) % sp;
+		fr = curtF / sp;
+
+		ratio = 3.00;
+		width = (windowWidth * 40) / 100.0;
+		height = width / ratio;
+		paddingV = windowHeight / 10;
+
+		PrintImg((windowWidth / 2) - (width / 2), paddingV, height, width, UI, 3);
+
+
+		if (fr == 100) {
+			screenID = 1;
+			fr = 0;
+		}
+		break;
 	}
 	click = false;
 
