@@ -21,6 +21,7 @@ using namespace std;
 class Grid
 {
 private:
+	int m_tiles;
 	int m_screen;
 	int m_selected;
 	int m_score;

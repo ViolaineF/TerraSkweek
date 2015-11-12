@@ -1,7 +1,8 @@
 #include "Grid.h"
 
 //-------------- CALL EXTERN VALUES
-
+extern bool inGame;
+extern int screenID;
 extern const int TextWidth;
 extern Player player;
 extern float light;
@@ -508,8 +509,8 @@ void Grid::PrintImg(float i, float j, float width, float height, int textureIt)
 void Grid::DisplayMap()
 {
 	//cout << player.GetPos().x << " , " << player.GetPos().y << " , " << player.GetPos().z << endl;
-
-
+	
+	m_tiles = 0;
 	int m_rowsText = 20 * TextWidth;
 	int m_lignesText = 20 * TextWidth;
 
@@ -519,6 +520,7 @@ void Grid::DisplayMap()
 			{
 			case 0:// Floor
 				PrintImg(i*TextWidth, j*TextWidth, TextWidth+1, TextWidth+1, 0);
+				m_tiles++;
 				break;
 			case 1:// Wall
 				PrintImg(i * TextWidth, j * TextWidth, TextWidth+1, TextWidth+1, 1);
@@ -546,6 +548,19 @@ void Grid::DisplayMap()
 			}
 		}
 	}// End drawing
+	if (m_tiles == 0)
+	{
+		inGame = false;
+		screenID = 5;
+	}
+
+
+	if (player.GetLife() <= 0)
+	{
+		inGame = false;
+		screenID = 6;
+	}
+
 }
 
 void Grid::DrawSpecialCases()

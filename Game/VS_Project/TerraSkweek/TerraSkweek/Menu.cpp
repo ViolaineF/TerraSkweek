@@ -5,10 +5,10 @@ extern Grid lvl;
 extern int windowWidth;
 extern int windowHeight;
 bool inGame;
+int screenID;
 extern Player player;
 extern string m_biome;
 extern HUD hud;
-
 
 
 Menu::Menu()

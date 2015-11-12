@@ -9,7 +9,6 @@ protected:
 private:
 	vector<GLuint> UI;
 	vector<GLuint> story;
-	int screenID;
 	int currentFrame;
 	int curtF;
 	bool click;

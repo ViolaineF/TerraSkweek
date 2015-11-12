@@ -80,9 +80,6 @@ void InterfaceArduino();
 
 
 
-
-
-
 void main() {
 	cout << "ok";
 
@@ -131,8 +128,6 @@ void main() {
 
 	glutMainLoop();
 }
-
-
 
 
 
@@ -282,28 +277,6 @@ void InterfaceArduino()
 }
 
 
-/*
-
-//------------------ PRINT IMAGES TO SCREEN
-void PrintImg(float i, float j, float width, float height, int textureIt) {
-
-	glEnable(GL_TEXTURE_2D); // Start textures
-	glBindTexture(GL_TEXTURE_2D, UI[textureIt]);
-	glBegin(GL_QUADS);
-
-	glColor3d(1.0, 1.0, 1.0);
-	glTexCoord2f(0.0f, 1.0f); glVertex2d(i, j);// coord flipped along the vertical axis
-	glTexCoord2f(1.0f, 1.0f); glVertex2d(i + height, j);
-	glTexCoord2f(1.0f, 0.0f); glVertex2d(i + height, j + width);
-	glTexCoord2f(0.0f, 0.0f); glVertex2d(i, j + width);
-
-	glEnd();
-	glDisable(GL_TEXTURE_2D);
-
-}
-
-*/
-
 
 //----------------------------- SPAWN NEW MOB
 void ActivateSpawnMob(int x) {
@@ -363,11 +336,6 @@ void PlayerMovt(int x) {
 	int pYupConv = round(player.GetPos().y / TextWidth);
 	int pYdownConv = round(player.GetPos().y / TextWidth);
 
-
-	//cout << pXleftConv << " , " << pYdownConv << endl;
-	//cout << pXleft << " , " << pYup << endl;
-
-	//cout << lvl.Map(pXleft, pYup) << endl;
 
 	// ----------------- CHECK WALLS AND CONVERT
 	switch (player.GetDir())
