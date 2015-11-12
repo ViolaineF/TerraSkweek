@@ -147,10 +147,15 @@ Grid::Grid(string biome)
 
 void Grid::SetMap(int x, int y, int a)
 {
+	if (Map(x,y) == 1) {
+		return;
+	}
+
 	map[x][y] = a;
 
-	if (a == 4)
+	if (a == 4) {
 		vecCaseAnimated.push_back(new SimpleConversion(x*TextWidth, y*TextWidth, "conversion"));
+	}
 
 }
 
@@ -615,15 +620,18 @@ void Grid::DrawSpecialCases()
 			}
 
 			else if (typeid(*vecCaseAnimated[i]) == typeid(SemiConverted) && light > 0.4) { //--------------- PLAYER IS ON SEMI CONVERTED CASE
-				if (light > 0.4) {
+
+				cout << (vecCaseAnimated[i]->GetPos().x) / TextWidth << " " << (vecCaseAnimated[i]->GetPos().y) / TextWidth << endl;
+
 					SetMap((vecCaseAnimated[i]->GetPos().x)/TextWidth, (vecCaseAnimated[i]->GetPos().y)/TextWidth, 4);
-					for (int i = -1; i < 2; i++) {
-						for (int j = -1; j < 2; j++) {
-							SetMap((vecCaseAnimated[i]->GetPos().x) / TextWidth + i, (vecCaseAnimated[i]->GetPos().y) / TextWidth + j, 4);
+					for (int j = -1; j < 2; j++) {
+						for (int k = -1; k < 2; k++) {
+							if (Map((vecCaseAnimated[i]->GetPos().x) / TextWidth + j, (vecCaseAnimated[i]->GetPos().y) / TextWidth + k) != 1) {
+								SetMap((vecCaseAnimated[i]->GetPos().x) / TextWidth + j, (vecCaseAnimated[i]->GetPos().y) / TextWidth + k, 4);
+							}
 						}
 					}
-				}
-				//vecCaseAnimated[i]->SetAnimated(true);
+					vecCaseAnimated.erase(vecCaseAnimated.begin() + i);
 			}
 
 
