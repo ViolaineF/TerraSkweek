@@ -39,6 +39,8 @@ private:
 	vector<TNT*> vecTNT;
 	vector<Arrow*> vecArrow;
 	vector<Weapon*> vecWeapons;
+
+	AudioFile bgm_menu{ "Menu_bgm.wav", 0 };
 	AudioFile sfx_e_death{ "Ennemy_death.wav", 1 };
 	AudioFile sfx_e_fire{ "ennemy_shoot.wav", 1 };
 	AudioFile sfx_loot{ "Powerup.wav", 1 };

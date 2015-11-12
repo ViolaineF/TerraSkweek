@@ -69,9 +69,9 @@ void loop()
 
 
   if (x_position > X_THRESHOLD_HIGH) {
-    x_direction = -1;
-  } else if (x_position < X_THRESHOLD_LOW) {
     x_direction = 1;
+  } else if (x_position < X_THRESHOLD_LOW) {
+    x_direction = -1;
   }
 
   if (y_position > Y_THRESHOLD_HIGH) {

@@ -140,6 +140,7 @@ Grid::Grid(string biome)
 		}
 	}
 
+	bgm_menu.PlayAudio();
 
 }
 
@@ -170,6 +171,8 @@ void Grid::ChangeMap(int choice)
 	switch (choice)
 	{
 	case 0:// Menu
+		bgm_menu.PlayAudio();
+
 		m_biome = "0menu";
 		m_maxMobs = 0;
 		LoadAllTextures();
@@ -189,6 +192,8 @@ void Grid::ChangeMap(int choice)
 		break;
 
 	case 1:// Forest
+		bgm_menu.StopAudio();
+
 		m_biome = "1forest";
 
 		m_maxMobs = 10;
@@ -209,7 +214,9 @@ void Grid::ChangeMap(int choice)
 
 		break;
 
-	case 2:// corruption
+	case 2:// corruption		
+		bgm_menu.StopAudio();
+
 		m_biome = "2corruption";
 
 		m_maxMobs = 15;
@@ -237,6 +244,8 @@ void Grid::ChangeMap(int choice)
 		break;
 
 	case 3:// Crimson
+		bgm_menu.StopAudio();
+
 		m_biome = "3crimson";
 		
 		m_maxMobs = 20;
@@ -258,6 +267,8 @@ void Grid::ChangeMap(int choice)
 		break;
 
 	case 4:// Hallow
+		bgm_menu.StopAudio();
+
 		m_biome = "4hallow";
 		LoadAllTextures();
 
