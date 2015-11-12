@@ -4,6 +4,8 @@
 extern int windowWidth;
 extern int windowHeight;
 extern const int TextWidth;
+extern bool inGame;
+extern int screenID;
 
 HUD::HUD(int Lv)
 {
@@ -44,7 +46,7 @@ void HUD::LoadAllTextures()
 	LoadGLTextures("nbrs", "HUD/S9.png");				//	9
 	LoadGLTextures("infos", "HUD/Score.png");			//	0
 	LoadGLTextures("infos", "HUD/Life.png");
-	LoadGLTextures("infos", "HUD/loose.png");			//	2
+	LoadGLTextures("infos", "HUD/timer.png");			//	2
 	LoadGLTextures("icons", "HUD/LifeIco.png");			//	0
 	LoadGLTextures("icons", "weapon_01.png");
 	LoadGLTextures("icons", "weapon_02.png");
@@ -275,10 +277,10 @@ void HUD::displayScore(int score, float life, int weapon)
 		timer = 180 - ClockDuration;
 
 	startTimer = PaddingLife + 2*offset + (windowWidth * 13) / 100.0;
-	ratio = 3.0;
+	ratio = 4.0;
 	width = height*ratio;
 	
-	PrintImg(startTimer, vMargin, width, height, infos, 1);
+	PrintImg(startTimer, vMargin, width, height, infos, 2);
 
 	// Draw Timer numbers
 	ratio = 1.0;
@@ -297,9 +299,12 @@ void HUD::displayScore(int score, float life, int weapon)
 	ratio = 1.0;
 	width = height*ratio;
 
-	if(timer <= 0)
-		PrintImg(12, 2*vMargin, width, height, infos, 2);
+	if (timer <= 0) {
+		inGame = false;
+		screenID = 6;
+	}
 
+		
 
 	// Draw Weapon icon
 	ratio = 1.0;
