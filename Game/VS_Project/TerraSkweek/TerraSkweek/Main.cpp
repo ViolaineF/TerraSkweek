@@ -586,7 +586,7 @@ void DrawLevel() {
 
 void Display() {
 
-	glClearColor(1.0, 1.0, 1.0, 1.0);
+	glClearColor(0.19, 0.43, 0.70, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	InterfaceArduino();
