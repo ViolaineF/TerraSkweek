@@ -1,4 +1,8 @@
+#ifndef ARROW_H
+#define ARROW_H
+
 #include "Weapon.h"
+#include "Player.h"
 
 class Arrow : public Weapon
 {
@@ -16,3 +20,5 @@ public:
 	void LoadAllTextures();
 	~Arrow();
 };
+
+#endif

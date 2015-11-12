@@ -343,7 +343,7 @@ void Grid::LoadObjectsOnMap()
 	vecArrow.push_back(new Arrow(10 * TextWidth, 4 * TextWidth, 0, 'l'));
 	vecArrow.push_back(new Arrow(15 * TextWidth, 15 * TextWidth, 0, 'r'));
 	vecArrow.push_back(new Arrow(16 * TextWidth, 8 * TextWidth, 0, 'u'));
-	vecArrow.push_back(new Arrow(8 * TextWidth, 16 * TextWidth, 0, 'd'));
+	vecArrow.push_back(new Arrow(8 * TextWidth, 14 * TextWidth, 0, 'd'));
 
 	//------------------ LOAD AT LEAST ONE MOB SPAWNER
 	vecSpawner.push_back(new MobSpawner(2*TextWidth, 2*TextWidth, "mobSpawner"));
@@ -623,7 +623,7 @@ void Grid::DrawSpecialCases()
 						}
 					}
 				}
-				vecCaseAnimated[i]->SetAnimated(true);
+				//vecCaseAnimated[i]->SetAnimated(true);
 			}
 
 
@@ -686,28 +686,6 @@ void Grid::DrawSpecialCases()
 			vecArrow[i]->activation(true); // Player's movement forced in the direction of the Arrow
 
 			Position Player_pos = player.GetPos();
-
-			if (vecArrow[i]->GetDir() == 'r')
-			{
-				Player_pos.x = Player_pos.x + 100;
-				player.Teleport(Player_pos);
-			}
-
-			if (vecArrow[i]->GetDir() == 'l')
-			{
-				Player_pos.x = Player_pos.x - 100;
-				player.Teleport(Player_pos);
-			}
-			if (vecArrow[i]->GetDir() == 'u')
-			{
-				Player_pos.y = Player_pos.y - 100;
-				player.Teleport(Player_pos);
-			}
-			if (vecArrow[i]->GetDir() == 'd')
-			{
-				Player_pos.y = Player_pos.y + 100;
-				player.Teleport(Player_pos);
-			}
 
 		}
 	}

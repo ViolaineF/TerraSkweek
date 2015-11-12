@@ -1,6 +1,7 @@
 #include "Arrow.h"
 
 extern const int TextWidth;
+extern Player player;
 
 
 Arrow::Arrow()
@@ -29,11 +30,17 @@ void Arrow::LoadAllTextures()
 
 void Arrow::Draw()
 {
+	float displace = 0.5;
+
 	if (m_dir == 'l')
 	{
 		if (activated)
 		{
 			timer += 1;
+				
+
+			player.Teleport({ player.GetPos().x - displace, player.GetPos().y , player.GetPos().z });
+			
 
 			glPushMatrix();
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -86,6 +93,8 @@ void Arrow::Draw()
 		if (activated)
 		{
 			timer += 1;
+
+			player.Teleport({ player.GetPos().x + displace, player.GetPos().y , player.GetPos().z });
 
 			glPushMatrix();
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -140,6 +149,8 @@ void Arrow::Draw()
 		{
 			timer += 1;
 
+			player.Teleport({ player.GetPos().x, player.GetPos().y - displace , player.GetPos().z });
+
 			glPushMatrix();
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -192,6 +203,8 @@ void Arrow::Draw()
 		if (activated)
 		{
 			timer += 1;
+
+			player.Teleport({ player.GetPos().x, player.GetPos().y + displace , player.GetPos().z });
 
 				glPushMatrix();
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
