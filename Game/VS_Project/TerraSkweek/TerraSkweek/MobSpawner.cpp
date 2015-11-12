@@ -4,7 +4,7 @@
 
 bool MobSpawner::Draw()
 {
-	const int speed = 400;
+	const int speed = 800;
 
 	if (animated) {
 
