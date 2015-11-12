@@ -221,12 +221,7 @@ void Grid::ChangeMap(int choice)
 		m_biome = "2corruption";
 
 		m_maxMobs = 10;
-
-		vecArrow.push_back(new Arrow(7, 7, 1, 'l'));
-		vecArrow.push_back(new Arrow(7, 6, 1, 'r'));
-		vecArrow.push_back(new Arrow(8, 5, 1, 'd'));
-		vecArrow.push_back(new Arrow(8, 4, 1, 'd'));
-
+		
 		LoadAllTextures();
 
 		player.Teleport(playerInitPos);
@@ -612,13 +607,13 @@ void Grid::DrawSpecialCases()
 		}
 		else if (vecCaseAnimated[i]->GetPos() == player.GetPos()) {
 
-			if (typeid(*vecCaseAnimated[i]) == typeid(CrackedFloor) && light>0.4) { //------------- PLAYER IS ON CRACKED FLOOR
+			if (typeid(*vecCaseAnimated[i]) == typeid(CrackedFloor) && light > 0.4) { //------------- PLAYER IS ON CRACKED FLOOR
 				vecCaseAnimated[i]->SetAnimated(true);
 				//------------------PLAY SOUND
 				sfx_gap.PlayAudio();
 			}
 
-			else if (typeid(*vecCaseAnimated[i]) == typeid(SemiConverted) && light >1) { //--------------- PLAYER IS ON SEMI CONVERTED CASE
+			else if (typeid(*vecCaseAnimated[i]) == typeid(SemiConverted) && light > 0.4) { //--------------- PLAYER IS ON SEMI CONVERTED CASE
 				if (light > 0.4) {
 					SetMap((vecCaseAnimated[i]->GetPos().x)/TextWidth, (vecCaseAnimated[i]->GetPos().y)/TextWidth, 4);
 					for (int i = -1; i < 2; i++) {
@@ -807,19 +802,6 @@ void Grid::DrawEnemies()
 
 void Grid::MoveAllEnemies()
 {
-	//for (unsigned int i = 0; i < vecTNT.size(); i++)
-	//{
-	//	if (vecTNT[i]->GetPos() == player.GetPos()) {
-	//		vecTNT[i]->activation(); // TNT is activated
-	//	}
-	//}
-
-	//for (unsigned int i = 0; i < vecArrow.size(); i++)
-	//{
-	//	if (vecArrow[i]->GetPos() == player.GetPos()) {
-	//		vecArrow[i]->activation(); // arrow force is activated
-	//	}
-	//}
 
 	for (unsigned int i = 0; i < vecEnemies.size(); i++) {
 
