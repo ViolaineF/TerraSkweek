@@ -25,6 +25,9 @@ Menu::Menu()
 	b_corruption.SetPos({ 0,0,0 });
 	b_crimson.SetPos({ 0,0,0 });
 	b_hallow.SetPos({ 0,0,0 });
+	t = 0;
+
+
 }
 
 
@@ -133,10 +136,6 @@ void Menu::Display()
 	float paddingV;
 	//float paddingH;
 
-	int sp = 100;
-	curtF = (curtF + 1) % sp;
-	int fr = curtF / sp;
-
 
 	float bjunglPosX = windowWidth / 5.5f;
 	float bPosYHaut = windowHeight / 7.0f;
@@ -149,12 +148,16 @@ void Menu::Display()
 
 
 
+
+
+
 	switch (screenID)
 	{
 //_________________________________________________________
 
 	case 0:
 		// 	TITLE
+
 		ratio = 3.97;
 		width = (windowWidth*40)/100.0;
 		height = width/ratio;
@@ -350,15 +353,14 @@ void Menu::Display()
 		PrintImg((windowWidth / 2) - (width / 2), paddingV, height, width, UI, 3);
 
 
-
 		// Draw new game button
 		// Update Ratio of button 1
 		ratio = 0.15;
-		width = (windowWidth * 10) / 100.0;
+		width = (windowWidth * 4) / 100.0;
 		height = width / ratio;
 		paddingV = windowHeight / 8;
 
-		b_continue.SetPos({ (windowWidth / 2) - (width / 2), paddingV + 1.0f*height,0 });
+		b_continue.SetPos({ (windowWidth / 2) - (width / 2), paddingV + height,0 });
 
 		if ((b_continue.GetPos().x) < player.GetPos().x && player.GetPos().x < (b_continue.GetPos().x + width) // Horizontal zone
 			&&
@@ -380,11 +382,11 @@ void Menu::Display()
 
 		// Update Ratio of button 2
 		ratio = 0.43;
-		width = (windowWidth * 10) / 100.0;
+		width = (windowWidth * 4) / 100.0;
 		height = width / ratio;
 		paddingV = windowHeight / 8;
 
-		b_quit.SetPos({ (windowWidth / 2) - (width / 2), paddingV + 1.2f*height,0 });
+		b_quit.SetPos({ (windowWidth / 2) - (width / 2), paddingV + height + 10,0 });
 
 		// Draw quit game button
 		if ((b_quit.GetPos().x) < player.GetPos().x && player.GetPos().x < (b_quit.GetPos().x + width) // Horizontal zone
@@ -416,6 +418,11 @@ void Menu::Display()
 
 	case 5:
 		// Victory Screen
+
+		t++;
+		inGame = false;
+		player.SetLife(150);
+
 		lvl.ClearMap();
 		lvl.ChangeMap(0);
 
@@ -426,37 +433,24 @@ void Menu::Display()
 		paddingV = windowHeight / 10;
 		PrintImg((windowWidth / 2) - (width / 2), paddingV, height, width, UI, 4);
 
-		// Update Ratio of button 2
-		ratio = 0.43;
-		width = (windowWidth * 10) / 100.0;
-		height = width / ratio;
-		paddingV = windowHeight / 8;
+		// Timer
+		// Timer
 
-		b_quit.SetPos({ (windowWidth / 2) - (width / 2), paddingV + 1.2f*height,0 });
-
-		// Draw quit game button
-		if ((b_quit.GetPos().x) < player.GetPos().x && player.GetPos().x < (b_quit.GetPos().x + width) // Horizontal zone
-			&&
-			(b_quit.GetPos().y) < player.GetPos().y && player.GetPos().y < (b_quit.GetPos().y + height)) // vertical zone
+		if (t >= 200)
 		{
-			b_quit.OnOver();
-			b_quit.Draw(width, height);
-
-			if (click)
-			{
-
-				cout << "lvl = 0" << endl;
-				inGame = false;
-				screenID = 0;
-			}
+			screenID = 0;
+			t = 0;
 		}
-		else
-			b_quit.Draw(width, height);
 
 		break;
 
 	case 6:
 		// Defeat Screen
+
+		t++;
+		inGame = false;
+		player.SetLife(150);
+
 		lvl.ClearMap();
 		lvl.ChangeMap(0);
 
@@ -466,32 +460,16 @@ void Menu::Display()
 		paddingV = windowHeight / 10;
 		PrintImg((windowWidth / 2) - (width / 2), paddingV, height, width, UI, 5);
 
-		// Update Ratio of button 2
-		ratio = 0.43;
-		width = (windowWidth * 10) / 100.0;
-		height = width / ratio;
-		paddingV = windowHeight / 8;
+		// Timer
 
-		b_quit.SetPos({ (windowWidth / 2) - (width / 2), paddingV + 1.2f*height,0 });
-
-		// Draw quit game button
-		if ((b_quit.GetPos().x) < player.GetPos().x && player.GetPos().x < (b_quit.GetPos().x + width) // Horizontal zone
-			&&
-			(b_quit.GetPos().y) < player.GetPos().y && player.GetPos().y < (b_quit.GetPos().y + height)) // vertical zone
+		if (t >= 200)
 		{
-			b_quit.OnOver();
-			b_quit.Draw(width, height);
-
-			if (click)
-			{
-
-				cout << "lvl = 0" << endl;
-				inGame = false;
-				screenID = 0;
-			}
+			screenID = 0;
+			t = 0;
 		}
-		else
-			b_quit.Draw(width, height);
+
+		
+
 		break;
 	}
 	click = false;
@@ -534,38 +512,6 @@ void Menu::DisplayStory(int n_pictures)
 		story.resize(0);
 	}
 
-
-	/*
-	for (int i = 0; i = n_pictures; i++)
-	{
-		glPushMatrix();
-		// Story Screen
-		glEnable(GL_TEXTURE_2D); // Start textures
-		glBindTexture(GL_TEXTURE_2D, story[frame]);
-		glBegin(GL_QUADS);
-
-		glColor3d(1.0, 1.0, 1.0);
-		glTexCoord2f(1.0f, 1.0f);
-		glVertex2d(0, 0);
-		glTexCoord2f(0.0f, 1.0f);
-		glVertex2d(20, 0);
-		glTexCoord2f(0.0f, 0.0f);
-		glVertex2d(20, 20);
-		glTexCoord2f(1.0f, 0.0f);
-		glVertex2d(0, 20);
-		glEnd();
-		glDisable(GL_TEXTURE_2D);
-		glPopMatrix();
-		/*
-		if (i = n_pictures) {
-			inGame = true;
-			hud.ResetTimer(180);
-			story.clear();
-			story.resize(0);
-		}
-		
-	}
-	*/
 }
 
 void Menu::PrintImg(float i, float j, float width, float height, vector<GLuint> vecTex, int textureIt)

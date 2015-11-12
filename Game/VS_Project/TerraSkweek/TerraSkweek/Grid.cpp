@@ -177,7 +177,7 @@ void Grid::ChangeMap(int choice)
 		m_maxMobs = 0;
 		LoadAllTextures();
 
-		player.Teleport(playerMenuPos);
+		player.Teleport(playerInitPos);
 
 		m_rows = 20;
 		m_lignes = 20;

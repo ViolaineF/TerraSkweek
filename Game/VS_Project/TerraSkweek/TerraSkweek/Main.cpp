@@ -10,7 +10,7 @@ int windowWidth = 200;
 int windowHeight = 200;
 extern const int TextWidth = 75;
 extern const Position playerInitPos = { 750, 750, 0 };
-extern const Position playerMenuPos = { 300, 300, 0 };
+extern const Position playerMenuPos = { windowWidth/2, windowHeight/2, 0 };
 
 
 //------------------LOADING MAP TEXTURES
@@ -124,8 +124,6 @@ void main() {
 	glutTimerFunc(enemySpawnFrequency, ActivateSpawnMob, 0);
 	//glutIdleFunc(Idle);
 
-
-
 	glutMainLoop();
 }
 
@@ -133,7 +131,6 @@ void main() {
 
 void InterfaceArduino()
 {
-
 
 	readResult = SP->ReadData(incomingData, dataLength);
 
@@ -214,22 +211,27 @@ void InterfaceArduino()
 						{
 						case 'u':
 							for (int i = player.GetPos().y / TextWidth; i > player.GetPos().y / TextWidth - 5; i--) {
-								lvl.SetMap(X, i, 4);
+								if (lvl.Map(X, i) == 0)
+									lvl.SetMap(X, i, 4);
 							}
 							break;
 						case 'd':
 							for (int i = player.GetPos().y / TextWidth; i < player.GetPos().y / TextWidth + 5; i++) {
-								lvl.SetMap(X, i, 4);
+								if (lvl.Map(X, i) == 0)
+									lvl.SetMap(X, i, 4);
 							}
 							break;
 						case 'r':
 							for (int i = player.GetPos().x / TextWidth; i < player.GetPos().x / TextWidth + 5; i++) {
-								lvl.SetMap(i, Y, 4);
+								if (lvl.Map(X, i) == 0)
+									lvl.SetMap(X, i, 4);
 							}
 							break;
 						case 'l':
 							for (int i = player.GetPos().x / TextWidth; i > player.GetPos().x / TextWidth - 5; i--) {
-								lvl.SetMap(i, Y, 4);
+								if (lvl.Map(X, i) == 0)
+									lvl.SetMap(X, i, 4);
+
 							}
 							break;
 						}

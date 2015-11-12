@@ -10,7 +10,8 @@ private:
 	vector<GLuint> UI;
 	vector<GLuint> story;
 	int currentFrame;
-	int curtF;
+
+	int t = 0;
 	bool click;
 	Button b_newGame{ 5.93 };
 	Button b_loadGame{ 6.66 };
