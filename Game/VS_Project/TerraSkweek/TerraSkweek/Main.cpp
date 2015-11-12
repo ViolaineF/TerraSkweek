@@ -355,22 +355,11 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			if (light > 0.4 && !(player.GetPos().z))
+			if (light > 0.6 && !(player.GetPos().z) && inGame)
 				lvl.SetMap(pXleft, pYup, 4);
 				//cout << "Map convertie avec la valeur : "<< lvl.Map(pXleftConv, pYupConv) << endl;
 			break;
 		case 2: //Ground converted
-			break;
-		case 3: //Semi-converted case
-			if (light > 0.4 && !(player.GetPos().z)) {
-				lvl.SetMap(pXleft, pYup, 4);
-
-				for (int i = -1; i < 2; i++) {
-					for (int j = -1; j < 2; j++) {
-						lvl.SetMap(pXleft + i, pYup + j, 4);
-					}
-				}
-			}
 			break;
 		case 6 : // Fall
 			player.SetLife(player.GetLife()-40); 
@@ -385,21 +374,10 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert	
-			if (light > 0.4 && !(player.GetPos().z))
+			if (light > 0.6 && !(player.GetPos().z) && inGame)
 			lvl.SetMap(pXright, pYup, 4);
 			break;
 		case 2: //Ground converted
-			break;
-		case 3: //Semi-converted case
-			if (light > 0.4 && !(player.GetPos().z)) {
-				lvl.SetMap(pXright, pYup, 4);
-
-				for (int i = -1; i < 2; i++) {
-					for (int j = -1; j < 2; j++) {
-						lvl.SetMap(pXrightConv + i, pYupConv + j, 4);
-					}
-				}
-			}
 			break;
 		case 6: // Fall
 				player.SetLife(player.GetLife() - 40);
@@ -416,22 +394,12 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			if (light > 0.4 && !(player.GetPos().z))
+			if (light > 0.6 && !(player.GetPos().z) && inGame)
 			lvl.SetMap(pXleft, pYdown, 4);
 			break;
 		case 2: //Ground converted
 			break;
-		case 3: //Semi-converted case
-			if (light > 0.4 && !(player.GetPos().z)) {
-				lvl.SetMap(pXleft, pYdown, 4);
 
-				for (int i = -1; i < 2; i++) {
-					for (int j = -1; j < 2; j++) {
-						lvl.SetMap(pXleft + i, pYdown + j, 4);
-					}
-				}
-			}
-			break;
 		case 6: // Fall
 			player.SetLife(player.GetLife() - 40);
 			player.Teleport(playerInitPos);
@@ -444,22 +412,12 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			if (light > 0.4 && !(player.GetPos().z))
+			if (light > 0.6 && !(player.GetPos().z) && inGame)
 			lvl.SetMap(pXright, pYdown, 4);
 			break;
 		case 2: //Ground converted
 			break;
-		case 3: //Semi-converted case
-			if (light > 0.4 && !(player.GetPos().z)) {
-				lvl.SetMap(pXright, pYdown, 4);
 
-				for (int i = -1; i < 2; i++) {
-					for (int j = -1; j < 2; j++) {
-						lvl.SetMap(pXright + i, pYdown + j, 4);
-					}
-				}
-			}
-			break;
 		case 6: // Fall
 			player.SetLife(player.GetLife() - 40);
 			player.Teleport(playerInitPos);
@@ -475,22 +433,12 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			if (light > 0.4 && !(player.GetPos().z))
+			if (light > 0.6 && !(player.GetPos().z) && inGame)
 			lvl.SetMap(pXright, pYdown, 4);
 			break;
 		case 2: //Ground converted
 			break;
-		case 3: //Semi-converted case
-			if (light > 0.4 && !(player.GetPos().z)) {
-				lvl.SetMap(pXright, pYdown, 4);
 
-				for (int i = -1; i < 2; i++) {
-					for (int j = -1; j < 2; j++) {
-						lvl.SetMap(pXright + i, pYdown + j, 4);
-					}
-				}
-			}
-			break;
 		case 6: // Fall
 			player.SetLife(player.GetLife() - 40);
 			player.Teleport(playerInitPos);
@@ -503,22 +451,12 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			if (light > 0.4 && !(player.GetPos().z))
+			if (light > 0.6 && !(player.GetPos().z) && inGame)
 				lvl.SetMap(pXright, pYup, 4);
 			break;
 		case 2: //Ground converted
 			break;
-		case 3: //Semi-converted case
-			if (light > 0.4 && !(player.GetPos().z)){
-				lvl.SetMap(pXright, pYup, 4);
 
-				for (int i = -1; i < 2; i++) {
-					for (int j = -1; j < 2; j++) {
-						lvl.SetMap(pXright + i, pYup + j, 4);
-					}
-				}
-			}
-			break;
 		case 6: // Fall
 			player.SetLife(player.GetLife() - 40);
 			player.Teleport(playerInitPos);
@@ -534,22 +472,12 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			if (light > 0.4 && !(player.GetPos().z))
+			if (light > 0.6 && !(player.GetPos().z) && inGame)
 			lvl.SetMap(pXleft, pYup, 4);
 			break;
 		case 2: //Ground converted
 			break;
-		case 3: //Semi-converted case
-			if (light > 0.4 && !(player.GetPos().z)) {
-				lvl.SetMap(pXleft, pYup, 4);
 
-				for (int i = -1; i < 2; i++) {
-					for (int j = -1; j < 2; j++) {
-						lvl.SetMap(pXleft + i, pYup + j, 4);
-					}
-				}
-			}
-			break;
 		case 6: // Fall
 			player.SetLife(player.GetLife() - 40);
 			player.Teleport(playerInitPos);
@@ -562,22 +490,12 @@ void PlayerMovt(int x) {
 			player.Teleport(playerPrevPos);
 			break;
 		case 0: //Ground to convert
-			if (light > 0.4 && !(player.GetPos().z))
+			if (light > 0.6 && !(player.GetPos().z) && inGame)
 			lvl.SetMap(pXleft, pYdown, 4);
 			break;
 		case 2: //Ground converted
 			break;
-		case 3: //Semi-converted case
-			if (light > 0.4 && !(player.GetPos().z)) {
-				lvl.SetMap(pXleft, pYdown, 4);
 
-				for (int i = -1; i < 2; i++) {
-					for (int j = -1; j < 2; j++) {
-						lvl.SetMap(pXleft+ i, pYdown + j, 4);
-					}
-				}
-			}
-			break;
 		case 6: // Fall
 			player.SetLife(player.GetLife() - 40);
 			player.Teleport(playerInitPos);
@@ -689,30 +607,13 @@ void Redim(int x, int y) {
 	glViewport(0, 0, x, y);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	//gluOrtho2D(0.0, (double)(20), (double)(20), 0.0);
 	gluOrtho2D(0.0, (double)(windowWidth), (double)(windowHeight), 0.0);
 	cout << windowWidth << endl;
-	//gluOrtho2D(0.0, (double)(res*windowWidth), (double)(res*windowHeight), 0.0);
-	//gluOrtho2D(0.0, (double)(res*glutGet(GLUT_SCREEN_WIDTH)), (double)(res*glutGet(GLUT_SCREEN_HEIGHT)), 0.0);
-	//gluOrtho2D(0.0, (double)(res*glutGet(GLUT_WINDOW_WIDTH)), (double)(res*glutGet(GLUT_WINDOW_HEIGHT)), 0.0);
-
 }
 
 
 //---------------------------- SCREEN/HUD CONTROLS
 void KeyButtons(unsigned char key, int y, int z) {
-	
-
-	//-------------------------- A ENLEVER POUR LAISSER PLACE AU DETECTEUR DE LUMIERE SUR ARDUINO
-	//if (key == '0') {
-	//	const int div = 4;
-	//	currentFrame = (currentFrame + 1) % div;
-	//	light = currentFrame * 4 / div;
-
-	//	player.setOpacity(light);// à placer dans une boucle infinie pour detecter toujours la valeur de "light"
-	//}
-
-	//cout << light << endl;
 
 
 	//--------------------------CHANGE ENEMY' SPEED
@@ -819,62 +720,3 @@ void KeyAction(int key, int x, int y) {
 	}
 
 }
-
-
-//-----------------------------WHAT HAPPENS WHEN NOTHING HAPPENS :)
-//Check LOSE
-//Check if player is attacked
-//void Idle() {
-//
-//	//-------------------IF NO MORE LIFE
-//	if (player.Life() <= 0) {
-//		screenIt = 4;
-//	}
-//
-//	//------------------IS PLAYER SAFE ?
-//	if (player.GetPos() != ghost1.GetPos()) {
-//		hurt1 = false;
-//	}
-//
-//	if (player.GetPos() != ghost2.GetPos()) {
-//		hurt2 = false;
-//	}
-//
-//	if (player.GetPos() != ghost3.GetPos()) {
-//		hurt3 = false;
-//	}
-//
-//	if (player.GetPos() != ghost4.GetPos()) {
-//		hurt4 = false;
-//	}
-//
-//	//----------------- IS GHOST 1 ON THE PLAYER ? - 1 life
-//	// Check if the player was safe before the attack (else the life would decrease at each frame!)
-//	if ((player.GetPos() == ghost1.GetPos()) && (hurt1 == false)) {
-//		hurt1 = true;
-//		player.Hurt(1);
-//		player.Teleport(m_start);
-//	}
-//
-//	//----------------- IS GHOST 2 ON THE PLAYER ? - 2 lives
-//	if ((player.GetPos() == ghost2.GetPos()) && (hurt2 == false)) {
-//		hurt2 = true;
-//		player.Hurt(2);
-//		player.Teleport(m_start);
-//	}
-//
-//	//----------------- IS GHOST 3 ON THE PLAYER ? - 3 lives
-//	if ((player.GetPos() == ghost3.GetPos()) && (hurt3 == false)) {
-//		hurt3 = true;
-//		player.Hurt(3);
-//		player.Teleport(m_start);
-//	}
-//
-//	//----------------- IS GHOST 4 ON THE PLAYER ? - 1 life
-//	if ((player.GetPos() == ghost4.GetPos()) && (hurt4 == false)) {
-//		hurt4 = true;
-//		player.Hurt(1);
-//		player.Teleport(m_start);
-//	}
-//}
-

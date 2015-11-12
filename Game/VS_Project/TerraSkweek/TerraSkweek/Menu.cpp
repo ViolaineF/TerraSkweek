@@ -434,7 +434,6 @@ void Menu::Display()
 		PrintImg((windowWidth / 2) - (width / 2), paddingV, height, width, UI, 4);
 
 		// Timer
-		// Timer
 
 		if (t >= 200)
 		{
@@ -483,12 +482,13 @@ void Menu::DisplayStory(int n_pictures)
 	currentFrame = (currentFrame + 1) % vitesse;
 	unsigned int frame = currentFrame * n_pictures / vitesse;
 
-	const float center = (windowWidth / 2);
+	const float centerH = (windowWidth / 2);
+	const float centerV = (windowHeight / 2);
 	const float sizeStory = (windowHeight * 90) / 100;
-	const float Xmin = center - sizeStory/2 ;
-	const float Xmax = center + sizeStory/2;
-	const float Ymin = center - sizeStory / 2;
-	const float Ymax = center + sizeStory / 2;
+	const float Xmin = centerH - sizeStory/2 ;
+	const float Xmax = centerH + sizeStory/2;
+	const float Ymin = centerV - sizeStory / 2;
+	const float Ymax = centerV + sizeStory / 2;
 
 	glPushMatrix();
 	// Story Screen

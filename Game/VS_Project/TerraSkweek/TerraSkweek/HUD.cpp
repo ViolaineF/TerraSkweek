@@ -290,9 +290,9 @@ void HUD::displayScore(int score, float life, int weapon)
 	t_dizaine = timer / 10 % 10;
 	t_centaine = timer / 100 % 10;
 
-	PrintImg(startTimer + 4*offset, vMargin, width, height, nbrs, t_centaine);
-	PrintImg(startTimer + 5*offset, vMargin, width, height, nbrs, t_dizaine);
-	PrintImg(startTimer + 6*offset, vMargin, width, height, nbrs, t_unite);
+	PrintImg(startTimer + 5*offset, vMargin, width, height, nbrs, t_centaine);
+	PrintImg(startTimer + 6*offset, vMargin, width, height, nbrs, t_dizaine);
+	PrintImg(startTimer + 7*offset, vMargin, width, height, nbrs, t_unite);
 
 
 	// Draw YOU LOOSE image

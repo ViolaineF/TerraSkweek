@@ -41,12 +41,12 @@ int mapLv1[20][20] = {
 	1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-	1,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,1,
+	1,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,
-	1,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,1,
+	1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -64,12 +64,12 @@ int mapLv2[20][20] = {
 	1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-	1,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,1,
+	1,0,0,0,0,0,0,1,1,0,0,1,1,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,
+	1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+	1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,
-	1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,
-	1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,
-	1,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,1,
+	1,0,0,0,0,0,0,1,1,0,0,1,1,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 	1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -196,7 +196,7 @@ void Grid::ChangeMap(int choice)
 		bgm_lvl.PlayAudio();
 		m_biome = "1forest";
 
-		m_maxMobs = 10;
+		m_maxMobs = 5;
 
 		LoadAllTextures();
 
@@ -220,7 +220,7 @@ void Grid::ChangeMap(int choice)
 
 		m_biome = "2corruption";
 
-		m_maxMobs = 15;
+		m_maxMobs = 10;
 
 		vecArrow.push_back(new Arrow(7, 7, 1, 'l'));
 		vecArrow.push_back(new Arrow(7, 6, 1, 'r'));
@@ -249,7 +249,7 @@ void Grid::ChangeMap(int choice)
 
 		m_biome = "3crimson";
 		
-		m_maxMobs = 20;
+		m_maxMobs = 15;
 
 		LoadAllTextures();
 
@@ -274,7 +274,7 @@ void Grid::ChangeMap(int choice)
 		m_biome = "4hallow";
 		LoadAllTextures();
 
-		m_maxMobs = 25;
+		m_maxMobs = 20;
 
 		player.Teleport(playerInitPos);
 
@@ -325,21 +325,32 @@ void Grid::LoadObjectsOnMap()
 
 
 	//------------------------ LOAD UP CASE 
+	vecUpCase.push_back(new UpCase(4 * TextWidth, 4 * TextWidth, "upcase"));
+	vecUpCase.push_back(new UpCase(4 * TextWidth, 5 * TextWidth, "upcase"));
+	vecUpCase.push_back(new UpCase(5 * TextWidth, 4 * TextWidth, "upcase"));
 	vecUpCase.push_back(new UpCase(5 * TextWidth, 5 * TextWidth, "upcase"));
-	vecUpCase.push_back(new UpCase(5 * TextWidth, 6 * TextWidth, "upcase"));
-	vecUpCase.push_back(new UpCase(6 * TextWidth, 5 * TextWidth, "upcase"));
-	vecUpCase.push_back(new UpCase(6 * TextWidth, 6 * TextWidth, "upcase"));
+
+
+	vecUpCase.push_back(new UpCase(17 * TextWidth, 16 * TextWidth, "upcase"));
+	vecUpCase.push_back(new UpCase(17 * TextWidth, 17 * TextWidth, "upcase"));
+	vecUpCase.push_back(new UpCase(18 * TextWidth, 16 * TextWidth, "upcase"));
+	vecUpCase.push_back(new UpCase(18 * TextWidth, 17 * TextWidth, "upcase"));
 
 	//---------- LOAD JUMP CASE ACCORDINGLY 
-	vecCaseAnimated.push_back(new SpecialCase({ 4.5f * TextWidth, 5.0f * TextWidth , 0 }, "elevator.png"));
-	vecCaseAnimated.push_back(new SpecialCase({ 4.5f * TextWidth, 6.0f * TextWidth , 0 }, "elevator.png"));
+	vecCaseAnimated.push_back(new SpecialCase({ 3.5f * TextWidth, 4.0f * TextWidth , 0 }, "elevator.png"));
+	vecCaseAnimated.push_back(new SpecialCase({ 3.5f * TextWidth, 5.0f * TextWidth , 0 }, "elevator.png"));
+
+	vecCaseAnimated.push_back(new SpecialCase({ 16.5f * TextWidth, 16.0f * TextWidth , 0 }, "elevator.png"));
+	vecCaseAnimated.push_back(new SpecialCase({ 16.5f * TextWidth, 17.0f * TextWidth , 0 }, "elevator.png"));
 
 	//-----------------LOAD ARROWS
-	vecArrow.push_back(new Arrow(400, 400, 0, 'l'));
-	vecArrow.push_back(new Arrow(400, 475, 0, 'r'));
-	vecArrow.push_back(new Arrow(550, 400, 0, 'u'));
-	vecArrow.push_back(new Arrow(625, 400, 0, 'd'));
+	vecArrow.push_back(new Arrow(10 * TextWidth, 4 * TextWidth, 0, 'l'));
+	vecArrow.push_back(new Arrow(15 * TextWidth, 15 * TextWidth, 0, 'r'));
+	vecArrow.push_back(new Arrow(16 * TextWidth, 8 * TextWidth, 0, 'u'));
+	vecArrow.push_back(new Arrow(8 * TextWidth, 16 * TextWidth, 0, 'd'));
 
+	//------------------ LOAD AT LEAST ONE MOB SPAWNER
+	vecSpawner.push_back(new MobSpawner(2*TextWidth, 2*TextWidth, "mobSpawner"));
 }
 
 void Grid::LoadAllTextures()
