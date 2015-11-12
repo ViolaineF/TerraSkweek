@@ -99,12 +99,12 @@ void main() {
 	//lvl.LoadGame("player1.txt");
 
 	//Gestion de la fenetre
-	glutInitWindowPosition(10, 10);
-	glutInitWindowSize(1000, 1000);
+	//glutInitWindowPosition(10, 10);
+	//glutInitWindowSize(1000, 1000);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE);		//A remplacer pour l'affichage sur d'autres PC par GLUT_DOUBLE
 	//glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 	glutCreateWindow("TerraSkweek");
-	//glutFullScreen();           // making the window full screen
+	glutFullScreen();           // making the window full screen
 
 
 	//----------------------- LOAD EVERYBODY'S SPRITES
